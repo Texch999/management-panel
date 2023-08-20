@@ -42,11 +42,11 @@ function Table(props) {
       </tbody>
       <tfoot>
         <tr>
-          <th colSpan={2} className="text-center small-font fw-lighter">
+          <th colSpan={2} className="small-font fw-lighter">
             showing entries from 1-50
           </th>
-          <th colSpan={1}></th>
-          <th colSpan={4} className="text-center medium-font">
+          <th colSpan={3}></th>
+          <th colSpan={4} className="medium-font">
             <button className="pegina-btn-clr p-2 m-1">Previous</button>
             <button className="pegina-btn-clr p-2 m-1">1</button>
             <button className="pegina-btn-clr p-2 m-1">2</button>
