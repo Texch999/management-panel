@@ -55,31 +55,42 @@ function Tickets() {
     },
   ];
 
-  const rows = [
-    {
-      one: "12/8/23",
-      two: "srini",
-    },
-    {
-      one: "15/6",
-      two: "aksh",
-    },
-  ];
+  
   const cols = [
     {
-      header: "date time",
-      field: "one",
+      header: "DATE & TIME",
+      field: "date",
     },
     {
-      header: "name role",
-      field: "two",
+      header: "Name & ROLE",
+      field: "name",
+    },
+    {
+      header: "TRX ID",
+      field: "trxid",
+    },
+    {
+      header: "PACKAGE TRX",
+      field: "package",
+    },
+    {
+      header: "PAY AMOUNT",
+      field: "pkgamnt",
+    },
+    {
+      header: "STATUS",
+      field: "",
+    },
+    {
+      header: "",
+      field: "status",
     },
   ];
 
   return (
     <div className="p-4 w-100">
       <h5 className="th-color">Tickets</h5>
-      <div className="sidebar-bg w-100 home-border-radius">
+      {/* <div className="sidebar-bg w-100 home-border-radius">
         <div className=" large-font px-2 p-1 m-1 th-color">Tickets</div>
         <table className="tickets-table table table-borderless">
           <thead className="th-color">
@@ -162,9 +173,9 @@ function Tickets() {
             </tr>
           </tfoot>
         </table>
-      </div>
+      </div> */}
       
-      <Table columns={cols} data={rows} />
+      <Table columns={cols} data={SETTELMENT_DETAILS} />
     </div>
   );
 }
