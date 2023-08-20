@@ -1,6 +1,3 @@
-import React, { useRef } from "react";
-import { AiFillEye } from "react-icons/ai";
-import { BiSolidCloudUpload } from "react-icons/bi";
 import Table from "./Table";
 
 function Tickets() {
@@ -55,15 +52,14 @@ function Tickets() {
     },
   ];
 
-  
   const cols = [
     {
       header: "DATE & TIME",
-      field: "date",
+      field: "dateAndTime",
     },
     {
       header: "Name & ROLE",
-      field: "name",
+      field: "nameAndRole",
     },
     {
       header: "TRX ID",
@@ -79,13 +75,28 @@ function Tickets() {
     },
     {
       header: "STATUS",
-      field: "",
+      field: "status_icon",
     },
     {
       header: "",
       field: "status",
+      clr: true
     },
   ];
+
+  const modifiedSettlementDetails = SETTELMENT_DETAILS.map((item) => ({
+    ...item,
+    nameAndRole: (
+      <div>
+        {item?.name} <br /> <span>{item?.role}</span>{" "}
+      </div>
+    ),
+    dateAndTime: (
+      <div>
+        {item?.date} <br /> <span>{item?.time}</span>{" "}
+      </div>
+    ),
+  }));
 
   return (
     <div className="p-4 w-100">
@@ -174,8 +185,8 @@ function Tickets() {
           </tfoot>
         </table>
       </div> */}
-      
-      <Table columns={cols} data={SETTELMENT_DETAILS} />
+
+      <Table columns={cols} data={modifiedSettlementDetails} />
     </div>
   );
 }
