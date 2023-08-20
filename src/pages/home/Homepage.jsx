@@ -11,7 +11,7 @@ function Homepage() {
       <div className="container-fluid p-0 mt-0">
         <div className="row medium-font">
           <div className="col-15 col-sm-6 col-md-4 col-lg-3 p-2">
-            <div className="d-flex justify-content-between home-border-radius sidebar-bg text-white p-4 align-items-center border border-secondary shadow-sm">
+            <div className="d-flex justify-content-between home-border-radius sidebar-bg text-white p-4 align-items-center">
               <div>
                 <span>Total Revenue</span>
                 <div>
@@ -28,7 +28,7 @@ function Homepage() {
             className="col-sm-6 col-md-4 col-lg-3
                         p-2"
           >
-            <div className="d-flex justify-content-between home-border-radius sidebar-bg text-white p-4 align-items-center border border-secondary shadow-sm">
+            <div className="d-flex justify-content-between home-border-radius sidebar-bg text-white p-4 align-items-center">
               <div>
                 <span>Total Balance</span>
                 <h6 className="medium-font">203.378</h6>
@@ -42,7 +42,7 @@ function Homepage() {
             className="col-sm-6 col-md-4 col-lg-3
                         p-2"
           >
-            <div className="d-flex justify-content-between home-border-radius sidebar-bg text-white p-4 align-items-center border border-secondary shadow-sm">
+            <div className="d-flex justify-content-between home-border-radius sidebar-bg text-white p-4 align-items-center">
               <div>
                 <span>Total Profit</span>
                 <h6 className="medium-font">203.378</h6>
@@ -56,7 +56,7 @@ function Homepage() {
             className="col-sm-6 col-md-4 col-lg-3
                         p-2"
           >
-            <div className="d-flex justify-content-between home-border-radius sidebar-bg text-white p-4 align-items-center border border-secondary shadow-sm">
+            <div className="d-flex justify-content-between home-border-radius sidebar-bg text-white p-4 align-items-center">
               <div>
                 <span>Total Customer</span>
                 <h6 className="medium-font">203.378</h6>

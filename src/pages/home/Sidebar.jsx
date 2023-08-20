@@ -5,7 +5,6 @@ import './style.css';
 import {LiaAdSolid} from 'react-icons/lia';
 import {LuCopyPlus} from 'react-icons/lu';
 import { Link } from 'react-router-dom';
-// import { Link } from 'react-router-dom';
 function Sidebar() {
     const [active, SetActive] = useState(1)
   return (
@@ -27,7 +26,7 @@ function Sidebar() {
             </li>
             <li className={active === 2 ? 'active nav-item p-2' : 'nav-item p-2'}
             onClick={e => SetActive(2)}>
-                <Link to='/addwebsites' className='p-1 '>
+                <Link to='/addwebsites' className='p-1 text-white text-decoration-none '>
                 <i className='bi bi-plus-circle me-3 fs-6'></i>
                 <span className='text-white fs-8'>Add Websites</span>
                 </Link>
@@ -35,32 +34,32 @@ function Sidebar() {
             </li>
             <li className={active === 3 ? 'active nav-item p-2' : 'nav-item p-2'}
             onClick={e => SetActive(3)}>
-                <a href='/adddirectors' className='p-1'>
+                <Link to='/adddirectors' className='p-1 text-white text-decoration-none'>
                 <i className='fa fa-user-plus me-3 fs-6'></i>
                 <span className='text-white fs-8'>Add Director/SA</span>
-                </a>
+                </Link>
             </li>
             <li className={active === 4 ? 'active nav-item p-2' : 'nav-item p-2'}
             onClick={e => SetActive(4)}>
               
-                <a href='/addtt' className='p-1'>
+                <Link to='/addtt' className='p-1 text-white text-decoration-none'>
                 <i className='me-3 fs-4'><LiaAdSolid></LiaAdSolid></i>
                 <span className='text-white fs-8'>Add TT/Ads</span>
-                </a>
+                </Link>
             </li>
             <li className={active === 5 ? 'active nav-item p-2' : 'nav-item p-2'}
             onClick={e => SetActive(5)}>
-                <a href='/creatematch' className='p-1'>
+                <Link to='/creatematch' className='p-1 text-white text-decoration-none'>
                 <i className='me-3 fs-5'><LuCopyPlus></LuCopyPlus></i>
                 <span className='text-white fs-8'>Create Match</span>
-                </a>
+                </Link>
             </li>
             <li className={active === 6 ? 'active nav-item p-2' : 'nav-item p-2'}
             onClick={e => SetActive(6)}>
-                <a href='/banking' className='p-1'>
+                <Link to='/banking' className='p-1 text-white text-decoration-none'>
                 <i className='fa fa-university me-3 fs-6'></i>
                 <span className='text-white fs-9'>Banking</span>
-                </a>
+                </Link>
             </li>
             <li className={active === 7 ? 'active nav-item p-2' : 'nav-item p-2'}
             onClick={e => SetActive(7)}>
@@ -69,6 +68,7 @@ function Sidebar() {
                 <span className='text-white fs-8'>Tickets</span>
                 </Link>
             </li>
+            
         </ul>
       </div>
       <div>

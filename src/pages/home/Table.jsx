@@ -13,26 +13,28 @@ function Table(props) {
     }
   };
   return (
+    <div className="sidebar-bg w-100 home-border-radius">
+      <div className=" large-font font-weight-bold px-2 p-2 m-1 th-color">Tickets</div>
     <table className="tickets-table table table-borderless">
-      <thead id="home-table-head">
-        <tr>
+      <thead className="th-color medium-font">
+        <tr className="medium-font th-color">
           {columns.map((column, index) => (
-            <th key={index}>{column.header}</th>
+            <th key={index} className="text-center medium-font th-color">{column.header}</th>
           ))}
         </tr>
       </thead>
-      <tbody>
+      <tbody className="td-color">
         {data.map((item, rowIndex) => (
-          <tr key={rowIndex}>
+          <tr key={rowIndex} className="medium-font td-color ">
             {columns.map((column, colIndex) => {
               if (column?.field === "status_icon")
                 return (
-                  <td>
+                  <td className="text-center">
                     <i className="fa fa-light fa-eye"></i>
                   </td>
                 );
               return (
-                <td key={colIndex}>
+                <td key={colIndex} className="px-2 text-center">
                   <div className={column?.clr ?  getColor(item[column.field]) : ""}>{item[column.field]}</div>
                 </td>
               );
@@ -42,11 +44,12 @@ function Table(props) {
       </tbody>
       <tfoot>
         <tr>
-          <th colSpan={2} className="small-font fw-lighter">
+          <th colSpan={1} className=" pegina-btn-clr small-font font-weight-light">
             showing entries from 1-50
           </th>
-          <th colSpan={3}></th>
-          <th colSpan={4} className="medium-font">
+          <th colSpan={1}></th>
+          <th colSpan={1}></th>
+          <th colSpan={5} className="medium-font">
             <button className="pegina-btn-clr p-2 m-1">Previous</button>
             <button className="pegina-btn-clr p-2 m-1">1</button>
             <button className="pegina-btn-clr p-2 m-1">2</button>
@@ -57,6 +60,8 @@ function Table(props) {
         </tr>
       </tfoot>
     </table>
+    
+    </div>
   );
 }
 

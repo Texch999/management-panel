@@ -16,7 +16,7 @@ const data = {
       data: [16, 10, 5, 2, 20, 30, 45],
     },
     {
-      label: "My Dataset",
+      label: " Dataset",
       backgroundColor: "#696cff",
       borderColor: "",
       borderRadius: 40,
@@ -28,7 +28,7 @@ const data = {
 
 function Barchart() {
   return (
-    <div className="w-45 grapgheight sidebar-bg home-border-radius p-2">
+    <div className="w-50 grapgheight sidebar-bg home-border-radius p-2">
       <div className="w-100 d-flex justify-content-between text-white">
         <div className="w-50 medium-font">
           <span>Spending Statistics</span>

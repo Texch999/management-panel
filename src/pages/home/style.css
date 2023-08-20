@@ -124,7 +124,7 @@
   border-radius: 5px;
 }
 .tickets-table th {
-  font-weight: 600;
+  font-weight: 500;
   background-color: #2b2c40 !important;
   color: #cbcbe2 !important;
 }
@@ -143,14 +143,14 @@
     border: none !important;
     border-radius: 5px !important;
     color: #71dd37 !important;
-    padding: 0 2px;
+    /* padding: 0 2px; */
 }
 .reject-button{
     background-color:#4d2930 !important;
     border: none !important;
     border-radius: 5px !important;
     color: #ff4747 !important;
-    padding: 0 2px;
+    /* padding: 0 2px; */
 
 }
 .pending-button{
@@ -158,6 +158,6 @@
     border: none !important;
     border-radius: 5px !important;
     color: #f99b2c !important;
-    padding: 0 2px;
+    /* padding: 0 2px; */
 
 }

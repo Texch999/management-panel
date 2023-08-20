@@ -10,6 +10,7 @@ import { BrowserRouter,Routes,Route } from 'react-router-dom';
 import Addwebsites from './pages/home/Addwebsites';
 import Adddirector from './pages/home/Adddirector';
 import Tickets from './pages/home/Tickets';
+import Reports from './pages/home/Reports';
 function App() {
   return (
         <BrowserRouter>
@@ -24,6 +25,7 @@ function App() {
           <Route path='/addwebsites' element={<Addwebsites/>}></Route>
           <Route path='/adddirectors' element={<Adddirector/>}></Route>
           <Route path='/tickets' element={<Tickets/>}></Route>
+          <Route path='/reports' element={<Reports/>}></Route>
         </Routes>
       </div>
     </div>
