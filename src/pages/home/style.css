@@ -53,7 +53,7 @@
 }
 
 .sidebar ul li:hover {
-  background-color: #696cff;
+  background-color: #696cff !important;
   border-radius: 5px;
   cursor: pointer;
 }
@@ -137,6 +137,7 @@
 .tickets-table tbody tr {
   border-bottom: 1px solid rgb(65, 64, 64);
   border-top: 1px solid rgb(65, 64, 64);
+  
 }
 .new-button{
     background-color:#36483f !important;
@@ -159,5 +160,12 @@
     border-radius: 5px !important;
     color: #f99b2c !important;
     /* padding: 0 2px; */
-
+}
+.table-header-box{
+  color: #ffffff;
+  background-color: #323349;
+  border-radius: 5px;
+}
+.borderr{
+border: 1px solid rgba(255, 255, 255, 0.1);
 }

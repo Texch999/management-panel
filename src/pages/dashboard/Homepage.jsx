@@ -3,7 +3,6 @@ import { FaSackDollar } from "react-icons/fa6";
 import { FaCircleDollarToSlot } from "react-icons/fa6";
 import { FaFileInvoiceDollar } from "react-icons/fa6";
 import { BsPersonCircle } from "react-icons/bs";
-import "./style.css";
 import Barchart from "./Barchart";
 function Homepage() {
   return (
