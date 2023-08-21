@@ -15,7 +15,9 @@ function Homepage() {
                 <span>Total Revenue</span>
                 <div>
                   <span className="medium-font">203.378</span>
-                  <span className="small-font px-2 fa-fileinvo-doll-icon">+6.32%</span>
+                  <span className="small-font px-2 fa-fileinvo-doll-icon">
+                    +6.32%
+                  </span>
                 </div>
               </div>
               <div className="fa-dollar-icon fs-2">

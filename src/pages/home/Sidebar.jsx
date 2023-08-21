@@ -7,59 +7,65 @@ import { LiaAdSolid } from "react-icons/lia";
 import { LuCopyPlus } from "react-icons/lu";
 import { Link, useLocation } from "react-router-dom";
 function Sidebar() {
-  const [active, SetActive] = useState(1);
-const location = useLocation();
+  const location = useLocation();
 
   const sidebar = [
     {
       title: "Dashboard",
       path: "/",
-      index: 0,
-      icon: "bi-grid"
+      icon: "bi-grid",
     },
     {
       title: "Add Websites",
       path: "/addwebsites",
-      index: 1,
-      icon: "bi-plus-circle"
-
+      icon: "bi-plus-circle",
     },
     {
       title: "Add Director/SA",
       path: "/adddirectors",
-      index: 2,
-      icon: "fa-user-plus"
-
+      icon: "fa-user-plus",
     },
     {
       title: "Add TT/Ads",
       path: "/addtt",
-      index: 3,
-      reactIcon: <LiaAdSolid />
-
+      reactIcon: <LiaAdSolid />,
     },
     {
       title: "Create Match",
       path: "/creatematch",
-      index: 4,
-      reactIcon: <LuCopyPlus />
-
+      reactIcon: <LuCopyPlus />,
     },
     {
       title: "Banking",
       path: "/banking",
-      index: 5,
-      icon: "fa-university"
-
+      icon: "fa-university",
     },
     {
       title: "Tickets",
       path: "/tickets",
-      index: 6,
-      icon: "fa-ticket"
-
-    }
-  ]
+      icon: "fa-ticket",
+    },
+    {
+      title: "Reports",
+      path: "/reportsts",
+      icon: "fa-ticket",
+      dataBsTarget: "#reports",
+      ariaExpanded: "false",
+      ariaControls: "reports",
+      childMenu: [
+        {
+          title: "Banking1",
+          path: "/banking1",
+          icon: "fa-university",
+        },
+        {
+          title: "Banking2",
+          path: "/banking2",
+          icon: "fa-university",
+        },
+      ],
+    },
+  ];
 
   return (
     <div className="d-flex justify-content-between flex-column sidebar-bg text-white p-1 vh-100">
@@ -70,24 +76,68 @@ const location = useLocation();
         </a>
         <hr className="text-white mt-2"></hr>
         <ul className="nav nav-pills flex-column mt-2">
-          {
-            sidebar?.map(({path, title, icon, reactIcon})=>{
+          {sidebar?.map(
+            ({
+              path,
+              title,
+              icon,
+              reactIcon,
+              childMenu,
+              ariaControls,
+              dataBsTarget,
+            }) => {
               return (
-                <li
-                className={location?.pathname === path ? "active nav-item p-2" : "nav-item p-2"}
-                key={path}
-              >
-                <Link to={path} className="p-1 text-white text-decoration-none">
-      
-                  <i className={`bi me-3 fs-6 ${icon}`}>
-                    {reactIcon && reactIcon}
-                  </i>
-                  <span className="text-white fs-8">{title}</span>
-                </Link>
-              </li>
-              )
-            })
-          }
+                <div>
+                  <li
+                    className={
+                      location?.pathname === path
+                        ? "active nav-item p-2"
+                        : "nav-item p-2"
+                    }
+                    key={path}
+                  >
+                    <Link
+                      to={path}
+                      className="p-1 text-white text-decoration-none"
+                      data-bs-toggle={childMenu && "collapse"}
+                      data-bs-target={dataBsTarget}
+                      aria-expanded="false"
+                      aria-controls={ariaControls}
+                    >
+                      <i className={`bi me-3 fs-6 ${icon}`}>
+                        {reactIcon && reactIcon}
+                      </i>
+                      <span className="text-white fs-8">{title}</span>
+                    </Link>
+                  </li>
+                  <div className="collapse" id={ariaControls}>
+                    {childMenu?.map(({ path, title, icon, reactIcon }) => {
+                      return (
+                        <li
+                          className={
+                            location?.pathname === path
+                              ? "active nav-item p-2"
+                              : "nav-item p-2"
+                          }
+                          key={path}
+                        >
+                          <Link
+                            to={path}
+                            className="p-1 text-white text-decoration-none"
+                          >
+                            <i className={`bi me-3 fs-6 ${icon}`}>
+                              {reactIcon && reactIcon}
+                            </i>
+                            <span className="text-white fs-8">{title}</span>
+                          </Link>
+                        </li>
+                      );
+                    })}
+                  </div>
+                </div>
+              );
+            }
+          )}
           {/* <li
             className={active === 1 ? "active nav-item p-2" : "nav-item p-2"}
             onClick={(e) => SetActive(1)}
