@@ -80,7 +80,7 @@ function Tickets() {
     {
       header: "",
       field: "status",
-      clr: true
+      clr: true,
     },
   ];
 
@@ -100,12 +100,12 @@ function Tickets() {
 
   return (
     <div className="p-4 w-100">
-      <h5 className="th-color">Tickets</h5>
+      <span className="th-color medium-font">Tickets</span>
       <div className="sidebar-bg rounded">
-      <div className=" large-font font-weight-bold px-2 p-2 m-1 th-color">
-        Tickets
-      </div>
-      <Table columns={cols} data={modifiedTicketDetails} />
+        <div className=" medium-font font-weight-bold px-2 p-2 m-1 th-color">
+          Tickets
+        </div>
+        <Table columns={cols} data={modifiedTicketDetails} />
       </div>
     </div>
   );

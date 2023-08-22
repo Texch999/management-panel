@@ -114,7 +114,7 @@
   color: #a3a4cc;
 }
 .role-color {
-  color: #ffb400;
+  color: #ffb400 !important;
 }
 .pegina-btn-clr {
   color: #696b9a;
@@ -137,35 +137,33 @@
 .tickets-table tbody tr {
   border-bottom: 1px solid rgb(65, 64, 64);
   border-top: 1px solid rgb(65, 64, 64);
-  
 }
-.new-button{
-    background-color:#36483f !important;
-    border: none !important;
-    border-radius: 5px !important;
-    color: #71dd37 !important;
-    /* padding: 0 2px; */
+.new-button {
+  background-color: #36483f !important;
+  border: none !important;
+  border-radius: 5px !important;
+  color: #71dd37 !important;
+  /* padding: 0 2px; */
 }
-.reject-button{
-    background-color:#4d2930 !important;
-    border: none !important;
-    border-radius: 5px !important;
-    color: #ff4747 !important;
-    /* padding: 0 2px; */
-
+.reject-button {
+  background-color: #4d2930 !important;
+  border: none !important;
+  border-radius: 5px !important;
+  color: #ff4747 !important;
+  /* padding: 0 2px; */
 }
-.pending-button{
-    background-color:#30200c !important;
-    border: none !important;
-    border-radius: 5px !important;
-    color: #f99b2c !important;
-    /* padding: 0 2px; */
+.pending-button {
+  background-color: #30200c !important;
+  border: none !important;
+  border-radius: 5px !important;
+  color: #f99b2c !important;
+  /* padding: 0 2px; */
 }
-.table-header-box{
+.table-header-box {
   color: #ffffff;
   background-color: #323349;
   border-radius: 5px;
 }
-.borderr{
-border: 1px solid rgba(255, 255, 255, 0.1);
+.borderr {
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }

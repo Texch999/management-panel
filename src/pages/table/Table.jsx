@@ -4,6 +4,8 @@ function Table(props) {
 
   const getColor = (clr) => {
     switch (clr) {
+      case "In-active":
+        return "reject-button";
       case "Rejected":
         return "reject-button";
       case "Pending":
@@ -14,12 +16,11 @@ function Table(props) {
   };
   return (
     <div className="sidebar-bg w-100 home-border-radius">
-      
       <table className="tickets-table table table-borderless">
         <thead className="th-color medium-font">
-          <tr className="medium-font th-color">
+          <tr className="small-font th-color">
             {columns.map((column, index) => (
-              <th key={index} className="text-center medium-font th-color">
+              <th key={index} className="text-center small-font th-color">
                 {column.header}
               </th>
             ))}
@@ -27,7 +28,7 @@ function Table(props) {
         </thead>
         <tbody className="td-color">
           {data.map((item, rowIndex) => (
-            <tr key={rowIndex} className="medium-font td-color ">
+            <tr key={rowIndex} className="small-font td-color ">
               {columns.map((column, colIndex) => {
                 if (column?.field === "status_icon")
                   return (
@@ -60,13 +61,13 @@ function Table(props) {
             </th>
             <th colSpan={1}></th>
             <th colSpan={1}></th>
-            <th colSpan={5} className="medium-font">
-              <button className="pegina-btn-clr p-2 m-1">Previous</button>
-              <button className="pegina-btn-clr p-2 m-1">1</button>
-              <button className="pegina-btn-clr p-2 m-1">2</button>
-              <button className="pegina-btn-clr p-2 m-1">3</button>
-              <button className="pegina-btn-clr p-2 m-1">4</button>
-              <button className="pegina-btn-clr p-2 m-1">Next</button>
+            <th colSpan={5} className="small-font">
+              <button className="pegina-btn-clr px-1 m-1">Previous</button>
+              <button className="pegina-btn-clr px-1 m-1">1</button>
+              <button className="pegina-btn-clr px-1 m-1">2</button>
+              <button className="pegina-btn-clr px-1 m-1">3</button>
+              <button className="pegina-btn-clr px-1 m-1">4</button>
+              <button className="pegina-btn-clr px-1 m-1">Next</button>
             </th>
           </tr>
         </tfoot>
