@@ -97,7 +97,7 @@ function Sidebar() {
       reactIcon: <TbPackages />,
     },
     {
-      title: "Reference",
+      title: "Reference Data",
       path: "/reference",
       reactIcon: <RiUserShared2Line />,
       dataBsTarget: "#reference",
@@ -115,8 +115,8 @@ function Sidebar() {
           reactIcon: <FaMoneyCheck />,
         },
         {
-          title: "Rejection Reaction",
-          path: "/rejectionreaction",
+          title: "Rejection Reason",
+          path: "/rejectionreason",
           reactIcon: <GoXCircle />,
         },
         {

@@ -114,7 +114,7 @@ function Addtt() {
             </div>
             <div className="row justify-content-md-center m-2 p-1">
               <div className="active text-white col-md-auto small-font justify-content-between p-2 px-4 m-1">
-                +ADD
+                +Add New
               </div>
             </div>
           </div>

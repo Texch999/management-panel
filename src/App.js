@@ -12,6 +12,11 @@ import Adddirector from './pages/addDirector/Adddirector';
 import Tickets from './pages/tickets/Tickets';
 import Reports from './pages/reports/Reports';
 import Addtt from './pages/addTT/Addtt';
+import Packages from './pages/packages/Packages';
+import Countrycurrency from './pages/referenceData/Countrycurrency';
+import Paymentgateway from './pages/referenceData/Paymentgateway';
+import Rejectionreason from './pages/referenceData/Rejectionreason';
+import Securityquestions from './pages/referenceData/Securityquestions';
 function App() {
   return (
         <BrowserRouter>
@@ -28,6 +33,11 @@ function App() {
           <Route path='/addtt' element={<Addtt/>}></Route>
           <Route path='/tickets' element={<Tickets/>}></Route>
           <Route path='/reports' element={<Reports/>}></Route>
+          <Route path='/packages' element={<Packages/>}></Route>
+          <Route path='/countrycurrency' element={<Countrycurrency/>}></Route>
+          <Route path='/paymentgateway' element={<Paymentgateway/>}></Route>
+          <Route path='/rejectionreason' element={<Rejectionreason/>}></Route>
+          <Route path='/securityquestions' element={<Securityquestions/>}></Route>
         </Routes>
       </div>
     </div>
