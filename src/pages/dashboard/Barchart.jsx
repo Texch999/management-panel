@@ -32,10 +32,16 @@ function Barchart() {
         <div className="w-50 medium-font">
           <span>Spending Statistics</span>
         </div>
-        <div className="w-50 d-flex justify-content-around text-white">
-          <div className="day-button rounded-pill medium-font p-1 height px-2 ">Day</div>
-          <div className="day-button rounded-pill medium-font p-1 height px-2 ">Week</div>
-          <div className="day-button rounded-pill medium-font p-1 height px-2 ">Month</div>
+        <div className="w-45 d-flex justify-content-around text-white">
+          <div className="day-button rounded-pill medium-font p-1 height px-2 ">
+            Day
+          </div>
+          <div className="day-button rounded-pill medium-font p-1 height px-2 ">
+            Week
+          </div>
+          <div className="day-button rounded-pill medium-font p-1 height px-2 ">
+            Month
+          </div>
         </div>
       </div>
       <div className="text-white medium-font">

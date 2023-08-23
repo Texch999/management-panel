@@ -17,7 +17,7 @@ function Table(props) {
   return (
     <div className="sidebar-bg w-100 home-border-radius">
       <table className="tickets-table table table-borderless">
-        <thead className="th-color medium-font">
+        <thead className="th-color small-font">
           <tr className="small-font th-color">
             {columns.map((column, index) => (
               <th key={index} className="text-center small-font th-color">

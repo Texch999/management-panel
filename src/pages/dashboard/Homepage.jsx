@@ -69,7 +69,10 @@ function Homepage() {
           </div>
         </div>
         <div className="row">
-          <div className="col-12 col-md-12 p3">
+          <div className=" col-12 col-lg-10">
+            <Barchart></Barchart>
+          </div>
+          <div className="col-12 col-lg-10">
             <Barchart></Barchart>
           </div>
         </div>

@@ -17,6 +17,8 @@ import Countrycurrency from './pages/referenceData/Countrycurrency';
 import Paymentgateway from './pages/referenceData/Paymentgateway';
 import Rejectionreason from './pages/referenceData/Rejectionreason';
 import Securityquestions from './pages/referenceData/Securityquestions';
+import Broadcasting from './pages/broadcasting/Broadcasting';
+import Offersmanagement from './pages/offersmanagement/Offersmanagement';
 function App() {
   return (
         <BrowserRouter>
@@ -38,6 +40,8 @@ function App() {
           <Route path='/paymentgateway' element={<Paymentgateway/>}></Route>
           <Route path='/rejectionreason' element={<Rejectionreason/>}></Route>
           <Route path='/securityquestions' element={<Securityquestions/>}></Route>
+          <Route path='/broadcasting' element={<Broadcasting/>}></Route>
+          <Route path='/offersmanagement' element={<Offersmanagement/>}></Route>
         </Routes>
       </div>
     </div>
