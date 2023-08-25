@@ -1,80 +1,30 @@
 import React from "react";
-import { FaSackDollar } from "react-icons/fa6";
-import { FaCircleDollarToSlot } from "react-icons/fa6";
-import { FaFileInvoiceDollar } from "react-icons/fa6";
-import { BsPersonCircle } from "react-icons/bs";
 import Barchart from "./Barchart";
+import Tours from "./Tours";
+import Totalaccount from "../home/Totalaccount";
+import Meetingshedule from "./Meetingshedule";
+import AppStatus from "./AppStatus";
+
 function Homepage() {
   return (
     <div className="p-3">
-      <div className="container-fluid p-0 mt-0">
-        <div className="row medium-font">
-          <div className="col-15 col-sm-6 col-md-4 col-lg-3 p-2">
-            <div className="d-flex justify-content-between home-border-radius sidebar-bg text-white p-4 align-items-center">
-              <div>
-                <span>Total Revenue</span>
-                <div>
-                  <span className="medium-font">203.378</span>
-                  <span className="small-font px-2 fa-fileinvo-doll-icon">
-                    +6.32%
-                  </span>
-                </div>
-              </div>
-              <div className="fa-dollar-icon fs-2">
-                <FaSackDollar />
-              </div>
-            </div>
-          </div>
-          <div
-            className="col-sm-6 col-md-4 col-lg-3
-                        p-2"
-          >
-            <div className="d-flex justify-content-between home-border-radius sidebar-bg text-white p-4 align-items-center">
-              <div>
-                <span>Total Balance</span>
-                <h6 className="medium-font">203.378</h6>
-              </div>
-              <div className="fa-c-dollar-toslot-icon fs-2">
-                <FaCircleDollarToSlot />
-              </div>
-            </div>
-          </div>
-          <div
-            className="col-sm-6 col-md-4 col-lg-3
-                        p-2"
-          >
-            <div className="d-flex justify-content-between home-border-radius sidebar-bg text-white p-4 align-items-center">
-              <div>
-                <span>Total Profit</span>
-                <h6 className="medium-font">203.378</h6>
-              </div>
-              <div className="fa-fileinvo-doll-icon fs-2">
-                <FaFileInvoiceDollar />
-              </div>
-            </div>
-          </div>
-          <div
-            className="col-sm-6 col-md-4 col-lg-3
-                        p-2"
-          >
-            <div className="d-flex justify-content-between home-border-radius sidebar-bg text-white p-4 align-items-center">
-              <div>
-                <span>Total Customer</span>
-                <h6 className="medium-font">203.378</h6>
-              </div>
-              <div className="bs-percircl-icon fs-2">
-                <BsPersonCircle />
-              </div>
-            </div>
-          </div>
+      <div className="container p-0 mt-0">
+        <Totalaccount />
+      </div>
+      <div className="row d-flex w-100 h-100">
+        <div className="col-5 p-2  h-50">
+          <Barchart></Barchart>
         </div>
-        <div className="row">
-          <div className=" col-12 col-lg-10">
-            <Barchart></Barchart>
-          </div>
-          <div className="col-12 col-lg-10">
-            <Barchart></Barchart>
-          </div>
+        <div className="col-7 p-2 h-75">
+          <Tours />
+        </div>
+      </div>
+      <div className="row d-flex w-100 h-100">
+        <div className="col-7 p-2">
+          <AppStatus />
+        </div>
+        <div className="col-5 p-2 ">
+          <Meetingshedule />
         </div>
       </div>
     </div>

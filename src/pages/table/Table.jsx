@@ -28,14 +28,8 @@ function Table(props) {
         </thead>
         <tbody className="td-color">
           {data.map((item, rowIndex) => (
-            <tr key={rowIndex} className="small-font td-color ">
+            <tr key={rowIndex} className="small-font td-color text-center">
               {columns.map((column, colIndex) => {
-                if (column?.field === "status_icon")
-                  return (
-                    <td className="text-center">
-                      <i className="fa fa-light fa-eye"></i>
-                    </td>
-                  );
                 return (
                   <td key={colIndex} className="px-2 text-center">
                     <div

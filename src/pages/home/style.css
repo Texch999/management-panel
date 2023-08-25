@@ -6,7 +6,7 @@
     font-size: 10px;
   }
   .large-font {
-    font-size: 14px;
+    font-size: 12px;
   }
   .height {
     height: fit-content;
@@ -14,9 +14,33 @@
   .grapgheight {
     height: fit-content;
   }
+  .tableheight {
+    height: 35vh;
+  }
 }
 
 @media (min-width: 769px) and (max-width: 1200px) {
+  .small-font {
+    font-size: 8px;
+  }
+  .medium-font {
+    font-size: 10px;
+  }
+  .large-font {
+    font-size: 12px;
+  }
+  .height {
+    height: fit-content;
+  }
+  .grapgheight {
+    height: fit-content;
+  }
+  .tableheight {
+    height: 35vh;
+  }
+}
+
+@media (min-width: 1201px) {
   .small-font {
     font-size: 10px;
   }
@@ -24,31 +48,16 @@
     font-size: 12px;
   }
   .large-font {
-    font-size: 16px;
-  }
-  .height {
-    height: fit-content;
-  }
-  .grapgheight {
-    height: fit-content;
-  }
-}
-
-@media (min-width: 1201px) {
-  .small-font {
-    font-size: 12px;
-  }
-  .medium-font {
     font-size: 14px;
   }
-  .large-font {
-    font-size: 18px;
-  }
   .height {
     height: fit-content;
   }
   .grapgheight {
     height: fit-content;
+  }
+  .tableheight {
+    height: 35vh;
   }
 }
 
@@ -119,6 +128,9 @@
 .role-color {
   color: #ffb400 !important;
 }
+.bluecolor-text {
+  color: #696cff;
+}
 .pegina-btn-clr {
   color: #696b9a;
   background-color: #323349;
@@ -174,4 +186,15 @@
   background-color: #2b2c40 !important;
   border: 1px solid rgba(255, 255, 255, 0.1) !important;
   color: #ffffff !important;
+}
+.red-text {
+  color: #f43a23;
+}
+.tour-img-size {
+  width: 20px;
+  height: 20px;
+}
+.eye-icon-size {
+  width: 15px;
+  height: 15px;
 }
