@@ -24,6 +24,17 @@ function Tours() {
       ),
       place: "Goa",
       members: "150",
+      profitloss: <div className="fa-fileinvo-doll-icon">1000k</div>,
+    },
+    {
+      status: (
+        <div className="d-flex align-items-center justfy-content-center">
+          <img src={Images.TourLogo} className="tour-img-size" />
+          <div className="px-1">Bigg daddy</div>
+        </div>
+      ),
+      place: "Goa",
+      members: "150",
       profitloss: <div className="red-text">1000k</div>,
     },
     {

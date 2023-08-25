@@ -1,32 +1,33 @@
 import React from "react";
 import Table from "../table/Table";
+import { MdOutlineEdit } from "react-icons/md";
 
 function Securityquestions() {
   const SECURITYQUESTIONS_DETAILS = [
     {
       questions: "What is your pet name?",
       status: "Aactive",
-      action: "",
+      icon: <MdOutlineEdit className="eye-icon-size" />,
     },
     {
       questions: "What is your favorite color?",
       status: "Aactive",
-      action: "",
+      icon: <MdOutlineEdit className="eye-icon-size" />,
     },
     {
       questions: "What is your favorite animal?",
       status: "Aactive",
-      action: "",
+      icon: <MdOutlineEdit className="eye-icon-size" />,
     },
     {
       questions: "When is your birthday?",
       status: "Aactive",
-      action: "",
+      icon: <MdOutlineEdit className="eye-icon-size" />,
     },
     {
       questions: "What is your favorite summer activity?",
       status: "Aactive",
-      action: "",
+      icon: <MdOutlineEdit className="eye-icon-size" />,
     },
   ];
 
@@ -42,7 +43,7 @@ function Securityquestions() {
     },
     {
       header: "Action",
-      field: "status_icon",
+      field: "icon",
     },
   ];
 
@@ -81,7 +82,6 @@ function Securityquestions() {
           </div>
         </div>
       </div>
-
       <div className="sidebar-bg rounded">
         <div className="d-flex align-items-center justify-content-between">
           <div className=" small-font font-weight-bold px-2 p-2 m-1 th-color">
@@ -97,7 +97,8 @@ function Securityquestions() {
             </select>
           </div>
         </div>
-
+      </div>
+      <div className="w-100">
         <Table columns={cols} data={modifiedSecurityquestionsDetails} />
       </div>
     </div>

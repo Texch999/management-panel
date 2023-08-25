@@ -198,3 +198,7 @@
   width: 15px;
   height: 15px;
 }
+.border-borderradius {
+  border: 1px solid #a3a4cc;
+  border-radius: 4px;
+}

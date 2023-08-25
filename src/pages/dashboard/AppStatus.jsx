@@ -7,7 +7,7 @@ function Appstatus() {
     {
       customer: "jantha",
       region: "India",
-      amount: "1200000",
+      amount: <div className="fa-fileinvo-doll-icon">1200000</div>,
       balance: "1200000",
       name: "We2Call",
       role: "SA",
@@ -17,7 +17,7 @@ function Appstatus() {
     {
       customer: "jantha",
       region: "India",
-      amount: "56000",
+      amount: <div className="red-text">56000</div>,
       balance: "56000",
       name: "T Exch",
       role: "Director",
@@ -27,7 +27,7 @@ function Appstatus() {
     {
       customer: "jantha",
       region: "India",
-      amount: "300000",
+      amount: <div className="fa-fileinvo-doll-icon">300000</div>,
       balance: "300000",
       name: "Ravana",
       role: "Director",
@@ -37,7 +37,7 @@ function Appstatus() {
     {
       customer: "jantha",
       region: "India",
-      amount: "1200000",
+      amount: <div className="red-text">1200000</div>,
       balance: "1200000",
       name: "Bangla Calling",
       role: "Director",
@@ -47,7 +47,7 @@ function Appstatus() {
     {
       customer: "jantha",
       region: "India",
-      amount: "56000",
+      amount: <div className="fa-fileinvo-doll-icon">56000</div>,
       balance: "56000",
       name: "T Exch",
       role: "Director",
@@ -69,7 +69,7 @@ function Appstatus() {
     {
       header: "AMOUNT",
       field: "amount",
-      clr: true,
+      clr: false,
     },
     {
       header: "BALANCE",

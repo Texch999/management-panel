@@ -22,7 +22,7 @@ function Meetingshedule() {
       name: "Srinivas",
       role: "T Exch Director",
       meetings: "16",
-      status: "Sheduled",
+      status: "Shedule",
     },
     {
       icon: "",

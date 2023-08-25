@@ -1,5 +1,6 @@
 import React from "react";
 import Table from "../table/Table";
+import { AiOutlineEye } from "react-icons/ai";
 
 function Offersmanagement() {
   const OFFERSMANAGEMENT_DETAILS = [
@@ -10,7 +11,7 @@ function Offersmanagement() {
       publishwebsite: "www.texch.com www.we2call.com www.ravanna.com",
       type: "Global",
       status: "Active",
-      action: "",
+      icon: <AiOutlineEye className="eye-icon-size" />,
     },
     {
       title:
@@ -19,7 +20,7 @@ function Offersmanagement() {
       publishwebsite: "www.texch.com www.we2call.com www.ravanna.com",
       type: "India",
       status: "Active",
-      action: "",
+      icon: <AiOutlineEye className="eye-icon-size" />,
     },
     {
       title:
@@ -28,7 +29,7 @@ function Offersmanagement() {
       publishwebsite: "www.texch.com www.we2call.com www.ravanna.com",
       type: "USA",
       status: "In-active",
-      action: "",
+      icon: <AiOutlineEye className="eye-icon-size" />,
     },
     {
       title:
@@ -37,7 +38,7 @@ function Offersmanagement() {
       publishwebsite: "www.texch.com www.we2call.com www.ravanna.com",
       type: "Global",
       status: "Active",
-      action: "",
+      icon: <AiOutlineEye className="eye-icon-size" />,
     },
     {
       title:
@@ -46,7 +47,7 @@ function Offersmanagement() {
       publishwebsite: "www.texch.com www.we2call.com www.ravanna.com",
       type: "Global",
       status: "Active",
-      action: "",
+      icon: <AiOutlineEye className="eye-icon-size" />,
     },
   ];
 
@@ -74,7 +75,7 @@ function Offersmanagement() {
     },
     {
       header: "Action",
-      field: "status_icon",
+      field: "icon",
     },
   ];
 

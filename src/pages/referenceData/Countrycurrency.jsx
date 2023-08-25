@@ -1,5 +1,6 @@
 import React from "react";
 import Table from "../table/Table";
+import { MdOutlineEdit } from "react-icons/md";
 
 function Countrycurrency() {
   const COUNTRYCURRENCY_DETAILS = [
@@ -9,7 +10,7 @@ function Countrycurrency() {
       availableaccounts: "Bank Details, Wallet, QR Code",
       showwebsites: "www.texch.com www.we2call.com www.ravanna.com",
       status: "Active",
-      action: "",
+      icon: <MdOutlineEdit className="eye-icon-size" />,
     },
     {
       countryname: "USA ",
@@ -17,7 +18,7 @@ function Countrycurrency() {
       availableaccounts: "Bank Details, Wallet, QR Code",
       showwebsites: "www.texch.com www.we2call.com www.ravanna.com",
       status: "In-active",
-      action: "",
+      icon: <MdOutlineEdit className="eye-icon-size" />,
     },
     {
       countryname: "India ",
@@ -25,7 +26,7 @@ function Countrycurrency() {
       availableaccounts: "Bank Details, Wallet, QR Code",
       showwebsites: "www.texch.com www.we2call.com www.ravanna.com",
       status: "In-active",
-      action: "",
+      icon: <MdOutlineEdit className="eye-icon-size" />,
     },
     {
       countryname: "Gemany ",
@@ -33,7 +34,7 @@ function Countrycurrency() {
       availableaccounts: "Bank Details, Wallet, QR Code",
       showwebsites: "www.texch.com www.we2call.com www.ravanna.com",
       status: "In-active",
-      action: "",
+      icon: <MdOutlineEdit className="eye-icon-size" />,
     },
     {
       countryname: "India ",
@@ -41,7 +42,7 @@ function Countrycurrency() {
       availableaccounts: "Bank Details, Wallet, QR Code",
       showwebsites: "www.texch.com www.we2call.com www.ravanna.com",
       status: "Aactive",
-      action: "",
+      icon: <MdOutlineEdit className="eye-icon-size" />,
     },
   ];
 
@@ -70,7 +71,7 @@ function Countrycurrency() {
     },
     {
       header: "Action",
-      field: "status_icon",
+      field: "icon",
     },
   ];
 

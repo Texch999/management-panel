@@ -1,6 +1,8 @@
 import React from "react";
 import TableHeader from "../table/TableHeader";
 import Table from "../table/Table";
+import { TbLockQuestion } from "react-icons/tb";
+import { MdOutlineBlock } from "react-icons/md";
 
 function Addtt() {
   const ADDTT_DETAILS = [
@@ -11,7 +13,13 @@ function Addtt() {
       password: "abcd1234",
       website: "Broadcasting & Adds",
       status: "Active",
-      action: "",
+      icon: (
+        <div className="d-flex align-items-center justify-content-evenly">
+          {" "}
+          <TbLockQuestion className="eye-icon-size" />
+          <MdOutlineBlock className="eye-icon-size border-borderradius" />
+        </div>
+      ),
     },
     {
       role: "Designer ",
@@ -20,7 +28,13 @@ function Addtt() {
       password: "abcd1234",
       website: "Broadcasting & Adds",
       status: "Active",
-      action: "",
+      icon: (
+        <div className="d-flex align-items-center justify-content-evenly">
+          {" "}
+          <TbLockQuestion className="eye-icon-size" />
+          <MdOutlineBlock className="eye-icon-size border-borderradius" />
+        </div>
+      ),
     },
     {
       role: "Designer ",
@@ -29,7 +43,13 @@ function Addtt() {
       password: "abcd1234",
       website: "Broadcasting & Adds",
       status: "In-active",
-      action: "",
+      icon: (
+        <div className="d-flex align-items-center justify-content-evenly">
+          {" "}
+          <TbLockQuestion className="eye-icon-size" />
+          <MdOutlineBlock className="eye-icon-size border-borderradius" />
+        </div>
+      ),
     },
     {
       role: "Designer ",
@@ -38,7 +58,13 @@ function Addtt() {
       password: "abcd1234",
       website: "Broadcasting & Adds",
       status: "Active",
-      action: "",
+      icon: (
+        <div className="d-flex align-items-center justify-content-evenly">
+          {" "}
+          <TbLockQuestion className="eye-icon-size" />
+          <MdOutlineBlock className="eye-icon-size border-borderradius" />
+        </div>
+      ),
     },
     {
       role: "Designer ",
@@ -47,7 +73,13 @@ function Addtt() {
       password: "abcd1234",
       website: "Broadcasting & Adds",
       status: "In-active",
-      action: "",
+      icon: (
+        <div className="d-flex align-items-center justify-content-evenly">
+          {" "}
+          <TbLockQuestion className="eye-icon-size" />
+          <MdOutlineBlock className="eye-icon-size border-borderradius" />
+        </div>
+      ),
     },
   ];
 
@@ -80,7 +112,7 @@ function Addtt() {
     },
     {
       header: "Action",
-      field: "status_icon",
+      field: "icon",
     },
   ];
 

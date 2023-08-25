@@ -1,5 +1,6 @@
 import React from "react";
 import Table from "../table/Table";
+import { MdOutlineEdit } from "react-icons/md";
 
 function Rejectionreason() {
   const REJECTIONREASON_DETAILS = [
@@ -7,31 +8,31 @@ function Rejectionreason() {
       reason: "Insufficient Balance",
       description: "Not enough balance in Users account",
       status: "Aactive",
-      action: "",
+      icon: <MdOutlineEdit className="eye-icon-size" />,
     },
     {
       reason: "Insufficient Balance",
       description: "Not enough balance in Users account",
       status: "Aactive",
-      action: "",
+      icon: <MdOutlineEdit className="eye-icon-size" />,
     },
     {
       reason: "Insufficient Balance",
       description: "Not enough balance in Users account",
       status: "Aactive",
-      action: "",
+      icon: <MdOutlineEdit className="eye-icon-size" />,
     },
     {
       reason: "Insufficient Balance",
       description: "Not enough balance in Users account",
       status: "Aactive",
-      action: "",
+      icon: <MdOutlineEdit className="eye-icon-size" />,
     },
     {
       reason: "Insufficient Balance",
       description: "Not enough balance in Users account",
       status: "Aactive",
-      action: "",
+      icon: <MdOutlineEdit className="eye-icon-size" />,
     },
   ];
 
@@ -52,7 +53,7 @@ function Rejectionreason() {
     },
     {
       header: "Action",
-      field: "status_icon",
+      field: "icon",
     },
   ];
 

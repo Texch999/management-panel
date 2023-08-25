@@ -1,5 +1,6 @@
 import React from "react";
 import Table from "../table/Table";
+import { AiOutlineEye } from "react-icons/ai";
 
 function Broadcasting() {
   const BROADCASTING_DETAILS = [
@@ -8,45 +9,50 @@ function Broadcasting() {
         "16 Free Premiere Pro Title Templates Perfect for Any Video | Motion Array",
       publishdate: "14/08/2023 15:37:00 PM",
       publishwebsite: "www.texch.com www.we2call.com www.ravanna.com",
+      dateandtime: 1692966757289,
       type: "Global",
       status: "Active",
-      action: "",
+      icon: <AiOutlineEye className="eye-icon-size" />,
     },
     {
       title:
         "16 Free Premiere Pro Title Templates Perfect for Any Video | Motion Array",
       publishdate: "14/08/2023 15:37:00 PM",
       publishwebsite: "www.texch.com www.we2call.com www.ravanna.com",
+      dateandtime: 1692966757289,
       type: "India",
       status: "Active",
-      action: "",
+      icon: <AiOutlineEye className="eye-icon-size" />,
     },
     {
       title:
         "16 Free Premiere Pro Title Templates Perfect for Any Video | Motion Array",
       publishdate: "14/08/2023 15:37:00 PM",
       publishwebsite: "www.texch.com www.we2call.com www.ravanna.com",
+      dateandtime: 1692966757289,
       type: "USA",
       status: "In-active",
-      action: "",
+      icon: <AiOutlineEye className="eye-icon-size" />,
     },
     {
       title:
         "16 Free Premiere Pro Title Templates Perfect for Any Video | Motion Array",
       publishdate: "14/08/2023 15:37:00 PM",
       publishwebsite: "www.texch.com www.we2call.com www.ravanna.com",
+      dateandtime: 1692966757289,
       type: "Global",
       status: "Active",
-      action: "",
+      icon: <AiOutlineEye className="eye-icon-size" />,
     },
     {
       title:
         "16 Free Premiere Pro Title Templates Perfect for Any Video | Motion Array",
       publishdate: "14/08/2023 15:37:00 PM",
       publishwebsite: "www.texch.com www.we2call.com www.ravanna.com",
+      dateandtime: 1692966757289,
       type: "Global",
       status: "Active",
-      action: "",
+      icon: <AiOutlineEye className="eye-icon-size" />,
     },
   ];
 
@@ -64,6 +70,10 @@ function Broadcasting() {
       field: "publishwebsite",
     },
     {
+      header: "UTC TIME STAMP",
+      field: "dateandtime",
+    },
+    {
       header: "TYPE",
       field: "type",
     },
@@ -74,7 +84,7 @@ function Broadcasting() {
     },
     {
       header: "Action",
-      field: "status_icon",
+      field: "icon",
     },
   ];
 

@@ -1,5 +1,6 @@
 import React from "react";
 import Table from "../table/Table";
+import { MdOutlineEdit } from "react-icons/md";
 
 function Paymentgateway() {
   const PAYMENTGATEWAY_DETAILS = [
@@ -9,7 +10,7 @@ function Paymentgateway() {
       country: "India ",
       currency: "INR ₹",
       status: "Aactive",
-      action: "",
+      icon: <MdOutlineEdit className="eye-icon-size" />,
     },
     {
       gatewayname: "Paytm",
@@ -17,7 +18,7 @@ function Paymentgateway() {
       country: "India ",
       currency: "INR ₹",
       status: "Aactive",
-      action: "",
+      icon: <MdOutlineEdit className="eye-icon-size" />,
     },
     {
       gatewayname: "QR Code",
@@ -25,7 +26,7 @@ function Paymentgateway() {
       country: "India ",
       currency: "INR ₹",
       status: "Aactive",
-      action: "",
+      icon: <MdOutlineEdit className="eye-icon-size" />,
     },
     {
       gatewayname: "Phone Pay",
@@ -33,7 +34,7 @@ function Paymentgateway() {
       country: "India ",
       currency: "INR ₹",
       status: "Aactive",
-      action: "",
+      icon: <MdOutlineEdit className="eye-icon-size" />,
     },
     {
       gatewayname: "Google Pay",
@@ -41,7 +42,7 @@ function Paymentgateway() {
       country: "India ",
       currency: "INR ₹",
       status: "Aactive",
-      action: "",
+      icon: <MdOutlineEdit className="eye-icon-size" />,
     },
   ];
 
@@ -70,7 +71,7 @@ function Paymentgateway() {
     },
     {
       header: "Action",
-      field: "status_icon",
+      field: "icon",
     },
   ];
 

@@ -1,4 +1,5 @@
 import Table from "../table/Table";
+import { AiOutlineEye } from "react-icons/ai";
 
 function Tickets() {
   const TICKET_DETAILS = [
@@ -13,6 +14,7 @@ function Tickets() {
       pkgamnt: "- 20,000 (Monthly)",
       amount: "200000000",
       status: "Approved",
+      icon: <AiOutlineEye className="eye-icon-size" />,
     },
     {
       date: "01/08/2023 ",
@@ -25,6 +27,7 @@ function Tickets() {
       pkgamnt: "- 20,000 (Monthly)",
       amount: "200000000",
       status: "Pending",
+      icon: <AiOutlineEye className="eye-icon-size" />,
     },
     {
       date: "01/08/2023 ",
@@ -37,6 +40,7 @@ function Tickets() {
       pkgamnt: "- 20,000 (Monthly)",
       amount: "200000000",
       status: "Rejected",
+      icon: <AiOutlineEye className="eye-icon-size" />,
     },
     {
       date: "01/08/2023 ",
@@ -49,6 +53,7 @@ function Tickets() {
       pkgamnt: "- 20,000 (Monthly)",
       amount: "200000000",
       status: "New",
+      icon: <AiOutlineEye className="eye-icon-size" />,
     },
   ];
 
@@ -75,7 +80,7 @@ function Tickets() {
     },
     {
       header: "STATUS",
-      field: "status_icon",
+      field: "icon",
     },
     {
       header: "",

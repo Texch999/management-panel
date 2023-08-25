@@ -4,6 +4,8 @@ function Table(props) {
 
   const getColor = (clr) => {
     switch (clr) {
+      case "Shedule":
+        return "pending-button";
       case "In-active":
         return "reject-button";
       case "Rejected":
@@ -31,7 +33,7 @@ function Table(props) {
             <tr key={rowIndex} className="small-font td-color text-center">
               {columns.map((column, colIndex) => {
                 return (
-                  <td key={colIndex} className="px-2 text-center">
+                  <td key={colIndex} className="px-2">
                     <div
                       className={
                         column?.clr ? getColor(item[column.field]) : ""
@@ -45,7 +47,7 @@ function Table(props) {
             </tr>
           ))}
         </tbody>
-        <tfoot>
+        {/* <tfoot>
           <tr>
             <th
               colSpan={1}
@@ -64,7 +66,7 @@ function Table(props) {
               <button className="pegina-btn-clr px-1 m-1">Next</button>
             </th>
           </tr>
-        </tfoot>
+        </tfoot> */}
       </table>
     </div>
   );
