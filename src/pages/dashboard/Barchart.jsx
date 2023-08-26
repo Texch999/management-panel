@@ -27,7 +27,7 @@ const data = {
 
 function Barchart() {
   return (
-    <div className="w-100 h-75 sidebar-bg home-border-radius p-2">
+    <div className="w-100 h-100 sidebar-bg home-border-radius p-2">
       <div className="w-100 d-flex justify-content-between text-white">
         <div className="w-50 small-font">
           <span>Spending Statistics</span>
@@ -49,7 +49,9 @@ function Barchart() {
         <h6 className="small-font">203.378</h6>
         <span>Total Income in week</span>
       </div>
-      <Bar data={data}></Bar>
+      <div className="chat-margin">
+        <Bar data={data}></Bar>
+      </div>
     </div>
   );
 }

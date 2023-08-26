@@ -26,7 +26,7 @@ function App() {
       <div className='w-auto'>
       <Sidebar></Sidebar>
       </div>
-      <div className='col overflow-auto home-bg'>
+      <div className='col overflow-auto home-bg vh-100'>
         <Header/>
         <Routes>
           <Route path='/' element={<Homepage/>}></Route>

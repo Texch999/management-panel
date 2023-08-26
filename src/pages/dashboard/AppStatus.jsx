@@ -2,7 +2,7 @@ import React from "react";
 import Table from "../table/Table";
 import { AiOutlineEye } from "react-icons/ai";
 
-function Appstatus() {
+function AppStatus() {
   const APPSTATUS_DETAILS = [
     {
       customer: "jantha",
@@ -112,4 +112,4 @@ function Appstatus() {
   );
 }
 
-export default Appstatus;
+export default AppStatus;

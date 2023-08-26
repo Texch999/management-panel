@@ -80,7 +80,7 @@ function Tours() {
   }));
 
   return (
-    <div className="w-100 sidebar-bg rounded h-100">
+    <div className="w-100 sidebar-bg rounded" style={{ height: "100%" }}>
       <div className=" w-100 d-flex align-items-center justify-content-between">
         <div className=" small-font font-weight-bold px-2 p-2 m-1 th-color">
           <span>Tours & Tournaments</span>
@@ -88,8 +88,8 @@ function Tours() {
           <span className="bluecolor-text">Sales & Volume</span>
         </div>
         <div className=" d-flex justify-conten-between">
-          <div className="w-50 d-flex justify-content-around text-white">
-            <div className="day-button rounded-pill small-font height px-2 p-1 ">
+          <div className="w-50 d-flex justify-content-between m-1 text-white">
+            <div className="day-button rounded-pill small-font height px-2 p-1 me-1 ">
               5000
             </div>
             <div className="day-button rounded-pill small-font height px-2 p-1">
@@ -98,7 +98,7 @@ function Tours() {
           </div>
         </div>
       </div>
-      <div className="h-100 py-2">
+      <div className="py-2">
         <Table columns={cols} data={modifiedToursDetails} />
       </div>
     </div>
