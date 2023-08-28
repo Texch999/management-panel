@@ -8,22 +8,22 @@ import AppStatus from "./AppStatus";
 function Homepage() {
   return (
     <div className="p-4 h-100 overflow-auto ">
-      <div className="p-0 mt-0">
+      <div>
         <Totalaccount />
       </div>
-      <div className="row d-flex w-100">
-        <div className="col-5 p-2">
+      <div className="row d-flex w-100 padding-unset">
+        <div className="col-5 p-1">
           <Barchart></Barchart>
         </div>
-        <div className="col-7 p-2">
+        <div className="col-7 p-1">
           <Tours />
         </div>
       </div>
-      <div className="row d-flex w-100 ">
-        <div className="col-7 p-2">
+      <div className="row d-flex w-100 padding-unset">
+        <div className="col-7 p-1">
           <AppStatus />
         </div>
-        <div className="col-5 p-2 ">
+        <div className="col-5 p-1">
           <Meetingshedule />
         </div>
       </div>

@@ -1,33 +1,58 @@
 import React from "react";
 import Table from "../table/Table";
+import { Images } from "../../images";
 
 function Meetingshedule() {
   const MEETINGSHEDULE_DETAILS = [
     {
-      icon: "",
-      name: "Srinivas",
-      role: "T Exch Director",
+      icon: (
+        <div className="d-flex align-items-center justify-content-center">
+          <img src={Images.ProfileOne} className="tour-img-size" />
+          <div className="d-flex flex-column">
+          <div className="px-1">Srinivas</div>
+          <div className="px-2 role-color">T Exch Director</div>
+          </div>
+        </div>
+      ),
       meetings: "16",
       status: "Active",
     },
     {
-      icon: "",
-      name: "Srinivas",
-      role: "T Exch Director",
+      icon: (
+        <div className="d-flex align-items-center justify-content-center">
+          <img src={Images.ProfileTwo} className="tour-img-size" />
+          <div className="d-flex flex-column">
+          <div className="px-1">Srinivas</div>
+          <div className="px-2 role-color">T Exch Director</div>
+          </div>
+        </div>
+      ),
       meetings: "16",
       status: "Active",
     },
     {
-      icon: "",
-      name: "Srinivas",
-      role: "T Exch Director",
+      icon: (
+        <div className="d-flex align-items-center justify-content-center">
+          <img src={Images.ProfileThree} className="tour-img-size" />
+          <div className="d-flex flex-column">
+          <div className="px-1">Srinivas</div>
+          <div className="px-2 role-color">T Exch Director</div>
+          </div>
+        </div>
+      ),
       meetings: "16",
       status: "Shedule",
     },
     {
-      icon: "",
-      name: "Srinivas",
-      role: "T Exch Director",
+      icon: (
+        <div className="d-flex align-items-center justify-content-center">
+          <img src={Images.ProfileFour} className="tour-img-size" />
+          <div className="d-flex flex-column">
+          <div className="px-1">Srinivas</div>
+          <div className="px-2 role-color">T Exch Director</div>
+          </div>
+        </div>
+      ),
       meetings: "16",
       status: "Active",
     },
@@ -36,13 +61,8 @@ function Meetingshedule() {
   const cols = [
     {
       header: "NAME & ROLE",
-      field: "nameAndRole",
-    },
-    {
-      header: "",
       field: "icon",
     },
-
     {
       header: "MEETINGSS",
       field: "meetings",
@@ -63,9 +83,9 @@ function Meetingshedule() {
     ),
   }));
   return (
-    <div className="p-2 w-100 sidebar-bg rounded ">
-      <div className=" small-font font-weight-bold px-2 p-1 m-1 th-color">
-        <span>Meeting Shedules/Live</span>
+    <div className="w-100 sidebar-bg rounded" style={{ height: "100%" }}>
+      <div className="small-font font-weight-bold px-2 p-1 m-1 th-color">
+        <div>Meeting Shedules/Live</div>
       </div>
       <div className="sidebar-bg rounded ">
         <Table columns={cols} data={modifiedMeetingsheduleDetails} />

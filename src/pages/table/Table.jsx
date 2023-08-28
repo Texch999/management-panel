@@ -5,22 +5,22 @@ function Table(props) {
   const getColor = (clr) => {
     switch (clr) {
       case "Shedule":
-        return "pending-button";
+        return "pending-button w-60";
       case "In-active":
-        return "reject-button";
+        return "reject-button w-60";
       case "Rejected":
-        return "reject-button";
+        return "reject-button w-60";
       case "Pending":
-        return "pending-button";
+        return "pending-button w-60";
       default:
-        return "new-button";
+        return "new-button w-60";
     }
   };
   return (
     <div className="sidebar-bg w-100 home-border-radius">
       <table className="tickets-table table table-borderless">
         <thead className="th-color small-font">
-          <tr className="small-font th-color">
+          <tr className="small-font th-color text-center">
             {columns.map((column, index) => (
               <th key={index} className="text-center small-font th-color">
                 {column.header}

@@ -104,7 +104,7 @@ function AppStatus() {
     ),
   }));
   return (
-    <div className="p-2 w-100 sidebar-bg rounded ">
+    <div className="w-100 sidebar-bg rounded" style={{ height: "100%" }}>
       <div className="sidebar-bg rounded py-1">
         <Table columns={cols} data={modifiedAppstatusDetails} />
       </div>

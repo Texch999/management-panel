@@ -6,7 +6,7 @@ function Tours() {
   const TOURS_DETAILS = [
     {
       status: (
-        <div className="d-flex align-items-center justfy-content-center">
+        <div className="d-flex align-items-center justify-content-center">
           <img src={Images.TourLogo} className="tour-img-size" />
           <div className="px-1">Bigg daddy</div>
         </div>
@@ -17,7 +17,7 @@ function Tours() {
     },
     {
       status: (
-        <div className="d-flex align-items-center justfy-content-center">
+        <div className="d-flex align-items-center justify-content-center">
           <img src={Images.TourLogo} className="tour-img-size" />
           <div className="px-1">Bigg daddy</div>
         </div>
@@ -28,7 +28,7 @@ function Tours() {
     },
     {
       status: (
-        <div className="d-flex align-items-center justfy-content-center">
+        <div className="d-flex align-items-center justify-content-center">
           <img src={Images.TourLogo} className="tour-img-size" />
           <div className="px-1">Bigg daddy</div>
         </div>
@@ -39,7 +39,29 @@ function Tours() {
     },
     {
       status: (
-        <div className="d-flex align-items-center justfy-content-center">
+        <div className="d-flex align-items-center justify-content-center">
+          <img src={Images.TourLogo} className="tour-img-size" />
+          <div className="px-1">Bigg daddy</div>
+        </div>
+      ),
+      place: "Goa",
+      members: "150",
+      profitloss: <div className="fa-fileinvo-doll-icon">1000k</div>,
+    },
+    {
+      status: (
+        <div className="d-flex align-items-center justify-content-center">
+          <img src={Images.TourLogo} className="tour-img-size" />
+          <div className="px-1">Bigg daddy</div>
+        </div>
+      ),
+      place: "Goa",
+      members: "150",
+      profitloss: <div className="fa-fileinvo-doll-icon">1000k</div>,
+    },
+    {
+      status: (
+        <div className="d-flex align-items-center justify-content-center">
           <img src={Images.TourLogo} className="tour-img-size" />
           <div className="px-1">Bigg daddy</div>
         </div>
@@ -98,7 +120,7 @@ function Tours() {
           </div>
         </div>
       </div>
-      <div className="py-2">
+      <div>
         <Table columns={cols} data={modifiedToursDetails} />
       </div>
     </div>
