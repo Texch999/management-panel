@@ -19,6 +19,7 @@ import Rejectionreason from './pages/referenceData/Rejectionreason';
 import Securityquestions from './pages/referenceData/Securityquestions';
 import Broadcasting from './pages/broadcasting/Broadcasting';
 import Offersmanagement from './pages/offersmanagement/Offersmanagement';
+import Creatematch from './pages/matchCreation/Creatematch';
 function App() {
   return (
         <BrowserRouter>
@@ -33,6 +34,7 @@ function App() {
           <Route path='/addwebsites' element={<Addwebsites/>}></Route>
           <Route path='/adddirectors' element={<Adddirector/>}></Route>
           <Route path='/addtt' element={<Addtt/>}></Route>
+          <Route path='/matchCreation' element={<Creatematch/>}></Route>
           <Route path='/tickets' element={<Tickets/>}></Route>
           <Route path='/reports' element={<Reports/>}></Route>
           <Route path='/packages' element={<Packages/>}></Route>

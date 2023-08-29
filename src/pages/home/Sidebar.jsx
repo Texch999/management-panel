@@ -48,7 +48,7 @@ function Sidebar() {
     },
     {
       title: "Create Match",
-      path: "/creatematch",
+      path: "/matchCreation",
       reactIcon: <LuCopyPlus />,
     },
     {

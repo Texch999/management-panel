@@ -91,7 +91,7 @@ function Offersmanagement() {
   );
   return (
     <div className="p-4 w-100">
-      <span className="th-color medium-font">Broadcasting & Notifications</span>
+      <span className="th-color medium-font">Offers</span>
       <div className="sidebar-bg rounded">
         <div className="d-flex align-items-center justify-content-between">
           <div className=" d-flex justify-conten-between">
