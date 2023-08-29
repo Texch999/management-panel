@@ -264,3 +264,9 @@ input::placeholder {
   width: 130px;
   height: 20px;
 }
+.margintop-10{
+margin-top: -10px;
+}
+.marginright-10{
+  margin-right: 10px;
+  }
