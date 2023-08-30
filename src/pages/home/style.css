@@ -298,3 +298,6 @@ input::placeholder {
 .user-img-bg-br{
   border-radius: 0px 0px 5px 5px;
 }
+.row-unset{
+   --bs-gutter-x: unset !important;
+}

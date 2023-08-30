@@ -219,9 +219,25 @@ function Usertransaction() {
   return (
     <div className="p-4 w-100">
        <div className="th-color medium-font p-1">userprofile/profile</div>
-       <div>
+       <div className="w-100">
        <img src={Images.ProfileBanner} className="w-100" />
-       <div className="sidebar-bg th-color user-img-bg-br">dfdhgj</div>
+       <div className="sidebar-bg th-color user-img-bg-br row row-unset p-2">
+        <div className="col-5"></div>
+        <div className="col-7">
+          <div className="row d-flex justify-content-between align-items-center ">
+        <div className="col-5 empty-bg-br d-flex text-center small-font m-1 d-flex justify-content-between align-items-center">
+          <span>User Name</span><span>Srinivas</span>
+        </div>
+        <div className="col-5 empty-bg-br d-flex text-center small-font m-1 d-flex justify-content-between align-items-center">
+        <span>Password</span><span>1234567</span>
+        </div>
+        <div className="col-1 active text-white text-align-center small-font p-2 m-1 d-flex justify-content-between align-items-center">
+                Add
+              </div>
+            
+              </div>
+        </div>
+       </div>
        </div>
     <div><Totalaccount/></div>
     <div className="gutter-1rem p-2 d-flex align-items-center">
