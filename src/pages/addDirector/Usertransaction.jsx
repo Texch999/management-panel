@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from "react";
 import Table from "../table/Table";
 import Totalaccount from '../home/Totalaccount';
 import {MdKeyboardArrowUp,MdKeyboardArrowDown} from "react-icons/md";
@@ -6,8 +6,13 @@ import {AiOutlineSetting} from "react-icons/ai";
 import {TbUserEdit} from "react-icons/tb";
 import {LuFileClock} from "react-icons/lu";
 import {TbFileText} from "react-icons/tb";
-function Adddirector() {
-  const ADDDIRECTOR_DETAILS = [
+import Dropdown from 'react-bootstrap/Dropdown';
+import {TbWorld} from "react-icons/tb";
+import {MdPayment} from "react-icons/md";
+import {HiMiniArrowPathRoundedSquare} from "react-icons/hi2";
+import { Images } from "../../images";
+function Usertransaction() {
+  const USERTRANSACTION_DETAILS = [
     {
       role: "Director",
       username: "Srinivas",
@@ -190,7 +195,7 @@ function Adddirector() {
     
   ];
 
-  const modifiedAdddirectorDetails = ADDDIRECTOR_DETAILS.map(
+  const modifiedUsertransactionDetails = USERTRANSACTION_DETAILS.map(
     (item) => ({
       ...item,
       role: (
@@ -205,39 +210,77 @@ function Adddirector() {
       ),
     })
   );
+  const [active,setActive]=useState("Transaction")
+
+  const handleActiveButton=(type)=>{
+  setActive(type)
+  console.log(type)
+  }
   return (
     <div className="p-4 w-100">
+       <div className="th-color medium-font p-1">userprofile/profile</div>
+       <div>
+       <img src={Images.ProfileBanner} className="w-100" />
+       <div className="sidebar-bg th-color user-img-bg-br">dfdhgj</div>
+       </div>
     <div><Totalaccount/></div>
+    <div className="gutter-1rem p-2 d-flex align-items-center">
+   
+    <Dropdown>
+    <TbWorld className="th-color world-icon align-items-center"/>
+      <Dropdown.Toggle className="button-clr-unset button-padding dropdown-clr medium-font" id="dropdown-basic"
+     >
+        Websites/Limit
+      </Dropdown.Toggle>
+
+      <Dropdown.Menu>
+        <Dropdown.Item href="#/action-1">Action</Dropdown.Item>
+        <Dropdown.Item href="#/action-2">Another action</Dropdown.Item>
+        <Dropdown.Item href="#/action-3">Something else</Dropdown.Item>
+      </Dropdown.Menu>
+    </Dropdown>
+        <div className={`d-flex table-header-box medium-font p-2 px-4 py-2 m-1 align-items-center
+                        ${active==="Payment Gateway" && "dropdown-clr"}`}
+        onClick={()=>handleActiveButton("Payment Gateway")}
+        >
+              <MdPayment className="medium-font"/>
+              <div className="medium-font ps-2">
+                Payment Gateway
+              </div>
+              </div>
+              <div className={`d-flex table-header-box medium-font p-2 px-4 py-2 m-1 align-items-center
+               ${active==="Transaction" && "dropdown-clr"}`} 
+               onClick={()=>handleActiveButton("Transaction")}>
+            <HiMiniArrowPathRoundedSquare className="medium-font"/>
+              <div className="medium-font ps-2">
+                Transaction
+              </div>
+              </div>
+            
+    
+    </div>
     
     <div className="sidebar-bg rounded">
-        <div className="d-flex row">
-          <h6 className="medium-font font-weight-bold th-color m-0 px-4 pt-3">
-            Add Director/Super Admin
-          </h6>
-          <div className=" d-flex justify-conten-around">
-            <div className="containaer-fluid ps-2 w-20">
-              <form className="d-flex" role="search">
-                <input
-                  className="search-width m-1 mt-3 p-2 text-white w-100 sidebar-bg borderr rounded small-font"
-                  type="search"
-                  placeholder="Search"
-                  aria-label="Search"
-                />
-              </form>
-            </div>
-            <div className="row justify-content-md-center mt-2 ms-1 p-1">
-              <div className="active text-white col-md-auto small-font justify-content-between p-2 px-4 m-1">
-                +Add
-              </div>
-            </div>
+    <div className="d-flex align-items-center justify-content-between" >
+          <div className=" medium-font font-weight-bold px-2 p-2 m-1 th-color">
+            Transaction
           </div>
-        </div>
+          <div className=" d-flex justify-conten-between m-1 px-2">
+            <select
+              className="form-select-option w-100 rounded p-2 px-3 m-1 mx-2 small-font"
+              aria-label="Default select example"
+            >
+              <option selected>ALL</option>
+              <option value="1">active</option>
+            </select>
+          </div>
+          </div>
 
-        <Table columns={cols} data={modifiedAdddirectorDetails} />
+        <Table columns={cols} data={modifiedUsertransactionDetails} />
       </div>
     
     </div>
-  )
+  );
 }
 
-export default Adddirector
+export default Usertransaction;

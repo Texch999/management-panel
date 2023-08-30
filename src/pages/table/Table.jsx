@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 function Table(props) {
   const { data, columns } = props;
   // console.log(data,columns)
@@ -14,6 +15,12 @@ function Table(props) {
         return "pending-button w-60";
       default:
         return "new-button w-60";
+    }
+  };
+  const navigate = useNavigate();
+  const handleClickTable = (item) => {
+    {
+      item === "role" && navigate("/usertransaction");
     }
   };
   return (
@@ -38,6 +45,7 @@ function Table(props) {
                       className={
                         column?.clr ? getColor(item[column.field]) : ""
                       }
+                      onClick={() => handleClickTable(column.field)}
                     >
                       {item[column.field]}
                     </div>

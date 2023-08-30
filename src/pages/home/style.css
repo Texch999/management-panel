@@ -81,16 +81,22 @@ input::-webkit-calendar-picker-indicator {
 .search-width {
   border-radius: 10px;
 }
-.search-icon{
+.search-icon {
   position: absolute;
   left: 3%;
-  top:35%;
+  top: 35%;
+}
+.dropdown-clr{
+  background-color: #696cff !important;
+  font-size: 12px !important;
+  color: #cbcbe2 !important;
 }
 .active {
   background-color: #696cff;
   border-radius: 5px;
   color: #ffff;
 }
+
 .fa-dollar-icon {
   color: #696cff;
 }
@@ -116,8 +122,8 @@ input::-webkit-calendar-picker-indicator {
 .w-55 {
   width: 55%;
 }
-.w-60{
-  width:60px;
+.w-60 {
+  width: 60px;
 }
 .w-100 {
   width: 100%;
@@ -129,7 +135,7 @@ input::-webkit-calendar-picker-indicator {
   border: solid 1px rgba(204, 201, 226, 0.28);
   background-color: #3a3c58;
 }
-.hr-color{
+.hr-color {
   border: solid 1px rgba(204, 201, 226, 0.28);
 }
 .home-bg {
@@ -194,7 +200,12 @@ input::-webkit-calendar-picker-indicator {
   /* padding: 0 2px; */
 }
 .table-header-box {
-  color: #ffffff;
+  color: #cbcbe2;
+  background-color: #323349;
+  border-radius: 5px;
+}
+.dropdown-box {
+  color: #cbcbe2;
   background-color: #323349;
   border-radius: 5px;
 }
@@ -224,17 +235,17 @@ input::-webkit-calendar-picker-indicator {
 .chat-margin {
   margin-top: 13%;
 }
-.padding-unset{
+.padding-unset {
   --bs-gutter-x: unset !important;
 }
 .sport-management-input input {
   background: none;
   border: none;
   outline: none;
-  color:#cbcbe2;
+  color: #cbcbe2;
 }
 .sport-management-input {
-  background:#3a3c58 ;
+  background: #3a3c58;
   height: 6vh;
   align-items: center;
   border-radius: 6px;
@@ -258,15 +269,32 @@ input::placeholder {
 .gutter-1rem {
   --bs-gutter-x: 1rem !important;
 }
-.empty-bg-br{
+.empty-bg-br {
   background-color: #3a3c58;
   border-radius: 8px;
   width: 130px;
   height: 20px;
 }
-.margintop-10{
-margin-top: -10px;
+.margintop-10 {
+  margin-top: -10px;
 }
-.marginright-10{
+.marginright-10 {
   margin-right: 10px;
-  }
+}
+.button-padding{
+  --bs-btn-padding-x: 1.6rem !important;
+  --bs-btn-padding-y: 0.5rem !important;
+  font-size: 12px !important;
+}
+.button-clr-unset{
+  --bs-btn-bg:unset !important;
+    --bs-btn-border-color: unset !important;
+}
+.world-icon{
+  position: relative;
+  left: 13%;
+  font-size: 12px;
+}
+.user-img-bg-br{
+  border-radius: 0px 0px 5px 5px;
+}

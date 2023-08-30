@@ -1,17 +1,17 @@
-import React from 'react'
+import React from "react";
 import Table from "../table/Table";
-import Totalaccount from '../home/Totalaccount';
-import {MdKeyboardArrowUp,MdKeyboardArrowDown} from "react-icons/md";
+import Totalaccount from "../home/Totalaccount";
+import { MdKeyboardArrowUp, MdKeyboardArrowDown } from "react-icons/md";
 function Addwebsites() {
   const ADDWEBSITE_DETAILS = [
     {
       websitename: "www.we2call.com ",
       is: "India-Hyderabad",
       used: "India-Delhi",
-      three:"India-Bengalore",
+      three: "India-Bengalore",
       user: "Srinivas",
-      full:"Ashoke",
-      name:"Gopikrishna",
+      full: "Ashoke",
+      name: "Gopikrishna",
       role1: "Director",
       role2: "Director",
       role3: "Director",
@@ -20,10 +20,10 @@ function Addwebsites() {
       websitename: "www.we2call.com ",
       is: "India-Hyderabad",
       used: "India-Delhi",
-      three:"India-Bengalore",
+      three: "India-Bengalore",
       user: "Srinivas",
-      full:"Ashoke",
-      name:"Gopikrishna",
+      full: "Ashoke",
+      name: "Gopikrishna",
       role1: "SA",
       role2: "SA",
       role3: "SA",
@@ -32,10 +32,10 @@ function Addwebsites() {
       websitename: "www.we2call.com ",
       is: "India-Hyderabad",
       used: "India-Delhi",
-      three:"India-Bengalore",
+      three: "India-Bengalore",
       user: "Srinivas",
-      full:"Ashoke",
-      name:"Gopikrishna",
+      full: "Ashoke",
+      name: "Gopikrishna",
       role1: "Director",
       role2: "Director",
       role3: "Director",
@@ -44,10 +44,10 @@ function Addwebsites() {
       websitename: "www.we2call.com ",
       is: "India-Hyderabad",
       used: "India-Delhi",
-      three:"India-Bengalore",
+      three: "India-Bengalore",
       user: "Srinivas",
-      full:"Ashoke",
-      name:"Gopikrishna",
+      full: "Ashoke",
+      name: "Gopikrishna",
       role1: "Director",
       role2: "Director",
       role3: "Director",
@@ -56,10 +56,10 @@ function Addwebsites() {
       websitename: "www.we2call.com ",
       is: "India-Hyderabad",
       used: "India-Delhi",
-      three:"India-Bengalore",
+      three: "India-Bengalore",
       user: "Srinivas",
-      full:"Ashoke",
-      name:"Gopikrishna",
+      full: "Ashoke",
+      name: "Gopikrishna",
       role1: "Director",
       role2: "Director",
       role3: "Director",
@@ -68,69 +68,93 @@ function Addwebsites() {
 
   const cols = [
     {
-      header: <div className='d-flex justify-content-center align-items-center'>
-      <div className='marginright-10'>WEBSITE NAME</div>
-      <div>
-      <div><MdKeyboardArrowUp className='fs-5'/></div><MdKeyboardArrowDown className='fs-5 margintop-10'/>
-      </div>
-      </div>,
+      header: (
+        <div className="d-flex justify-content-center align-items-center">
+          <div className="marginright-10">WEBSITE NAME</div>
+          <div>
+            <div>
+              <MdKeyboardArrowUp className="fs-6" />
+            </div>
+            <MdKeyboardArrowDown className="fs-6 margintop-10" />
+          </div>
+        </div>
+      ),
       field: "websitename",
     },
     {
-      header: <div className='d-flex justify-content-center align-items-center'>
-      <div className='marginright-10'>IS USED</div>
-      <div>
-      <div><MdKeyboardArrowUp className='fs-5'/></div><MdKeyboardArrowDown className='fs-5 margintop-10'/>
-      </div>
-      </div>,
+      header: (
+        <div className="d-flex justify-content-center align-items-center">
+          <div className="marginright-10">IS USED</div>
+          <div>
+            <div>
+              <MdKeyboardArrowUp className="fs-6" />
+            </div>
+            <MdKeyboardArrowDown className="fs-6 margintop-10" />
+          </div>
+        </div>
+      ),
       field: "isAndusedAndthree",
     },
     {
-      header: <div className='d-flex justify-content-center align-items-center'>
-      <div className='marginright-10'>USER NAME</div>
-      <div>
-      <div><MdKeyboardArrowUp className='fs-5'/></div><MdKeyboardArrowDown className='fs-5 margintop-10'/>
-      </div>
-      </div>,
+      header: (
+        <div className="d-flex justify-content-center align-items-center">
+          <div className="marginright-10">USER NAME</div>
+          <div>
+            <div>
+              <MdKeyboardArrowUp className="fs-6" />
+            </div>
+            <MdKeyboardArrowDown className="fs-6 margintop-10" />
+          </div>
+        </div>
+      ),
       field: "userAndfullAndname",
     },
     {
-      header: <div className='d-flex justify-content-center align-items-center '>
-      <div className='marginright-10'>ROLE</div>
-      <div>
-      <div><MdKeyboardArrowUp className='fs-5'/></div><MdKeyboardArrowDown className='fs-5 margintop-10'/>
-      </div>
-      </div>,
+      header: (
+        <div className="d-flex justify-content-center align-items-center ">
+          <div className="marginright-10">ROLE</div>
+          <div>
+            <div>
+              <MdKeyboardArrowUp className="fs-6" />
+            </div>
+            <MdKeyboardArrowDown className="fs-6 margintop-10" />
+          </div>
+        </div>
+      ),
       field: "role1Androle2Androle3",
     },
   ];
 
-  const modifiedAddwebsiteDetails = ADDWEBSITE_DETAILS.map(
-    (item) => ({
-      ...item,
-      isAndusedAndthree: (
-        <div>
-          {item?.is} <br /> <span>{item?.used}</span> <br/>{item?.three}{""}
-        </div>
-      ),
-      userAndfullAndname: (
-        <div>
-          {item?.user} <br /> <span>{item?.full}</span> <br/>{item?.name}{""}
-        </div>
-      ),
-      role1Androle2Androle3: (
-        <div className="role-color">
-          {item?.role1} <br /> <span>{item?.role2}</span> <br/>{item?.role3}{""}
-        </div>
-      ),
-    })
-  );
+  const modifiedAddwebsiteDetails = ADDWEBSITE_DETAILS.map((item) => ({
+    ...item,
+    isAndusedAndthree: (
+      <div>
+        {item?.is} <br /> <span>{item?.used}</span> <br />
+        {item?.three}
+        {""}
+      </div>
+    ),
+    userAndfullAndname: (
+      <div>
+        {item?.user} <br /> <span>{item?.full}</span> <br />
+        {item?.name}
+      </div>
+    ),
+    role1Androle2Androle3: (
+      <div className="role-color">
+        {item?.role1} <br /> <span>{item?.role2}</span> <br />
+        {item?.role3}
+        {""}
+      </div>
+    ),
+  }));
   return (
-   
     <div className="p-4 w-100">
-    <div><Totalaccount/></div>
-    
-    <div className="sidebar-bg rounded">
+      <div>
+        <Totalaccount />
+      </div>
+
+      <div className="sidebar-bg rounded">
         <div className="d-flex row">
           <h6 className="medium-font font-weight-bold th-color m-0 px-4 pt-3">
             Add Website
@@ -156,9 +180,8 @@ function Addwebsites() {
 
         <Table columns={cols} data={modifiedAddwebsiteDetails} />
       </div>
-    
     </div>
-  )
+  );
 }
 
-export default Addwebsites
+export default Addwebsites;
