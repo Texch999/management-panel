@@ -325,3 +325,7 @@ input::placeholder {
   width: 14%;
   margin-left: 4px;
 }
+.check-box-input-clr{
+  --bs-form-check-bg: #555774 !important;
+  border:none !important;
+}

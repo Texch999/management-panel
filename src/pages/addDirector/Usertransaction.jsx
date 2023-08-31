@@ -101,7 +101,7 @@ function Usertransaction() {
                     <span>www.we2call.com</span>
                     <span class="form-check">
                       <input
-                        class="form-check-input"
+                        class="form-check-input check-box-input-clr"
                         type="checkbox"
                         value=""
                         id="defaultCheck1"
@@ -112,7 +112,7 @@ function Usertransaction() {
                     <span>www.we2call.com</span>
                     <span class="form-check">
                       <input
-                        class="form-check-input"
+                        class="form-check-input check-box-input-clr"
                         type="checkbox"
                         value=""
                         id="defaultCheck1"
@@ -123,7 +123,7 @@ function Usertransaction() {
                     <span>www.we2call.com</span>
                     <span class="form-check">
                       <input
-                        class="form-check-input"
+                        class="form-check-input check-box-input-clr"
                         type="checkbox"
                         value=""
                         id="defaultCheck1"
@@ -137,7 +137,7 @@ function Usertransaction() {
                   <span>www.we2call.com</span>
                   <span class="form-check">
                     <input
-                      class="form-check-input"
+                      class="form-check-input check-box-input-clr"
                       type="checkbox"
                       value=""
                       id="defaultCheck1"
