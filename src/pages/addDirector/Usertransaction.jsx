@@ -1,300 +1,173 @@
 import React, { useState } from "react";
-import Table from "../table/Table";
-import Totalaccount from '../home/Totalaccount';
-import {MdKeyboardArrowUp,MdKeyboardArrowDown} from "react-icons/md";
-import {AiOutlineSetting} from "react-icons/ai";
-import {TbUserEdit} from "react-icons/tb";
-import {LuFileClock} from "react-icons/lu";
-import {TbFileText} from "react-icons/tb";
-import Dropdown from 'react-bootstrap/Dropdown';
-import {TbWorld} from "react-icons/tb";
-import {MdPayment} from "react-icons/md";
-import {HiMiniArrowPathRoundedSquare} from "react-icons/hi2";
+import Totalaccount from "../home/Totalaccount";
+import Dropdown from "react-bootstrap/Dropdown";
+import { TbWorld } from "react-icons/tb";
+import { MdPayment } from "react-icons/md";
+import { HiMiniArrowPathRoundedSquare } from "react-icons/hi2";
 import { Images } from "../../images";
+import { AiOutlineEye } from "react-icons/ai";
+import { TiTick } from "react-icons/ti";
+import { BiUser } from "react-icons/bi";
+import { IoLocation } from "react-icons/io5";
+import TransactionTable from "./TransactionTable";
+import PaymentGateway from "./PaymentGateway";
+import WebsitesLimit from "./WebsitesLimit";
+import { MdKeyboardArrowDown } from "react-icons/md";
 function Usertransaction() {
-  const USERTRANSACTION_DETAILS = [
-    {
-      role: "Director",
-      username: "Srinivas",
-      inused: "India--Hyderabad",
-      website1: "www.we2call.com",
-      website2:"www.we2call.com",
-      website3:" www.we2call.com",
-      billing: "Cash-INR",
-      profitloss:<div className="fa-fileinvo-doll-icon">500K</div>,
-      status: "Active",
-      icon: (
-        <div className="d-flex align-items-center justify-content-evenly">
-          {" "}
-          <TbFileText className='eye-icon-size'/>
-          <LuFileClock className="eye-icon-size"/>
-          <AiOutlineSetting className="eye-icon-size" />
-          <TbUserEdit className="eye-icon-size" />
-        </div>
-      ),  
-  
-    },
-    {
-      role: "Director",
-      username: "Srinivas",
-      inused: "India--Hyderabad",
-      website1: "www.we2call.com",
-      website2:"www.we2call.com",
-      website3:" www.we2call.com",
-      billing: "Cash-INR",
-      profitloss:<div className="red-text">2K</div>,
-      status: "In-active",
-      icon: (
-        <div className="d-flex align-items-center justify-content-evenly">
-          {" "}
-          <TbFileText className='eye-icon-size'/>
-          <LuFileClock className="eye-icon-size"/>
-          <AiOutlineSetting className="eye-icon-size" />
-          <TbUserEdit className="eye-icon-size" />
-        </div>
-      ),     
-    },
-    {
-      role: "SA",
-      username: "Srinivas",
-      inused: "India--Hyderabad",
-      website1: "www.we2call.com",
-      website2:"www.we2call.com",
-      website3:" www.we2call.com",
-      billing: "Cash-INR",
-      profitloss:<div className="fa-fileinvo-doll-icon">500K</div>,
-      status: "Active",
-      icon: (
-        <div className="d-flex align-items-center justify-content-evenly">
-          {" "}
-          <TbFileText className='eye-icon-size'/>
-          <LuFileClock className="eye-icon-size"/>
-          <AiOutlineSetting className="eye-icon-size" />
-          <TbUserEdit className="eye-icon-size" />
-        </div>
-      ),     
-    },
-    {
-      role: "Director",
-      username: "Srinivas",
-      inused: "India--Hyderabad",
-      website1: "www.we2call.com",
-      website2:"www.we2call.com",
-      website3:" www.we2call.com",
-      billing: "Cash-INR",
-      profitloss:<div className="fa-fileinvo-doll-icon">500K</div>,
-      status: "Active",
-      icon: (
-        <div className="d-flex align-items-center justify-content-evenly">
-          {" "}
-          <TbFileText className='eye-icon-size'/>
-          <LuFileClock className="eye-icon-size"/>
-          <AiOutlineSetting className="eye-icon-size" />
-          <TbUserEdit className="eye-icon-size" />
-        </div>
-      ), 
+  const [OnlineWebsites, setOnlineWebsites] = useState(true);
+  const [OfflineWebsites, setOfflineWebsites] = useState();
+  const [active, setActive] = useState("Transaction");
 
-    },
-    {
-      role: "Director",
-      username: "Srinivas",
-      inused: "India--Hyderabad",
-      website1: "www.we2call.com",
-      website2:"www.we2call.com",
-      website3:" www.we2call.com",
-      billing: "Cash-INR",
-      profitloss:<div className="red-text">20K</div>,
-      status: "In-active",
-      icon: (
-        <div className="d-flex align-items-center justify-content-evenly">
-          {" "}
-          <TbFileText className='eye-icon-size'/>
-          <LuFileClock className="eye-icon-size"/>
-          <AiOutlineSetting className="eye-icon-size" />
-          <TbUserEdit className="eye-icon-size" />
-        </div>
-      ),     
-    },
-  ];
-
-  const cols = [
-    {
-      header: <div className='d-flex justify-content-center align-items-center '>
-      <div className='marginright-10'>ROLE</div>
-      <div>
-      <div><MdKeyboardArrowUp className='fs-6'/></div><MdKeyboardArrowDown className='fs-6 margintop-10'/>
-      </div>
-      </div>,
-      field: "role",
-    },
-    {
-      header: <div className='d-flex justify-content-center align-items-center'>
-      <div className='marginright-10'>USER NAME</div>
-      <div>
-      <div><MdKeyboardArrowUp className='fs-6'/></div><MdKeyboardArrowDown className='fs-6 margintop-10'/>
-      </div>
-      </div>,
-      field: "username",
-    },
-    {
-      header: <div className='d-flex justify-content-center align-items-center'>
-      <div className='marginright-10'>In USED</div>
-      <div>
-      <div><MdKeyboardArrowUp className='fs-6'/></div><MdKeyboardArrowDown className='fs-6 margintop-10'/>
-      </div>
-      </div>,
-      field: "inused",
-    },
-    {
-      header: <div className='d-flex justify-content-center align-items-center'>
-      <div className='marginright-10'>WEBSITE</div>
-      <div>
-      <div><MdKeyboardArrowUp className='fs-6'/></div><MdKeyboardArrowDown className='fs-6 margintop-10'/>
-      </div>
-      </div>,
-      field: "website1Andwebsite2Andwebsite3",
-    },
-    {
-      header: <div className='d-flex justify-content-center align-items-center'>
-      <div className='marginright-10'>BILLING</div>
-      <div>
-      <div><MdKeyboardArrowUp className='fs-6'/></div><MdKeyboardArrowDown className='fs-6 margintop-10'/>
-      </div>
-      </div>,
-      field: "billing",
-    },
-    {
-      header: <div className='d-flex justify-content-center align-items-center'>
-      <div className='marginright-10'>PROFIT/LOSS</div>
-      <div>
-      <div><MdKeyboardArrowUp className='fs-6'/></div><MdKeyboardArrowDown className='fs-6 margintop-10'/>
-      </div>
-      </div>,
-      field: "profitloss",
-    },
-    {
-      header: <div className='d-flex justify-content-center align-items-center'>
-      <div className='marginright-10'>STATUS</div>
-      <div>
-      <div><MdKeyboardArrowUp className='fs-6'/></div><MdKeyboardArrowDown className='fs-6 margintop-10'/>
-      </div>
-      </div>,
-      field: "status",
-      clr: true,
-    },
-    {
-      header: <div className='d-flex justify-content-center align-items-center'>
-      <div className='marginright-10'>ACTION</div>
-      <div>
-      <div><MdKeyboardArrowUp className='fs-6'/></div><MdKeyboardArrowDown className='fs-6 margintop-10'/>
-      </div>
-      </div>,
-      field: "icon",
-    },
-    
-    
-  ];
-
-  const modifiedUsertransactionDetails = USERTRANSACTION_DETAILS.map(
-    (item) => ({
-      ...item,
-      role: (
-        <div className="role-color">
-          <span className="role-color">{item?.role}</span>{" "}
-        </div>
-      ),
-      website1Andwebsite2Andwebsite3: (
-        <div>
-          {item?.website1} <br /> <span>{item?.website2}</span> <br/>{item?.website3}{""}
-        </div>
-      ),
-    })
-  );
-  const [active,setActive]=useState("Transaction")
-
-  const handleActiveButton=(type)=>{
-  setActive(type)
-  console.log(type)
-  }
+  const handleActiveButton = (type) => {
+    setActive(type);
+    console.log(type);
+  };
+  const handleOffline = () => {
+    setOfflineWebsites(true);
+    setOnlineWebsites(false);
+  };
+  const handleOnline = () => {
+    setOfflineWebsites(false);
+    setOnlineWebsites(true);
+  };
   return (
     <div className="p-4 w-100">
-       <div className="th-color medium-font p-1">userprofile/profile</div>
-       <div className="w-100">
-       <img src={Images.ProfileBanner} className="w-100" />
-       <div className="sidebar-bg th-color user-img-bg-br row row-unset p-2">
-        <div className="col-5"></div>
-        <div className="col-7">
-          <div className="row d-flex justify-content-between align-items-center ">
-        <div className="col-5 empty-bg-br d-flex text-center small-font m-1 d-flex justify-content-between align-items-center">
-          <span>User Name</span><span>Srinivas</span>
-        </div>
-        <div className="col-5 empty-bg-br d-flex text-center small-font m-1 d-flex justify-content-between align-items-center">
-        <span>Password</span><span>1234567</span>
-        </div>
-        <div className="col-1 active text-white text-align-center small-font p-2 m-1 d-flex justify-content-between align-items-center">
-                Add
+      <div className="th-color medium-font p-1">userprofile/profile</div>
+      <div className="w-100">
+        <img src={Images.ProfileBanner} className="w-100" />
+        <div className="sidebar-bg th-color user-img-bg-br row row-unset p-2">
+          <div className="col-5 d-flex">
+            <img src={Images.PersonImg} className="w-10 user-margin-top" />
+            <div className="row px-2">
+              <div className="medium-font d-flex align-items-center">
+                Srinivas
               </div>
-            
+              <div className="medium-font d-flex justify-content-between align-items-baseline w-75">
+                <span>
+                  <BiUser />
+                  Director
+                </span>
+                <span>
+                  <IoLocation />
+                  India
+                </span>
               </div>
-        </div>
-       </div>
-       </div>
-    <div><Totalaccount/></div>
-    <div className="gutter-1rem p-2 d-flex align-items-center">
-   
-    <Dropdown>
-    <TbWorld className="th-color world-icon align-items-center"/>
-      <Dropdown.Toggle className="button-clr-unset button-padding dropdown-clr medium-font" id="dropdown-basic"
-     >
-        Websites/Limit
-      </Dropdown.Toggle>
-
-      <Dropdown.Menu>
-        <Dropdown.Item href="#/action-1">Action</Dropdown.Item>
-        <Dropdown.Item href="#/action-2">Another action</Dropdown.Item>
-        <Dropdown.Item href="#/action-3">Something else</Dropdown.Item>
-      </Dropdown.Menu>
-    </Dropdown>
-        <div className={`d-flex table-header-box medium-font p-2 px-4 py-2 m-1 align-items-center
-                        ${active==="Payment Gateway" && "dropdown-clr"}`}
-        onClick={()=>handleActiveButton("Payment Gateway")}
-        >
-              <MdPayment className="medium-font"/>
-              <div className="medium-font ps-2">
-                Payment Gateway
-              </div>
-              </div>
-              <div className={`d-flex table-header-box medium-font p-2 px-4 py-2 m-1 align-items-center
-               ${active==="Transaction" && "dropdown-clr"}`} 
-               onClick={()=>handleActiveButton("Transaction")}>
-            <HiMiniArrowPathRoundedSquare className="medium-font"/>
-              <div className="medium-font ps-2">
-                Transaction
-              </div>
-              </div>
-            
-    
-    </div>
-    
-    <div className="sidebar-bg rounded">
-    <div className="d-flex align-items-center justify-content-between" >
-          <div className=" medium-font font-weight-bold px-2 p-2 m-1 th-color">
-            Transaction
+            </div>
           </div>
-          <div className=" d-flex justify-conten-between m-1 px-2">
-            <select
-              className="form-select-option w-100 rounded p-2 px-3 m-1 mx-2 small-font"
-              aria-label="Default select example"
-            >
-              <option selected>ALL</option>
-              <option value="1">active</option>
-            </select>
+          <div className="col-7 d-flex align-items-center justify-content-end">
+            <div className="w-80 d-flex align-items-center justify-content-between">
+              <div className="w-25 px-2 py-1 rounded-pill empty-bg-br small-font d-flex align-items-center justify-content-between">
+                <span>User Name</span>
+                <span>Srinivas</span>
+              </div>
+              <div className="px-2 py-1 rounded-pill empty-bg-br small-font d-flex align-items-center justify-content-between">
+                <span className="pe-4">Password</span>
+                <span className="px-3 ps-5 role-color">1234567</span>
+                <span className="role-color">
+                  <AiOutlineEye className="eye-icon-size" />
+                </span>
+              </div>
+              <div className="active text-white align-items-center small-font p-2 m-1 d-flex justify-content-between align-items-center">
+                <TiTick className="eye-icon-size" /> Active
+              </div>
+            </div>
           </div>
-          </div>
-
-        <Table columns={cols} data={modifiedUsertransactionDetails} />
+        </div>
       </div>
-    
+      <div>
+        <Totalaccount />
+      </div>
+      <div className="gutter-1rem p-2 d-flex ">
+        <div className="d-flex flex-column">
+          <div
+            className={`d-flex table-header-box medium-font p-2 px-4 py-2 m-1 align-items-center
+                        ${active === "Websites/Limit" && "dropdown-clr"}`}
+            onClick={() => handleActiveButton("Websites/Limit")}
+          >
+            <TbWorld className="medium-font" />
+            <div className="medium-font ps-2">Websites/Limit</div>
+            <MdKeyboardArrowDown className="fs-6" />
+          </div>
+          {active === "Websites/Limit" && (
+            <div className="empty-bg-br d-flex flex-column justify-content-between online-div th-color medium-font">
+              <div className="d-flex justify-content-between p-2">
+                <span onClick={() => handleOnline()}>Online</span>
+                <span onClick={() => handleOffline()}>Offline</span>
+              </div>
+              <hr className="hr-line" />
+              {OnlineWebsites && (
+                <div>
+                  <div className="d-flex justify-content-between p-2">
+                    <span>www.we2call.com</span>
+                    <span class="form-check">
+                      <input
+                        class="form-check-input"
+                        type="checkbox"
+                        value=""
+                        id="defaultCheck1"
+                      />
+                    </span>
+                  </div>
+                  <div className="d-flex justify-content-between p-2">
+                    <span>www.we2call.com</span>
+                    <span class="form-check">
+                      <input
+                        class="form-check-input"
+                        type="checkbox"
+                        value=""
+                        id="defaultCheck1"
+                      />
+                    </span>
+                  </div>
+                  <div className="d-flex justify-content-between p-2">
+                    <span>www.we2call.com</span>
+                    <span class="form-check">
+                      <input
+                        class="form-check-input"
+                        type="checkbox"
+                        value=""
+                        id="defaultCheck1"
+                      />
+                    </span>
+                  </div>
+                </div>
+              )}
+              {OfflineWebsites && (
+                <div className="d-flex justify-content-between p-2">
+                  <span>www.we2call.com</span>
+                  <span class="form-check">
+                    <input
+                      class="form-check-input"
+                      type="checkbox"
+                      value=""
+                      id="defaultCheck1"
+                    />
+                  </span>
+                </div>
+              )}
+            </div>
+          )}
+        </div>
+        <div
+          className={`d-flex table-header-box height-fit-content medium-font p-2 px-4 py-2 m-1 align-items-center
+                        ${active === "Payment Gateway" && "dropdown-clr"}`}
+          onClick={() => handleActiveButton("Payment Gateway")}
+        >
+          <MdPayment className="medium-font" />
+          <div className="medium-font ps-2">Payment Gateway</div>
+        </div>
+        <div
+          className={`d-flex table-header-box height-fit-content medium-font p-2 px-4 py-2 m-1 align-items-center
+               ${active === "Transaction" && "dropdown-clr"}`}
+          onClick={() => handleActiveButton("Transaction")}
+        >
+          <HiMiniArrowPathRoundedSquare className="medium-font" />
+          <div className="medium-font ps-2">Transaction</div>
+        </div>
+      </div>
+      {active === "Websites/Limit" && <WebsitesLimit />}
+      {active === "Payment Gateway" && <PaymentGateway />}
+      {active === "Transaction" && <TransactionTable />}
     </div>
   );
 }

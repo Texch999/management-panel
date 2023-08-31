@@ -86,7 +86,7 @@ input::-webkit-calendar-picker-indicator {
   left: 3%;
   top: 35%;
 }
-.dropdown-clr{
+.dropdown-clr {
   background-color: #696cff !important;
   font-size: 12px !important;
   color: #cbcbe2 !important;
@@ -125,9 +125,10 @@ input::-webkit-calendar-picker-indicator {
 .w-60 {
   width: 60px;
 }
-.w-100 {
-  width: 100%;
+.w-80 {
+  width: 80%;
 }
+
 .h-40vh {
   height: 40vh;
 }
@@ -272,8 +273,6 @@ input::placeholder {
 .empty-bg-br {
   background-color: #3a3c58;
   border-radius: 8px;
-  width: 130px;
-  height: 20px;
 }
 .margintop-10 {
   margin-top: -10px;
@@ -281,23 +280,48 @@ input::placeholder {
 .marginright-10 {
   margin-right: 10px;
 }
-.button-padding{
+.button-padding {
   --bs-btn-padding-x: 1.6rem !important;
   --bs-btn-padding-y: 0.5rem !important;
   font-size: 12px !important;
 }
-.button-clr-unset{
-  --bs-btn-bg:unset !important;
-    --bs-btn-border-color: unset !important;
+.button-clr-unset {
+  --bs-btn-bg: unset !important;
+  --bs-btn-border-color: unset !important;
 }
-.world-icon{
+.world-icon {
   position: relative;
   left: 13%;
   font-size: 12px;
 }
-.user-img-bg-br{
+.user-img-bg-br {
   border-radius: 0px 0px 5px 5px;
 }
-.row-unset{
-   --bs-gutter-x: unset !important;
+.row-unset {
+  --bs-gutter-x: unset !important;
+}
+.user-margin-top {
+  margin-top: -3rem;
+}
+.green-bg {
+  background-color: #36483f;
+  color: #71dd37;
+  border-radius: 4px;
+  width: fit-content;
+}
+.hr-line {
+  margin: 0px !important;
+  opacity: 0.1;
+  border: solid 1px #fff;
+  background-color: #fff;
+}
+.height-fit-content {
+  height: fit-content;
+}
+.online-div {
+  margin-top: 2.5rem;
+  position: absolute;
+  z-index: 9999;
+  width: 14%;
+  margin-left: 4px;
 }
