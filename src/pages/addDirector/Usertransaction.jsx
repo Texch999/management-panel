@@ -88,7 +88,7 @@ function Usertransaction() {
             <div className="medium-font ps-2">Websites/Limit</div>
             <MdKeyboardArrowDown className="fs-6" />
           </div>
-          {active === "Websites/Limit" && (
+          {/* {active === "Websites/Limit" && (
             <div className="empty-bg-br d-flex flex-column justify-content-between online-div th-color medium-font">
               <div className="d-flex justify-content-between p-2">
                 <span onClick={() => handleOnline()}>Online</span>
@@ -146,7 +146,7 @@ function Usertransaction() {
                 </div>
               )}
             </div>
-          )}
+          )} */}
         </div>
         <div
           className={`d-flex table-header-box height-fit-content medium-font p-2 px-4 py-2 m-1 align-items-center
