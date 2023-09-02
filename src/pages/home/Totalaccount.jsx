@@ -3,20 +3,21 @@ import { FaSackDollar } from "react-icons/fa6";
 import { FaCircleDollarToSlot } from "react-icons/fa6";
 import { FaFileInvoiceDollar } from "react-icons/fa6";
 import { BsPersonCircle } from "react-icons/bs";
-import "./style.css";
-import Barchart from "./Barchart";
-function Homepage() {
+
+function Totalaccount() {
   return (
-    <div className="p-3">
-      <div className="container-fluid p-0 mt-0">
-        <div className="row medium-font">
-          <div className="col-15 col-sm-6 col-md-4 col-lg-3 p-2">
-            <div className="d-flex justify-content-between home-border-radius sidebar-bg text-white p-4 align-items-center border border-secondary shadow-sm">
+    
+      <div>
+        <div className="row medium-font padding-unset">
+          <div className="col-15 col-sm-6 col-md-4 col-lg-3 p-1">
+            <div className="d-flex justify-content-between home-border-radius sidebar-bg text-white p-4 align-items-center">
               <div>
                 <span>Total Revenue</span>
                 <div>
                   <span className="medium-font">203.378</span>
-                  <span className="small-font px-2 fa-fileinvo-doll-icon">+6.32%</span>
+                  <span className="small-font px-2 fa-fileinvo-doll-icon">
+                    +6.32%
+                  </span>
                 </div>
               </div>
               <div className="fa-dollar-icon fs-2">
@@ -28,7 +29,7 @@ function Homepage() {
             className="col-sm-6 col-md-4 col-lg-3
                         p-2"
           >
-            <div className="d-flex justify-content-between home-border-radius sidebar-bg text-white p-4 align-items-center border border-secondary shadow-sm">
+            <div className="d-flex justify-content-between home-border-radius sidebar-bg text-white p-4 align-items-center">
               <div>
                 <span>Total Balance</span>
                 <h6 className="medium-font">203.378</h6>
@@ -42,7 +43,7 @@ function Homepage() {
             className="col-sm-6 col-md-4 col-lg-3
                         p-2"
           >
-            <div className="d-flex justify-content-between home-border-radius sidebar-bg text-white p-4 align-items-center border border-secondary shadow-sm">
+            <div className="d-flex justify-content-between home-border-radius sidebar-bg text-white p-4 align-items-center">
               <div>
                 <span>Total Profit</span>
                 <h6 className="medium-font">203.378</h6>
@@ -54,9 +55,9 @@ function Homepage() {
           </div>
           <div
             className="col-sm-6 col-md-4 col-lg-3
-                        p-2"
+                        p-1"
           >
-            <div className="d-flex justify-content-between home-border-radius sidebar-bg text-white p-4 align-items-center border border-secondary shadow-sm">
+            <div className="d-flex justify-content-between home-border-radius sidebar-bg text-white p-4 align-items-center">
               <div>
                 <span>Total Customer</span>
                 <h6 className="medium-font">203.378</h6>
@@ -67,14 +68,9 @@ function Homepage() {
             </div>
           </div>
         </div>
-        <div className="row">
-          <div className="col-12 col-md-12 p3">
-            <Barchart></Barchart>
-          </div>
-        </div>
       </div>
-    </div>
+    
   );
 }
 
-export default Homepage;
+export default Totalaccount;
