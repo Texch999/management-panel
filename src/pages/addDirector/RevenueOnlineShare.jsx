@@ -1,5 +1,5 @@
-import React from 'react'
-import TotalPaidBalanceTable from './TotalPaidBalanceTable';
+import React from "react";
+import TotalPaidBalanceTable from "./TotalPaidBalanceTable";
 
 function RevenueOnlineShare() {
   const sportsboxes = [
@@ -22,7 +22,7 @@ function RevenueOnlineShare() {
       value: "10000",
     },
   ];
-  
+
   return (
     <div>
       <div className="p-3">
@@ -30,9 +30,9 @@ function RevenueOnlineShare() {
           Sports & Casino
         </div>
       </div>
-    <div className="p-3">
+      <div className="p-2">
         <div className="row d-flex justify-content-between">
-          <div className="col-8">
+          <div className="col">
             <div className="row">
               <div className="col ">
                 <div className="th-color small-font py-1">Buy Chips</div>
@@ -51,11 +51,15 @@ function RevenueOnlineShare() {
                   </div>
                 </div>
               </div>
-              {sportsboxes.map((item,index) => {
+              {sportsboxes.map((item, index) => {
                 return (
                   <div className="col" key={index}>
-                    <div className="th-color small-font py-1">{item.header}</div>
-                    <div className={`${item.cssClass} text-white small-font p-2`}>
+                    <div className="th-color small-font py-1">
+                      {item.header}
+                    </div>
+                    <div
+                      className={`${item.cssClass} text-white small-font p-2`}
+                    >
                       <div>{item.text}</div>
                       <div>{item.value}</div>
                     </div>
@@ -64,12 +68,10 @@ function RevenueOnlineShare() {
               })}
             </div>
           </div>
-          <TotalPaidBalanceTable/>
         </div>
-
       </div>
     </div>
-  )
+  );
 }
 
-export default RevenueOnlineShare
+export default RevenueOnlineShare;

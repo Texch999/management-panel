@@ -103,8 +103,13 @@ function WebsitesLimit() {
       <hr className="hr-line mt-2" />
       <div className="row w-100 py-3">
         <div className="col-8 d-flex flex-column">
-          <RevenueOnlineFixd gameName={"Sports"} />
-          <RevenueOnlineFixd gameName={"Casino"} />
+          {paymentTypeSelect === "fixed" && (
+            <>
+              <RevenueOnlineFixd gameName={"Sports"} />
+              <RevenueOnlineFixd gameName={"Casino"} />
+            </>
+          )}
+          {paymentTypeSelect === "share" && <RevenueOnlineShare />}
         </div>
         <div className="col-4">
           <TotalPaidBalanceTable />
