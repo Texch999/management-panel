@@ -335,6 +335,10 @@ input::placeholder {
 .head-container{
   height: 8vh !important;
 }
+.diamond-img-size{
+width:10px;
+height: 10px;
+}
 .check-box-input-clr{
   --bs-form-check-bg: #555774 !important;
   border:none !important;

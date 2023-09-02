@@ -5,10 +5,7 @@ import RevenueOfflineTable from "./RevenueOfflineTable";
 import TotalPaidBalanceTable from "./TotalPaidBalanceTable";
 
 function RevenueOfflineShare() {
-  const [PurchasepaymentSelect, setPurchasepaymentSelect] = useState("");
-  const handlepurchasepaymentSelect = (e) => {
-    setPurchasepaymentSelect(e.target.value);
-  };
+  
   return (
     <div className="sidebar-bg rounded w-100">
       <div className="d-flex justify-content-between align-items-center p-3">
@@ -59,12 +56,12 @@ function RevenueOfflineShare() {
     <hr className="hr-line mt-2" />
       <div className="row w-100 py-3">
         <div className="col-8 d-flex flex-column">
-          {PurchasepaymentSelect === "fixed" && (
+        
             <>
               <RevenueOfflineTable we2callgameName={"Total Purchase & Payment"} />
               <RevenueOfflineTable we2callgameName={"Topup Hours"} />
             </>
-          )}
+    
         </div>
         <div className="col-4">
           <TotalPaidBalanceTable/>
