@@ -28,7 +28,7 @@ function App() {
         <div className="w-auto">
           <Sidebar></Sidebar>
         </div>
-        <div className="col overflow-auto home-bg vh-100">
+        <div className="col w-auto home-bg vh-100">
           <Header />
           <div className="homepage-div">
             <Routes>

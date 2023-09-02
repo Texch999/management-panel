@@ -1,0 +1,22 @@
+.package-bg {
+  background-color: #2b2c40;
+}
+.dollar-icon-bg {
+  background-color: #9155fd;
+  color: #ffffff;
+  border-radius: 50%;
+  height: 3rem;
+  width: 3rem;
+}
+.font-grey {
+  color: #cbcbe2;
+}
+.font-green {
+  color: #71dd37;
+}
+.w-10 {
+  width: 12% !important;
+}
+.w-90 {
+  width: 88% !important;
+}

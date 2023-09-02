@@ -3,10 +3,10 @@ input::-webkit-calendar-picker-indicator {
   opacity: 0;
 }
 body {
-  background-color: #2b2c40;
+  background-color: #232333 !important;
 }
 .header-div {
-  width: 88% !important;
+  width: 88%;
   height: 8vh;
   position: fixed;
   top: 0;
