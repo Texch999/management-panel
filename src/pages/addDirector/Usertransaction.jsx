@@ -13,22 +13,26 @@ import TransactionTable from "./TransactionTable";
 import PaymentGateway from "./PaymentGateway";
 import WebsitesLimit from "./WebsitesLimit";
 import { MdKeyboardArrowDown } from "react-icons/md";
+import RevenueOfflineShare from "./RevenueOfflineShare";
+import RevenueOfflineTable from "./RevenueOfflineTable";
 function Usertransaction() {
   const [OnlineWebsites, setOnlineWebsites] = useState(true);
   const [OfflineWebsites, setOfflineWebsites] = useState();
   const [active, setActive] = useState("Transaction");
+  const [activeDrop, setActiveDrop] = useState(false);
 
   const handleActiveButton = (type) => {
     setActive(type);
+    setActiveDrop((prev) => !prev);
     console.log(type);
   };
-  const handleOffline = () => {
-    setOfflineWebsites(true);
-    setOnlineWebsites(false);
-  };
-  const handleOnline = () => {
-    setOfflineWebsites(false);
-    setOnlineWebsites(true);
+  // const handleOffline = () => {
+  //   setOfflineWebsites(true);
+  //   setOnlineWebsites(false);
+  // };
+  const handleOnline = (item) => {
+    // setOfflineWebsites(false);
+    setOnlineWebsites(item);
   };
   return (
     <div className="p-4 w-100">
@@ -77,7 +81,7 @@ function Usertransaction() {
       <div>
         <Totalaccount />
       </div>
-      <div className="gutter-1rem p-2 d-flex ">
+      <div className="gutter-1rem p-2 d-flex head-container">
         <div className="d-flex flex-column">
           <div
             className={`d-flex table-header-box medium-font p-2 px-4 py-2 m-1 align-items-center
@@ -88,14 +92,14 @@ function Usertransaction() {
             <div className="medium-font ps-2">Websites/Limit</div>
             <MdKeyboardArrowDown className="fs-6" />
           </div>
-          {/* {active === "Websites/Limit" && (
+          {active === "Websites/Limit" && activeDrop === true && (
             <div className="empty-bg-br d-flex flex-column justify-content-between online-div th-color medium-font">
               <div className="d-flex justify-content-between p-2">
-                <span onClick={() => handleOnline()}>Online</span>
-                <span onClick={() => handleOffline()}>Offline</span>
+                <span onClick={() => handleOnline("online")}>Online</span>
+                <span onClick={() => handleOnline("offline")}>Offline</span>
               </div>
               <hr className="hr-line" />
-              {OnlineWebsites && (
+              {OnlineWebsites === "online" && (
                 <div>
                   <div className="d-flex justify-content-between p-2">
                     <span>www.we2call.com</span>
@@ -132,7 +136,7 @@ function Usertransaction() {
                   </div>
                 </div>
               )}
-              {OfflineWebsites && (
+              {OnlineWebsites === "offline" && (
                 <div className="d-flex justify-content-between p-2">
                   <span>www.we2call.com</span>
                   <span class="form-check">
@@ -146,7 +150,7 @@ function Usertransaction() {
                 </div>
               )}
             </div>
-          )} */}
+          )}
         </div>
         <div
           className={`d-flex table-header-box height-fit-content medium-font p-2 px-4 py-2 m-1 align-items-center
@@ -165,7 +169,15 @@ function Usertransaction() {
           <div className="medium-font ps-2">Transaction</div>
         </div>
       </div>
-      {active === "Websites/Limit" && <WebsitesLimit />}
+      {active === "Websites/Limit" && OnlineWebsites === "online" && (
+        <WebsitesLimit />
+      )}
+      {active === "Websites/Limit" && OnlineWebsites === "offline" && (
+        <div>
+          <RevenueOfflineShare />
+          <RevenueOfflineTable />
+        </div>
+      )}
       {active === "Payment Gateway" && <PaymentGateway />}
       {active === "Transaction" && <TransactionTable />}
     </div>
