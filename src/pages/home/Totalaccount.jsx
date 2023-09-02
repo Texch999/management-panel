@@ -24,7 +24,10 @@ function Totalaccount() {
             </div>
           </div>
         </div>
-        <div className="col-sm-6 col-md-4 col-lg-3 p-1">
+        <div
+          className="col-sm-6 col-md-4 col-lg-3
+                        p-2"
+        >
           <div className="d-flex justify-content-between home-border-radius sidebar-bg text-white p-4 align-items-center">
             <div>
               <span>Total Balance</span>
@@ -35,7 +38,10 @@ function Totalaccount() {
             </div>
           </div>
         </div>
-        <div className="col-sm-6 col-md-4 col-lg-3 p-1">
+        <div
+          className="col-sm-6 col-md-4 col-lg-3
+                        p-2"
+        >
           <div className="d-flex justify-content-between home-border-radius sidebar-bg text-white p-4 align-items-center">
             <div>
               <span>Total Profit</span>
@@ -46,7 +52,10 @@ function Totalaccount() {
             </div>
           </div>
         </div>
-        <div className="col-sm-6 col-md-4 col-lg-3 p-1">
+        <div
+          className="col-sm-6 col-md-4 col-lg-3
+                        p-1"
+        >
           <div className="d-flex justify-content-between home-border-radius sidebar-bg text-white p-4 align-items-center">
             <div>
               <span>Total Customer</span>

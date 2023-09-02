@@ -341,13 +341,16 @@ input::placeholder {
   width: fit-content;
 }
 .online-div {
-  margin-top: 2.5rem;
-  position: absolute;
+  /* margin-top: 2.5rem; */
+  position: relative;
   z-index: 9999;
-  width: 14%;
+  width: 100%;
   margin-left: 4px;
 }
-.check-box-input-clr {
+.head-container{
+  height: 8vh !important;
+}
+.check-box-input-clr{
   --bs-form-check-bg: #555774 !important;
   border: none !important;
 }
@@ -367,7 +370,10 @@ input::placeholder {
 .balance-cls {
   background-color: #ffb400;
 }
-.box-border-radius {
+.diamond-box-bg{
+  background-color: #ff4c51;
+}
+.box-border-radius{
   border-radius: 6px;
 }
 .casino-box-bg {

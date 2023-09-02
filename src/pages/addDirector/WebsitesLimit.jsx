@@ -5,8 +5,9 @@ import RevenueOfflineShare from "./RevenueOfflineShare";
 import RevenueOnlineShare from "./RevenueOnlineShare";
 import RevenueOnlineFixd from "./RevenueOnlineFixd";
 import TotalPaidBalanceTable from "./TotalPaidBalanceTable";
+import RevenueOfflineTable from "./RevenueOfflineTable";
 function WebsitesLimit() {
-  const [paymentTypeSelect, setPaymentTypeSelect] = useState("");
+  const [paymentTypeSelect, setPaymentTypeSelect] = useState("share");
   const handlePaymentSelect = (e) => {
     setPaymentTypeSelect(e.target.value);
   };
