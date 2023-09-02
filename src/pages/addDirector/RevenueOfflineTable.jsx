@@ -102,7 +102,7 @@ function RevenueOfflineTable(props) {
             <div className="row">
               {purchaseboxes.map((item, index) => {
                 return (
-                  <div className="col" key={index}>
+                  <div className=" col" key={index}>
                     <div className="th-color small-font py-1">
                       {item.header}
                     </div>
