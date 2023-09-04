@@ -21,6 +21,9 @@ import Broadcasting from "./pages/broadcasting/Broadcasting";
 import Offersmanagement from "./pages/offersmanagement/Offersmanagement";
 import Creatematch from "./pages/matchCreation/Creatematch";
 import Usertransaction from "./pages/addDirector/Usertransaction";
+import PolicyDocument from "./pages/referenceData/PolicyDocument";
+import Settlement from "./pages/reports/Settlement";
+import SettlementStatement from "./pages/reports/SettlementStatement";
 function App() {
   return (
     <BrowserRouter>
@@ -44,6 +47,15 @@ function App() {
               <Route path="/tickets" element={<Tickets />}></Route>
               <Route path="/reports" element={<Reports />}></Route>
               <Route path="/packages" element={<Packages />}></Route>
+              <Route path="/settlement" element={<Settlement />}></Route>
+              <Route
+                path="/settlementstatement"
+                element={<SettlementStatement />}
+              ></Route>
+              <Route
+                path="/policydocuments"
+                element={<PolicyDocument />}
+              ></Route>
               <Route
                 path="/countrycurrency"
                 element={<Countrycurrency />}

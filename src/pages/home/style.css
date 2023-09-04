@@ -156,6 +156,9 @@ body {
 .w-45 {
   width: 45%;
 }
+.w-40 {
+  width: 40%;
+}
 .w-55 {
   width: 55%;
 }
@@ -165,7 +168,9 @@ body {
 .w-80 {
   width: 80%;
 }
-
+.w-90 {
+  width: 90%;
+}
 .h-40vh {
   height: 40vh;
 }
@@ -241,6 +246,11 @@ body {
 .table-header-box {
   color: #cbcbe2;
   background-color: #323349;
+  border-radius: 5px;
+}
+.accounts-box {
+  color: #cbcbe2;
+  background-color: #3a3c58;
   border-radius: 5px;
 }
 .dropdown-box {
@@ -372,6 +382,10 @@ input::placeholder {
 }
 .head-container {
   height: 8vh !important;
+}
+.diamond-img-size {
+  width: 10px;
+  height: 10px;
 }
 .check-box-input-clr {
   --bs-form-check-bg: #555774 !important;

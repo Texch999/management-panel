@@ -11,4 +11,9 @@ export const Images = {
   GoldSmallImg: "./assets/gold-small.png",
   DiamondSmallImg: "./assets/diamond-small.png",
   VIPSmallImg: "./assets/vip-small.png",
+  Diamond: "./assets/Diamond.png",
+  Gold: "./assets/Gold.png",
+  Silver: "./assets/Silver.png",
+  Standard: "./assets/Standard.png",
+  Vip: "./assets/VIP.png",
 };

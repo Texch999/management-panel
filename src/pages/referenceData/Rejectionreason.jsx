@@ -7,31 +7,31 @@ function Rejectionreason() {
     {
       reason: "Insufficient Balance",
       description: "Not enough balance in Users account",
-      status: "Aactive",
+      status: "Active",
       icon: <MdOutlineEdit className="eye-icon-size" />,
     },
     {
       reason: "Insufficient Balance",
       description: "Not enough balance in Users account",
-      status: "Aactive",
+      status: "Active",
       icon: <MdOutlineEdit className="eye-icon-size" />,
     },
     {
       reason: "Insufficient Balance",
       description: "Not enough balance in Users account",
-      status: "Aactive",
+      status: "Active",
       icon: <MdOutlineEdit className="eye-icon-size" />,
     },
     {
       reason: "Insufficient Balance",
       description: "Not enough balance in Users account",
-      status: "Aactive",
+      status: "Active",
       icon: <MdOutlineEdit className="eye-icon-size" />,
     },
     {
       reason: "Insufficient Balance",
       description: "Not enough balance in Users account",
-      status: "Aactive",
+      status: "Active",
       icon: <MdOutlineEdit className="eye-icon-size" />,
     },
   ];

@@ -175,7 +175,7 @@ function Usertransaction() {
       {active === "Websites/Limit" && OnlineWebsites === "offline" && (
         <div>
           <RevenueOfflineShare />
-          <RevenueOfflineTable />
+          {/* <RevenueOfflineTable /> */}
         </div>
       )}
       {active === "Payment Gateway" && <PaymentGateway />}

@@ -1,11 +1,14 @@
 import React from "react";
 import TotalPaidBalanceTable from "./TotalPaidBalanceTable";
-
+import { Images } from "../../images";
 function RevenueOfflineTable(props) {
     const {we2callgameName} = props
   const purchaseboxes = [
     {
-      header: "Standard",
+      header: <div className="d-flex align-items-center justify-content-between">
+        <div>Standard</div>
+        <img src={Images.Standard} className="diamond-img-size" />
+      </div>,
       cssClass: "bal-bg-box box-border-radius p-3",
       buytext: "Buy",
       buyvalue: "10000",
@@ -15,7 +18,10 @@ function RevenueOfflineTable(props) {
       balvalue: "10000",
     },
     {
-      header: "Silver",
+      header: <div className="d-flex align-items-center justify-content-between">
+      <div>Silver</div>
+      <img src={Images.Silver} className="diamond-img-size" />
+    </div>,
       cssClass: "total-cls box-border-radius p-3",
       buytext: "Buy",
       buyvalue: "10000",
@@ -25,7 +31,10 @@ function RevenueOfflineTable(props) {
       balvalue: "10000",
     },
     {
-      header: "Gold",
+      header: <div className="d-flex align-items-center justify-content-between">
+      <div>Gold</div>
+      <img src={Images.Gold} className="diamond-img-size" />
+    </div>,
       cssClass: "paid-cls box-border-radius p-3",
       buytext: "Buy",
       buyvalue: "10000",
@@ -35,7 +44,10 @@ function RevenueOfflineTable(props) {
       balvalue: "10000",
     },
     {
-      header: "Diamond",
+      header: <div className="d-flex align-items-center justify-content-between">
+      <div>Diamond</div>
+      <img src={Images.Diamond} className="diamond-img-size" />
+    </div>,
       cssClass: "diamond-box-bg box-border-radius p-3",
       buytext: "Buy",
       buyvalue: "10000",
@@ -45,7 +57,10 @@ function RevenueOfflineTable(props) {
       balvalue: "10000",
     },
     {
-      header: "Vip",
+      header: <div className="d-flex align-items-center justify-content-between">
+      <div>Vip</div>
+      <img src={Images.Vip} className="diamond-img-size" />
+    </div>,
       cssClass: "balance-cls box-border-radius p-3",
       buytext: "Buy",
       buyvalue: "10000",
@@ -87,7 +102,7 @@ function RevenueOfflineTable(props) {
             <div className="row">
               {purchaseboxes.map((item, index) => {
                 return (
-                  <div className="col" key={index}>
+                  <div className=" col" key={index}>
                     <div className="th-color small-font py-1">
                       {item.header}
                     </div>
