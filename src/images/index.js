@@ -4,6 +4,11 @@ export const Images = {
   ProfileTwo: "./assets/profile-pic1 (2).png",
   ProfileThree: "./assets/profile-pic1 (3).png",
   ProfileFour: "./assets/profile-pic1 (4).png",
-  PersonImg : "./assets/person-img.png",
-  ProfileBanner : "./assets/profile-banner.png",
+  PersonImg: "./assets/person-img.png",
+  ProfileBanner: "./assets/profile-banner.png",
+  StandardSmallImg: "./assets/standard-small.png",
+  SilverSmallImg: "./assets/silver-small.png",
+  GoldSmallImg: "./assets/gold-small.png",
+  DiamondSmallImg: "./assets/diamond-small.png",
+  VIPSmallImg: "./assets/vip-small.png",
 };

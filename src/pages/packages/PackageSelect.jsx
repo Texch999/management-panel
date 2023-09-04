@@ -33,6 +33,7 @@ function PackageSelect() {
           </select>
         </div>
       </div>
+      <hr className="hr-line mt-3" />
     </div>
   );
 }
