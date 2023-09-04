@@ -153,6 +153,9 @@ input::-webkit-calendar-picker-indicator {
   border-radius: 10px;
   border: none !important;
 }
+.w-20{
+  width: 20%;
+}
 .w-45 {
   width: 45%;
 }

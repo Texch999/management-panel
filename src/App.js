@@ -24,6 +24,7 @@ import Usertransaction from "./pages/addDirector/Usertransaction";
 import PolicyDocument from "./pages/referenceData/PolicyDocument";
 import Settlement from "./pages/reports/Settlement";
 import SettlementStatement from "./pages/reports/SettlementStatement";
+import MyStatement from "./pages/reports/MyStatement";
 function App() {
   return (
     <BrowserRouter>
@@ -48,6 +49,7 @@ function App() {
               <Route path="/reports" element={<Reports />}></Route>
               <Route path="/packages" element={<Packages />}></Route>
               <Route path="/settlement" element={<Settlement />}></Route>
+              <Route path="/mystatement" element={<MyStatement />}></Route>
               <Route
                 path="/settlementstatement"
                 element={<SettlementStatement />}
