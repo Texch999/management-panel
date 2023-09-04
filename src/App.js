@@ -33,7 +33,7 @@ function App() {
         </div>
         <div className="col w-auto home-bg vh-100">
           <Header />
-          <div className="homepage-div">
+          <div className="homepage-div mt-8vh">
             <Routes>
               <Route path="/" element={<Homepage />}></Route>
               <Route path="/addwebsites" element={<Addwebsites />}></Route>

@@ -87,7 +87,7 @@ function Countrycurrency() {
   );
 
   return (
-    <div className="p-4 w-100">
+    <div className="p-4 w-100 mt-8vh">
       <span className="th-color medium-font">Country Currency</span>
       <div className="sidebar-bg rounded">
         <div className="d-flex align-items-center justify-content-between">
