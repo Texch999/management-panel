@@ -2,16 +2,31 @@ input::-webkit-calendar-picker-indicator {
   color: red;
   opacity: 0;
 }
-
+body {
+  background-color: #232333 !important;
+}
+.header-div {
+  width: 88%;
+  height: 8vh;
+  position: fixed;
+  top: 0;
+}
+.homepage-div {
+  width: 88%;
+  height: 92vh;
+  position: fixed;
+  bottom: 0;
+  overflow-y: scroll;
+}
 @media (min-width: 577px) and (max-width: 768px) {
   .small-font {
-    font-size: 8px;
+    font-size: 0.5rem;
   }
   .medium-font {
-    font-size: 10px;
+    font-size: 0.7rem;
   }
   .large-font {
-    font-size: 12px;
+    font-size: 0.9rem;
   }
   .height {
     height: fit-content;
@@ -26,13 +41,13 @@ input::-webkit-calendar-picker-indicator {
 
 @media (min-width: 769px) and (max-width: 1200px) {
   .small-font {
-    font-size: 8px;
+    font-size: 0.6rem;
   }
   .medium-font {
-    font-size: 10px;
+    font-size: 0.7rem;
   }
   .large-font {
-    font-size: 12px;
+    font-size: 1rem;
   }
   .height {
     height: fit-content;
@@ -45,15 +60,35 @@ input::-webkit-calendar-picker-indicator {
   }
 }
 
-@media (min-width: 1201px) {
+@media (min-width: 1201px) and (max-width: 1600px) {
   .small-font {
-    font-size: 10px;
+    font-size: 0.7rem;
   }
   .medium-font {
-    font-size: 12px;
+    font-size: 0.8rem;
   }
   .large-font {
-    font-size: 14px;
+    font-size: 1.1rem;
+  }
+  .height {
+    height: fit-content;
+  }
+  .grapgheight {
+    height: fit-content;
+  }
+  .tableheight {
+    height: 35vh;
+  }
+}
+@media (min-width: 1601px) {
+  .small-font {
+    font-size: 0.8rem;
+  }
+  .medium-font {
+    font-size: 1rem;
+  }
+  .large-font {
+    font-size: 1.5rem;
   }
   .height {
     height: fit-content;
@@ -79,7 +114,8 @@ input::-webkit-calendar-picker-indicator {
   border: none;
 }
 .search-width {
-  border-radius: 10px;
+  width: 98% !important;
+  outline: none;
 }
 .search-icon {
   position: absolute;
@@ -99,6 +135,7 @@ input::-webkit-calendar-picker-indicator {
 
 .fa-dollar-icon {
   color: #696cff;
+  font-weight: bold !important;
 }
 .fa-circledollar-icon {
   color: aqua;
@@ -119,7 +156,7 @@ input::-webkit-calendar-picker-indicator {
 .w-45 {
   width: 45%;
 }
-.w-40{
+.w-40 {
   width: 40%;
 }
 .w-55 {
@@ -131,7 +168,7 @@ input::-webkit-calendar-picker-indicator {
 .w-80 {
   width: 80%;
 }
-.w-90{
+.w-90 {
   width: 90%;
 }
 .h-40vh {
@@ -160,7 +197,8 @@ input::-webkit-calendar-picker-indicator {
   color: #ffb400 !important;
 }
 .bluecolor-text {
-  color: #696cff;
+  color: #696cff !important;
+  font-weight: 600 !important;
 }
 .pegina-btn-clr {
   color: #696b9a;
@@ -210,7 +248,7 @@ input::-webkit-calendar-picker-indicator {
   background-color: #323349;
   border-radius: 5px;
 }
-.accounts-box{
+.accounts-box {
   color: #cbcbe2;
   background-color: #3a3c58;
   border-radius: 5px;
@@ -326,8 +364,8 @@ input::placeholder {
 .hr-line {
   margin: 0px !important;
   opacity: 0.1;
-  border: solid 1px #fff;
-  background-color: #fff;
+  border: solid 1px #cbcbe2;
+  background-color: #cbcbe2;
 }
 .height-fit-content {
   height: fit-content;
@@ -342,37 +380,37 @@ input::placeholder {
   width: 100%;
   margin-left: 4px;
 }
-.head-container{
+.head-container {
   height: 8vh !important;
 }
-.diamond-img-size{
-width:10px;
-height: 10px;
+.diamond-img-size {
+  width: 10px;
+  height: 10px;
 }
-.check-box-input-clr{
+.check-box-input-clr {
   --bs-form-check-bg: #555774 !important;
-  border:none !important;
+  border: none !important;
 }
-.button-input-clr{
+.button-input-clr {
   --bs-form-check-bg: #3e4058 !important;
   /* background-color: #696cff !important; */
 }
-.bal-bg-box{
+.bal-bg-box {
   background: #9155fd;
 }
-.total-cls{
+.total-cls {
   background-color: #8a8d93;
 }
-.paid-cls{
+.paid-cls {
   background-color: #16b1ff;
 }
-.balance-cls{
+.balance-cls {
   background-color: #ffb400;
 }
-.diamond-box-bg{
+.diamond-box-bg {
   background-color: #ff4c51;
 }
-.box-border-radius{
+.box-border-radius {
   border-radius: 6px;
 }
 .casino-box-bg {
@@ -380,7 +418,7 @@ height: 10px;
   background-color: #3a3c58;
   border-radius: 3px;
 }
-.casino-box-field-bg{
+.casino-box-field-bg {
   background-color: #4a4c69;
   border-radius: 6px;
 }
