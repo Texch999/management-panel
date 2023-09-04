@@ -5,8 +5,8 @@
   background-color: #9155fd;
   color: #ffffff;
   border-radius: 50%;
-  height: 3rem;
-  width: 3rem;
+  height: 2.5rem;
+  width: 2.5rem;
 }
 .font-grey {
   color: #cbcbe2;
@@ -19,4 +19,13 @@
 }
 .w-90 {
   width: 88% !important;
+}
+.w-98 {
+  width: 98% !important;
+}
+.select-bg {
+  background-color: #3a3c58;
+  color: #a3a4cc;
+  outline: none;
+  border: none;
 }

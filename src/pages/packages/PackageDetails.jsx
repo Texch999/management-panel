@@ -30,15 +30,15 @@ function PackageDetails() {
   return (
     <div className="row">
       {PACKAGR_DETAILS_DATA?.map((item, index) => (
-        <div className="col-sm-6 col-lg-3">
+        <div className="col-sm-6 col-lg-3 mt-1">
           <div className="package-bg rounded p-2 d-flex">
             <div className="row w-100">
               <div className="col-9">
                 <div className="p-1">
-                  <p className="font-grey">{item.text}</p>
+                  <p className="font-grey small-font">{item.text}</p>
                   <div className="d-flex">
-                    <h5 className="font-grey">{item.amount}</h5>
-                    <span className="font-green px-2">{item.profitLoss}</span>
+                    <h5 className="font-grey medium-font">{item.amount}</h5>
+                    <span className="font-green small-font px-2">{item.profitLoss}</span>
                   </div>
                 </div>
               </div>
