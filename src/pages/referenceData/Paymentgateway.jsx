@@ -9,7 +9,7 @@ function Paymentgateway() {
       lastupdate: "18/08/2023",
       country: "India ",
       currency: "INR ₹",
-      status: "Aactive",
+      status: "Active",
       icon: <MdOutlineEdit className="eye-icon-size" />,
     },
     {
@@ -17,7 +17,7 @@ function Paymentgateway() {
       lastupdate: "18/08/2023",
       country: "India ",
       currency: "INR ₹",
-      status: "Aactive",
+      status: "Active",
       icon: <MdOutlineEdit className="eye-icon-size" />,
     },
     {
@@ -25,7 +25,7 @@ function Paymentgateway() {
       lastupdate: "18/08/2023",
       country: "India ",
       currency: "INR ₹",
-      status: "Aactive",
+      status: "Active",
       icon: <MdOutlineEdit className="eye-icon-size" />,
     },
     {
@@ -33,7 +33,7 @@ function Paymentgateway() {
       lastupdate: "18/08/2023",
       country: "India ",
       currency: "INR ₹",
-      status: "Aactive",
+      status: "Active",
       icon: <MdOutlineEdit className="eye-icon-size" />,
     },
     {
@@ -41,7 +41,7 @@ function Paymentgateway() {
       lastupdate: "18/08/2023",
       country: "India ",
       currency: "INR ₹",
-      status: "Aactive",
+      status: "Active",
       icon: <MdOutlineEdit className="eye-icon-size" />,
     },
   ];

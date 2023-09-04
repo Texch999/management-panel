@@ -6,27 +6,27 @@ function Securityquestions() {
   const SECURITYQUESTIONS_DETAILS = [
     {
       questions: "What is your pet name?",
-      status: "Aactive",
+      status: "Active",
       icon: <MdOutlineEdit className="eye-icon-size" />,
     },
     {
       questions: "What is your favorite color?",
-      status: "Aactive",
+      status: "Active",
       icon: <MdOutlineEdit className="eye-icon-size" />,
     },
     {
       questions: "What is your favorite animal?",
-      status: "Aactive",
+      status: "Active",
       icon: <MdOutlineEdit className="eye-icon-size" />,
     },
     {
       questions: "When is your birthday?",
-      status: "Aactive",
+      status: "Active",
       icon: <MdOutlineEdit className="eye-icon-size" />,
     },
     {
       questions: "What is your favorite summer activity?",
-      status: "Aactive",
+      status: "Active",
       icon: <MdOutlineEdit className="eye-icon-size" />,
     },
   ];

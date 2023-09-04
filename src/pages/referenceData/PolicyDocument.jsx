@@ -1,46 +1,34 @@
-import React from "react";
+import React from 'react';
 import Table from "../table/Table";
 import { MdOutlineEdit } from "react-icons/md";
-
-function Countrycurrency() {
-  const COUNTRYCURRENCY_DETAILS = [
+const POLICYDOCUMENT_DETAILS = [
     {
       countryname: "India ",
-      currency: "INR ₹",
-      availableaccounts: "Bank Details, Wallet, QR Code",
-      showwebsites: "www.texch.com www.we2call.com www.ravanna.com",
+      showwebsites: "www.texch.com",
       status: "Active",
       icon: <MdOutlineEdit className="eye-icon-size" />,
     },
     {
       countryname: "USA ",
-      currency: "USD $",
-      availableaccounts: "Bank Details, Wallet, QR Code",
-      showwebsites: "www.texch.com www.we2call.com www.ravanna.com",
-      status: "In-active",
+      showwebsites: "www.we2call",
+      status: "Active",
       icon: <MdOutlineEdit className="eye-icon-size" />,
     },
     {
       countryname: "India ",
-      currency: "INR ₹",
-      availableaccounts: "Bank Details, Wallet, QR Code",
-      showwebsites: "www.texch.com www.we2call.com www.ravanna.com",
-      status: "In-active",
+      showwebsites: "www.ravanna.com",
+      status: "Active",
       icon: <MdOutlineEdit className="eye-icon-size" />,
     },
     {
       countryname: "Gemany ",
-      currency: "EUR €",
-      availableaccounts: "Bank Details, Wallet, QR Code",
-      showwebsites: "www.texch.com www.we2call.com www.ravanna.com",
-      status: "In-active",
+      showwebsites: "we2call.com",
+      status: "Active",
       icon: <MdOutlineEdit className="eye-icon-size" />,
     },
     {
       countryname: "India ",
-      currency: "INR ₹",
-      availableaccounts: "Bank Details, Wallet, QR Code",
-      showwebsites: "www.texch.com www.we2call.com www.ravanna.com",
+      showwebsites: "www.texch.com",
       status: "Active",
       icon: <MdOutlineEdit className="eye-icon-size" />,
     },
@@ -51,14 +39,7 @@ function Countrycurrency() {
       header: "COUNTRY NAME",
       field: "countryname",
     },
-    {
-      header: "CURRENCY",
-      field: "currency",
-    },
-    {
-      header: "AVAILABLE ACCOUNTS",
-      field: "availableaccounts",
-    },
+   
     {
       header: "SHOW WEBSITES",
       field: "showwebsites",
@@ -75,7 +56,7 @@ function Countrycurrency() {
     },
   ];
 
-  const modifiedCountrycurrencyDetails = COUNTRYCURRENCY_DETAILS.map(
+  const modifiedPolicydocumentDetails = POLICYDOCUMENT_DETAILS.map(
     (item) => ({
       ...item,
       countryname: (
@@ -85,14 +66,14 @@ function Countrycurrency() {
       ),
     })
   );
-
+function PolicyDocument() {
   return (
     <div className="p-4 w-100">
-      <span className="th-color medium-font">Country Currency</span>
+      <span className="th-color medium-font">Policy Document</span>
       <div className="sidebar-bg rounded">
         <div className="d-flex align-items-center justify-content-between">
           <div className=" small-font font-weight-bold px-2 p-2 m-1 th-color">
-            All Country/Currency
+           All Policy Document
           </div>
           <div className=" d-flex justify-conten-between">
             <div className="containaer-fluid px-2 w-20">
@@ -112,11 +93,12 @@ function Countrycurrency() {
             </div>
           </div>
         </div>
-
-        <Table columns={cols} data={modifiedCountrycurrencyDetails} />
+       <div>
+        <Table columns={cols} data={modifiedPolicydocumentDetails} />
+        </div>
       </div>
     </div>
-  );
+  )
 }
 
-export default Countrycurrency;
+export default PolicyDocument
