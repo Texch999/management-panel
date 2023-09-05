@@ -41,6 +41,9 @@
   border: none !important;
   outline: none !important;
 }
-select {
+.payment-modal select {
+  color: #a3a4cc;
+}
+.payment-modal i {
   color: #a3a4cc;
 }
