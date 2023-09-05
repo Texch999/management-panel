@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import Table from "../table/Table";
 import Totalaccount from "../home/Totalaccount";
 import { MdKeyboardArrowUp, MdKeyboardArrowDown } from "react-icons/md";
+import AddWebsitePopup from "../Popups/AddWebsitePopup";
 function Addwebsites() {
   const ADDWEBSITE_DETAILS = [
     {
@@ -148,6 +149,11 @@ function Addwebsites() {
       </div>
     ),
   }));
+  const [showAddWebPopup, setShowAddWebPopup] = useState(false);
+  const handleShowAddWebPopup = () => {
+    setShowAddWebPopup(true);
+    console.log("click me!!!!");
+  };
   return (
     <div className="p-4 w-100">
       <div>
@@ -170,7 +176,10 @@ function Addwebsites() {
                 />
               </form>
             </div>
-            <div className="row justify-content-md-center mt-2 ms-1 p-1">
+            <div
+              className="row justify-content-md-center mt-2 ms-1 p-1"
+              onClick={() => handleShowAddWebPopup()}
+            >
               <div className="active text-white col-md-auto small-font justify-content-between p-2 px-4 m-1">
                 +Add Website
               </div>
@@ -180,6 +189,10 @@ function Addwebsites() {
 
         <Table columns={cols} data={modifiedAddwebsiteDetails} />
       </div>
+      <AddWebsitePopup
+        showAddWebPopup={showAddWebPopup}
+        setShowAddWebPopup={setShowAddWebPopup}
+      />
     </div>
   );
 }

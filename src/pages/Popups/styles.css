@@ -1,0 +1,22 @@
+.match-share-modal .modal-content,
+.match-declaration-modal .modal-content {
+  background-color: #2b2c40;
+}
+.match-declaration-modal .modal-header,
+.match-share-modal .modal-header {
+  padding: 5px 15px !important;
+  border-bottom: none;
+}
+.match-share-modal .modal-body {
+  padding: 0px;
+  color: #ffffff;
+}
+.match-declaration-modal .modal-content {
+  width: 60%;
+  margin-left: 18%;
+}
+.add-button {
+  background-color: #696cff;
+  border: none;
+  color: #ffffff;
+}
