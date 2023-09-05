@@ -119,7 +119,7 @@ input::-webkit-calendar-picker-indicator {
 }
 .sidebar-bg {
   background-color: #2b2c40 !important;
-  border: none !important;
+  border: none;
 }
 .search-width {
   width: 96% !important;
