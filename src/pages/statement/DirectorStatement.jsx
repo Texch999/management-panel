@@ -1,12 +1,13 @@
 import Table from "./../table/Table";
 import { AiOutlineEye } from "react-icons/ai";
-function OwnerStatement() {
-  const OWNER_ROW_DATA = [
+
+function DirectorStatement() {
+  const DIRECTOR_ROW_DATA = [
     {
       userName: (
         <div className="d-flex flex-column">
           <div>Srinivas</div>
-          <div className="role-color">Director</div>
+          <div className="role-color">SA</div>
         </div>
       ),
       pkgAmount: 500000,
@@ -33,7 +34,7 @@ function OwnerStatement() {
       userName: (
         <div className="d-flex flex-column">
           <div>Srinivas</div>
-          <div className="role-color">Director</div>
+          <div className="role-color">SA</div>
         </div>
       ),
       pkgAmount: 500000,
@@ -60,7 +61,7 @@ function OwnerStatement() {
       userName: (
         <div className="d-flex flex-column">
           <div>Srinivas</div>
-          <div className="role-color">Director</div>
+          <div className="role-color">SA</div>
         </div>
       ),
       pkgAmount: 500000,
@@ -84,7 +85,7 @@ function OwnerStatement() {
       viewDownline: <AiOutlineEye className="eye-icon" />,
     },
   ];
-  const OWNER_COLUMN_DATA = [
+  const DIRECTOR_COLUMN_DATA = [
     {
       header: "USER NAME/ROLE",
       field: "userName",
@@ -132,7 +133,7 @@ function OwnerStatement() {
         <div className="row p-3">
           <div className="col d-flex align-items-center">
             <h6 className="h6 mb-0 font-grey">
-              Downline Balance Statement/Owner
+              View Downline Director Srinivas
             </h6>
           </div>
           <div className="col d-flex align-items-center justify-content-end">
@@ -145,7 +146,7 @@ function OwnerStatement() {
           </div>
         </div>
         <div>
-          <Table data={OWNER_ROW_DATA} columns={OWNER_COLUMN_DATA} />
+          <Table data={DIRECTOR_ROW_DATA} columns={DIRECTOR_COLUMN_DATA} />
           <div className="th-color d-flex align-items-center justify-content-center">
             TOTAL
           </div>
@@ -158,4 +159,4 @@ function OwnerStatement() {
   );
 }
 
-export default OwnerStatement;
+export default DirectorStatement;

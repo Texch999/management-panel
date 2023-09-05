@@ -1,12 +1,13 @@
 import Table from "./../table/Table";
 import { AiOutlineEye } from "react-icons/ai";
-function OwnerStatement() {
-  const OWNER_ROW_DATA = [
+
+function SuperAdminTable() {
+  const SUPER_ADMIN_ROW_DATA = [
     {
       userName: (
         <div className="d-flex flex-column">
           <div>Srinivas</div>
-          <div className="role-color">Director</div>
+          <div className="role-color">Admin</div>
         </div>
       ),
       pkgAmount: 500000,
@@ -33,7 +34,7 @@ function OwnerStatement() {
       userName: (
         <div className="d-flex flex-column">
           <div>Srinivas</div>
-          <div className="role-color">Director</div>
+          <div className="role-color">Master</div>
         </div>
       ),
       pkgAmount: 500000,
@@ -60,7 +61,7 @@ function OwnerStatement() {
       userName: (
         <div className="d-flex flex-column">
           <div>Srinivas</div>
-          <div className="role-color">Director</div>
+          <div className="role-color">Sub A</div>
         </div>
       ),
       pkgAmount: 500000,
@@ -84,7 +85,7 @@ function OwnerStatement() {
       viewDownline: <AiOutlineEye className="eye-icon" />,
     },
   ];
-  const OWNER_COLUMN_DATA = [
+  const SUPER_ADMIN_COLUMN_DATA = [
     {
       header: "USER NAME/ROLE",
       field: "userName",
@@ -128,34 +129,15 @@ function OwnerStatement() {
   ];
   return (
     <div>
-      <div className="package-bg rounded">
-        <div className="row p-3">
-          <div className="col d-flex align-items-center">
-            <h6 className="h6 mb-0 font-grey">
-              Downline Balance Statement/Owner
-            </h6>
-          </div>
-          <div className="col d-flex align-items-center justify-content-end">
-            <select className="w-25 medium-font font-grey p-2 package-bg rounded outline-none">
-              <option>ALL</option>
-              <option>Texch</option>
-              <option>We2Call</option>
-              <option>Raavana</option>
-            </select>
-          </div>
-        </div>
-        <div>
-          <Table data={OWNER_ROW_DATA} columns={OWNER_COLUMN_DATA} />
-          <div className="th-color d-flex align-items-center justify-content-center">
-            TOTAL
-          </div>
-          <div className="th-color d-flex align-items-center justify-content-center">
-            PAGINATION
-          </div>
-        </div>
+      <Table data={SUPER_ADMIN_ROW_DATA} columns={SUPER_ADMIN_COLUMN_DATA} />
+      <div className="th-color d-flex align-items-center justify-content-center">
+        TOTAL
+      </div>
+      <div className="th-color d-flex align-items-center justify-content-center">
+        PAGINATION
       </div>
     </div>
   );
 }
 
-export default OwnerStatement;
+export default SuperAdminTable;
