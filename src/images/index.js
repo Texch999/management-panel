@@ -16,4 +16,6 @@ export const Images = {
   Silver: "./assets/Silver.png",
   Standard: "./assets/Standard.png",
   Vip: "./assets/VIP.png",
+  QuestionMark: "./assets/question_mark.png",
+  CheckedMark: "./assets/checked_Mark.png",
 };

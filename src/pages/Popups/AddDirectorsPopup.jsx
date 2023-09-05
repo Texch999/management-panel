@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Button, Col, Container, Modal, Row } from "react-bootstrap";
 import "./styles.css";
+import MatchSubmitPopup from "../../matchpopups/MatchSubmitPopup";
 
 function AddDirectorsPopup(props) {
   const { showAddDirectorPopup, setShowAddDirectorPopup } = props;
@@ -19,6 +20,11 @@ function AddDirectorsPopup(props) {
     }
     setPasswordType("password");
   };
+  const [addDirectorsPopup, setAddDirectorPopup] = useState(false);
+  const handleAddDirectorPopup = () => {
+    setAddDirectorPopup(true);
+    setShowAddDirectorPopup(false);
+  };
   return (
     <div className="modal fade bd-example-modal-lg container mt-5">
       <Modal
@@ -28,7 +34,7 @@ function AddDirectorsPopup(props) {
         className="match-share-modal payment-modal"
       >
         <Modal.Header closeButton>
-          <div className="w-100">
+          <div className="w-100 mt-4">
             <h5 className="text-center mt-2 mb-4">Add Director & SA</h5>
           </div>
         </Modal.Header>
@@ -50,7 +56,7 @@ function AddDirectorsPopup(props) {
                 <input
                   type="number"
                   placeholder="Enter Amount"
-                  className="w-100 custom-select small-font input-btn-bg px-2 py-2 all-none rounded all-none"
+                  className="w-100 custom-select small-font login-inputs input-btn-bg px-2 py-2 all-none rounded all-none"
                 ></input>
               </div>
             </div>
@@ -65,7 +71,7 @@ function AddDirectorsPopup(props) {
                       value={passwordInput}
                       name="confirm password"
                       placeholder="Enter"
-                      className="w-100 custom-select small-font input-btn-bg px-2 py-2 all-none rounded all-none"
+                      className="w-100 custom-select login-inputs small-font input-btn-bg px-2 py-2 all-none rounded all-none"
                     ></input>
                     <button
                       onClick={togglePassword}
@@ -88,7 +94,7 @@ function AddDirectorsPopup(props) {
                       value={passwordInput}
                       name="password"
                       placeholder="Re-enter"
-                      className="w-100 custom-select small-font input-btn-bg px-2 py-2 all-none rounded all-none"
+                      className="w-100 custom-select small-font login-inputs input-btn-bg px-2 py-2 all-none rounded all-none"
                     ></input>
                     <button
                       onClick={togglePassword}
@@ -111,7 +117,7 @@ function AddDirectorsPopup(props) {
                   <input
                     type="text"
                     placeholder="Enter"
-                    className="w-100 custom-select small-font input-btn-bg px-2 py-2 all-none rounded all-none"
+                    className="w-100 custom-select small-font login-inputs input-btn-bg px-2 py-2 all-none rounded all-none"
                   ></input>
                 </Col>
                 <Col className="pe-0">
@@ -119,7 +125,7 @@ function AddDirectorsPopup(props) {
                   <input
                     type="number"
                     placeholder="Enter"
-                    className="w-100 custom-select small-font input-btn-bg px-2 py-2 all-none rounded all-none"
+                    className="w-100 custom-select small-font login-inputs input-btn-bg px-2 py-2 all-none rounded all-none"
                   ></input>
                 </Col>
               </Row>
@@ -131,12 +137,12 @@ function AddDirectorsPopup(props) {
                   <input
                     type="number"
                     placeholder="Enter"
-                    className="w-100 custom-select small-font input-btn-bg px-2 py-2 all-none rounded all-none"
+                    className="w-100 custom-select small-font login-inputs input-btn-bg px-2 py-2 all-none rounded all-none"
                   ></input>
                 </Col>
                 <Col className="pe-0">
                   <div className="small-font my-1">TimeZone</div>
-                  <select className="w-100 custom-select small-font input-btn-bg px-2 py-2 all-none rounded all-none">
+                  <select className="w-100 custom-select small-font login-inputs input-btn-bg px-2 py-2 all-none rounded all-none">
                     <option selected>Select</option>
                     <option> UTC+5:30 (India)</option>
                     <option> UTC+5:30 (India)</option>
@@ -150,13 +156,21 @@ function AddDirectorsPopup(props) {
               </Row>
             </Container>
             <div className="d-flex justify-content-center w-100 my-4">
-              <button className="add-button rounded px-2 py-3 w-50 medium-font">
+              <button
+                className="add-button rounded px-2 py-3 w-50 medium-font"
+                onClick={() => handleAddDirectorPopup()}
+              >
                 Create
               </button>
             </div>
           </div>
         </Modal.Body>
       </Modal>
+      <MatchSubmitPopup
+        header={"Payment Successfully Completed"}
+        state={addDirectorsPopup}
+        setState={setAddDirectorPopup}
+      />
     </div>
   );
 }

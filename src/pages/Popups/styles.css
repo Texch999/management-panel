@@ -15,6 +15,7 @@
 .match-declaration-modal .modal-content {
   width: 60%;
   margin-left: 18%;
+  color: #ffffff;
 }
 .match-share-modal .btn-close {
   color: #ffffff !important;
@@ -46,4 +47,19 @@
 }
 .payment-modal i {
   color: #a3a4cc;
+}
+.login-inputs {
+  border: none;
+  outline: none;
+  color: #a3a4cc;
+}
+.login-inputs::placeholder {
+  color: #c9d6f0 !important;
+  font-family: "Barlow-Regular";
+}
+.blue-button {
+  font-weight: 400;
+  color: #ffffff !important;
+  background-color: #696cff;
+  border: none !important;
 }
