@@ -1,4 +1,7 @@
 import { FaSackDollar } from "react-icons/fa6";
+import { LiaCoinsSolid } from "react-icons/lia";
+import { BiCoinStack } from "react-icons/bi";
+import { FiUser } from "react-icons/fi";
 
 function PackageDetails() {
   const PACKAGR_DETAILS_DATA = [
@@ -12,19 +15,19 @@ function PackageDetails() {
       text: "Total Users",
       amount: 20003.378,
       profitLoss: "",
-      icon: <FaSackDollar />,
+      icon: <LiaCoinsSolid />,
     },
     {
       text: "Non Uses Downline",
       amount: 333.653,
       profitLoss: "+8.12%",
-      icon: <FaSackDollar />,
+      icon: <BiCoinStack />,
     },
     {
       text: "Total Discount",
       amount: 54500,
       profitLoss: "+3.54%",
-      icon: <FaSackDollar />,
+      icon: <FiUser />,
     },
   ];
   return (
@@ -38,7 +41,9 @@ function PackageDetails() {
                   <p className="font-grey small-font">{item.text}</p>
                   <div className="d-flex">
                     <h5 className="font-grey medium-font">{item.amount}</h5>
-                    <span className="font-green small-font px-2">{item.profitLoss}</span>
+                    <span className="font-green small-font px-2">
+                      {item.profitLoss}
+                    </span>
                   </div>
                 </div>
               </div>
