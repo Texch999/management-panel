@@ -2,8 +2,9 @@ input::-webkit-calendar-picker-indicator {
   color: red;
   opacity: 0;
 }
+
 .header-div {
-  width: 85%;
+  width: 91%;
   height: 8vh;
   position: fixed;
   top: 0;
@@ -100,7 +101,14 @@ input::-webkit-calendar-picker-indicator {
     height: 35vh;
   }
 }
-
+.serch-text-color {
+  color: #5d5f7f !important;
+  outline: none !important;
+  border: none !important;
+}
+.serch-text-color::placeholder {
+  color: #5d5f7f !important;
+}
 .sidebar ul li:hover {
   background-color: #696cff !important;
   border-radius: 5px;
@@ -110,11 +118,11 @@ input::-webkit-calendar-picker-indicator {
   color: #ffff;
 }
 .sidebar-bg {
-  background-color: #2b2c40;
-  border: none;
+  background-color: #2b2c40 !important;
+  border: none !important;
 }
 .search-width {
-  width: 98% !important;
+  width: 96% !important;
   outline: none;
 }
 .search-icon {
@@ -128,9 +136,9 @@ input::-webkit-calendar-picker-indicator {
   color: #cbcbe2 !important;
 }
 .active {
-  background-color: #696cff;
+  background-color: #696cff !important;
   border-radius: 5px;
-  color: #ffff;
+  color: #ffffff !important;
 }
 
 .fa-dollar-icon {
@@ -152,6 +160,12 @@ input::-webkit-calendar-picker-indicator {
 .home-border-radius {
   border-radius: 10px;
   border: none !important;
+}
+.w-20 {
+  width: 20%;
+}
+.w-30 {
+  width: 30%;
 }
 .w-45 {
   width: 45%;

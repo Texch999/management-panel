@@ -105,9 +105,9 @@ function Tickets() {
 
   return (
     <div className="p-4 w-100">
-      <span className="th-color medium-font">Tickets</span>
+      <h6 className="h6 font-grey">Tickets</h6>
       <div className="sidebar-bg rounded">
-        <div className=" medium-font font-weight-bold px-2 p-2 m-1 th-color">
+        <div className="medium-font font-weight-bold px-2 p-2 m-1 th-color">
           Tickets
         </div>
         <Table columns={cols} data={modifiedTicketDetails} />

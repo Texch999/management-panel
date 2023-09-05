@@ -116,7 +116,7 @@ function SettlementStatement() {
   );
   return (
     <div className="p-4 w-100">
-      <span className="th-color medium-font">Settlement Statement</span>
+      <h6 className="h6 font-grey">Settlement Statement</h6>
       <div className="sidebar-bg rounded py-3 mt-1">
         <div>
           <Table columns={cols} data={modifiedSettlementstatementDetails} />

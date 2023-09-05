@@ -25,16 +25,17 @@ import PolicyDocument from "./pages/referenceData/PolicyDocument";
 import Settlement from "./pages/reports/Settlement";
 import SettlementStatement from "./pages/reports/SettlementStatement";
 import Statement from "./pages/statement/Statement";
+import MyStatement from "./pages/reports/MyStatement";
 function App() {
   return (
     <BrowserRouter>
       <div className="d-flex">
         <div className="w-auto">
-          <Sidebar></Sidebar>
+          <Sidebar />
         </div>
-        <div className="col w-auto home-bg vh-100">
+        <div className="w-100 home-bg vh-100">
           <Header />
-          <div className="homepage-div mt-8vh">
+          <div className="w-100 homepage-div mt-8vh">
             <Routes>
               <Route path="/" element={<Homepage />}></Route>
               <Route path="/addwebsites" element={<Addwebsites />}></Route>
@@ -49,6 +50,7 @@ function App() {
               <Route path="/reports" element={<Reports />}></Route>
               <Route path="/packages" element={<Packages />}></Route>
               <Route path="/settlement" element={<Settlement />}></Route>
+              <Route path="/mystatement" element={<MyStatement />}></Route>
               <Route
                 path="/settlementstatement"
                 element={<SettlementStatement />}

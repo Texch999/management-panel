@@ -8,8 +8,8 @@ function Totalaccount() {
   return (
     <div>
       <div className="row medium-font padding-unset">
-        <div className="col-15 col-sm-6 col-md-4 col-lg-3 p-1">
-          <div className="d-flex justify-content-between home-border-radius sidebar-bg text-white p-4 align-items-center">
+        <div className="col-15 col-sm-6 col-md-4 col-lg-3 p-2">
+          <div className="d-flex justify-content-between home-border-radius sidebar-bg th-color p-4 align-items-center">
             <div>
               <span>Total Revenue</span>
               <div>
@@ -28,7 +28,7 @@ function Totalaccount() {
           className="col-sm-6 col-md-4 col-lg-3
                         p-2"
         >
-          <div className="d-flex justify-content-between home-border-radius sidebar-bg text-white p-4 align-items-center">
+          <div className="d-flex justify-content-between home-border-radius sidebar-bg th-color p-4 align-items-center">
             <div>
               <span>Total Balance</span>
               <h6 className="medium-font">203.378</h6>
@@ -42,7 +42,7 @@ function Totalaccount() {
           className="col-sm-6 col-md-4 col-lg-3
                         p-2"
         >
-          <div className="d-flex justify-content-between home-border-radius sidebar-bg text-white p-4 align-items-center">
+          <div className="d-flex justify-content-between home-border-radius sidebar-bg th-color p-4 align-items-center">
             <div>
               <span>Total Profit</span>
               <h6 className="medium-font">203.378</h6>
@@ -54,9 +54,9 @@ function Totalaccount() {
         </div>
         <div
           className="col-sm-6 col-md-4 col-lg-3
-                        p-1"
+                        p-2"
         >
-          <div className="d-flex justify-content-between home-border-radius sidebar-bg text-white p-4 align-items-center">
+          <div className="d-flex justify-content-between home-border-radius sidebar-bg th-color p-4 align-items-center">
             <div>
               <span>Total Customer</span>
               <h6 className="medium-font">203.378</h6>

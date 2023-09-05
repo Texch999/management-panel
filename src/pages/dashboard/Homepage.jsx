@@ -7,7 +7,7 @@ import AppStatus from "./AppStatus";
 
 function Homepage() {
   return (
-    <div className="p-4 h-100 overflow-auto ">
+    <div className="p-3 h-100 w-100">
       <div>
         <Totalaccount />
       </div>

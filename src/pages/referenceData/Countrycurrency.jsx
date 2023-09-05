@@ -88,17 +88,17 @@ function Countrycurrency() {
 
   return (
     <div className="p-4 w-100 mt-8vh">
-      <span className="th-color medium-font">Country Currency</span>
+      <h6 className="h6 font-grey">Country Currency</h6>
       <div className="sidebar-bg rounded">
         <div className="d-flex align-items-center justify-content-between">
-          <div className=" small-font font-weight-bold px-2 p-2 m-1 th-color">
+          <div className=" medium-font font-weight-bold px-2 p-2 m-1 th-color">
             All Country/Currency
           </div>
-          <div className=" d-flex justify-conten-between">
-            <div className="containaer-fluid px-2 w-20">
+          <div className=" d-flex align-items-center justify-content-end">
+            <div className="containaer-fluid px-2 w-30">
               <form className="d-flex" role="search">
                 <input
-                  className="search-width m-1 mt-3 p-2 text-white w-100 sidebar-bg borderr rounded small-font"
+                  className="search-width p-2 text-white w-100 sidebar-bg borderr rounded small-font"
                   type="search"
                   placeholder="Search"
                   aria-label="Search"
