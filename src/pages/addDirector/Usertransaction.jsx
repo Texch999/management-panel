@@ -36,12 +36,12 @@ function Usertransaction() {
   };
   return (
     <div className="p-4 w-100">
-      <div className="th-color medium-font p-1">userprofile/profile</div>
+      <h6 className="h6 font-grey p-1">userprofile/profile</h6>
       <div className="w-100">
         <img src={Images.ProfileBanner} className="w-100" />
         <div className="sidebar-bg th-color user-img-bg-br row row-unset p-2">
           <div className="col-5 d-flex">
-            <img src={Images.PersonImg} className="w-10 user-margin-top" />
+            <img src={Images.PersonImg} className="w-20 user-margin-top" />
             <div className="row px-2">
               <div className="medium-font d-flex align-items-center">
                 Srinivas
@@ -60,7 +60,7 @@ function Usertransaction() {
           </div>
           <div className="col-7 d-flex align-items-center justify-content-end">
             <div className="w-80 d-flex align-items-center justify-content-between">
-              <div className="w-25 px-2 py-1 rounded-pill empty-bg-br small-font d-flex align-items-center justify-content-between">
+              <div className="w-30 px-2 py-1 rounded-pill empty-bg-br small-font d-flex align-items-center justify-content-between">
                 <span>User Name</span>
                 <span>Srinivas</span>
               </div>

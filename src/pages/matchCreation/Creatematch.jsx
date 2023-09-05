@@ -158,7 +158,7 @@ function Creatematch() {
    
   return (
     <div className="p-4 w-100">
-    <span className="th-color medium-font fw-bold p-2">CREATE MATCH</span>
+    <h6 className="h6 font-grey p-2">CREATE MATCH</h6>
     <div className="sidebar-bg rounded">
     <div className="row gutter-1rem p-2">
     <div className="col">
@@ -242,7 +242,7 @@ function Creatematch() {
     <div className="col"></div>
   </div>
 <hr className="hr-color"/>
-    <div className=" small-font font-weight-bold px-2 p-2 pt-0 mt-0 th-color">
+    <div className=" medium-font font-weight-bold px-2 p-2 pt-0 mt-0 th-color">
           Ur Creating Matches
         </div>
 

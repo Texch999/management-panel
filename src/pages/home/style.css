@@ -114,7 +114,7 @@ input::-webkit-calendar-picker-indicator {
   border: none;
 }
 .search-width {
-  width: 98% !important;
+  width: 96% !important;
   outline: none;
 }
 .search-icon {
@@ -128,9 +128,9 @@ input::-webkit-calendar-picker-indicator {
   color: #cbcbe2 !important;
 }
 .active {
-  background-color: #696cff;
+  background-color: #696cff !important;
   border-radius: 5px;
-  color: #ffff;
+  color: #ffffff !important;
 }
 
 .fa-dollar-icon {
@@ -155,6 +155,9 @@ input::-webkit-calendar-picker-indicator {
 }
 .w-20{
   width: 20%;
+}
+.w-30{
+  width: 30%;
 }
 .w-45 {
   width: 45%;

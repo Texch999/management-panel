@@ -68,26 +68,8 @@ function MystatementPacckage() {
     })
   );
   return (
-    <div className="p-4 w-100">
-      <span className="th-color medium-font">My Statement</span>
-      <div className="sidebar-bg rounded mt-1">
-        <div className="d-flex justify-content-between align-items-center px-4">
-          <span className="small-font th-color">My Statement</span>
-          <div className="d-flex align-items-center justify-content-between w-40">
-            <div className="accounts-box small-font p-2">Packages</div>
-            <div className="accounts-box small-font p-2">Sports/Casino</div>
-            <div className=" d-flex m-1">
-              <select
-                className="form-select-option w-100 rounded p-2 px-4 m-1 small-font"
-                aria-label="Default select example"
-              >
-                <option selected>All</option>
-                <option value="1">T Exch</option>
-                <option value="1">We2Call</option>
-              </select>
-            </div>
-          </div>
-        </div>
+    <div>
+
         <div>
           <Table columns={cols} data={modifiedMystatementpackageDetails} />
         </div>
@@ -118,7 +100,7 @@ function MystatementPacckage() {
           </div>
         </div>
       </div>
-    </div>
+    
   );
 }
 
