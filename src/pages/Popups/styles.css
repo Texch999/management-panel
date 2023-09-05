@@ -6,6 +6,7 @@
 .match-share-modal .modal-header {
   padding: 5px 15px !important;
   border-bottom: none;
+  color: #ffffff;
 }
 .match-share-modal .modal-body {
   padding: 0px;
@@ -15,8 +16,31 @@
   width: 60%;
   margin-left: 18%;
 }
+.match-share-modal .btn-close {
+  color: #ffffff !important;
+}
 .add-button {
   background-color: #696cff;
   border: none;
   color: #ffffff;
+}
+.input-btn-bg {
+  border: solid 2px rgba(54, 60, 72, 0.5);
+  background-color: #3a3c58;
+}
+.payment-modal {
+  --bs-modal-width: 420px !important;
+}
+.payment-modal .btn-close {
+  --bs-btn-close-bg: url("/public/assets/close.png");
+  position: absolute;
+  top: 5%;
+  right: 5%;
+}
+.all-none {
+  border: none !important;
+  outline: none !important;
+}
+select {
+  color: #a3a4cc;
 }
