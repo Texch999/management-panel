@@ -54,6 +54,7 @@ function SuperAdminStatement() {
             </div>
           </div>
         </div>
+        <hr className="hr-line" />
         <div>
           {superAdminButtons === 0 && <SuperAdminTable />}
           {superAdminButtons === 1 && <SuperAdminUsersTable />}
