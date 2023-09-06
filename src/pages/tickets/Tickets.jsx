@@ -1,5 +1,7 @@
+import { useState } from "react";
 import Table from "../table/Table";
 import { AiOutlineEye } from "react-icons/ai";
+import PackageViewPoup from "../Popups/PackageViewPoup";
 
 function Tickets() {
   const TICKET_DETAILS = [
@@ -14,7 +16,12 @@ function Tickets() {
       pkgamnt: "- 20,000 (Monthly)",
       amount: "200000000",
       status: "Approved",
-      icon: <AiOutlineEye className="eye-icon-size" />,
+      icon: (
+        <AiOutlineEye
+          className="eye-icon-size"
+          onClick={() => handlePackageUpgrade()}
+        />
+      ),
     },
     {
       date: "01/08/2023 ",
@@ -102,7 +109,10 @@ function Tickets() {
       </div>
     ),
   }));
-
+  const [showPackageUpgrade, setShowPackageUpgrade] = useState(false);
+  const handlePackageUpgrade = () => {
+    setShowPackageUpgrade(true);
+  };
   return (
     <div className="p-4 w-100">
       <h6 className="h6 font-grey">Tickets</h6>
@@ -112,6 +122,10 @@ function Tickets() {
         </div>
         <Table columns={cols} data={modifiedTicketDetails} />
       </div>
+      <PackageViewPoup
+        showPackageUpgrade={showPackageUpgrade}
+        setShowPackageUpgrade={setShowPackageUpgrade}
+      />
     </div>
   );
 }

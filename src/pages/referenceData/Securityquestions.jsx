@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import Table from "../table/Table";
 import { MdOutlineEdit } from "react-icons/md";
+import AddReasonPopup from "../Popups/AddReasonPopup";
 
 function Securityquestions() {
   const SECURITYQUESTIONS_DETAILS = [
@@ -57,13 +58,14 @@ function Securityquestions() {
       ),
     })
   );
-
+  const [rejectPopupOpen, SetRejectpopupOpen] = useState(false);
+  const handleRejectionPopupOpen = () => {
+    SetRejectpopupOpen(true);
+  };
   return (
     <div className="p-4 w-100">
       <div className="d-flex align-items-center justify-content-between">
-        <h6 className=" h6 font-grey px-2 p-2 m-1">
-          Security Questions
-        </h6>
+        <h6 className=" h6 font-grey px-2 p-2 m-1">Security Questions</h6>
         <div className=" d-flex justify-content-end align-items-center">
           <div className="containaer-fluid px-2 w-30">
             <form className="d-flex" role="search">
@@ -76,7 +78,10 @@ function Securityquestions() {
             </form>
           </div>
           <div className="row justify-content-md-center m-2 p-1">
-            <div className="active text-white col-md-auto medium-font justify-content-between p-2 px-4 m-1">
+            <div
+              onClick={() => handleRejectionPopupOpen()}
+              className="active text-white col-md-auto medium-font justify-content-between p-2 px-4 m-1"
+            >
               +Add New
             </div>
           </div>
@@ -101,6 +106,13 @@ function Securityquestions() {
       <div className="w-100">
         <Table columns={cols} data={modifiedSecurityquestionsDetails} />
       </div>
+      <AddReasonPopup
+        rejectPopupOpen={rejectPopupOpen}
+        SetRejectpopupOpen={SetRejectpopupOpen}
+        Heading="Add Security Questions"
+        firstSelect="Questions "
+        firstTextarea="Description"
+      />
     </div>
   );
 }
