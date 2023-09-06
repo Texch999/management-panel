@@ -26,6 +26,7 @@ import Settlement from "./pages/reports/Settlement";
 import SettlementStatement from "./pages/reports/SettlementStatement";
 import MyStatement from "./pages/reports/MyStatement";
 import Statement from "./pages/statement/Statement";
+import ToursManagement from "./pages/tours-tournaments/ToursManagement";
 function App() {
   return (
     <BrowserRouter>
@@ -81,6 +82,7 @@ function App() {
                 element={<Offersmanagement />}
               ></Route>
               <Route path="/statement" element={<Statement />} />
+              <Route path="/tours-tournaments" element={<ToursManagement />} />
             </Routes>
           </div>
         </div>
