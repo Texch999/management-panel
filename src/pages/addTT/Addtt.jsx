@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import TableHeader from "../table/TableHeader";
 import Table from "../table/Table";
 import { TbLockQuestion } from "react-icons/tb";
 import { MdOutlineBlock } from "react-icons/md";
+import AddDirectorsPopup from "../Popups/AddDirectorsPopup";
 
 function Addtt() {
   const ADDTT_DETAILS = [
@@ -124,7 +125,10 @@ function Addtt() {
       </div>
     ),
   }));
-
+  const [showAddDirectorPopup, setShowAddDirectorPopup] = useState(false);
+  const handleAddDirectionPopup = () => {
+    setShowAddDirectorPopup(true);
+  };
   return (
     <div className="p-4 w-100">
       <h6 className="h6 font-grey">ADD TT</h6>
@@ -145,7 +149,10 @@ function Addtt() {
               </form>
             </div>
             <div className="row justify-content-md-center m-2 p-1">
-              <div className="active text-white col-md-auto small-font justify-content-between p-2 px-4 m-1">
+              <div
+                className="active text-white col-md-auto small-font justify-content-between p-2 px-4 m-1"
+                onClick={() => handleAddDirectionPopup()}
+              >
                 +Add New
               </div>
             </div>
@@ -154,6 +161,13 @@ function Addtt() {
         {/* <TableHeader /> */}
         <Table columns={cols} data={modifiedAddttDetails} />
       </div>
+      <AddDirectorsPopup
+        showAddDirectorPopup={showAddDirectorPopup}
+        setShowAddDirectorPopup={setShowAddDirectorPopup}
+        heading="Add Owner Team"
+        firstTextBox="Select Area *"
+        firstSelect="Role"
+      />
     </div>
   );
 }

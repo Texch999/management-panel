@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import Table from "../table/Table";
 import { MdOutlineEdit } from "react-icons/md";
+import AddReasonPopup from "../Popups/AddReasonPopup";
 
 function Rejectionreason() {
   const REJECTIONREASON_DETAILS = [
@@ -67,13 +68,14 @@ function Rejectionreason() {
       ),
     })
   );
-
+  const [rejectPopupOpen, SetRejectpopupOpen] = useState(false);
+  const handleRejectionPopupOpen = () => {
+    SetRejectpopupOpen(true);
+  };
   return (
     <div className="p-4 w-100">
       <div className="d-flex align-items-center justify-content-between">
-        <h6 className="h6 font-grey px-2 p-2 m-1">
-          Reason For Rejection
-        </h6>
+        <h6 className="h6 font-grey px-2 p-2 m-1">Reason For Rejection</h6>
         <div className=" d-flex justify-content-end align-items-center">
           <div className="containaer-fluid px-2 w-30">
             <form className="d-flex" role="search">
@@ -86,7 +88,10 @@ function Rejectionreason() {
             </form>
           </div>
           <div className="row m-2 p-1">
-            <div className="active text-white col-md-auto medium-font justify-content-between p-2 px-4 m-1">
+            <div
+              className="active text-white col-md-auto medium-font justify-content-between p-2 px-4 m-1"
+              onClick={() => handleRejectionPopupOpen()}
+            >
               +Add New
             </div>
           </div>
@@ -111,6 +116,13 @@ function Rejectionreason() {
 
         <Table columns={cols} data={modifiedRejectionreasonDetails} />
       </div>
+      <AddReasonPopup
+        rejectPopupOpen={rejectPopupOpen}
+        SetRejectpopupOpen={SetRejectpopupOpen}
+        Heading="Add Reason"
+        firstSelect="Reason"
+        firstTextarea="Description"
+      />
     </div>
   );
 }
