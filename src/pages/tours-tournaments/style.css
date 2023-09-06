@@ -61,4 +61,18 @@
   border: solid 1.5px rgba(102, 115, 141, 0.5);
   border-radius: 10px;
 }
-
+.open-button {
+  background: #012305;
+  color: #16a527;
+  border-radius: 5px;
+}
+.black-button {
+  background: #fce719;
+  color: #2b2c40;
+  border-radius: 5px;
+}
+.edit-button {
+  background: #696cff;
+  color: #ffffff;
+  border-radius: 5px;
+}

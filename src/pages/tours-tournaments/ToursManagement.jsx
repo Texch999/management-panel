@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "./style.css";
 import AddTours from "./AddTours";
 import Schedule from "./Schedule";
+import ManageTournament from "./ManageTournament";
 
 function ToursManagement() {
   const [activeHead, setActiveHead] = useState("add");
@@ -42,6 +43,7 @@ function ToursManagement() {
       </div>
       {activeHead === "add" && <AddTours />}
       {activeHead === "schedule" && <Schedule />}
+      {activeHead === "manage" && <ManageTournament />}
     </div>
   );
 }
