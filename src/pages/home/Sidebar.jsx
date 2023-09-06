@@ -143,7 +143,7 @@ function Sidebar() {
     },
     {
       title: "Tours/Tournaments",
-      path: "/tourstournaments",
+      path: "/tours-tournaments",
       reactIcon: <PiAirplaneTiltBold />,
     },
   ];
