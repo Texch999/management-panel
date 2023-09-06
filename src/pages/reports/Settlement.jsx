@@ -90,10 +90,10 @@ function Settlement() {
   }));
   return (
     <div className="p-4 w-100">
-      <span className="th-color medium-font">Settlement</span>
+      <h6 className="h6 font-grey">Settlement</h6>
       <div className="sidebar-bg rounded">
         <div className="d-flex flex-column">
-          <div className=" small-font font-weight-bold px-2 p-2 m-1 th-color">
+          <div className=" medium-font font-weight-bold px-2 p-1 m-1 th-color">
             Account Summary
           </div>
           <div className="medium-font d-flex justify-content-between w-50 px-3 py-2">

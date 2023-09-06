@@ -32,11 +32,11 @@ function App() {
     <BrowserRouter>
       <div className="d-flex">
         <div className="w-auto">
-          <Sidebar></Sidebar>
+          <Sidebar />
         </div>
-        <div className="col w-auto home-bg vh-100">
+        <div className="w-100 home-bg vh-100">
           <Header />
-          <div className="homepage-div mt-8vh">
+          <div className="w-100 homepage-div mt-8vh">
             <Routes>
               <Route path="/" element={<Homepage />}></Route>
               <Route path="/addwebsites" element={<Addwebsites />}></Route>

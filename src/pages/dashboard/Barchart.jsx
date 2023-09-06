@@ -28,11 +28,11 @@ const data = {
 function Barchart() {
   return (
     <div className="w-100 h-100 sidebar-bg home-border-radius p-2">
-      <div className="w-100 d-flex justify-content-between text-white">
+      <div className="w-100 d-flex justify-content-between th-color">
         <div className="w-50 small-font">
           <span>Spending Statistics</span>
         </div>
-        <div className="w-45 d-flex justify-content-around text-white">
+        <div className="w-45 d-flex justify-content-around th-color">
           <div className="day-button rounded-pill small-font height px-2 ">
             Day
           </div>
@@ -44,7 +44,7 @@ function Barchart() {
           </div>
         </div>
       </div>
-      <div className="text-white small-font">
+      <div className="th-color small-font">
         <span>Total Revenue</span>
         <h6 className="small-font">203.378</h6>
         <span>Total Income in week</span>

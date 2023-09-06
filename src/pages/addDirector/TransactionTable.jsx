@@ -242,9 +242,9 @@ function TransactionTable() {
   return (
     <div className="sidebar-bg rounded">
       <div className="d-flex align-items-center justify-content-between">
-        <div className=" medium-font font-weight-bold px-2 p-2 m-1 th-color">
+        <h6 className="h6 font-grey px-2 p-2 m-1">
           Transaction
-        </div>
+        </h6>
         <div className=" d-flex justify-conten-between m-1 px-2">
           <select
             className="form-select-option w-100 rounded p-2 px-3 m-1 mx-2 small-font"
