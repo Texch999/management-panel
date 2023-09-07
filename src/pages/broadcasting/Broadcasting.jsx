@@ -1,6 +1,7 @@
 import React from "react";
 import Table from "../table/Table";
 import { AiOutlineEye } from "react-icons/ai";
+import { useNavigate } from "react-router-dom";
 
 function Broadcasting() {
   const BROADCASTING_DETAILS = [
@@ -96,6 +97,7 @@ function Broadcasting() {
       </div>
     ),
   }));
+  const navigate = useNavigate();
   return (
     <div className="p-4 w-100">
       <h6 className="h6 font-grey">Broadcasting & Notifications</h6>
@@ -130,7 +132,10 @@ function Broadcasting() {
               </form>
             </div>
             <div className="row justify-content-md-center m-1 p-1">
-              <div className="active text-white col-md-auto medium-font justify-content-between px-2 p-2 m-1">
+              <div
+                onClick={() => navigate("/publish-notification")}
+                className="active text-white col-md-auto medium-font justify-content-between px-2 p-2 m-1"
+              >
                 +Add New
               </div>
             </div>

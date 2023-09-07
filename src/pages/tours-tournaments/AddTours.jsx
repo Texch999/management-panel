@@ -1,12 +1,17 @@
-import React from "react";
+import React, { useState } from "react";
 import { AiOutlineClockCircle } from "react-icons/ai";
 import { BiSolidArrowFromBottom } from "react-icons/bi";
 import { BsChevronDown } from "react-icons/bs";
 import { FaCalendarDays } from "react-icons/fa6";
 import { HiMiniArrowUpCircle } from "react-icons/hi2";
+import ReturnedPaymentPopup from "../Popups/ReturnedPaymentPopup";
 
 function AddTours() {
   const toursType = ["1.Tour", "2.Cricket Tour", "3.Sports Tour"];
+  const [showReturnPopup, setShowReturnPopup] = useState(false);
+  const handleReturnPaymentpopup = () => {
+    setShowReturnPopup(true);
+  };
   return (
     <div className="add-tours p-3 mt-3">
       <div className="row d-flex justify-content-end">
@@ -25,7 +30,7 @@ function AddTours() {
           </select>
         </div>
       </div>
-      {toursType.map((item,index) => {
+      {toursType.map((item, index) => {
         return (
           <div>
             <div className="sub-head medium-font">{item}</div>
@@ -76,7 +81,11 @@ function AddTours() {
             </div>
             <div className="row d-flex justify-content-end mt-2">
               <div className="btn-cls">
-                <button type="button" class="btn btn-primary">
+                <button
+                  type="button"
+                  class="btn btn-primary"
+                  onClick={() => handleReturnPaymentpopup()}
+                >
                   Submit
                 </button>
               </div>
@@ -84,6 +93,10 @@ function AddTours() {
           </div>
         );
       })}
+      <ReturnedPaymentPopup
+        showReturnPopup={showReturnPopup}
+        setShowReturnPopup={setShowReturnPopup}
+      />
     </div>
   );
 }
