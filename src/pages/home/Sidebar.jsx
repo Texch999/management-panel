@@ -22,6 +22,8 @@ import { LuFilePlus2 } from "react-icons/lu";
 import { BsBroadcast } from "react-icons/bs";
 import { BiSolidOffer } from "react-icons/bi";
 import { PiAirplaneTiltBold } from "react-icons/pi";
+import { Images } from "../../images";
+import { BsChevronDown } from "react-icons/bs";
 function Sidebar() {
   const location = useLocation();
 
@@ -62,7 +64,7 @@ function Sidebar() {
       reactIcon: <ImTicket />,
     },
     {
-      title: "Reports",
+      title: "Reports", 
       path: "/reportsts",
       reactIcon: <LuFileBarChart />,
       dataBsTarget: "#reports",
@@ -149,13 +151,12 @@ function Sidebar() {
   ];
 
   return (
-    <div className="d-flex justify-content-between flex-column sidebar-bg text-white p-1 vh-100">
+    <div className="d-flex justify-content-between flex-column sidebar-bg th-color p-1 vh-100">
       <div className="sidebar">
-        <a href="" className="p-1 text-decoration-none text-white">
-          <i className="bi bi-code-slash fs-4 me-4"></i>
-          <span className="text-white medium-font">Sseven</span>
-        </a>
-        <hr className="text-white mt-2"></hr>
+        <div className="d-flex align-items-center justfy-content-center p-2">
+        <img src={Images.SsevenLogo} className="sseven-logo-size" />
+        </div>
+        <hr className="th-color mt-2"></hr>
         <ul className="nav nav-pills flex-column mt-2">
           {sidebar?.map(
             ({
@@ -179,7 +180,7 @@ function Sidebar() {
                   >
                     <Link
                       to={path}
-                      className="p-1 text-white medium-font text-decoration-none"
+                      className="p-1 th-color medium-font text-decoration-none"
                       data-bs-toggle={childMenu && "collapse"}
                       data-bs-target={dataBsTarget}
                       aria-expanded="false"
@@ -188,10 +189,10 @@ function Sidebar() {
                       <i className={`bi me-3 medium-font ${icon}`}>
                         {reactIcon && reactIcon}
                       </i>
-                      <span className="text-white medium-font">{title}</span>
+                      <span className="th-color medium-font">{title}</span>
                     </Link>
                   </li>
-                  <div className="collapse text-white" id={ariaControls}>
+                  <div className="collapse th-color" id={ariaControls}>
                     {childMenu?.map(({ path, title, icon, reactIcon }) => {
                       return (
                         <li
@@ -204,14 +205,14 @@ function Sidebar() {
                         >
                           <Link
                             to={path}
-                            className="p-1 text-white medium-font text-decoration-none"
+                            className="p-1 th-color medium-font text-decoration-none"
                           >
                             <i
-                              className={`bi me-3 text-white medium-font ${icon}`}
+                              className={`bi me-3 th-color medium-font ${icon}`}
                             >
                               {reactIcon && reactIcon}
                             </i>
-                            <span className="text-white medium-font">
+                            <span className="th-color medium-font">
                               {title}
                             </span>
                           </Link>
