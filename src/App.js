@@ -27,6 +27,7 @@ import SettlementStatement from "./pages/reports/SettlementStatement";
 import MyStatement from "./pages/reports/MyStatement";
 import Statement from "./pages/statement/Statement";
 import ToursManagement from "./pages/tours-tournaments/ToursManagement";
+import NotificationTextMsg from "./pages/broadcasting/NotificationTextMsg";
 function App() {
   return (
     <BrowserRouter>
@@ -77,6 +78,11 @@ function App() {
                 element={<Securityquestions />}
               ></Route>
               <Route path="/broadcasting" element={<Broadcasting />}></Route>
+              <Route
+                path="/publish-notification"
+                element={<NotificationTextMsg />}
+              ></Route>
+
               <Route
                 path="/offersmanagement"
                 element={<Offersmanagement />}

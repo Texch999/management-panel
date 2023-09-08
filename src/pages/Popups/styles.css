@@ -38,10 +38,25 @@
   top: 5%;
   right: 5%;
 }
-.all-none {
-  border: none !important;
-  outline: none !important;
+.login-input input {
+  background: none;
+  border: none;
+  outline: none;
+  color: white;
 }
+.login-input {
+  background: #3a3c58;
+  border-radius: 5px;
+}
+.all-none {
+  outline: none;
+  border: none;
+  color: #ffffff;
+}
+/* .all-none::placeholder {
+  color: #8da3d0;
+  font-weight: 600;
+} */
 .payment-modal select {
   color: #a3a4cc;
 }
@@ -86,7 +101,8 @@
 }
 .h9vh {
   height: 9vh !important;
-}.h5vh {
+}
+.h5vh {
   height: 5vh !important;
 }
 .user-dropdown-toggle .dropdown-toggle {
@@ -119,4 +135,47 @@
   border: solid 2px #4a4c50;
   background-color: #3a3c58;
   color: #ffffff;
+}
+.msg-deactive-button {
+  border: solid 2px #3a3c58;
+  background-color: #2b2c40;
+}
+.h15vh {
+  height: 15vh;
+}
+.h20vh {
+  height: 20vh;
+}
+.btn:hover {
+  color: none !important;
+  background-color: none !important;
+  border-color: none !important;
+}
+.button-bg {
+  background-color: #232333 !important;
+}
+.active-button {
+  background-color: #2b2c40;
+  color: #696cff;
+}
+.deactive-msg-button {
+  border: none !important;
+  background-color: #2b2c40;
+  color: #9899a3;
+}
+.h-85 {
+  height: 85% !important;
+}
+.upload-icon {
+  color: #696cff;
+  font-size: 20px;
+}
+.font-size-30 {
+  font-size: 30px !important;
+}
+.clr-white {
+  color: #ffffff;
+}
+.clr-grey {
+  color: #cbcbe2;
 }

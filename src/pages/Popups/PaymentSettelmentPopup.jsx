@@ -29,7 +29,7 @@ function PaymentSettelmentPopup(props) {
       >
         <Modal.Header closeButton>
           <div className="w-100 flex-columnn relative-position">
-            <div className="text-center large-font my-3">
+            <div className="text-center large-font mt-3 mb-2">
               Payment Settelment
             </div>
             <div className="p-2 rounded-top w-100 d-flex align-items-center justify-content-center">
@@ -48,7 +48,7 @@ function PaymentSettelmentPopup(props) {
             </div>
             <div className="w-100 p-4">
               <div className="d-flex flex-column">
-                <div className="small-font mb-1">Client Name *</div>
+                <div className="small-font my-2">Client Name *</div>
                 <div className="d-flex flex-row w-100 custom-select small-font input-btn-bg rounded all-none align-items-center">
                   <select className="w-100 custom-select small-font input-btn-bg rounded all-none py-2 px-2">
                     <option selected>Select</option>
