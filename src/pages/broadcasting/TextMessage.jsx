@@ -21,11 +21,11 @@ function TextMessage() {
                     </div>
                     <select className="w-100 custom-select small-font input-btn-bg px-2 py-3 all-none rounded all-none">
                       {/* <option selected>Select</option> */}
-                      <option selected>NEFT/RTGS</option>
-                      <option>UPI</option>
-                      <option>Phone Pe</option>
-                      <option>Google Pay</option>
-                      <option>Paytm</option>
+                      <option selected>Select</option>
+                      <option>Demo</option>
+                      <option>Demo</option>
+                      <option>Demo</option>
+                      <option>Demo</option>
                     </select>
                   </div>
                 </Col>
@@ -38,11 +38,11 @@ function TextMessage() {
                     </div>
                     <select className="w-100 custom-select small-font input-btn-bg px-2 py-3 all-none rounded all-none">
                       {/* <option selected>Select</option> */}
-                      <option selected>NEFT/RTGS</option>
-                      <option>UPI</option>
-                      <option>Phone Pe</option>
-                      <option>Google Pay</option>
-                      <option>Paytm</option>
+                      <option selected>Select</option>
+                      <option>Demo</option>
+                      <option>Demo</option>
+                      <option>Demo</option>
+                      <option>Demo</option>
                     </select>
                   </div>
                 </Col>
@@ -53,11 +53,11 @@ function TextMessage() {
                     </div>
                     <select className="w-100 custom-select small-font input-btn-bg px-2 py-3 all-none rounded all-none">
                       {/* <option selected>Select</option> */}
-                      <option selected>NEFT/RTGS</option>
-                      <option>UPI</option>
-                      <option>Phone Pe</option>
-                      <option>Google Pay</option>
-                      <option>Paytm</option>
+                      <option selected>Select</option>
+                      <option>Demo</option>
+                      <option>Demo</option>
+                      <option>Demo</option>
+                      <option>Demo</option>
                     </select>
                   </div>
                 </Col>
@@ -69,11 +69,11 @@ function TextMessage() {
                   </div>
                   <select className="w-100 custom-select small-font input-btn-bg px-2 py-3 all-none rounded all-none">
                     {/* <option selected>Select</option> */}
-                    <option selected>NEFT/RTGS</option>
-                    <option>UPI</option>
-                    <option>Phone Pe</option>
-                    <option>Google Pay</option>
-                    <option>Paytm</option>
+                    <option selected>Select</option>
+                    <option>Demo</option>
+                    <option>Demo</option>
+                    <option>Demo</option>
+                    <option>Demo</option>
                   </select>
                 </div>
               </Col>
