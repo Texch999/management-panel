@@ -100,7 +100,7 @@ function TextMessage() {
           <Col className="col-lg-2 col-md-3">
             <div>
               <div className="medium-font mb-2 clr-grey">Active From</div>
-              <div className=" d-flex flex-row w-100 custom-select small-font input-btn-bg px-2 py-2 all-none rounded all-none align-items-center">
+              <div className=" d-flex flex-row w-100 custom-select small-font input-btn-bg px-2 py-2 all-none rounded all-none align-items-center justify-content-between">
                 <DatePicker
                   className="login-input all-none w-50"
                   selected={selectedDate}
@@ -115,7 +115,7 @@ function TextMessage() {
           <Col className="col-lg-2 col-md-3">
             <div>
               <div className="medium-font mb-2 clr-grey">To</div>
-              <div className="w-100 custom-select small-font input-btn-bg px-2 py-2 all-none rounded all-none d-flex flex-row align-items-center">
+              <div className="w-100 custom-select small-font input-btn-bg px-2 py-2 all-none rounded all-none d-flex flex-row align-items-center justify-content-between">
                 <DatePicker
                   className="login-input all-none w-50"
                   selected={selectedDate}
@@ -130,7 +130,7 @@ function TextMessage() {
           <Col className="col-lg-2 col-md-3">
             <div>
               <div className="medium-font mb-2 clr-grey">Publish Date</div>
-              <div className="w-100 custom-select small-font input-btn-bg px-2 py-2 all-none rounded all-none d-flex flex-row align-items-center">
+              <div className="w-100 custom-select small-font input-btn-bg px-2 py-2 all-none rounded all-none d-flex flex-row align-items-center justify-content-between">
                 <DatePicker
                   className="login-input all-none w-50"
                   selected={selectedDate}
@@ -148,25 +148,25 @@ function TextMessage() {
         <input type="checkbox" />
         <div className="medium-font mx-2 clr-grey">Publish Now</div>
       </div>
-      <div className="d-flex justify-content-between flex-row align-itms-center my-3 w-100">
-        <div className="d-flex  flex-row justify-content-start w-50">
+      <div class="row w-100 d-flex flex-row justify-content-between my-3">
+        <div class="col-sm d-flex flex-row">
           <button
             type="submit"
-            className="add-button  medium-font rounded px-5 py-3 mx-2 w-25 all-none"
+            className="add-button  medium-font rounded px-3 py-3 mx-2  all-none "
           >
             Publish
           </button>
           <button
             type="submit"
-            className="msg-deactive-button  medium-font rounded px-4 py-3 mx-2 w-25 all-none"
+            className="msg-deactive-button  medium-font rounded  mx-2 all-none px-3 py-3"
           >
             Save As Draft
           </button>
         </div>
-        <div className="w-50 d-flex justify-content-end">
+        <div class="col-sm d-flex justify-content-end">
           <button
             type="submit"
-            className="msg-deactive-button  medium-font rounded px-4 py-3 mx-2 w-25 all-none"
+            className="msg-deactive-button  medium-font rounded  mx-2 all-none px-3 py-3"
           >
             Cancel
           </button>

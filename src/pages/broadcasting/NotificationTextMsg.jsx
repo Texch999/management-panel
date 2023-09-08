@@ -20,13 +20,13 @@ function NotificationTextMsg() {
     <div className="p-4 w-100">
       <div className="sidebar-bg rounded">
         <div className="button-bg w-100">
-          <div className=" d-flex justify-content-around  align-items-center w-75">
+          <div className="d-flex justify-content-around  align-items-center w-75 small-font">
             <div className="d-flex justify-content-start">
               <MdOutlineArrowBackIosNew
                 className="upload-icon me-3"
                 onClick={() => navigate("/broadcasting")}
               />
-              <h6 className="clr-white ms-3">Create New Broadcast</h6>
+              <div className="medium-font clr-white ms-3">Create New Broadcast</div>
             </div>
 
             {headingList.map((report, index) => (
