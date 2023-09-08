@@ -287,6 +287,10 @@ input::-webkit-calendar-picker-indicator {
   width: 20px;
   height: 20px;
 }
+.sseven-logo-size {
+  width: 140px;
+  height: 60px;
+}
 .eye-icon-size {
   width: 15px;
   height: 15px;
