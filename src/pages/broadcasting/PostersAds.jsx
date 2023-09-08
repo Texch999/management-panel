@@ -30,10 +30,10 @@ function PostersAds() {
                     <select className="w-100 custom-select small-font input-btn-bg px-2 py-3 all-none rounded all-none">
                       {/* <option selected>Select</option> */}
                       <option selected>Select</option>
-                    <option>Demo</option>
-                    <option>Demo</option>
-                    <option>Demo</option>
-                    <option>Demo</option>
+                      <option>Demo</option>
+                      <option>Demo</option>
+                      <option>Demo</option>
+                      <option>Demo</option>
                     </select>
                   </div>
                 </Col>
@@ -62,10 +62,10 @@ function PostersAds() {
                     <select className="w-100 custom-select small-font input-btn-bg px-2 py-3 all-none rounded all-none">
                       {/* <option selected>Select</option> */}
                       <option selected>Select</option>
-                    <option>Demo</option>
-                    <option>Demo</option>
-                    <option>Demo</option>
-                    <option>Demo</option>
+                      <option>Demo</option>
+                      <option>Demo</option>
+                      <option>Demo</option>
+                      <option>Demo</option>
                     </select>
                   </div>
                 </Col>
@@ -80,17 +80,19 @@ function PostersAds() {
                     <select className="w-100 custom-select small-font input-btn-bg px-2 py-3 all-none rounded all-none">
                       {/* <option selected>Select</option> */}
                       <option selected>Select</option>
-                    <option>Demo</option>
-                    <option>Demo</option>
-                    <option>Demo</option>
-                    <option>Demo</option>
+                      <option>Demo</option>
+                      <option>Demo</option>
+                      <option>Demo</option>
+                      <option>Demo</option>
                     </select>
                   </div>
                 </Col>
                 <Col>
-                  <div className="small-font clr-grey my-2">Upload Screenshot</div>
+                  <div className="small-font clr-grey my-2">
+                    Upload Screenshot
+                  </div>
                   <div
-                    className="w-100 custom-select small-font input-btn-bg px-2 py-3 my-2 all-none rounded all-none d-flex flex-row justify-content-between align-items-center"
+                    className="w-100 custom-select small-font input-btn-bg p-3 my-2 all-none rounded all-none d-flex flex-row justify-content-between align-items-center"
                     onClick={handleUploadButtonClick}
                   >
                     <div className="small-font font-grey">
@@ -118,7 +120,7 @@ function PostersAds() {
             ></textarea>
           </Col>
         </Row>
-      </Container>  
+      </Container>
       <hr className="hr-line my-2" />
       <div className="w-25">
         <div className="rounded-pill medium-font px-3 py-2 completed-btn w-50 text-center">

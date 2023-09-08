@@ -84,7 +84,7 @@ function TextMessage() {
             <textarea
               type="number"
               placeholder="Type Here ............"
-              className="w-100 custom-select small-font input-btn-bg rounded all-none py-3 px-2 h20vh"
+              className="w-100 custom-select small-font input-btn-bg rounded all-none py-3 px-2 h-85"
             ></textarea>
           </Col>
         </Row>
