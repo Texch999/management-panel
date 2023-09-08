@@ -20,6 +20,9 @@
 .match-share-modal .btn-close {
   color: #ffffff !important;
 }
+.w-40 {
+  width: 40% !important;
+}
 .add-button {
   background-color: #696cff;
   border: none;

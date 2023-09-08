@@ -180,25 +180,26 @@ function PostersAds() {
         <input type="checkbox" />
         <div className="medium-font mx-2 clr-grey">Publish Now</div>
       </div>
-      <div className="d-flex justify-content-between flex-row align-itms-center my-3 w-100">
-        <div className="d-flex  flex-row justify-content-start w-50">
+      <div class="row w-100 d-flex flex-row justify-content-between my-3">
+        <div class="col-sm d-flex flex-row">
           <button
             type="submit"
-            className="add-button  medium-font rounded px-5 py-3 mx-2 w-25 all-none"
+            className="add-button  medium-font rounded px-3 py-3 mx-2  all-none "
           >
             Publish
           </button>
+
           <button
             type="submit"
-            className="msg-deactive-button  medium-font rounded px-4 py-3 mx-2 w-25 all-none"
+            className="msg-deactive-button  medium-font rounded  mx-2 all-none px-3 py-3"
           >
             Save As Draft
           </button>
         </div>
-        <div className="w-50 d-flex justify-content-end">
+        <div class="col-sm d-flex justify-content-end">
           <button
             type="submit"
-            className="msg-deactive-button  medium-font rounded px-4 py-3 mx-2 w-25 all-none"
+            className="msg-deactive-button  medium-font rounded  mx-2 all-none px-3 py-3"
           >
             Cancel
           </button>
