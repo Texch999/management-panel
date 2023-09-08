@@ -8,7 +8,6 @@ import { useNavigate } from "react-router-dom";
 
 function NotificationTextMsg() {
   const headingList = [
-    "Create New Broadcast",
     "Notification and Promotion Text Message",
     "Posters & Ads",
   ];
@@ -22,12 +21,14 @@ function NotificationTextMsg() {
       <div className="sidebar-bg rounded">
         <div className="button-bg w-100">
           <div className=" d-flex justify-content-around  align-items-center w-75">
-            <div className="d-flex justify-content-center">
+            <div className="d-flex justify-content-start">
               <MdOutlineArrowBackIosNew
-                className="upload-icon"
+                className="upload-icon me-3"
                 onClick={() => navigate("/broadcasting")}
               />
+              <h6 className="clr-white ms-3">Create New Broadcast</h6>
             </div>
+
             {headingList.map((report, index) => (
               <div
                 key={index}
@@ -44,7 +45,6 @@ function NotificationTextMsg() {
           </div>
         </div>
 
-        {activeReport === "Create New Broadcast" && <CreateBroadCast />}
         {activeReport === "Notification and Promotion Text Message" && (
           <TextMessage />
         )}
