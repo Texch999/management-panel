@@ -5,9 +5,10 @@ input::-webkit-calendar-picker-indicator {
 
 .header-div {
   width: 91%;
-  height: 8vh !important;
+  height: 10vh !important;
   position: fixed;
   top: 0;
+  background: #232333;
 }
 /* .homepage-div {
   width: 86%;
