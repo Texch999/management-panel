@@ -22,6 +22,7 @@ import { LuFilePlus2 } from "react-icons/lu";
 import { BsBroadcast } from "react-icons/bs";
 import { BiSolidOffer } from "react-icons/bi";
 import { PiAirplaneTiltBold } from "react-icons/pi";
+import { TiMessages } from "react-icons/ti";
 import { Images } from "../../images";
 import { BsChevronDown } from "react-icons/bs";
 function Sidebar() {
@@ -64,7 +65,7 @@ function Sidebar() {
       reactIcon: <ImTicket />,
     },
     {
-      title: "Reports", 
+      title: "Reports",
       path: "/reportsts",
       reactIcon: <LuFileBarChart />,
       dataBsTarget: "#reports",
@@ -148,13 +149,18 @@ function Sidebar() {
       path: "/tours-tournaments",
       reactIcon: <PiAirplaneTiltBold />,
     },
+    {
+      title: "Support",
+      path: "/support-chat",
+      reactIcon: <TiMessages />,
+    },
   ];
 
   return (
     <div className="d-flex justify-content-between flex-column sidebar-bg th-color p-1 vh-100">
       <div className="sidebar">
         <div className="d-flex align-items-center justfy-content-center p-2">
-        <img src={Images.SsevenLogo} className="sseven-logo-size" />
+          <img src={Images.SsevenLogo} className="sseven-logo-size" />
         </div>
         <hr className="th-color mt-2"></hr>
         <ul className="nav nav-pills flex-column mt-2">
