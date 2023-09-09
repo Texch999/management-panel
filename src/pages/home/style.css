@@ -456,7 +456,7 @@ input::placeholder {
   width: 215px;
 }
 .scroll-side-bar {
-  height: 67vh;
+  height: 70vh;
   overflow-y: scroll;
 }
 .scroll-side-bar::-webkit-scrollbar-track,

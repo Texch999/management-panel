@@ -15,6 +15,7 @@ img {
   border: 1px solid #c4c4c4;
   clear: both;
   overflow: hidden;
+  /* height: 75vh; */
 }
 .top_spac {
   margin: 20px 0 0;
@@ -96,6 +97,12 @@ img {
 .inbox_chat {
   height: 300px;
   overflow-y: scroll;
+}
+.inbox_chat::-webkit-scrollbar {
+  display: none;
+}
+.inbox-chat-contacts::-webkit-scrollbar {
+  display: none;
 }
 .inbox-chat-contacts {
   height: 265px;
@@ -194,6 +201,9 @@ img {
 .msg_history {
   height: 603px;
   overflow-y: auto;
+}
+.msg_history::-webkit-scrollbar {
+  display: none;
 }
 .clr-cornflower {
   color: #696cff;
