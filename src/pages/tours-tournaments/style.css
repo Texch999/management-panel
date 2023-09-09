@@ -4,6 +4,8 @@
   border-radius: 5px;
   width: fit-content;
   height: fit-content;
+  border: none;
+  outline: none;
 }
 .active-head {
   color: #696cff !important;
@@ -75,4 +77,19 @@
   background: #696cff;
   color: #ffffff;
   border-radius: 5px;
+}
+.download-div {
+  /* border: 1px solid grey; */
+  border-radius: 5px;
+  width: 100%;
+  text-align: right;
+  /* display: flex; */
+  /* justify-content: flex-end; */
+}
+.download-container {
+  border-radius: 5px;
+  border: 1px solid grey;
+  width: fit-content;
+  position: relative;
+  right: -75%;
 }

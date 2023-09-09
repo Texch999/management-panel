@@ -163,7 +163,8 @@ function Sidebar() {
           <img src={Images.SsevenLogo} className="sseven-logo-size" />
         </div>
         <hr className="th-color mt-2"></hr>
-        <ul className="nav nav-pills flex-column mt-2">
+        <div className="scroll-side-bar">
+        <ul className="nav nav-pills flex-column mt-2 nav-width">
           {sidebar?.map(
             ({
               path,
@@ -231,6 +232,7 @@ function Sidebar() {
             }
           )}
         </ul>
+        </div>
       </div>
       <div>
         <hr className="text-white mt-2"></hr>

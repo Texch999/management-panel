@@ -32,13 +32,14 @@ import Chats from "./pages/chat/Chats";
 function App() {
   return (
     <BrowserRouter>
-      <div className="d-flex">
-        <div className="w-auto">
+      <div className="d-flex main">
+        <div className="w-auto side-b">
           <Sidebar />
         </div>
         <div className="w-100 home-bg vh-100">
-          <Header />
+          {/*  */}
           <div className="w-100 homepage-div mt-8vh">
+          <Header />
             <Routes>
               <Route path="/" element={<Homepage />}></Route>
               <Route path="/addwebsites" element={<Addwebsites />}></Route>
