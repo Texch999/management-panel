@@ -28,6 +28,7 @@ import MyStatement from "./pages/reports/MyStatement";
 import Statement from "./pages/statement/Statement";
 import ToursManagement from "./pages/tours-tournaments/ToursManagement";
 import NotificationTextMsg from "./pages/broadcasting/NotificationTextMsg";
+import Chats from "./pages/chat/Chats";
 function App() {
   return (
     <BrowserRouter>
@@ -90,6 +91,7 @@ function App() {
               ></Route>
               <Route path="/statement" element={<Statement />} />
               <Route path="/tours-tournaments" element={<ToursManagement />} />
+              <Route path="/support-chat" element={<Chats />} />
             </Routes>
           </div>
         </div>
