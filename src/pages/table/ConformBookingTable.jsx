@@ -1,10 +1,18 @@
-import React from "react";
+import React, { useRef, useState } from "react";
 import { MdUpload } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 
 function ConformBookingTable(props) {
   const { data, columns } = props;
-
+  const [selectedDate, setSelectedDate] = useState(null);
+  const uploadfileInputRef = useRef(null);
+  const handleUploadFileSelect = (e) => {
+    const file = e.target.files[0];
+    console.log("selected file", file);
+  };
+  const handleUploadButtonClick = () => {
+    uploadfileInputRef.current.click();
+  };
   const getColor = (clr) => {
     switch (clr) {
       case "Shedule":
@@ -66,13 +74,21 @@ function ConformBookingTable(props) {
               <td className="p-2 download-div" colspan="10">
                 <div className="download-container p-1">
                   Upload Your Documents
-                  <MdUpload className="ms-1 ions-clr" />
+                  <MdUpload
+                    className="ms-1 ions-clr"
+                    onClick={() => handleUploadButtonClick()}
+                  />
                 </div>
               </td>
             </tr>
           </tbody>
         ))}
       </table>
+      <input
+        ref={uploadfileInputRef}
+        style={{ display: "none" }}
+        onChange={handleUploadFileSelect}
+      ></input>
     </div>
   );
 }
