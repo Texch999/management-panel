@@ -1,7 +1,8 @@
 import React from "react";
+import { MdUpload } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 
-function DocTable(props) {
+function ConformBookingTable(props) {
   const { data, columns } = props;
 
   const getColor = (clr) => {
@@ -26,7 +27,6 @@ function DocTable(props) {
       item === "role" && navigate("/usertransaction");
     }
   };
-
   return (
     <div className="sidebar-bg w-100 home-border-radius">
       <table className="tickets-table table table-borderless">
@@ -39,9 +39,9 @@ function DocTable(props) {
             ))}
           </tr>
         </thead>
-        <tbody className="td-color">
-          {data.map((item, rowIndex) => (
-            <tr key={rowIndex} className="small-font td-color text-center">
+        {data.map((item, rowIndex) => (
+          <tbody className="td-color">
+            <tr key={rowIndex} className="medium-font td-color text-center">
               {columns.map((column, colIndex) => {
                 return (
                   <td
@@ -62,11 +62,19 @@ function DocTable(props) {
                 );
               })}
             </tr>
-          ))}
-        </tbody>
+            <tr>
+              <td className="p-2 download-div" colspan="10">
+                <div className="download-container p-1">
+                  Upload Your Documents
+                  <MdUpload className="ms-1 ions-clr" />
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        ))}
       </table>
     </div>
   );
 }
 
-export default DocTable;
+export default ConformBookingTable;
