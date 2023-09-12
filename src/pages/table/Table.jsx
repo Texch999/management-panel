@@ -1,6 +1,7 @@
+import { MdOutlineEdit } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 function Table(props) {
-const { data, columns } = props;
+  const { data, columns } = props;
 
   const getColor = (clr) => {
     switch (clr) {
@@ -12,7 +13,7 @@ const { data, columns } = props;
         return "reject-button w-fit-content p-1 px-2";
       case "Pending":
         return "pending-button w-fit-content p-1 px-2";
-        case "Select":
+      case "Select":
         return "select-button w-fit-content p-1 px-2";
       default:
         return "new-button w-fit-content p-1 px-2";
@@ -52,7 +53,15 @@ const { data, columns } = props;
                         }
                         onClick={() => handleClickTable(column.field)}
                       >
-                        {item[column.field]}
+                        {column.field === "icon" ? (
+                          <MdOutlineEdit className="eye-icon-size" />
+                        ) : item[column.field] === 1 ? (
+                          "active"
+                        ) : item[column.field] === 0 ? (
+                          "inactive"
+                        ) : (
+                          item[column.field]
+                        )}
                       </div>
                     </div>
                   </td>

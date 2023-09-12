@@ -1,45 +1,49 @@
-import React, { useState } from "react";
+import React from "react";
 import Table from "../table/Table";
 import { MdOutlineEdit } from "react-icons/md";
 import AddReasonPopup from "../Popups/AddReasonPopup";
+import { useEffect,useState} from "react";
+import { GET_ALL_SECURITY_QUESTIONS } from "../../config/endpoints";
+import { call } from "../../config/axios";
 
 function Securityquestions() {
-  const SECURITYQUESTIONS_DETAILS = [
-    {
-      questions: "What is your pet name?",
-      status: "Active",
-      icon: <MdOutlineEdit className="eye-icon-size" />,
-    },
-    {
-      questions: "What is your favorite color?",
-      status: "Active",
-      icon: <MdOutlineEdit className="eye-icon-size" />,
-    },
-    {
-      questions: "What is your favorite animal?",
-      status: "Active",
-      icon: <MdOutlineEdit className="eye-icon-size" />,
-    },
-    {
-      questions: "When is your birthday?",
-      status: "Active",
-      icon: <MdOutlineEdit className="eye-icon-size" />,
-    },
-    {
-      questions: "What is your favorite summer activity?",
-      status: "Active",
-      icon: <MdOutlineEdit className="eye-icon-size" />,
-    },
-  ];
+  const [allQuestions, setAllQuestions] = useState([]);
+  // const SECURITYQUESTIONS_DETAILS = [
+  //   {
+  //     questions: "What is your pet name?",
+  //     status: "Active",
+  //     icon: <MdOutlineEdit className="eye-icon-size" />,
+  //   },
+  //   {
+  //     questions: "What is your favorite color?",
+  //     status: "Active",
+  //     icon: <MdOutlineEdit className="eye-icon-size" />,
+  //   },
+  //   {
+  //     questions: "What is your favorite animal?",
+  //     status: "Active",
+  //     icon: <MdOutlineEdit className="eye-icon-size" />,
+  //   },
+  //   {
+  //     questions: "When is your birthday?",
+  //     status: "Active",
+  //     icon: <MdOutlineEdit className="eye-icon-size" />,
+  //   },
+  //   {
+  //     questions: "What is your favorite summer activity?",
+  //     status: "Active",
+  //     icon: <MdOutlineEdit className="eye-icon-size" />,
+  //   },
+  // ];
 
-  const cols = [
+  const   cols = [
     {
       header: "QUESTIONS",
       field: "questions",
     },
     {
       header: "STATUS",
-      field: "status",
+      field: "is_active",
       clr: true,
     },
     {
@@ -47,13 +51,28 @@ function Securityquestions() {
       field: "icon",
     },
   ];
+  const getAllQuestions = async () => {
 
-  const modifiedSecurityquestionsDetails = SECURITYQUESTIONS_DETAILS.map(
+    await call(GET_ALL_SECURITY_QUESTIONS)
+      .then((res) => {
+        console.log("response====>",res)
+        setAllQuestions(res?.data?.data?.securityQuestions);
+      })
+
+      .catch((err) => console.log(err));
+  };
+  console.log("AllQuestions===>",allQuestions)
+  useEffect(() => {
+    getAllQuestions();
+  }, []);
+
+  const modifiedSecurityquestionsDetails = allQuestions.map(
+    
     (item) => ({
       ...item,
       questions: (
         <div className="role-color">
-          <span className="role-color">{item?.questions}</span>{" "}
+          <span className="role-color">{item?.question}</span>{" "}
         </div>
       ),
     })
@@ -62,6 +81,7 @@ function Securityquestions() {
   const handleRejectionPopupOpen = () => {
     SetRejectpopupOpen(true);
   };
+  
   return (
     <div className="p-4 w-100">
       <div className="d-flex align-items-center justify-content-between">
@@ -118,3 +138,7 @@ function Securityquestions() {
 }
 
 export default Securityquestions;
+
+
+
+

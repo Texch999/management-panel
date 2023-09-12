@@ -1,9 +1,13 @@
-import React, { useState } from "react";
+import React from "react";
 import Table from "../table/Table";
 import { MdOutlineEdit } from "react-icons/md";
 import AddReasonPopup from "../Popups/AddReasonPopup";
+import { useEffect,useState} from "react";
+import { GET_ALL_SECURITY_QUESTIONS } from "../../config/endpoints";
+import { call } from "../../config/axios";
 
 function Rejectionreason() {
+  const [allQuestions, setAllQuestions] = useState([]);
   const REJECTIONREASON_DETAILS = [
     {
       reason: "Insufficient Balance",
@@ -49,7 +53,7 @@ function Rejectionreason() {
 
     {
       header: "STATUS",
-      field: "status",
+      field: "is_active",
       clr: true,
     },
     {
@@ -57,13 +61,26 @@ function Rejectionreason() {
       field: "icon",
     },
   ];
+  const getAllRejectQuestions = async () => {
+  
+    await call(GET_ALL_SECURITY_QUESTIONS)
+      .then((res) => {
+        console.log("response====>",res)
+        setAllQuestions(res?.data?.data?.securityQuestions);
+      })
 
-  const modifiedRejectionreasonDetails = REJECTIONREASON_DETAILS.map(
+      .catch((err) => console.log(err));
+  };
+  useEffect(() => {
+    getAllRejectQuestions();
+  }, []);
+
+  const modifiedRejectionreasonDetails = allQuestions.map(
     (item) => ({
       ...item,
       reason: (
         <div className="role-color">
-          <span className="role-color">{item?.reason}</span>{" "}
+          <span className="role-color">{item?.question}</span>{" "}
         </div>
       ),
     })
