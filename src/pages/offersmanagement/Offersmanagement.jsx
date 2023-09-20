@@ -1,55 +1,59 @@
 import React from "react";
 import Table from "../table/Table";
 import { AiOutlineEye } from "react-icons/ai";
+import { useEffect, useState } from "react";
+import { ADD_OFFERS } from "../../config/endpoints";
+import { call } from "../../config/axios";
 
 function Offersmanagement() {
-  const OFFERSMANAGEMENT_DETAILS = [
-    {
-      title:
-        "16 Free Premiere Pro Title Templates Perfect for Any Video | Motion Array",
-      publishdate: "14/08/2023 15:37:00 PM",
-      publishwebsite: "www.texch.com www.we2call.com www.ravanna.com",
-      type: "Global",
-      status: "Active",
-      icon: <AiOutlineEye className="eye-icon-size" />,
-    },
-    {
-      title:
-        "16 Free Premiere Pro Title Templates Perfect for Any Video | Motion Array",
-      publishdate: "14/08/2023 15:37:00 PM",
-      publishwebsite: "www.texch.com www.we2call.com www.ravanna.com",
-      type: "India",
-      status: "Active",
-      icon: <AiOutlineEye className="eye-icon-size" />,
-    },
-    {
-      title:
-        "16 Free Premiere Pro Title Templates Perfect for Any Video | Motion Array",
-      publishdate: "14/08/2023 15:37:00 PM",
-      publishwebsite: "www.texch.com www.we2call.com www.ravanna.com",
-      type: "USA",
-      status: "In-active",
-      icon: <AiOutlineEye className="eye-icon-size" />,
-    },
-    {
-      title:
-        "16 Free Premiere Pro Title Templates Perfect for Any Video | Motion Array",
-      publishdate: "14/08/2023 15:37:00 PM",
-      publishwebsite: "www.texch.com www.we2call.com www.ravanna.com",
-      type: "Global",
-      status: "Active",
-      icon: <AiOutlineEye className="eye-icon-size" />,
-    },
-    {
-      title:
-        "16 Free Premiere Pro Title Templates Perfect for Any Video | Motion Array",
-      publishdate: "14/08/2023 15:37:00 PM",
-      publishwebsite: "www.texch.com www.we2call.com www.ravanna.com",
-      type: "Global",
-      status: "Active",
-      icon: <AiOutlineEye className="eye-icon-size" />,
-    },
-  ];
+  const [allOffers, setAllOffers] = useState([]);
+  // const OFFERSMANAGEMENT_DETAILS = [
+  //   {
+  //     title:
+  //       "16 Free Premiere Pro Title Templates Perfect for Any Video | Motion Array",
+  //     publishdate: "14/08/2023 15:37:00 PM",
+  //     publishwebsite: "www.texch.com www.we2call.com www.ravanna.com",
+  //     type: "Global",
+  //     status: "Active",
+  //     icon: <AiOutlineEye className="eye-icon-size" />,
+  //   },
+  //   {
+  //     title:
+  //       "16 Free Premiere Pro Title Templates Perfect for Any Video | Motion Array",
+  //     publishdate: "14/08/2023 15:37:00 PM",
+  //     publishwebsite: "www.texch.com www.we2call.com www.ravanna.com",
+  //     type: "India",
+  //     status: "Active",
+  //     icon: <AiOutlineEye className="eye-icon-size" />,
+  //   },
+  //   {
+  //     title:
+  //       "16 Free Premiere Pro Title Templates Perfect for Any Video | Motion Array",
+  //     publishdate: "14/08/2023 15:37:00 PM",
+  //     publishwebsite: "www.texch.com www.we2call.com www.ravanna.com",
+  //     type: "USA",
+  //     status: "In-active",
+  //     icon: <AiOutlineEye className="eye-icon-size" />,
+  //   },
+  //   {
+  //     title:
+  //       "16 Free Premiere Pro Title Templates Perfect for Any Video | Motion Array",
+  //     publishdate: "14/08/2023 15:37:00 PM",
+  //     publishwebsite: "www.texch.com www.we2call.com www.ravanna.com",
+  //     type: "Global",
+  //     status: "Active",
+  //     icon: <AiOutlineEye className="eye-icon-size" />,
+  //   },
+  //   {
+  //     title:
+  //       "16 Free Premiere Pro Title Templates Perfect for Any Video | Motion Array",
+  //     publishdate: "14/08/2023 15:37:00 PM",
+  //     publishwebsite: "www.texch.com www.we2call.com www.ravanna.com",
+  //     type: "Global",
+  //     status: "Active",
+  //     icon: <AiOutlineEye className="eye-icon-size" />,
+  //   },
+  // ];
 
   const cols = [
     {
@@ -78,17 +82,45 @@ function Offersmanagement() {
       field: "icon",
     },
   ];
+  const getAllOffers = async () => {
+    const payload = {
+      register_id: "reg-20230710182031623",
+    };
+    await call(ADD_OFFERS, payload)
+      .then((res) => {
+        console.log("response====>", res);
+        setAllOffers(res?.data?.data?.offers);
+      })
 
-  const modifiedOffersmanagementDetails = OFFERSMANAGEMENT_DETAILS.map(
-    (item) => ({
-      ...item,
-      title: (
-        <div className="role-color">
-          <span className="role-color">{item?.title}</span>{" "}
-        </div>
-      ),
-    })
-  );
+      .catch((err) => console.log(err));
+  };
+  console.log("AllOffers===>", allOffers);
+  useEffect(() => {
+    getAllOffers();
+  }, []);
+
+  const modifiedOffersmanagementDetails = allOffers.map((item) => ({
+    title: (
+      <div className="role-color">
+        <span className="role-color">{item?.offer_name}</span>{" "}
+      </div>
+    ),
+    publishdate: (
+      <div>
+        <span>{item?.publish_date}</span>
+        <br />
+        <span>{item?.start_time}</span>
+      </div>
+    ),
+    publishwebsite: <span>{item?.website_name}</span>,
+    type: <span>{item?.notification_type}</span>,
+    status: (
+      <span>
+        {item?.offer_status === 1 ? <div>active</div> : <div>inactive</div>}
+      </span>
+    ),
+  }));
+  console.log(modifiedOffersmanagementDetails, ",,,,,,live");
   return (
     <div className="p-4 w-100">
       <h6 className="h6 font-grey">Offers</h6>

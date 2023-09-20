@@ -1,8 +1,9 @@
+import { useState } from "react";
 import { MdOutlineEdit } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 function Table(props) {
   const { data, columns } = props;
-
+  const [change, setChange] = useState(true);
   const getColor = (clr) => {
     switch (clr) {
       case "Shedule":
@@ -53,15 +54,7 @@ function Table(props) {
                         }
                         onClick={() => handleClickTable(column.field)}
                       >
-                        {column.field === "icon" ? (
-                          <MdOutlineEdit className="eye-icon-size" />
-                        ) : item[column.field] === 1 ? (
-                          "active"
-                        ) : item[column.field] === 0 ? (
-                          "inactive"
-                        ) : (
-                          item[column.field]
-                        )}
+                        <td>{item[column.field]}</td>
                       </div>
                     </div>
                   </td>

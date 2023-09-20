@@ -2,60 +2,65 @@ import React from "react";
 import Table from "../table/Table";
 import { AiOutlineEye } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { GET_BROADCAST_EVENTS } from "../../config/endpoints";
+import { call } from "../../config/axios";
 
 function Broadcasting() {
-  const BROADCASTING_DETAILS = [
-    {
-      title:
-        "16 Free Premiere Pro Title Templates Perfect for Any Video | Motion Array",
-      publishdate: "14/08/2023 15:37:00 PM",
-      publishwebsite: "www.texch.com www.we2call.com www.ravanna.com",
-      dateandtime: 1692966757289,
-      type: "Global",
-      status: "Active",
-      icon: <AiOutlineEye className="eye-icon-size" />,
-    },
-    {
-      title:
-        "16 Free Premiere Pro Title Templates Perfect for Any Video | Motion Array",
-      publishdate: "14/08/2023 15:37:00 PM",
-      publishwebsite: "www.texch.com www.we2call.com www.ravanna.com",
-      dateandtime: 1692966757289,
-      type: "India",
-      status: "Active",
-      icon: <AiOutlineEye className="eye-icon-size" />,
-    },
-    {
-      title:
-        "16 Free Premiere Pro Title Templates Perfect for Any Video | Motion Array",
-      publishdate: "14/08/2023 15:37:00 PM",
-      publishwebsite: "www.texch.com www.we2call.com www.ravanna.com",
-      dateandtime: 1692966757289,
-      type: "USA",
-      status: "In-active",
-      icon: <AiOutlineEye className="eye-icon-size" />,
-    },
-    {
-      title:
-        "16 Free Premiere Pro Title Templates Perfect for Any Video | Motion Array",
-      publishdate: "14/08/2023 15:37:00 PM",
-      publishwebsite: "www.texch.com www.we2call.com www.ravanna.com",
-      dateandtime: 1692966757289,
-      type: "Global",
-      status: "Active",
-      icon: <AiOutlineEye className="eye-icon-size" />,
-    },
-    {
-      title:
-        "16 Free Premiere Pro Title Templates Perfect for Any Video | Motion Array",
-      publishdate: "14/08/2023 15:37:00 PM",
-      publishwebsite: "www.texch.com www.we2call.com www.ravanna.com",
-      dateandtime: 1692966757289,
-      type: "Global",
-      status: "Active",
-      icon: <AiOutlineEye className="eye-icon-size" />,
-    },
-  ];
+  const [allbroadcasts, setAllBroadcasts] = useState([]);
+
+  // const BROADCASTING_DETAILS = [
+  //   {
+  //     title:
+  //       "16 Free Premiere Pro Title Templates Perfect for Any Video | Motion Array",
+  //     publishdate: "14/08/2023 15:37:00 PM",
+  //     publishwebsite: "www.texch.com www.we2call.com www.ravanna.com",
+  //     dateandtime: 1692966757289,
+  //     type: "Global",
+  //     status: "Active",
+  //     icon: <AiOutlineEye className="eye-icon-size" />,
+  //   },
+  //   {
+  //     title:
+  //       "16 Free Premiere Pro Title Templates Perfect for Any Video | Motion Array",
+  //     publishdate: "14/08/2023 15:37:00 PM",
+  //     publishwebsite: "www.texch.com www.we2call.com www.ravanna.com",
+  //     dateandtime: 1692966757289,
+  //     type: "India",
+  //     status: "Active",
+  //     icon: <AiOutlineEye className="eye-icon-size" />,
+  //   },
+  //   {
+  //     title:
+  //       "16 Free Premiere Pro Title Templates Perfect for Any Video | Motion Array",
+  //     publishdate: "14/08/2023 15:37:00 PM",
+  //     publishwebsite: "www.texch.com www.we2call.com www.ravanna.com",
+  //     dateandtime: 1692966757289,
+  //     type: "USA",
+  //     status: "In-active",
+  //     icon: <AiOutlineEye className="eye-icon-size" />,
+  //   },
+  //   {
+  //     title:
+  //       "16 Free Premiere Pro Title Templates Perfect for Any Video | Motion Array",
+  //     publishdate: "14/08/2023 15:37:00 PM",
+  //     publishwebsite: "www.texch.com www.we2call.com www.ravanna.com",
+  //     dateandtime: 1692966757289,
+  //     type: "Global",
+  //     status: "Active",
+  //     icon: <AiOutlineEye className="eye-icon-size" />,
+  //   },
+  //   {
+  //     title:
+  //       "16 Free Premiere Pro Title Templates Perfect for Any Video | Motion Array",
+  //     publishdate: "14/08/2023 15:37:00 PM",
+  //     publishwebsite: "www.texch.com www.we2call.com www.ravanna.com",
+  //     dateandtime: 1692966757289,
+  //     type: "Global",
+  //     status: "Active",
+  //     icon: <AiOutlineEye className="eye-icon-size" />,
+  //   },
+  // ];
 
   const cols = [
     {
@@ -88,13 +93,44 @@ function Broadcasting() {
       field: "icon",
     },
   ];
+  const getAllBroadcastEvents = async () => {
+    const payload = {
+      register_id: "reg-20230710182031623",
+    };
+    await call(GET_BROADCAST_EVENTS,payload)
+      .then((res) => {
+        console.log("response====>", res);
+        setAllBroadcasts(res?.data?.data);
+      })
 
-  const modifiedBroadcastingDetails = BROADCASTING_DETAILS.map((item) => ({
+      .catch((err) => console.log(err));
+  };
+  console.log("allbroadcasts===>", allbroadcasts);
+  useEffect(() => {
+    getAllBroadcastEvents();
+  }, []);
+
+  const modifiedBroadcastingDetails = allbroadcasts.map((item) => ({
     ...item,
     title: (
       <div className="role-color">
-        <span className="role-color">{item?.title}</span>{" "}
+        <span className="role-color">{item?.event_name}</span>{" "}
       </div>
+    ),
+    publishdate: (
+      <div>
+        <span>{item?.event_date}</span>
+        <br />
+        <span>{item?.start_time}</span>
+      </div>
+    ),
+    publishwebsite: <span>{item?.website_name}</span>,
+    dateandtime: <span>{item?.create_at}</span>,
+    type: <span>{item?.event_type}</span>,
+    status: (
+      <span>
+        {item?.event_status === 1 ? <div>active</div> : <div>inactive</div>}
+      </span>
     ),
   }));
   const navigate = useNavigate();

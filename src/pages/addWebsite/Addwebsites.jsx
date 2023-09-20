@@ -1,71 +1,75 @@
-import React, { useState } from "react";
+import React from "react";
 import Table from "../table/Table";
 import Totalaccount from "../home/Totalaccount";
 import { MdKeyboardArrowUp, MdKeyboardArrowDown } from "react-icons/md";
 import AddWebsitePopup from "../Popups/AddWebsitePopup";
+import { useEffect,useState} from "react";
+import { GET_ALL_WEBSITES } from "../../config/endpoints";
+import { call } from "../../config/axios";
 function Addwebsites() {
-  const ADDWEBSITE_DETAILS = [
-    {
-      websitename: "www.we2call.com ",
-      is: "India-Hyderabad",
-      used: "India-Delhi",
-      three: "India-Bengalore",
-      user: "Srinivas",
-      full: "Ashoke",
-      name: "Gopikrishna",
-      role1: "Director",
-      role2: "Director",
-      role3: "Director",
-    },
-    {
-      websitename: "www.we2call.com ",
-      is: "India-Hyderabad",
-      used: "India-Delhi",
-      three: "India-Bengalore",
-      user: "Srinivas",
-      full: "Ashoke",
-      name: "Gopikrishna",
-      role1: "SA",
-      role2: "SA",
-      role3: "SA",
-    },
-    {
-      websitename: "www.we2call.com ",
-      is: "India-Hyderabad",
-      used: "India-Delhi",
-      three: "India-Bengalore",
-      user: "Srinivas",
-      full: "Ashoke",
-      name: "Gopikrishna",
-      role1: "Director",
-      role2: "Director",
-      role3: "Director",
-    },
-    {
-      websitename: "www.we2call.com ",
-      is: "India-Hyderabad",
-      used: "India-Delhi",
-      three: "India-Bengalore",
-      user: "Srinivas",
-      full: "Ashoke",
-      name: "Gopikrishna",
-      role1: "Director",
-      role2: "Director",
-      role3: "Director",
-    },
-    {
-      websitename: "www.we2call.com ",
-      is: "India-Hyderabad",
-      used: "India-Delhi",
-      three: "India-Bengalore",
-      user: "Srinivas",
-      full: "Ashoke",
-      name: "Gopikrishna",
-      role1: "Director",
-      role2: "Director",
-      role3: "Director",
-    },
-  ];
+  const [allWebsites, setAllWebsites] = useState([]);
+  // const ADDWEBSITE_DETAILS = [
+  //   {
+  //     websitename: "www.we2call.com ",
+  //     is: "India-Hyderabad",
+  //     used: "India-Delhi",
+  //     three: "India-Bengalore",
+  //     user: "Srinivas",
+  //     full: "Ashoke",
+  //     name: "Gopikrishna",
+  //     role1: "Director",
+  //     role2: "Director",
+  //     role3: "Director",
+  //   },
+  //   {
+  //     websitename: "www.we2call.com ",
+  //     is: "India-Hyderabad",
+  //     used: "India-Delhi",
+  //     three: "India-Bengalore",
+  //     user: "Srinivas",
+  //     full: "Ashoke",
+  //     name: "Gopikrishna",
+  //     role1: "SA",
+  //     role2: "SA",
+  //     role3: "SA",
+  //   },
+  //   {
+  //     websitename: "www.we2call.com ",
+  //     is: "India-Hyderabad",
+  //     used: "India-Delhi",
+  //     three: "India-Bengalore",
+  //     user: "Srinivas",
+  //     full: "Ashoke",
+  //     name: "Gopikrishna",
+  //     role1: "Director",
+  //     role2: "Director",
+  //     role3: "Director",
+  //   },
+  //   {
+  //     websitename: "www.we2call.com ",
+  //     is: "India-Hyderabad",
+  //     used: "India-Delhi",
+  //     three: "India-Bengalore",
+  //     user: "Srinivas",
+  //     full: "Ashoke",
+  //     name: "Gopikrishna",
+  //     role1: "Director",
+  //     role2: "Director",
+  //     role3: "Director",
+  //   },
+  //   {
+  //     websitename: "www.we2call.com ",
+  //     is: "India-Hyderabad",
+  //     used: "India-Delhi",
+  //     three: "India-Bengalore",
+  //     user: "Srinivas",
+  //     full: "Ashoke",
+  //     name: "Gopikrishna",
+  //     role1: "Director",
+  //     role2: "Director",
+  //     role3: "Director",
+  //   },
+  // ];
 
   const cols = [
     {
@@ -125,9 +129,25 @@ function Addwebsites() {
       field: "role1Androle2Androle3",
     },
   ];
+  const getAllWebsites = async () => {
+    const payload = {
+      register_id: "reg-20230710182031623",
+    };
+    await call(GET_ALL_WEBSITES,payload)
+      .then((res) => {
+        console.log("response====>",res)
+        setAllWebsites(res?.data?.data);
+      })
 
-  const modifiedAddwebsiteDetails = ADDWEBSITE_DETAILS.map((item) => ({
+      .catch((err) => console.log(err));
+  };
+  useEffect(() => {
+    getAllWebsites();
+  }, []);
+
+  const modifiedAddwebsiteDetails = allWebsites.map((item) => ({
     ...item,
+    websitename: <span>{item?.web_url}</span>,
     isAndusedAndthree: (
       <div>
         {item?.is} <br /> <span>{item?.used}</span> <br />

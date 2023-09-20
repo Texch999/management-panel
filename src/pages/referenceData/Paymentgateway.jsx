@@ -1,50 +1,54 @@
 import React from "react";
 import Table from "../table/Table";
 import { MdOutlineEdit } from "react-icons/md";
+import { useEffect, useState } from "react";
+import { GET_ALL_PAYMENTS } from "../../config/endpoints";
+import { call } from "../../config/axios";
 
 function Paymentgateway() {
-  const PAYMENTGATEWAY_DETAILS = [
-    {
-      gatewayname: "Google Pay",
-      lastupdate: "18/08/2023",
-      country: "India ",
-      currency: "INR ₹",
-      status: "Active",
-      icon: <MdOutlineEdit className="eye-icon-size" />,
-    },
-    {
-      gatewayname: "Paytm",
-      lastupdate: "18/08/2023",
-      country: "India ",
-      currency: "INR ₹",
-      status: "Active",
-      icon: <MdOutlineEdit className="eye-icon-size" />,
-    },
-    {
-      gatewayname: "QR Code",
-      lastupdate: "18/08/2023",
-      country: "India ",
-      currency: "INR ₹",
-      status: "Active",
-      icon: <MdOutlineEdit className="eye-icon-size" />,
-    },
-    {
-      gatewayname: "Phone Pay",
-      lastupdate: "18/08/2023",
-      country: "India ",
-      currency: "INR ₹",
-      status: "Active",
-      icon: <MdOutlineEdit className="eye-icon-size" />,
-    },
-    {
-      gatewayname: "Google Pay",
-      lastupdate: "18/08/2023",
-      country: "India ",
-      currency: "INR ₹",
-      status: "Active",
-      icon: <MdOutlineEdit className="eye-icon-size" />,
-    },
-  ];
+  const [allPayments, setAllPayments] = useState([]);
+  // const PAYMENTGATEWAY_DETAILS = [
+  //   {
+  //     gatewayname: "Google Pay",
+  //     lastupdate: "18/08/2023",
+  //     country: "India ",
+  //     currency: "INR ₹",
+  //     status: "Active",
+  //     icon: <MdOutlineEdit className="eye-icon-size" />,
+  //   },
+  //   {
+  //     gatewayname: "Paytm",
+  //     lastupdate: "18/08/2023",
+  //     country: "India ",
+  //     currency: "INR ₹",
+  //     status: "Active",
+  //     icon: <MdOutlineEdit className="eye-icon-size" />,
+  //   },
+  //   {
+  //     gatewayname: "QR Code",
+  //     lastupdate: "18/08/2023",
+  //     country: "India ",
+  //     currency: "INR ₹",
+  //     status: "Active",
+  //     icon: <MdOutlineEdit className="eye-icon-size" />,
+  //   },
+  //   {
+  //     gatewayname: "Phone Pay",
+  //     lastupdate: "18/08/2023",
+  //     country: "India ",
+  //     currency: "INR ₹",
+  //     status: "Active",
+  //     icon: <MdOutlineEdit className="eye-icon-size" />,
+  //   },
+  //   {
+  //     gatewayname: "Google Pay",
+  //     lastupdate: "18/08/2023",
+  //     country: "India ",
+  //     currency: "INR ₹",
+  //     status: "Active",
+  //     icon: <MdOutlineEdit className="eye-icon-size" />,
+  //   },
+  // ];
 
   const cols = [
     {
@@ -74,13 +78,38 @@ function Paymentgateway() {
       field: "icon",
     },
   ];
+const getPaymentWay = async () => {
+  const payload = {
+    register_id: "reg-20230710182031623",
+  };
+    await call(GET_ALL_PAYMENTS,payload)
+      .then((res) => {
+        console.log("API Response:", res);
+       setAllPayments(res?.data?.data);
+      console.log("All Payments===>", allPayments);
 
-  const modifiedPaymentgatewayDetails = PAYMENTGATEWAY_DETAILS.map((item) => ({
+      })
+      .catch((err) => console.log(err));
+  };
+  console.log("AllPayment Gatways===>", allPayments);
+  useEffect(() => {
+    getPaymentWay();
+  },[]);
+
+  const modifiedPaymentgatewayDetails = allPayments.map((item) => ({
     ...item,
     gatewayname: (
       <div className="role-color">
-        <span className="role-color">{item?.gatewayname}</span>{" "}
+        <span className="role-color">{item?.pg_name}</span>{" "}
       </div>
+    ),
+    country: <span>{item?.country_name}</span>,
+    lastupdate: <span>{item?.update_at}</span>,
+    currency: <span>{item?.currency_name}</span>,
+    status: (
+      <span>
+        {item?.is_active === 1 ? <div>active</div> : <div>inactive</div>}
+      </span>
     ),
   }));
 

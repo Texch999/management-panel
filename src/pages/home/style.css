@@ -226,7 +226,7 @@ input::-webkit-calendar-picker-indicator {
   background-color: #2b2c40 !important;
   color: #cbcbe2 !important;
 }
-.tickets-table tbody > tr td {
+.tickets-table tbody tr td {
   background-color: #2b2c40 !important;
   color: #a3a4cc;
   font-weight: 500;

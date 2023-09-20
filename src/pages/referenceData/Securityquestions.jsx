@@ -2,12 +2,25 @@ import React from "react";
 import Table from "../table/Table";
 import { MdOutlineEdit } from "react-icons/md";
 import AddReasonPopup from "../Popups/AddReasonPopup";
-import { useEffect,useState} from "react";
+import { useEffect, useState } from "react";
 import { GET_ALL_SECURITY_QUESTIONS } from "../../config/endpoints";
 import { call } from "../../config/axios";
 
 function Securityquestions() {
-  const [allQuestions, setAllQuestions] = useState([]);
+  const [allQuestions, setAllQuestions] = useState([]); 
+  const [filteredQuestions, setFilteredQuestions] = useState([]);
+  const [selectedOption, setSelectedOption] = useState("Active");
+  const [searchText,setSearchText]=useState("");
+  const [status, setStatus] = useState(false);
+
+const handleSelectChange = (event) => {
+    const selectedValue = event.target.value;
+    setSelectedOption(selectedValue);
+  };
+  console.log("SELECT", selectedOption);
+
+  
+
   // const SECURITYQUESTIONS_DETAILS = [
   //   {
   //     questions: "What is your pet name?",
@@ -36,52 +49,105 @@ function Securityquestions() {
   //   },
   // ];
 
-  const   cols = [
+const searchContent =(value) =>{
+    setSearchText(value)
+    const filteredSearchText= allQuestions.filter((res)=>
+      res?.question?.toLowerCase().includes(searchText.toLowerCase())
+    )
+    setFilteredQuestions(filteredSearchText)
+}
+  const cols = [
     {
       header: "QUESTIONS",
       field: "questions",
     },
     {
       header: "STATUS",
-      field: "is_active",
-      clr: true,
+      field: "status",
     },
     {
       header: "Action",
       field: "icon",
     },
   ];
-  const getAllQuestions = async () => {
-
-    await call(GET_ALL_SECURITY_QUESTIONS)
+  const getAllSecurityQuestions = async () => {
+    const payload = {
+      register_id: "reg-20230710182031623",
+    };
+    await call(GET_ALL_SECURITY_QUESTIONS, payload)
       .then((res) => {
-        console.log("response====>",res)
+        console.log("response====>", res);
         setAllQuestions(res?.data?.data?.securityQuestions);
       })
 
       .catch((err) => console.log(err));
   };
-  console.log("AllQuestions===>",allQuestions)
+  console.log("AllQuestions===>", allQuestions);
   useEffect(() => {
-    getAllQuestions();
-  }, []);
+    getAllSecurityQuestions();
+  }, [status]);
+  
+  console.log(filteredQuestions)
+  console.log(allQuestions)
 
-  const modifiedSecurityquestionsDetails = allQuestions.map(
-    
-    (item) => ({
-      ...item,
-      questions: (
-        <div className="role-color">
-          <span className="role-color">{item?.question}</span>{" "}
-        </div>
-      ),
-    })
-  );
+  // const modifiedSecurityquestionsDetails = allQuestions
+  //   .filter((item) =>
+  //     selectedOption === "Active"
+  //       ? item?.is_active === 1
+  //       : item?.is_active === 0
+  //   )
+  //   .map((item) => {
+  //     return {
+  //       questions: <div className="role-color">{item?.question}</div>,
+  //       status:
+  //         item?.is_active === 1 ? (
+  //           <div className="font-green">Active</div>
+  //         ) : (
+  //           <div className="font-orange">InActive</div>
+  //         ),
+  //       icon: <MdOutlineEdit className="eye-icon-size" />,
+  //     };
+  //   });
+  const modifiedSecurityquestionsDetails = searchText.length
+  ? filteredQuestions
+      .filter((item) =>
+        selectedOption === "Active" ? item?.is_active === 1 : item?.is_active === 0
+      )
+      .filter((item) =>
+        item?.question?.toLowerCase().includes(searchText.toLowerCase())
+      )
+      .map((item) => {
+        return {
+          questions: <div className="role-color">{item?.question}</div>,
+          status:
+            item?.is_active === 1 ? (
+              <div className="font-green">Active</div>
+            ) : (
+              <div className="font-orange">InActive</div>
+            ),
+          icon: <MdOutlineEdit className="eye-icon-size" />,
+        };
+      })
+  : allQuestions
+      .filter((item) =>
+        selectedOption === "Active" ? item?.is_active === 1 : item?.is_active === 0
+      )
+      .map((item) => {
+        return {
+          questions: <div className="role-color">{item?.question}</div>,
+          status:
+            item?.is_active === 1 ? (
+              <div className="font-green">Active</div>
+            ) : (
+              <div className="font-orange">InActive</div>
+            ),
+          icon: <MdOutlineEdit className="eye-icon-size" />,
+        };
+      });
   const [rejectPopupOpen, SetRejectpopupOpen] = useState(false);
   const handleRejectionPopupOpen = () => {
     SetRejectpopupOpen(true);
   };
-  
   return (
     <div className="p-4 w-100">
       <div className="d-flex align-items-center justify-content-between">
@@ -94,6 +160,8 @@ function Securityquestions() {
                 type="search"
                 placeholder="Search"
                 aria-label="Search"
+                value={searchText} 
+                onChange={(e)=> searchContent(e.target.value)}
               />
             </form>
           </div>
@@ -116,9 +184,11 @@ function Securityquestions() {
             <select
               className="form-select-option w-100 rounded p-2 px-3 m-1 mx-2 small-font"
               aria-label="Default select example"
+              value={selectedOption}
+              onChange={handleSelectChange}
             >
-              <option selected>Active</option>
-              <option value="1">In-active</option>
+              <option value="Active">Active</option>
+              <option value="In-Active">In-active</option>
             </select>
           </div>
         </div>
@@ -132,13 +202,10 @@ function Securityquestions() {
         Heading="Add Security Questions"
         firstSelect="Questions "
         firstTextarea="Description"
+        setStatus={setStatus}
       />
     </div>
   );
 }
 
 export default Securityquestions;
-
-
-
-

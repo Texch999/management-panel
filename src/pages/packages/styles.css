@@ -25,7 +25,7 @@
   font-weight: 600;
 }
 .font-green {
-  color: #71dd37;
+  color: #71dd37 !important;
 }
 .font-orange {
   color: #ff5426;

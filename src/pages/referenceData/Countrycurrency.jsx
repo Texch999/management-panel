@@ -1,9 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, useEffect} from "react";
 import Table from "../table/Table";
 import { MdOutlineEdit } from "react-icons/md";
 import AddCountryPopups from "../Popups/AddCountryPopups";
+import { GET_COUNTRY_AND_CURRENCY } from "../../config/endpoints";
+import { call } from "../../config/axios";
 
 function Countrycurrency() {
+  const [getallCountries, setAllCountries] = useState([]);
+  const [filteredQuestions, setFilteredQuestions] = useState([]);
+  const [searchText,setSearchText]=useState("");
+  const [status, setStatus] = useState(false);
   const COUNTRYCURRENCY_DETAILS = [
     {
       countryname: "India ",
@@ -46,8 +52,14 @@ function Countrycurrency() {
       icon: <MdOutlineEdit className="eye-icon-size" />,
     },
   ];
-
-  const cols = [
+  const searchContent =(value) =>{
+    setSearchText(value)
+    const filteredSearchText= getallCountries.filter((res)=>
+      res?.country_name.toLowerCase().includes(searchText.toLowerCase())
+    )
+    setFilteredQuestions(filteredSearchText)
+}
+ const cols = [
     {
       header: "COUNTRY NAME",
       field: "countryname",
@@ -75,17 +87,70 @@ function Countrycurrency() {
       field: "icon",
     },
   ];
+  const getAllCountries = async () => {
+    const payload = {
+      register_id: "reg-20230909114353315",
+    };
+    await call(GET_COUNTRY_AND_CURRENCY,payload)
+      .then((res) => {
+        console.log("response====>", res);
+        setAllCountries(res?.data?.data);
+      })
 
-  const modifiedCountrycurrencyDetails = COUNTRYCURRENCY_DETAILS.map(
-    (item) => ({
-      ...item,
-      countryname: (
-        <div className="role-color">
-          <span className="role-color">{item?.countryname}</span>{" "}
-        </div>
-      ),
-    })
-  );
+      .catch((err) => console.log(err));
+  };
+  console.log("AllCountries===>", getallCountries);
+  useEffect(() => {
+    getAllCountries();
+  }, [status]);
+
+  // const modifiedCountrycurrencyDetails = COUNTRYCURRENCY_DETAILS.map(
+  //   (item) => ({
+  //     ...item,
+  //     countryname: (
+  //       <div className="role-color">
+  //         <span className="role-color">{item?.countryname}</span>{" "}
+  //       </div>
+  //     ),
+  //   })
+  // );
+  const modifiedCountrycurrencyDetails = searchText.length
+  ? filteredQuestions
+      .filter((item) =>
+        item?.country_name.toLowerCase().includes(searchText.toLowerCase())
+      )
+      .map((item) => {
+        return {
+          countryname: <div className="role-color">{item?.country_name}</div>,
+          currency: item?.currency_name,
+          availableaccounts:item?.payment_details,
+          showwebsites:item?.website,
+          status:
+            item?.status === "active" ? (
+              <div className="font-green">Active</div>
+            ) : (
+              <div className="font-orange">InActive</div>
+            ),
+          icon: <MdOutlineEdit className="eye-icon-size" />,
+        };
+      })
+  : getallCountries
+      
+      .map((item) => {
+        return {
+          countryname: <div className="role-color">{item?.country_name}</div>,
+          currency: item?.currency_name,
+          availableaccounts:item?.payment_details,
+          showwebsites:item?.website,
+          status:
+            item?.status === "active" ? (
+              <div className="font-green">Active</div>
+            ) : (
+              <div className="font-orange">InActive</div>
+            ),
+          icon: <MdOutlineEdit className="eye-icon-size" />,
+        };
+      });
   const [addCountryOpen, setAddCountryOpen] = useState(false);
   const handleAddCountryPopup = () => {
     setAddCountryOpen(true);
@@ -106,6 +171,8 @@ function Countrycurrency() {
                   type="search"
                   placeholder="Search"
                   aria-label="Search"
+                  value={searchText} 
+                  onChange={(e)=> searchContent(e.target.value)}
                 />
               </form>
             </div>
@@ -125,6 +192,7 @@ function Countrycurrency() {
       <AddCountryPopups
         addCountryOpen={addCountryOpen}
         setAddCountryOpen={setAddCountryOpen}
+        setStatus={setStatus}
       />
     </div>
   );
