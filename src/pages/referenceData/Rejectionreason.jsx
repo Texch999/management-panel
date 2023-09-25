@@ -8,57 +8,22 @@ import { call } from "../../config/axios";
 
 function Rejectionreason() {
   const [allQuestions, setAllQuestions] = useState([]);
-  const [selectedQuestion,setSelectedQuestion]=useState([])
+  const [selectedQuestion, setSelectedQuestion] = useState([]);
   const [filteredQuestions, setFilteredQuestions] = useState([]);
   const [selectedOption, setSelectedOption] = useState("Active");
-  const [searchText,setSearchText]=useState("");
+  const [searchText, setSearchText] = useState("");
   const [status, setStatus] = useState(false);
   const handleSelectChange = (event) => {
     const selectedValue = event.target.value;
     setSelectedOption(selectedValue);
   };
-  // const REJECTIONREASON_DETAILS = allQuestions.map(()=>{
-  //   return()
-  // })[
-  //   {
-  //     reason: "Insufficient Balance",
-  //     description: "Not enough balance in Users account",
-  //     status: "Active",
-  //     icon: <MdOutlineEdit className="eye-icon-size" />,
-  //   },
-  //   {
-  //     reason: "Insufficient Balance",
-  //     description: "Not enough balance in Users account",
-  //     status: "Active",
-  //     icon: <MdOutlineEdit className="eye-icon-size" />,
-  //   },
-  //   {
-  //     reason: "Insufficient Balance",
-  //     description: "Not enough balance in Users account",
-  //     status: "Active",
-  //     icon: <MdOutlineEdit className="eye-icon-size" />,
-  //   },
-  //   {
-  //     reason: "Insufficient Balance",
-  //     description: "Not enough balance in Users account",
-  //     status: "Active",
-  //     icon: <MdOutlineEdit className="eye-icon-size" />,
-  //   },
-  //   {
-  //     reason: "Insufficient Balance",
-  //     description: "Not enough balance in Users account",
-  //     status: "Active",
-  //     icon: <MdOutlineEdit className="eye-icon-size" />,
-  //   },
-  // ];
-
-  const searchContent =(value) =>{
-    setSearchText(value)
-    const filteredSearchText= allQuestions.filter((res)=>
+  const searchContent = (value) => {
+    setSearchText(value);
+    const filteredSearchText = allQuestions.filter((res) =>
       res?.reason?.toLowerCase().includes(searchText.toLowerCase())
-    )
-    setFilteredQuestions(filteredSearchText)
-}
+    );
+    setFilteredQuestions(filteredSearchText);
+  };
 
   const cols = [
     {
@@ -73,7 +38,6 @@ function Rejectionreason() {
     {
       header: "STATUS",
       field: "status",
-      // clr: true,
     },
     {
       header: "Action",
@@ -86,7 +50,6 @@ function Rejectionreason() {
     };
     await call(GET_ALL_SECURITY_QUESTIONS, payload)
       .then((res) => {
-        console.log("response====>", res);
         setAllQuestions(res?.data?.data?.securityQuestions);
       })
       .catch((err) => console.log(err));
@@ -95,72 +58,57 @@ function Rejectionreason() {
     getAllRejectQuestions();
   }, [status]);
 
-  console.log(filteredQuestions)
-  console.log(allQuestions)
-  // const modifiedRejectionreasonDetails = searchText.length ? filteredQuestions : allQuestions
-  //   .filter((item) =>
-  //     selectedOption === "Active"
-  //       ? item?.is_active === 1
-  //       : item?.is_active === 0
-  //   )
-  //   .map((item) => {
-  //     return {
-  //       reason: <div className="role-color">{item?.question}</div>,
-  //       description:item?.description,
-  //       status:
-  //         item?.is_active === 1 ? (
-  //           <div className="font-green">Active</div>
-  //         ) : (
-  //           <div className="font-orange">InActive</div>
-  //         ),
-  //       icon: <MdOutlineEdit className="eye-icon-size" />,
-  //     };
-  //   });
   const modifiedRejectionreasonDetails = searchText.length
-  ? filteredQuestions
-      .filter((item) =>
-        selectedOption === "Active" ? item?.is_active === 1 : item?.is_active === 0
-      )
-      .filter((item) =>
-        item?.reason?.toLowerCase().includes(searchText.toLowerCase())
-      )
-      .map((item) => {
-        return {
-          reason: <div className="role-color">{item?.reason}</div>,
-          description: item?.description,
-          status:
-            item?.is_active === 1 ? (
-              <div className="font-green">Active</div>
-            ) : (
-              <div className="font-orange">InActive</div>
+    ? filteredQuestions
+        .filter((item) =>
+          selectedOption === "Active"
+            ? item?.is_active === 1
+            : item?.is_active === 0
+        )
+        .filter((item) =>
+          item?.reason?.toLowerCase().includes(searchText.toLowerCase())
+        )
+        .map((item) => {
+          return {
+            reason: <div className="role-color">{item?.reason}</div>,
+            description: item?.description,
+            status:
+              item?.is_active === 1 ? (
+                <div className="font-green">Active</div>
+              ) : (
+                <div className="font-orange">InActive</div>
+              ),
+            icon: <MdOutlineEdit className="eye-icon-size" />,
+          };
+        })
+    : allQuestions
+        .filter((item) =>
+          selectedOption === "Active"
+            ? item?.is_active === 1
+            : item?.is_active === 0
+        )
+        .map((item) => {
+          return {
+            reason: <div className="role-color">{item?.reason}</div>,
+            description: item?.description,
+            status:
+              item?.is_active === 1 ? (
+                <div className="font-green">Active</div>
+              ) : (
+                <div className="font-orange">InActive</div>
+              ),
+            icon: (
+              <MdOutlineEdit
+                className="eye-icon-size"
+                onClick={() => {
+                  console.log("testetestste");
+                  setSelectedQuestion(item);
+                  handleRejectionPopupOpen();
+                }}
+              />
             ),
-          icon: <MdOutlineEdit className="eye-icon-size"  />,
-        };
-      })
-  : allQuestions
-      .filter((item) =>
-        selectedOption === "Active" ? item?.is_active === 1 : item?.is_active === 0
-      )
-      .map((item) => {
-        return {
-          reason: <div className="role-color">{item?.reason}</div>,
-          description: item?.description,
-          status:
-            item?.is_active === 1 ? (
-              <div className="font-green">Active</div>
-            ) : (
-              <div className="font-orange">InActive</div>
-            ),
-          icon: <MdOutlineEdit className="eye-icon-size"/>,
-          
-        };
-        // onClick={()=>{
-        //   console.log("testetestste")
-        //   setSelectedQuestion(item)
-        //   handleRejectionPopupOpen()
-        // }}
-      });
-
+          };
+        });
 
   const [rejectPopupOpen, SetRejectpopupOpen] = useState(false);
   const handleRejectionPopupOpen = () => {
@@ -178,8 +126,8 @@ function Rejectionreason() {
                 type="search"
                 placeholder="Search"
                 aria-label="Search"
-                value={searchText} 
-                onChange={(e)=> searchContent(e.target.value)}
+                value={searchText}
+                onChange={(e) => searchContent(e.target.value)}
               />
             </form>
           </div>
@@ -217,7 +165,7 @@ function Rejectionreason() {
       <AddReasonPopup
         rejectPopupOpen={rejectPopupOpen}
         SetRejectpopupOpen={SetRejectpopupOpen}
-        Heading="Add Reason"
+        Heading={`${selectedQuestion ? "Update Reason" : "Add Reason"} `}
         firstSelect="Reason"
         firstTextarea="Description"
         setStatus={setStatus}

@@ -7,57 +7,17 @@ import { call } from "../../config/axios";
 
 function Countrycurrency() {
   const [getallCountries, setAllCountries] = useState([]);
-  const [filteredQuestions, setFilteredQuestions] = useState([]);
+  const [filteredCountries, setFilteredCountries] = useState([]);
+  const [selectedCountry,setSelectedCountry]=useState("")
   const [searchText,setSearchText]=useState("");
   const [status, setStatus] = useState(false);
-  const COUNTRYCURRENCY_DETAILS = [
-    {
-      countryname: "India ",
-      currency: "INR ₹",
-      availableaccounts: "Bank Details, Wallet, QR Code",
-      showwebsites: "www.texch.com www.we2call.com www.ravanna.com",
-      status: "Active",
-      icon: <MdOutlineEdit className="eye-icon-size" />,
-    },
-    {
-      countryname: "USA ",
-      currency: "USD $",
-      availableaccounts: "Bank Details, Wallet, QR Code",
-      showwebsites: "www.texch.com www.we2call.com www.ravanna.com",
-      status: "In-active",
-      icon: <MdOutlineEdit className="eye-icon-size" />,
-    },
-    {
-      countryname: "India ",
-      currency: "INR ₹",
-      availableaccounts: "Bank Details, Wallet, QR Code",
-      showwebsites: "www.texch.com www.we2call.com www.ravanna.com",
-      status: "In-active",
-      icon: <MdOutlineEdit className="eye-icon-size" />,
-    },
-    {
-      countryname: "Gemany ",
-      currency: "EUR €",
-      availableaccounts: "Bank Details, Wallet, QR Code",
-      showwebsites: "www.texch.com www.we2call.com www.ravanna.com",
-      status: "In-active",
-      icon: <MdOutlineEdit className="eye-icon-size" />,
-    },
-    {
-      countryname: "India ",
-      currency: "INR ₹",
-      availableaccounts: "Bank Details, Wallet, QR Code",
-      showwebsites: "www.texch.com www.we2call.com www.ravanna.com",
-      status: "Active",
-      icon: <MdOutlineEdit className="eye-icon-size" />,
-    },
-  ];
+  
   const searchContent =(value) =>{
     setSearchText(value)
     const filteredSearchText= getallCountries.filter((res)=>
       res?.country_name.toLowerCase().includes(searchText.toLowerCase())
     )
-    setFilteredQuestions(filteredSearchText)
+    setFilteredCountries(filteredSearchText)
 }
  const cols = [
     {
@@ -93,29 +53,17 @@ function Countrycurrency() {
     };
     await call(GET_COUNTRY_AND_CURRENCY,payload)
       .then((res) => {
-        console.log("response====>", res);
         setAllCountries(res?.data?.data);
       })
 
       .catch((err) => console.log(err));
   };
-  console.log("AllCountries===>", getallCountries);
   useEffect(() => {
     getAllCountries();
   }, [status]);
 
-  // const modifiedCountrycurrencyDetails = COUNTRYCURRENCY_DETAILS.map(
-  //   (item) => ({
-  //     ...item,
-  //     countryname: (
-  //       <div className="role-color">
-  //         <span className="role-color">{item?.countryname}</span>{" "}
-  //       </div>
-  //     ),
-  //   })
-  // );
   const modifiedCountrycurrencyDetails = searchText.length
-  ? filteredQuestions
+  ? filteredCountries
       .filter((item) =>
         item?.country_name.toLowerCase().includes(searchText.toLowerCase())
       )
@@ -131,7 +79,7 @@ function Countrycurrency() {
             ) : (
               <div className="font-orange">InActive</div>
             ),
-          icon: <MdOutlineEdit className="eye-icon-size" />,
+          icon: <MdOutlineEdit className="eye-icon-size"/>,
         };
       })
   : getallCountries
@@ -148,7 +96,11 @@ function Countrycurrency() {
             ) : (
               <div className="font-orange">InActive</div>
             ),
-          icon: <MdOutlineEdit className="eye-icon-size" />,
+          icon: <MdOutlineEdit className="eye-icon-size" onClick={()=>{
+                setSelectedCountry(item)
+                handleAddCountryPopup()
+              }}
+          />,
         };
       });
   const [addCountryOpen, setAddCountryOpen] = useState(false);
@@ -193,6 +145,8 @@ function Countrycurrency() {
         addCountryOpen={addCountryOpen}
         setAddCountryOpen={setAddCountryOpen}
         setStatus={setStatus}
+        selectedCountry={selectedCountry}
+        setSelectedCountry={setSelectedCountry}   
       />
     </div>
   );

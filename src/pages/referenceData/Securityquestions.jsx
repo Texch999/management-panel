@@ -7,55 +7,25 @@ import { GET_ALL_SECURITY_QUESTIONS } from "../../config/endpoints";
 import { call } from "../../config/axios";
 
 function Securityquestions() {
-  const [allQuestions, setAllQuestions] = useState([]); 
+  const [allQuestions, setAllQuestions] = useState([]);
+  const [selectedQuestion, setSelectedQuestion] = useState("");
   const [filteredQuestions, setFilteredQuestions] = useState([]);
   const [selectedOption, setSelectedOption] = useState("Active");
-  const [searchText,setSearchText]=useState("");
+  const [searchText, setSearchText] = useState("");
   const [status, setStatus] = useState(false);
 
-const handleSelectChange = (event) => {
+  const handleSelectChange = (event) => {
     const selectedValue = event.target.value;
     setSelectedOption(selectedValue);
   };
-  console.log("SELECT", selectedOption);
 
-  
-
-  // const SECURITYQUESTIONS_DETAILS = [
-  //   {
-  //     questions: "What is your pet name?",
-  //     status: "Active",
-  //     icon: <MdOutlineEdit className="eye-icon-size" />,
-  //   },
-  //   {
-  //     questions: "What is your favorite color?",
-  //     status: "Active",
-  //     icon: <MdOutlineEdit className="eye-icon-size" />,
-  //   },
-  //   {
-  //     questions: "What is your favorite animal?",
-  //     status: "Active",
-  //     icon: <MdOutlineEdit className="eye-icon-size" />,
-  //   },
-  //   {
-  //     questions: "When is your birthday?",
-  //     status: "Active",
-  //     icon: <MdOutlineEdit className="eye-icon-size" />,
-  //   },
-  //   {
-  //     questions: "What is your favorite summer activity?",
-  //     status: "Active",
-  //     icon: <MdOutlineEdit className="eye-icon-size" />,
-  //   },
-  // ];
-
-const searchContent =(value) =>{
-    setSearchText(value)
-    const filteredSearchText= allQuestions.filter((res)=>
+  const searchContent = (value) => {
+    setSearchText(value);
+    const filteredSearchText = allQuestions.filter((res) =>
       res?.question?.toLowerCase().includes(searchText.toLowerCase())
-    )
-    setFilteredQuestions(filteredSearchText)
-}
+    );
+    setFilteredQuestions(filteredSearchText);
+  };
   const cols = [
     {
       header: "QUESTIONS",
@@ -76,75 +46,66 @@ const searchContent =(value) =>{
     };
     await call(GET_ALL_SECURITY_QUESTIONS, payload)
       .then((res) => {
-        console.log("response====>", res);
         setAllQuestions(res?.data?.data?.securityQuestions);
       })
 
       .catch((err) => console.log(err));
   };
-  console.log("AllQuestions===>", allQuestions);
   useEffect(() => {
     getAllSecurityQuestions();
   }, [status]);
-  
-  console.log(filteredQuestions)
-  console.log(allQuestions)
 
-  // const modifiedSecurityquestionsDetails = allQuestions
-  //   .filter((item) =>
-  //     selectedOption === "Active"
-  //       ? item?.is_active === 1
-  //       : item?.is_active === 0
-  //   )
-  //   .map((item) => {
-  //     return {
-  //       questions: <div className="role-color">{item?.question}</div>,
-  //       status:
-  //         item?.is_active === 1 ? (
-  //           <div className="font-green">Active</div>
-  //         ) : (
-  //           <div className="font-orange">InActive</div>
-  //         ),
-  //       icon: <MdOutlineEdit className="eye-icon-size" />,
-  //     };
-  //   });
   const modifiedSecurityquestionsDetails = searchText.length
-  ? filteredQuestions
-      .filter((item) =>
-        selectedOption === "Active" ? item?.is_active === 1 : item?.is_active === 0
-      )
-      .filter((item) =>
-        item?.question?.toLowerCase().includes(searchText.toLowerCase())
-      )
-      .map((item) => {
-        return {
-          questions: <div className="role-color">{item?.question}</div>,
-          status:
-            item?.is_active === 1 ? (
-              <div className="font-green">Active</div>
-            ) : (
-              <div className="font-orange">InActive</div>
+    ? filteredQuestions
+        .filter((item) =>
+          selectedOption === "Active"
+            ? item?.is_active === 1
+            : item?.is_active === 0
+        )
+        .filter((item) =>
+          item?.question?.toLowerCase().includes(searchText.toLowerCase())
+        )
+        .map((item) => {
+          return {
+            questions: <div className="role-color">{item?.question}</div>,
+            status:
+              item?.is_active === 1 ? (
+                <div className="font-green">Active</div>
+              ) : (
+                <div className="font-orange">InActive</div>
+              ),
+            icon: <MdOutlineEdit className="eye-icon-size" />,
+          };
+        })
+    : allQuestions
+        .filter((item) =>
+          selectedOption === "Active"
+            ? item?.is_active === 1
+            : item?.is_active === 0
+        )
+        .map((item) => {
+          return {
+            questions: <div className="role-color">{item?.question}</div>,
+            status:
+              item?.is_active === 1 ? (
+                <div className="font-green">Active</div>
+              ) : (
+                <div className="font-orange">InActive</div>
+              ),
+            icon: (
+              <MdOutlineEdit
+                className="eye-icon-size"
+                onClick={() => {
+                  console.log("testetestste");
+                  setSelectedQuestion(item);
+                  handleRejectionPopupOpen();
+                }}
+              />
             ),
-          icon: <MdOutlineEdit className="eye-icon-size" />,
-        };
-      })
-  : allQuestions
-      .filter((item) =>
-        selectedOption === "Active" ? item?.is_active === 1 : item?.is_active === 0
-      )
-      .map((item) => {
-        return {
-          questions: <div className="role-color">{item?.question}</div>,
-          status:
-            item?.is_active === 1 ? (
-              <div className="font-green">Active</div>
-            ) : (
-              <div className="font-orange">InActive</div>
-            ),
-          icon: <MdOutlineEdit className="eye-icon-size" />,
-        };
-      });
+          };
+        });
   const [rejectPopupOpen, SetRejectpopupOpen] = useState(false);
+
   const handleRejectionPopupOpen = () => {
     SetRejectpopupOpen(true);
   };
@@ -160,8 +121,8 @@ const searchContent =(value) =>{
                 type="search"
                 placeholder="Search"
                 aria-label="Search"
-                value={searchText} 
-                onChange={(e)=> searchContent(e.target.value)}
+                value={searchText}
+                onChange={(e) => searchContent(e.target.value)}
               />
             </form>
           </div>
@@ -199,10 +160,16 @@ const searchContent =(value) =>{
       <AddReasonPopup
         rejectPopupOpen={rejectPopupOpen}
         SetRejectpopupOpen={SetRejectpopupOpen}
-        Heading="Add Security Questions"
+        Heading={`${
+          selectedQuestion
+            ? "Update Security Questions"
+            : "Add Security Questions"
+        } `}
         firstSelect="Questions "
         firstTextarea="Description"
         setStatus={setStatus}
+        selectedQuestion={selectedQuestion}
+        setSelectedQuestion={setSelectedQuestion}
       />
     </div>
   );

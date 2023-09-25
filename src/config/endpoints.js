@@ -6,8 +6,14 @@ const GET_ALL_PAYMENTS ="/management/getall_payments";
 const GET_BROADCAST_EVENTS ="/management/get_broadcast_event"
 const GET_ALL_WEBSITES = "/management/getall_websites"
 const ADD_WEBSITE = "/management/addwebsite"
-const GET_COUNTRY_AND_CURRENCY = "/management/get_country_and_currency"
+const GET_COUNTRY_AND_CURRENCY = "/management/get_country_and_currency" 
 const ADD_COUNTRY_AND_CURRENCY = "/management/add_countryand_currency"
+const UPDATE_SETTINGS = "/management/update_settings"
+const GET_ALL_POLICY_DOCUMENTS="/management/get_policy_document"
+const ADD_POLICY="/management/add_policy"
+const ADD_NEW_NOTIFICATIONS="/management/add_new_notifications";
+const UPDATE_COUNTRY_CURRENCY="/management/update_countryand_currency"
+
 
 
 // methods
@@ -57,6 +63,7 @@ exports.GET_ALL_WEBSITES = {
   url: GET_ALL_WEBSITES,
   method: POST
 }
+
 exports.GET_COUNTRY_AND_CURRENCY = {
   url: GET_COUNTRY_AND_CURRENCY,
   method: POST
@@ -73,3 +80,29 @@ exports.ADD_COUNTRY_AND_CURRENCY = {
 }
 
 
+exports.UPDATE_SETTINGS = {
+  url: UPDATE_SETTINGS,
+  method: POST
+}
+
+
+exports.GET_ALL_POLICY_DOCUMENTS = {
+  url: GET_ALL_POLICY_DOCUMENTS,
+  method: POST
+}
+
+exports.ADD_POLICY = {
+  url: ADD_POLICY,
+  method: POST
+}
+
+exports.ADD_NEW_NOTIFICATIONS = {
+  url: ADD_NEW_NOTIFICATIONS,
+  method: POST
+}
+
+
+exports.UPDATE_COUNTRY_CURRENCY = {
+  url: UPDATE_COUNTRY_CURRENCY,
+  method: POST
+}
