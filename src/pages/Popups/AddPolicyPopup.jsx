@@ -1,15 +1,40 @@
 import React, { useState } from "react";
 import MatchSubmitPopup from "../../matchpopups/MatchSubmitPopup";
 import { Col, Container, Dropdown, Modal, Row } from "react-bootstrap";
+import { ADD_POLICY} from "../../config/endpoints"; 
+import { call } from "../../config/axios";
 function AddPolicyPopup(props) {
-  const { addPolicyOpen, setAddPolicyOpen } = props;
+  const { addPolicyOpen, setAddPolicyOpen,setStatus } = props;
   const [acceptClick, setAcceptClick] = useState(false);
-  const handleAcceptClickPopupOpen = () => {
-    setAcceptClick(true);
-    setAddPolicyOpen(false);
-  };
+  const [countryName, setCountryName] = useState("");
+  const [website, setWebsite] = useState("");
+  const [paymentDetails, setPaymentDetails] = useState("");
+  const [active, setActive] = useState("Select");
+ 
   const handleAddPolicyClose = () => {
     setAddPolicyOpen(false);
+  };
+  const handleCreatePolicy = async () => {
+    try {
+      const data = {
+        register_id: "reg-20230710182031623",
+        country_name: countryName,
+        payment_description: paymentDetails,
+        website_name: website,
+        active: active
+      };
+      
+      const res = await call(ADD_POLICY,data);
+      if (res.data.error) {
+        console.error("API Error:", res.data.message);
+      } else {
+        setAcceptClick(true);
+        setAddPolicyOpen(false);
+        setStatus((prev)=>!prev)
+      }
+    } catch (err) {
+      console.error("API Error:", err);
+    }
   };
   return (
     <div className="modal fade bd-example-modal-lg container mt-5">
@@ -32,28 +57,37 @@ function AddPolicyPopup(props) {
                 <div className="small-font my-1">Country Name *</div>
                 <input
                   type="text"
+                  name="country_name"
                   placeholder="Enter"
                   className="w-100 custom-select small-font login-inputs input-btn-bg px-2 py-3 all-none rounded all-none"
+                  value={countryName}
+                  onChange={(e) => setCountryName(e.target.value)}
                 ></input>
               </Col>
               <Col className="pe-0">
                 <div className="small-font my-1">Show Website *</div>
-                <select className="w-100 custom-select small-font input-btn-bg px-2 py-3 all-none rounded all-none">
-                  <option selected>Select</option>
-                  <option>Phone Pe</option>
-                  <option>NEFT/RTGS</option>
-                  <option>UPI</option>
-                  <option>Paytm</option>
+                <select
+                  value={website}
+                  name="website_name"
+                  onChange={(e) => setWebsite(e.target.value)}
+                  className="w-100 custom-select small-font input-btn-bg px-2 py-3 all-none rounded all-none">
+                  <option value="Select">Select</option>
+                  <option>www.texch.com</option>
+                  <option>www.we2call.com</option>
+                  <option>www.ravana.com</option>
+                  <option>www.brahama.com</option>
                 </select>
               </Col>
               <Col className="pe-0">
                 <div className="small-font my-1">In Active *</div>
-                <select className="w-100 custom-select small-font input-btn-bg px-2 py-3 all-none rounded all-none">
+                <select 
+                  name="active"
+                  value={active}
+                  onChange={(e) => setActive(e.target.value)}
+                   className="w-100 custom-select small-font input-btn-bg px-2 py-3 all-none rounded all-none">
                   <option selected>Select</option>
-                  <option>Phone Pe</option>
-                  <option>NEFT/RTGS</option>
-                  <option>UPI</option>
-                  <option>Paytm</option>
+                  <option>Yes</option>
+                  <option>No</option>
                 </select>
               </Col>
             </Row>
@@ -65,6 +99,9 @@ function AddPolicyPopup(props) {
                 type="text"
                 placeholder="Type Here....."
                 className="w-100 custom-select small-font login-inputs input-btn-bg rounded h15vh"
+                name="payment_details"
+                value={paymentDetails}
+                onChange={(e) => setPaymentDetails(e.target.value)}
               ></textarea>
             </Row>
           </Container>
@@ -74,7 +111,7 @@ function AddPolicyPopup(props) {
                 <button
                   type="submit"
                   className="add-button  small-font rounded px-4 py-3 my-3 w-50 all-none"
-                  onClick={() => handleAcceptClickPopupOpen()}
+                  onClick={handleCreatePolicy}
                 >
                   Create
                 </button>
@@ -87,6 +124,7 @@ function AddPolicyPopup(props) {
         header={"Ticket Upgraded Successfully"}
         state={acceptClick}
         setState={setAcceptClick}
+        setStatus={setStatus}
       />
     </div>
   );
