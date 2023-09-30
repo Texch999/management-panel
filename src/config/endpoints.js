@@ -3,16 +3,20 @@ const GET_ALL_SECURITY_QUESTIONS = "/settings/getall_security_questions";
 const ADD_SECURITY_QUESTIONS = "/settings/add_security_questions";
 const ADD_OFFERS = "/offers/getall_offers";
 const GET_ALL_PAYMENTS ="/management/getall_payments";
+const ADD_PAYMENT_GATEWAY ="/management/add_payment_gateway";
+const UPDATE_PAYMENT_GATEWAY ="/management/update_payment_gateway";
 const GET_BROADCAST_EVENTS ="/management/get_broadcast_event"
 const GET_ALL_WEBSITES = "/management/getall_websites"
 const ADD_WEBSITE = "/management/addwebsite"
 const GET_COUNTRY_AND_CURRENCY = "/management/get_country_and_currency" 
 const ADD_COUNTRY_AND_CURRENCY = "/management/add_countryand_currency"
-const UPDATE_SETTINGS = "/management/update_settings"
+const UPDATE_SETTINGS = "/management/update_settings" 
 const GET_ALL_POLICY_DOCUMENTS="/management/get_policy_document"
-const ADD_POLICY="/management/add_policy"
-const ADD_NEW_NOTIFICATIONS="/management/add_new_notifications";
-const UPDATE_COUNTRY_CURRENCY="/management/update_countryand_currency"
+const ADD_POLICY ="/management/add_policy"
+const ADD_NEW_NOTIFICATIONS ="/management/add_new_notifications";
+const UPDATE_COUNTRY_CURRENCY ="/management/update_countryand_currency";
+const UPDATE_POLICY = "/management/update_policy"
+const GET_ALL_PACKAGES ="/packages/get_packages";
 
 
 
@@ -69,13 +73,23 @@ exports.GET_COUNTRY_AND_CURRENCY = {
   method: POST
 }
 
-exports.ADD_WEBSITE = {
-  url: ADD_WEBSITE,
+exports.UPDATE_COUNTRY_CURRENCY = {
+  url: UPDATE_COUNTRY_CURRENCY,
   method: POST
 }
 
 exports.ADD_COUNTRY_AND_CURRENCY = {
   url: ADD_COUNTRY_AND_CURRENCY,
+  method: POST
+}
+
+exports.ADD_WEBSITE = {
+  url: ADD_WEBSITE,
+  method: POST
+}
+
+exports.ADD_PAYMENT_GATEWAY = {
+  url: ADD_PAYMENT_GATEWAY,
   method: POST
 }
 
@@ -102,7 +116,18 @@ exports.ADD_NEW_NOTIFICATIONS = {
 }
 
 
-exports.UPDATE_COUNTRY_CURRENCY = {
-  url: UPDATE_COUNTRY_CURRENCY,
+exports.UPDATE_PAYMENT_GATEWAY = {
+  url: UPDATE_PAYMENT_GATEWAY,
+  method: POST
+}
+
+exports.UPDATE_POLICY = {
+  url: UPDATE_POLICY,
+  method: POST
+}
+
+
+exports.GET_ALL_PACKAGES = {
+  url: GET_ALL_PACKAGES,
   method: POST
 }

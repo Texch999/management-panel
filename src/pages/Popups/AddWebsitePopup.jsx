@@ -4,7 +4,7 @@ import "./styles.css";
 import { ADD_WEBSITE } from "../../config/endpoints";
 import { call } from "../../config/axios";
 function AddWebsitePopup(props) {
-  const { showAddWebPopup, setShowAddWebPopup } = props;
+  const { showAddWebPopup, setShowAddWebPopup,setStatus } = props;
   const [formData, setFormData] = useState({
     register_id: "reg-20230710182031623", 
     web_url: "",
@@ -26,6 +26,10 @@ function AddWebsitePopup(props) {
         console.error("API Error:", res.data.message);
       } else {
         setShowAddWebPopup(false);
+        setStatus((prev) => !prev);
+        setFormData({
+          web_url:""
+        })
       }
     } catch (err) {
       console.error("API Error:", err);

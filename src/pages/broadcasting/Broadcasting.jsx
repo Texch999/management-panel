@@ -8,6 +8,8 @@ import { call } from "../../config/axios";
 
 function Broadcasting() {
   const [allbroadcasts, setAllBroadcasts] = useState([]);
+  const [filteredBroadcasts, setFilteredBroadcasts] = useState([]);
+  const [searchText,setSearchText]=useState("");
 
   // const BROADCASTING_DETAILS = [
   //   {
@@ -132,7 +134,9 @@ function Broadcasting() {
         {item?.event_status === 1 ? <div>active</div> : <div>inactive</div>}
       </span>
     ),
+    icon: <AiOutlineEye className="eye-icon-size" />,
   }));
+  
   const navigate = useNavigate();
   return (
     <div className="p-4 w-100">

@@ -1,22 +1,59 @@
+import React, { useEffect, useState } from "react";
+import { GET_ALL_PACKAGES } from "../../config/endpoints";
+import { call } from "../../config/axios";
 function TopupHoursDiscount() {
-  const TOPUP_HOURS_DATA = [
-    {
-      packagename: "Standard",
-      members: 10,
-    },
-    {
-      packagename: "Silver",
-      members: 15,
-    },
-    {
-      packagename: "Gold",
-      members: 20,
-    },
-  ];
+  const [allPackages, setAllPackages] = useState([])
+  // const TOPUP_HOURS_DATA = [
+  //   {
+  //     packagename: "Standard",
+  //     members: 10,
+  //   },
+  //   {
+  //     packagename: "Silver",
+  //     members: 15,
+  //   },
+  //   {
+  //     packagename: "Gold",
+  //     members: 20,
+  //   },
+  // ];
+  
+const calculatePriceAndHours = (pkg) => {
+    if (pkg.package_duration === "monthly") {
+      return {
+        price: pkg.package_cost + " M",
+        hours: pkg.package_limits.duration,
+      };
+    } else if (pkg.package_duration === "yearly") {
+      return {
+        price: pkg.package_cost + " Y",
+        hours: pkg.package_limits.duration,
+      };
+    }
+    return {
+      price: "N/A",
+      hours: "N/A",
+    };
+  };
+ 
+  
+  const getAllPackages = async () => {
+    await call(GET_ALL_PACKAGES)
+      .then((res) => {
+        setAllPackages(res?.data?.data);
+      })
+      .catch((err) => console.log(err));
+  };
+  useEffect(() => {
+    getAllPackages();
+  },[]);
+  console.log("getAllPackages====>",allPackages)
   return (
     <div className="W-100 medium-font font-grey package-bg p-3 package-radius">
-      {TOPUP_HOURS_DATA?.map((item, index) => (
-        <div key={index} className="mt-3">
+      {allPackages?.map((item, index) => {
+        const { price, hours } = calculatePriceAndHours(item);
+        return(
+          <div key={index} className="mt-3">
           <div className="d-flex">
             <div className="row w-90">
               <div className="col-3">
@@ -25,7 +62,7 @@ function TopupHoursDiscount() {
                     Package & Features
                   </div>
                   <div className="medium-font package-heading-bg p-2 rounded mt-1 font-orange">
-                    {item.packagename}
+                      {item?.package_name}
                   </div>
                 </div>
               </div>
@@ -48,7 +85,7 @@ function TopupHoursDiscount() {
                     Limited Members
                   </div>
                   <div className="medium-font package-btn-bg p-2 rounded mt-1 font-grey">
-                    {item.members}
+                        {item?.package_limits?.members}
                   </div>
                 </div>
               </div>
@@ -57,12 +94,10 @@ function TopupHoursDiscount() {
                   <div className="medium-font package-btn-bg p-2 rounded font-white fw-semibold">
                     Package Hours
                   </div>
-                  <div className="medium-font package-btn-bg p-2 rounded mt-1 font-grey">
-                    40 Hours
-                  </div>
-                  <div className="medium-font package-btn-bg p-2 rounded mt-1 font-grey">
-                    4800 Hours
-                  </div>
+                    <div className="medium-font package-btn-bg p-2 rounded mt-1 font-grey">
+                    {hours}
+                    </div>
+                 
                 </div>
               </div>
               <div className="col">
@@ -71,11 +106,8 @@ function TopupHoursDiscount() {
                     Price
                   </div>
                   <div className="medium-font package-btn-bg p-2 rounded mt-1 font-grey d-flex align-items-center justify-content-between">
-                    <span>5000</span> <span>M</span>
-                  </div>
-                  <div className="medium-font package-btn-bg p-2 rounded mt-1 font-grey d-flex align-items-center justify-content-between">
-                    <span>45000</span> <span>Y</span>
-                  </div>
+                    <span>{price}</span> 
+                  </div> 
                 </div>
               </div>
               <div className="col">
@@ -98,7 +130,9 @@ function TopupHoursDiscount() {
           </div>
           <hr className="hr-line mt-3" />
         </div>
-      ))}
+        )
+       
+        })}
     </div>
   );
 }

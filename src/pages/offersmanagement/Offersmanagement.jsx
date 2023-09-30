@@ -7,6 +7,9 @@ import { call } from "../../config/axios";
 
 function Offersmanagement() {
   const [allOffers, setAllOffers] = useState([]);
+  const [filteredOffers,setFilteredOffers]=useState([])
+  const [searchText, setSearchText] = useState("");
+
   // const OFFERSMANAGEMENT_DETAILS = [
   //   {
   //     title:
@@ -55,6 +58,14 @@ function Offersmanagement() {
   //   },
   // ];
 
+
+const searchContent = (value) => {
+    setSearchText(value);
+    const filteredSearchText = allOffers.filter((res) =>
+      res?.offer_name?.toLowerCase().includes(searchText.toLowerCase())
+    );
+    setFilteredOffers(filteredSearchText);
+  };
   const cols = [
     {
       header: "TITLE",
@@ -99,27 +110,82 @@ function Offersmanagement() {
     getAllOffers();
   }, []);
 
-  const modifiedOffersmanagementDetails = allOffers.map((item) => ({
-    title: (
-      <div className="role-color">
-        <span className="role-color">{item?.offer_name}</span>{" "}
-      </div>
-    ),
-    publishdate: (
-      <div>
-        <span>{item?.publish_date}</span>
-        <br />
-        <span>{item?.start_time}</span>
-      </div>
-    ),
-    publishwebsite: <span>{item?.website_name}</span>,
-    type: <span>{item?.notification_type}</span>,
-    status: (
-      <span>
-        {item?.offer_status === 1 ? <div>active</div> : <div>inactive</div>}
-      </span>
-    ),
-  }));
+  // const modifiedOffersmanagementDetails = allOffers.map((item) => ({
+  //   title: (
+  //     <div className="role-color">
+  //       <span className="role-color">{item?.offer_name}</span>{" "}
+  //     </div>
+  //   ),
+  //   publishdate: (
+  //     <div>
+  //       <span>{item?.publish_date}</span>
+  //       <br />
+  //       <span>{item?.start_time}</span>
+  //     </div>
+  //   ),
+  //   publishwebsite: <span>{item?.website_name}</span>,
+  //   type: <span>{item?.notification_type}</span>,
+  //   status: (
+  //     <span>
+  //       {item?.offer_status === 1 ? <div>active</div> : <div>inactive</div>}
+  //     </span>
+  //   ),
+  //   icon: <AiOutlineEye className="eye-icon-size" />,
+  // }));
+  const modifiedOffersmanagementDetails = searchText.length
+    ? filteredOffers
+        .filter((item) =>
+          item?.offer_name?.toLowerCase().includes(searchText.toLowerCase())
+        )
+        .map((item) => {
+          return {
+                    title: (
+                      <div className="role-color">
+                        <span className="role-color">{item?.offer_name}</span>{" "}
+                      </div>
+                    ),
+                    publishdate: (
+                      <div>
+                        <span>{item?.publish_date}</span>
+                        <br />
+                        <span>{item?.start_time}</span>
+                      </div>
+                    ),
+                    publishwebsite: <span>{item?.website_name}</span>,
+                    type: <span>{item?.notification_type}</span>,
+                    status: (
+                      <span>
+                        {item?.offer_status === 1 ? <div>active</div> : <div>inactive</div>}
+                      </span>
+                    ),
+                    icon: <AiOutlineEye className="eye-icon-size" />,
+  
+          };
+        })
+    : allOffers.map((item) => {
+        return {
+               title: (
+                <div className="role-color">
+                  <span className="role-color">{item?.offer_name}</span>{" "}
+                </div>
+              ),
+              publishdate: (
+                <div>
+                  <span>{item?.publish_date}</span>
+                  <br />
+                  <span>{item?.start_time}</span>
+                </div>
+              ),
+              publishwebsite: <span>{item?.website_name}</span>,
+              type: <span>{item?.notification_type}</span>,
+              status: (
+                <span>
+                  {item?.offer_status === 1 ? <div>active</div> : <div>inactive</div>}
+                </span>
+              ),
+              icon: <AiOutlineEye className="eye-icon-size" />,
+        };
+   });
   console.log(modifiedOffersmanagementDetails, ",,,,,,live");
   return (
     <div className="p-4 w-100">
@@ -151,6 +217,8 @@ function Offersmanagement() {
                   type="search"
                   placeholder="Search"
                   aria-label="Search"
+                  value={searchText}
+                  onChange={(e) => searchContent(e.target.value)}
                 />
               </form>
             </div>

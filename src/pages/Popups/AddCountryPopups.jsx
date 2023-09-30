@@ -1,16 +1,25 @@
 import React, { useState, useEffect } from "react";
 import MatchSubmitPopup from "../../matchpopups/MatchSubmitPopup";
 import { Col, Container, Modal, Row } from "react-bootstrap";
-import { ADD_COUNTRY_AND_CURRENCY, UPDATE_COUNTRY_CURRENCY } from "../../config/endpoints";
+import {
+  ADD_COUNTRY_AND_CURRENCY,
+  UPDATE_COUNTRY_CURRENCY,
+  ADD_PAYMENT_GATEWAY,
+  UPDATE_PAYMENT_GATEWAY,
+} from "../../config/endpoints";
 import { call } from "../../config/axios";
 
 function AddCountryPopups(props) {
   const {
+    componentType,
     addCountryOpen,
     setAddCountryOpen,
+    Heading,
     setStatus,
     selectedCountry,
-    setSelectedCountry,
+    setData,
+    selectedPayment,
+    getData
   } = props;
 
   const [acceptClick, setAcceptClick] = useState(false);
@@ -24,7 +33,15 @@ function AddCountryPopups(props) {
 
   const handleAddCountryOpenClose = () => {
     setAddCountryOpen(false);
-    setSelectedCountry("");
+    setData(null);
+    // setData(null);
+
+    setCountryName("");
+        setCurrencyName("");
+        setPaymentGateway("Select");
+        setPaymentDetails("");
+        setWebsite("Select");
+        setActive("Select");
   };
 
   useEffect(() => {
@@ -35,13 +52,26 @@ function AddCountryPopups(props) {
       setPaymentDetails(selectedCountry.payment_details || "");
       setWebsite(selectedCountry.website || "Select");
       setActive(selectedCountry.active || "Select");
-    } else {
     }
-  }, [selectedCountry]);
+
+    if (selectedPayment) {
+      setCountryName(selectedPayment.country_name || "");
+      setCurrencyName(selectedPayment.currency_name || "");
+      setPaymentGateway(selectedPayment.payment_gateway || "Select");
+      setPaymentDetails(selectedPayment.payment_details || "");
+      setWebsite(selectedPayment.website || "Select");
+      setActive(selectedPayment.active || "Select");
+    }
+  }, [selectedCountry, selectedPayment]);
 
   const handleCreateOrUpdateCountryCurrency = async () => {
     try {
-      const url = selectedCountry ? UPDATE_COUNTRY_CURRENCY : ADD_COUNTRY_AND_CURRENCY;
+
+      if(componentType === "CURRENCY"){
+        const countryCurrencyUrl = selectedCountry
+        ? UPDATE_COUNTRY_CURRENCY
+        : ADD_COUNTRY_AND_CURRENCY;
+
       const requestData = {
         register_id: "reg-20230909114353315",
         country_name: countryName,
@@ -57,13 +87,15 @@ function AddCountryPopups(props) {
         requestData.p_id = selectedCountry.p_id;
       }
 
-      const res = await call(url, requestData);
-
-      if (res.data.error) {
-        console.error("API Error:", res.data.message);
-      } else {
+      const res = await call(countryCurrencyUrl, requestData);
+      console.log('res____', res)
+      // if (res.data.error) {
+      //   console.error("API Error:", res.data.message);
+      // } else {
+        getData()
         setAcceptClick(true);
         setAddCountryOpen(false);
+        handleAddCountryOpenClose();
         setStatus((prev) => !prev);
         setCountryName("");
         setCurrencyName("");
@@ -71,6 +103,53 @@ function AddCountryPopups(props) {
         setPaymentDetails("");
         setWebsite("Select");
         setActive("Select");
+      // }
+
+      }
+      
+      // Logic to call ADD_PAYMENT_GATEWAY or UPDATE_PAYMENT_GATEWAY based on selectedPayment
+      if (componentType === "PAYMENT") {
+        const paymentUrl = selectedPayment
+          ? UPDATE_PAYMENT_GATEWAY
+          : ADD_PAYMENT_GATEWAY;
+
+        const paymentData = {
+          register_id: "reg-20230710182031623",
+          payment_details: paymentDetails,
+          country_name: countryName,
+          currency_name: currencyName,
+          payment_gateway: paymentGateway,
+          website: website,
+          active: active,
+        };
+
+        if (selectedPayment) {
+          paymentData.pg_id = selectedPayment.pg_id;
+          paymentData.p_id = selectedPayment.p_id;
+        }
+
+        const paymentRes = await call(paymentUrl, paymentData);
+        getData()
+        // if (paymentRes.data.error) {
+        //   console.error("Payment API Error:", paymentRes.data.message);
+        // } else {
+          setAcceptClick(true);
+          handleAddCountryOpenClose();
+          setAddCountryOpen(false);
+          setStatus((prev) => !prev);
+          setCountryName("");
+          setCurrencyName("");
+          setPaymentGateway("Select");
+          setPaymentDetails("");
+          setWebsite("Select");
+          setActive("Select");
+        // }
+      }
+
+      // Check if neither selectedCountry nor selectedPayment is defined
+      if (!selectedCountry && !selectedPayment) {
+        setData(null);
+        setData(null);
       }
     } catch (err) {
       console.error("API Error:", err);
@@ -88,9 +167,7 @@ function AddCountryPopups(props) {
       >
         <Modal.Header closeButton>
           <div className="px-5 mt-3">
-            <h6 className="text-start">
-              {`${selectedCountry ? "Update" : "Add"}  Country, Currency and Payment Gateways`}
-            </h6>
+            <h6 className="text-start">{Heading}</h6>
           </div>
         </Modal.Header>
         <Modal.Body className="px-5">
@@ -121,16 +198,16 @@ function AddCountryPopups(props) {
               <Col className="pe-0">
                 <div className="small-font my-1">Payment Gateway *</div>
                 <select
-                  name="active"
+                  name="payment_gateway"
                   value={paymentGateway}
                   onChange={(e) => setPaymentGateway(e.target.value)}
                   className="w-100 custom-select small-font input-btn-bg px-2 py-3 all-none rounded all-none"
                 >
                   <option value="Select">Select</option>
-                  <option>Phone Pe</option>
+                  <option>Phonepe</option>
                   <option>NEFT/RTGS</option>
                   <option>UPI</option>
-                  <option>Paytm</option>
+                  <option>paytm</option>
                 </select>
               </Col>
             </Row>
@@ -188,7 +265,7 @@ function AddCountryPopups(props) {
                   className="add-button  small-font rounded px-4 py-3 mx-2 my-3 w-50 all-none"
                   onClick={handleCreateOrUpdateCountryCurrency}
                 >
-                  {selectedCountry ? "Update" : "Create"}
+                  {selectedCountry ? "Update" : selectedPayment ? "Update" : "Create"}
                 </button>
               </Col>
             </Row>
@@ -206,4 +283,7 @@ function AddCountryPopups(props) {
 }
 
 export default AddCountryPopups;
+
+
+
 

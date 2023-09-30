@@ -8,6 +8,17 @@ import { GET_ALL_WEBSITES } from "../../config/endpoints";
 import { call } from "../../config/axios";
 function Addwebsites() {
   const [allWebsites, setAllWebsites] = useState([]);
+  const [filteredWebsites, setFilteredWebsites] = useState([]);
+  const [status, setStatus] = useState(false);
+  const [searchText, setSearchText] = useState("");
+
+  const searchContent = (value) => {
+    setSearchText(value);
+    const filteredSearchText = allWebsites.filter((res) =>
+      res?.web_url?.toLowerCase().includes(searchText.toLowerCase())
+    );
+    setFilteredWebsites(filteredSearchText);
+  };
   // const ADDWEBSITE_DETAILS = [
   //   {
   //     websitename: "www.we2call.com ",
@@ -143,32 +154,86 @@ function Addwebsites() {
   };
   useEffect(() => {
     getAllWebsites();
-  }, []);
+  }, [status]);
 
-  const modifiedAddwebsiteDetails = allWebsites.map((item) => ({
-    ...item,
-    websitename: <span>{item?.web_url}</span>,
-    isAndusedAndthree: (
-      <div>
-        {item?.is} <br /> <span>{item?.used}</span> <br />
-        {item?.three}
-        {""}
-      </div>
-    ),
-    userAndfullAndname: (
-      <div>
-        {item?.user} <br /> <span>{item?.full}</span> <br />
-        {item?.name}
-      </div>
-    ),
-    role1Androle2Androle3: (
-      <div className="role-color">
-        {item?.role1} <br /> <span>{item?.role2}</span> <br />
-        {item?.role3}
-        {""}
-      </div>
-    ),
-  }));
+  // const modifiedAddwebsiteDetails = allWebsites.map((item) => ({
+  //   ...item,
+  //   websitename: <span>{item?.web_url}</span>,
+  //   isAndusedAndthree: (
+  //     <div>
+  //       {item?.is_used} <br /> <span>{item?.used}</span> <br />
+  //       {item?.three}
+  //       {""}
+  //     </div>
+  //   ),
+  //   userAndfullAndname: (
+  //     <div>
+  //       {item?.user_name} <br /> <span>{item?.full}</span> <br />
+  //       {item?.name}
+  //     </div>
+  //   ),
+  //   role1Androle2Androle3: (
+  //     <div className="role-color">
+  //       {item?.account_role} <br /> <span>{item?.role2}</span> <br />
+  //       {item?.role3}
+  //       {""}
+  //     </div>
+  //   ),
+  // }));
+
+  const modifiedAddwebsiteDetails = searchText.length
+    ? filteredWebsites
+        .filter((item) =>
+          item?.web_url?.toLowerCase().includes(searchText.toLowerCase())
+        )
+        .map((item) => {
+          return {
+            websitename: <span>{item?.web_url}</span>,
+            isAndusedAndthree: (
+              <div>
+                {item?.is_used} <br /> <span>{item?.used}</span> <br />
+                {item?.three}
+                {""}
+              </div>
+            ),
+            userAndfullAndname: (
+              <div>
+                {item?.user_name} <br /> <span>{item?.full}</span> <br />
+                {item?.name}
+              </div>
+            ),
+            role1Androle2Androle3: (
+              <div className="role-color">
+                {item?.account_role} <br /> <span>{item?.role2}</span> <br />
+                {item?.role3}
+                {""}
+              </div>)
+          };
+        })
+    : allWebsites.map((item) => {
+        return {
+          websitename: <span>{item?.web_url}</span>,
+            isAndusedAndthree: (
+              <div>
+                {item?.is_used} <br /> <span>{item?.used}</span> <br />
+                {item?.three}
+                {""}
+              </div>
+            ),
+            userAndfullAndname: (
+              <div>
+                {item?.user_name} <br /> <span>{item?.full}</span> <br />
+                {item?.name}
+              </div>
+            ),
+            role1Androle2Androle3: (
+              <div className="role-color">
+                {item?.account_role} <br /> <span>{item?.role2}</span> <br />
+                {item?.role3}
+                {""}
+              </div>)
+        };
+  });
   const [showAddWebPopup, setShowAddWebPopup] = useState(false);
   const handleShowAddWebPopup = () => {
     setShowAddWebPopup(true);
@@ -193,6 +258,8 @@ function Addwebsites() {
                   type="search"
                   placeholder="Search"
                   aria-label="Search"
+                  value={searchText}
+                  onChange={(e) => searchContent(e.target.value)}
                 />
               </form>
             </div>
@@ -212,6 +279,7 @@ function Addwebsites() {
       <AddWebsitePopup
         showAddWebPopup={showAddWebPopup}
         setShowAddWebPopup={setShowAddWebPopup}
+        setStatus={setStatus}
       />
     </div>
   );

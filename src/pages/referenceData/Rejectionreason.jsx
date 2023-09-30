@@ -50,7 +50,9 @@ function Rejectionreason() {
     };
     await call(GET_ALL_SECURITY_QUESTIONS, payload)
       .then((res) => {
-        setAllQuestions(res?.data?.data?.securityQuestions);
+         const responseArray=res?.data?.data?.securityQuestions
+         setAllQuestions(responseArray.length>0?responseArray.filter((item)=>item.reason!==""):[] )
+
       })
       .catch((err) => console.log(err));
   };
@@ -69,17 +71,22 @@ function Rejectionreason() {
           item?.reason?.toLowerCase().includes(searchText.toLowerCase())
         )
         .map((item) => {
-          return {
-            reason: <div className="role-color">{item?.reason}</div>,
-            description: item?.description,
-            status:
-              item?.is_active === 1 ? (
-                <div className="font-green">Active</div>
-              ) : (
-                <div className="font-orange">InActive</div>
-              ),
-            icon: <MdOutlineEdit className="eye-icon-size" />,
-          };
+             if(item.reason!==""){
+              return {
+                reason: <div className="role-color">{item?.reason}</div>,
+                description: item?.description,
+                status:
+                  item?.is_active === 1 ? (
+                    <div className="font-green custom-active-button px-2">
+                    Active
+                  </div>
+                  ) : (
+                    <div className="custom-deactive-button px-2">InActive</div>
+                  ),
+                icon: <MdOutlineEdit className="eye-icon-size" />,
+              };
+                }
+         
         })
     : allQuestions
         .filter((item) =>
@@ -93,9 +100,9 @@ function Rejectionreason() {
             description: item?.description,
             status:
               item?.is_active === 1 ? (
-                <div className="font-green">Active</div>
+                <div className="font-green custom-active-button px-2">Active</div>
               ) : (
-                <div className="font-orange">InActive</div>
+                <div className="custom-deactive-button px-2">InActive</div>
               ),
             icon: (
               <MdOutlineEdit
@@ -165,7 +172,7 @@ function Rejectionreason() {
       <AddReasonPopup
         rejectPopupOpen={rejectPopupOpen}
         SetRejectpopupOpen={SetRejectpopupOpen}
-        Heading={`${selectedQuestion ? "Update Reason" : "Add Reason"} `}
+        Heading={`${selectedQuestion ? "Update Reason" : " Reason"} `}
         firstSelect="Reason"
         firstTextarea="Description"
         setStatus={setStatus}

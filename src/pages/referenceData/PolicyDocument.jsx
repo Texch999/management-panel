@@ -11,11 +11,12 @@ function PolicyDocument() {
   const [filteredQuestions, setFilteredQuestions] = useState([]);
   const [searchText,setSearchText]=useState("");
   const [status, setStatus] = useState(false);
+  const [selectedPolicy, setSelectedPolicy] = useState();
   
   const handlePolicyOpen = () => {
     setAddPolicyOpen(true);
   };
-  const searchContent =(value) =>{
+const searchContent =(value) =>{
     setSearchText(value)
     const filteredSearchText= allPolicyDocuments.filter((res)=>
       res?.country_name.toLowerCase().includes(searchText.toLowerCase())
@@ -72,13 +73,12 @@ function PolicyDocument() {
             item?.is_active === 1 ? (
               <div className="font-green">Active</div>
             ) : (
-              <div className="font-orange">InActive</div>
+              <div className="custom-deactive-button px-2">InActive</div>
             ),
           icon: <MdOutlineEdit className="eye-icon-size" />,
         };
       })
   : allPolicyDocuments
-      
       .map((item) => {
         return {
           countryname: <div className="role-color">{item?.country_name}</div>,
@@ -87,9 +87,13 @@ function PolicyDocument() {
             item?.is_active === 1 ? (
               <div className="font-green">Active</div>
             ) : (
-              <div className="font-orange">InActive</div>
+              <div className="custom-deactive-button px-2">InActive</div>
             ),
-          icon: <MdOutlineEdit className="eye-icon-size" />,
+          icon: <MdOutlineEdit className="eye-icon-size"  onClick={() => {
+            console.log("testetestste");
+            setSelectedPolicy(item);
+            handlePolicyOpen();
+          }}/>,
         };
       });
   return (
@@ -131,6 +135,8 @@ function PolicyDocument() {
         addPolicyOpen={addPolicyOpen}
         setAddPolicyOpen={setAddPolicyOpen}
         setStatus={setStatus}
+        selectedPolicy={selectedPolicy}
+        setSelectedPolicy={setSelectedPolicy}
       />
     </div>
   );

@@ -46,9 +46,10 @@ function Securityquestions() {
     };
     await call(GET_ALL_SECURITY_QUESTIONS, payload)
       .then((res) => {
-        setAllQuestions(res?.data?.data?.securityQuestions);
-      })
+        const responseArray=res?.data?.data?.securityQuestions
+         setAllQuestions(responseArray.length>0?responseArray.filter((item)=>item.question!==""):[] )
 
+      })
       .catch((err) => console.log(err));
   };
   useEffect(() => {
@@ -70,9 +71,11 @@ function Securityquestions() {
             questions: <div className="role-color">{item?.question}</div>,
             status:
               item?.is_active === 1 ? (
-                <div className="font-green">Active</div>
+                <div className="font-green custom-active-button px-2">
+                  Active
+                </div>
               ) : (
-                <div className="font-orange">InActive</div>
+                <div className="custom-deactive-button px-2">InActive</div>
               ),
             icon: <MdOutlineEdit className="eye-icon-size" />,
           };
@@ -88,9 +91,11 @@ function Securityquestions() {
             questions: <div className="role-color">{item?.question}</div>,
             status:
               item?.is_active === 1 ? (
-                <div className="font-green">Active</div>
+                <div className="font-green custom-active-button px-2">
+                  Active
+                </div>
               ) : (
-                <div className="font-orange">InActive</div>
+                <div className="custom-deactive-button px-2">InActive</div>
               ),
             icon: (
               <MdOutlineEdit

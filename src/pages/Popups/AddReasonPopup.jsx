@@ -87,6 +87,7 @@ function AddReasonPopup(props) {
         console.error("API Error:", res.data.message);
       } else {
         setAcceptClick(true);
+        handleClosePopup()
         SetRejectpopupOpen(false);
         setStatus((prev) => !prev);
         setFormData({

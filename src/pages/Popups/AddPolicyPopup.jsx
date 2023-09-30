@@ -1,36 +1,62 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import MatchSubmitPopup from "../../matchpopups/MatchSubmitPopup";
 import { Col, Container, Dropdown, Modal, Row } from "react-bootstrap";
-import { ADD_POLICY} from "../../config/endpoints"; 
+import { ADD_POLICY,UPDATE_POLICY} from "../../config/endpoints"; 
 import { call } from "../../config/axios";
 function AddPolicyPopup(props) {
-  const { addPolicyOpen, setAddPolicyOpen,setStatus } = props;
+  const { addPolicyOpen, setAddPolicyOpen,setStatus,setSelectedPolicy,selectedPolicy } = props;
   const [acceptClick, setAcceptClick] = useState(false);
   const [countryName, setCountryName] = useState("");
   const [website, setWebsite] = useState("");
-  const [paymentDetails, setPaymentDetails] = useState("");
+  const [policyDetails, setPolicyDetails] = useState("");
   const [active, setActive] = useState("Select");
  
-  const handleAddPolicyClose = () => {
+  const handleAddPolicyClose = () => {  
     setAddPolicyOpen(false);
+    setSelectedPolicy(null)
+    setCountryName("");
+    setPolicyDetails("");
+    setWebsite("Select");
+    setActive("Select");
   };
-  const handleCreatePolicy = async () => {
+  useEffect(() => {
+    if (selectedPolicy) {
+      setCountryName(selectedPolicy.country_name || "");
+      setPolicyDetails(selectedPolicy.policy_description || "");
+      setWebsite(selectedPolicy.website_name || "Select");
+      setActive(selectedPolicy.active || "Select");
+    } else {
+    }
+  }, [selectedPolicy]);
+  const handleCreateOrUpdatePolicy = async () => {
     try {
-      const data = {
+      const url = selectedPolicy ? UPDATE_POLICY : ADD_POLICY;
+      const requestData = {
         register_id: "reg-20230710182031623",
         country_name: countryName,
-        payment_description: paymentDetails,
+        policy_description: policyDetails,
         website_name: website,
-        active: active
+        active: active,
       };
-      
-      const res = await call(ADD_POLICY,data);
+
+      if (selectedPolicy) {
+        requestData.policy_id = selectedPolicy.policy_id;
+        requestData.p_id = selectedPolicy.p_id;
+      }
+
+      const res = await call(url, requestData);
+
       if (res.data.error) {
         console.error("API Error:", res.data.message);
       } else {
         setAcceptClick(true);
         setAddPolicyOpen(false);
-        setStatus((prev)=>!prev)
+        handleAddPolicyClose()
+        setStatus((prev) => !prev);
+        setCountryName("");
+        setPolicyDetails("");
+        setWebsite("Select");
+        setActive("Select");
       }
     } catch (err) {
       console.error("API Error:", err);
@@ -94,14 +120,14 @@ function AddPolicyPopup(props) {
           </Container>
           <Container fluid className="my-2">
             <Row>
-              <div className="small-font my-1">Payment Details *</div>
+              <div className="small-font my-1">Policy Details *</div>
               <textarea
                 type="text"
                 placeholder="Type Here....."
                 className="w-100 custom-select small-font login-inputs input-btn-bg rounded h15vh"
-                name="payment_details"
-                value={paymentDetails}
-                onChange={(e) => setPaymentDetails(e.target.value)}
+                name="policy_description"
+                value={policyDetails}
+                onChange={(e) => setPolicyDetails(e.target.value)}
               ></textarea>
             </Row>
           </Container>
@@ -111,9 +137,9 @@ function AddPolicyPopup(props) {
                 <button
                   type="submit"
                   className="add-button  small-font rounded px-4 py-3 my-3 w-50 all-none"
-                  onClick={handleCreatePolicy}
+                  onClick={handleCreateOrUpdatePolicy}
                 >
-                  Create
+                   {selectedPolicy ? "Update" : "Create"}
                 </button>
               </Col>
             </Row>

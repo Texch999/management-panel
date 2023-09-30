@@ -10,15 +10,15 @@ const { data, columns } = props;
       case "Shedule":
         return "pending-button w-fit-content p-1 px-2";
       case "In-active":
-        return "reject-button w-fit-content p-1 px-2";
+        return "custom-deactive-button w-fit-content p-1 px-2";
       case "Rejected":
-        return "reject-button w-fit-content p-1 px-2";
+        return "custom-deactive-button w-fit-content p-1 px-2";
       case "Pending":
         return "pending-button w-fit-content p-1 px-2";
       case "Select":
         return "select-button w-fit-content p-1 px-2";
       default:
-        return "new-button w-fit-content p-1 px-2";
+        return " w-fit-content p-1 px-2";
     }
   };
   const navigate = useNavigate();
