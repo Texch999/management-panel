@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Col, Container, Modal, Row } from "react-bootstrap";
+import { Modal } from "react-bootstrap";
 import "./styles.css";
 function AddWebsitePopup(props) {
   const { showAddWebPopup, setShowAddWebPopup } = props;
@@ -14,36 +14,29 @@ function AddWebsitePopup(props) {
         centered
         className="match-share-modal payment-modal"
       >
-        <Modal.Header closeButton></Modal.Header>
+        <Modal.Header closeButton>
+          <div className="w-100 text-center mt-4">
+            <h6>Add Website</h6>
+            <span className="small-font">Add new website</span>
+          </div>
+        </Modal.Header>
         <Modal.Body>
           <div className="w-100 p-4">
-            <div className="w-100 text-center my-n5">
-              <h5>Add Website</h5>
-              <span className="samll-font">Add new website</span>
-            </div>
             <div>
-              <div className="text-start mx-2 my-2">Website URL</div>
+              <div className="text-start mx-2 my-2 small-font">Website URL</div>
               <div>
                 <input
                   type="text"
-                  className="w-100 input-btn-bg px-2 py-2 all-none"
+                  className="w-100 input-btn-bg px-2 py-2 all-none rounded"
                   placeholder="Enter Website URL "
                 />
               </div>
             </div>
             <div className="d-flex justify-content-center w-100 my-4">
-              <button className="add-button rounded px-2 py-3 w-50">Add</button>
+              <button className="add-button rounded px-2 py-2 w-50 medium-font">Add</button>
             </div>
           </div>
         </Modal.Body>
-        {/* <Modal.Footer>
-        <Button variant="secondary" onClick={handleAddWebPopupClose}>
-          Close
-        </Button>
-        <Button variant="primary" onClick={handleAddWebPopupClose}>
-          Save changes
-        </Button>
-      </Modal.Footer> */}
       </Modal>
     </div>
   );

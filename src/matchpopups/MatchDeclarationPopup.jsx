@@ -1,7 +1,6 @@
 import { Modal } from "react-bootstrap";
 import { IoCloseSharp } from "react-icons/io5";
-import { Images } from "./../../images/index";
-
+import { Images } from "./../images/index";
 function MatchDeclarationPopup(props) {
   const { header, amount, state, setState, handleSubmitPopupOpen } = props;
   const handleCancel = () => {
@@ -29,7 +28,7 @@ function MatchDeclarationPopup(props) {
               Yes
             </div>
             <div
-              className="col-5 rounded share-bg p-1"
+              className="col-5 rounded deactive-button p-1"
               onClick={() => handleCancel()}
             >
               No

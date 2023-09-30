@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import Table from "../table/Table";
 import { MdOutlineEdit } from "react-icons/md";
+import AddCountryPopups from "../Popups/AddCountryPopups";
 
 function Countrycurrency() {
   const COUNTRYCURRENCY_DETAILS = [
@@ -85,7 +86,10 @@ function Countrycurrency() {
       ),
     })
   );
-
+  const [addCountryOpen, setAddCountryOpen] = useState(false);
+  const handleAddCountryPopup = () => {
+    setAddCountryOpen(true);
+  };
   return (
     <div className="p-4 w-100 mt-8vh">
       <h6 className="h6 font-grey">Country Currency</h6>
@@ -106,7 +110,10 @@ function Countrycurrency() {
               </form>
             </div>
             <div className="row justify-content-md-center m-2 p-1">
-              <div className="active text-white col-md-auto small-font justify-content-between p-2 px-4 m-1">
+              <div
+                className="active text-white col-md-auto small-font justify-content-between p-2 px-4 m-1"
+                onClick={() => handleAddCountryPopup()}
+              >
                 +Add New
               </div>
             </div>
@@ -115,6 +122,10 @@ function Countrycurrency() {
 
         <Table columns={cols} data={modifiedCountrycurrencyDetails} />
       </div>
+      <AddCountryPopups
+        addCountryOpen={addCountryOpen}
+        setAddCountryOpen={setAddCountryOpen}
+      />
     </div>
   );
 }

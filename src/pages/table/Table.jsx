@@ -1,7 +1,6 @@
 import { useNavigate } from "react-router-dom";
 function Table(props) {
-  const { data, columns } = props;
-  // console.log(data,columns)
+const { data, columns } = props;
 
   const getColor = (clr) => {
     switch (clr) {
@@ -13,6 +12,8 @@ function Table(props) {
         return "reject-button w-fit-content p-1 px-2";
       case "Pending":
         return "pending-button w-fit-content p-1 px-2";
+        case "Select":
+        return "select-button w-fit-content p-1 px-2";
       default:
         return "new-button w-fit-content p-1 px-2";
     }
@@ -45,14 +46,14 @@ function Table(props) {
                     className=" text-center d-felx align-items-center"
                   >
                     <div className="d-flex justify-content-center align-items-center">
-                    <div
-                      className={
-                        column?.clr ? getColor(item[column.field]) : ""
-                      }
-                      onClick={() => handleClickTable(column.field)}
-                    >
-                      {item[column.field]}
-                    </div>
+                      <div
+                        className={
+                          column?.clr ? getColor(item[column.field]) : ""
+                        }
+                        onClick={() => handleClickTable(column.field)}
+                      >
+                        {item[column.field]}
+                      </div>
                     </div>
                   </td>
                 );

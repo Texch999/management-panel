@@ -1,8 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import Table from "../table/Table";
 import { BiFile } from "react-icons/bi";
+import PaymentSettelmentPopup from "../Popups/PaymentSettelmentPopup";
 
 function Settlement() {
+  const [showPaymentModal, setShowPaymentModal] = useState(false);
+  const handlePaymentSettelment = () => {
+    setShowPaymentModal(true);
+  };
   const SETTLEMENT_DETAILS = [
     {
       username: "Srinivas",
@@ -10,7 +15,12 @@ function Settlement() {
       amount: "100000",
       creditdebit: <div className="fa-fileinvo-doll-icon">50000</div>,
       balance: "75000.00",
-      icon: <BiFile className="eye-icon-size" />,
+      icon: (
+        <BiFile
+          className="eye-icon-size"
+          onClick={() => handlePaymentSettelment()}
+        />
+      ),
     },
     {
       username: "Srinivas",
@@ -115,6 +125,10 @@ function Settlement() {
           <Table columns={cols} data={modifiedSettlementDetails} />
         </div>
       </div>
+      <PaymentSettelmentPopup
+        showPaymentModal={showPaymentModal}
+        setShowPaymentModal={setShowPaymentModal}
+      />
     </div>
   );
 }

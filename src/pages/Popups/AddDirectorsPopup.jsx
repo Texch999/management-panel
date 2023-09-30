@@ -4,7 +4,13 @@ import "./styles.css";
 import MatchSubmitPopup from "../../matchpopups/MatchSubmitPopup";
 
 function AddDirectorsPopup(props) {
-  const { showAddDirectorPopup, setShowAddDirectorPopup } = props;
+  const {
+    showAddDirectorPopup,
+    setShowAddDirectorPopup,
+    heading,
+    firstTextBox,
+    firstSelect,
+  } = props;
   const handleAddDirectorClose = () => {
     setShowAddDirectorPopup(false);
   };
@@ -35,13 +41,13 @@ function AddDirectorsPopup(props) {
       >
         <Modal.Header closeButton>
           <div className="w-100 mt-4">
-            <h5 className="text-center mt-2 mb-4">Add Director & SA</h5>
+            <h5 className="text-center mt-2 mb-4">{heading}</h5>
           </div>
         </Modal.Header>
         <Modal.Body>
           <div className="w-100 px-4">
             <div className="d-flex flex-column">
-              <div className="small-font mb-1">Select Website *</div>
+              <div className="small-font mb-1">{firstTextBox}</div>
               <select className="w-100 custom-select small-font input-btn-bg px-2 py-2 all-none rounded all-none">
                 <option selected>Select</option>
                 <option>www.texch.com</option>
@@ -51,7 +57,7 @@ function AddDirectorsPopup(props) {
               </select>
             </div>
             <div className="d-flex flex-column w-100 mt-2">
-              <div className="small-font mb-1 mt-1">Website *</div>
+              <div className="small-font mb-1 mt-1">User ID *</div>
               <div className="w-100">
                 <input
                   type="number"
@@ -129,11 +135,11 @@ function AddDirectorsPopup(props) {
                   ></input>
                 </Col>
               </Row>
-            </Container>{" "}
+            </Container>
             <Container fluid className="my-2">
               <Row>
                 <Col className="ps-0">
-                  <div className="small-font my-1">Phone</div>
+                  <div className="small-font my-1">Phone *</div>
                   <input
                     type="number"
                     placeholder="Enter"
@@ -141,7 +147,7 @@ function AddDirectorsPopup(props) {
                   ></input>
                 </Col>
                 <Col className="pe-0">
-                  <div className="small-font my-1">TimeZone</div>
+                  <div className="small-font my-1">{firstSelect}</div>
                   <select className="w-100 custom-select small-font login-inputs input-btn-bg px-2 py-2 all-none rounded all-none">
                     <option selected>Select</option>
                     <option> UTC+5:30 (India)</option>
@@ -167,7 +173,7 @@ function AddDirectorsPopup(props) {
         </Modal.Body>
       </Modal>
       <MatchSubmitPopup
-        header={"Payment Successfully Completed"}
+        header={"Successfully Completed"}
         state={addDirectorsPopup}
         setState={setAddDirectorPopup}
       />

@@ -20,6 +20,9 @@
 .match-share-modal .btn-close {
   color: #ffffff !important;
 }
+.w-40 {
+  width: 40% !important;
+}
 .add-button {
   background-color: #696cff;
   border: none;
@@ -38,10 +41,25 @@
   top: 5%;
   right: 5%;
 }
-.all-none {
-  border: none !important;
-  outline: none !important;
+.login-input input {
+  background: none;
+  border: none;
+  outline: none;
+  color: white;
 }
+.login-input {
+  background: #3a3c58;
+  border-radius: 5px;
+}
+.all-none {
+  outline: none;
+  border: none;
+  color: #ffffff;
+}
+/* .all-none::placeholder {
+  color: #8da3d0;
+  font-weight: 600;
+} */
 .payment-modal select {
   color: #a3a4cc;
 }
@@ -62,4 +80,105 @@
   color: #ffffff !important;
   background-color: #696cff;
   border: none !important;
+}
+.yellow-btn {
+  background-color: #f3a22f;
+  color: white;
+  border: none;
+}
+.completed-btn {
+  background-color: #36483f;
+  color: #71dd37;
+}
+.font-grey {
+  color: #a3a4cc !important;
+}
+.zoom-icon {
+  position: absolute;
+  right: 0%;
+  top: 45%;
+  font-size: 30px;
+}
+.relative-position {
+  position: relative !important;
+}
+.h9vh {
+  height: 9vh !important;
+}
+.h5vh {
+  height: 5vh !important;
+}
+.user-dropdown-toggle .dropdown-toggle {
+  --bs-btn-bg: #3a3c58;
+  --bs-btn-border-color: solid 2px rgba(54, 60, 72, 0.5);
+  --bs-btn-font-size: none;
+}
+.user-dropdown-toggle .btn:hover,
+.user-dropdown-toggle .btn:first-child:active {
+  background-color: none;
+}
+.user-dropdown-toggle .dropdown-menu {
+  --bs-dropdown-bg: #3a3c58;
+  --bs-dropdown-font-size: 0.8rem;
+}
+.user-dropdown-toggle .dropdown-toggle::after {
+  content: none;
+}
+.user-dropdown-toggle .dropdown-item:focus,
+.dropdown-item:hover {
+  background-color: #2b2c40;
+}
+.user-dropdown-toggle .dropdown-item {
+  color: #a3a4cc;
+}
+.clr-yellow {
+  color: #ffb400;
+}
+.deactive-button {
+  border: solid 2px #4a4c50;
+  background-color: #3a3c58;
+  color: #ffffff;
+}
+.msg-deactive-button {
+  border: solid 2px #3a3c58;
+  background-color: #2b2c40;
+}
+.h15vh {
+  height: 15vh;
+}
+.h20vh {
+  height: 20vh;
+}
+.btn:hover {
+  color: none !important;
+  background-color: none !important;
+  border-color: none !important;
+}
+.button-bg {
+  background-color: #232333 !important;
+}
+.active-button {
+  background-color: #2b2c40;
+  color: #696cff;
+}
+.deactive-msg-button {
+  border: none !important;
+  background-color: #2b2c40;
+  color: #9899a3;
+}
+.h-85 {
+  height: 85% !important;
+}
+.upload-icon {
+  color: #696cff;
+  font-size: 20px;
+}
+.font-size-30 {
+  font-size: 30px !important;
+}
+.clr-white {
+  color: #ffffff;
+}
+.clr-grey {
+  color: #cbcbe2;
 }

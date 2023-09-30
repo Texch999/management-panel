@@ -284,6 +284,9 @@ function Adddirector() {
       <AddDirectorsPopup
         showAddDirectorPopup={showAddDirectorPopup}
         setShowAddDirectorPopup={setShowAddDirectorPopup}
+        heading="Add Director & SA"
+        firstTextBox="Select Website *"
+        firstSelect="Time Zone"
       />
     </div>
   );

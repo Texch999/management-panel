@@ -18,4 +18,5 @@ export const Images = {
   Vip: "./assets/VIP.png",
   QuestionMark: "./assets/question_mark.png",
   CheckedMark: "./assets/checked_Mark.png",
+  SsevenLogo:"./assets/ssevenLogo.png",
 };
