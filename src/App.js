@@ -28,6 +28,7 @@ import MyStatement from "./pages/reports/MyStatement";
 import Statement from "./pages/statement/Statement";
 import ToursManagement from "./pages/tours-tournaments/ToursManagement";
 import NotificationTextMsg from "./pages/broadcasting/NotificationTextMsg";
+import CreateNewOffers from "./pages/offersmanagement/CreateNewOffers";
 function App() {
   return (
     <BrowserRouter>
@@ -89,6 +90,8 @@ function App() {
               ></Route>
               <Route path="/statement" element={<Statement />} />
               <Route path="/tours-tournaments" element={<ToursManagement />} />
+              <Route path="/create-new-offer" element={<CreateNewOffers />} />
+
             </Routes>
           </div>
         </div>

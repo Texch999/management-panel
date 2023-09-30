@@ -1,12 +1,12 @@
-import React,{ useState } from "react";
+import React, { useState } from "react";
 import { Modal } from "react-bootstrap";
 import "./styles.css";
 import { ADD_WEBSITE } from "../../config/endpoints";
 import { call } from "../../config/axios";
 function AddWebsitePopup(props) {
-  const { showAddWebPopup, setShowAddWebPopup,setStatus } = props;
+  const { showAddWebPopup, setShowAddWebPopup, setStatus } = props;
   const [formData, setFormData] = useState({
-    register_id: "reg-20230710182031623", 
+    register_id: "reg-20230710182031623",
     web_url: "",
   });
   const handleAddWebPopupClose = () => {
@@ -28,8 +28,8 @@ function AddWebsitePopup(props) {
         setShowAddWebPopup(false);
         setStatus((prev) => !prev);
         setFormData({
-          web_url:""
-        })
+          web_url: "",
+        });
       }
     } catch (err) {
       console.error("API Error:", err);
@@ -65,10 +65,12 @@ function AddWebsitePopup(props) {
               </div>
             </div>
             <div className="d-flex justify-content-center w-100 my-4">
-              <button 
-              className="add-button rounded px-2 py-2 w-50 medium-font"
-              onClick={handleCreateWebsite}
-              >Add</button>
+              <button
+                className="add-button rounded px-2 py-2 w-50 medium-font"
+                onClick={() => handleCreateWebsite()}
+              >
+                Add
+              </button>
             </div>
           </div>
         </Modal.Body>
