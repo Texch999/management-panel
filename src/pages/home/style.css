@@ -201,7 +201,7 @@ input::-webkit-calendar-picker-indicator {
   height: 100vh;
   overflow-y: scroll;
 }
-.main{
+.main {
   height: 100vh;
 }
 .th-color {
@@ -215,6 +215,7 @@ input::-webkit-calendar-picker-indicator {
 }
 .role-color {
   color: #ffb400 !important;
+  font-weight: 600;
 }
 .bluecolor-text {
   color: #696cff !important;

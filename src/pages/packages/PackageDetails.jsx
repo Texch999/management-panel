@@ -33,7 +33,7 @@ function PackageDetails() {
   return (
     <div className="row">
       {PACKAGR_DETAILS_DATA?.map((item, index) => (
-        <div className="col-sm-6 col-lg-3 mt-1">
+        <div key={index} className="col-sm-6 col-lg-3 mt-1">
           <div className="package-bg rounded p-2 d-flex">
             <div className="row w-100">
               <div className="col-9">

@@ -164,82 +164,82 @@ function Sidebar() {
         </div>
         <hr className="th-color mt-2"></hr>
         <div className="scroll-side-bar">
-        <ul className="nav nav-pills flex-column mt-2 nav-width">
-          {sidebar?.map(
-            ({
-              path,
-              title,
-              icon,
-              reactIcon,
-              childMenu,
-              ariaControls,
-              dataBsTarget,
-            }) => {
-              return (
-                <div>
-                  <li
-                    className={
-                      location?.pathname === path
-                        ? "active nav-item p-2"
-                        : "nav-item p-2"
-                    }
-                    key={path}
-                  >
-                    <Link
-                      to={path}
-                      className="p-1 th-color medium-font text-decoration-none"
-                      data-bs-toggle={childMenu && "collapse"}
-                      data-bs-target={dataBsTarget}
-                      aria-expanded="false"
-                      aria-controls={ariaControls}
+          <ul className="nav nav-pills flex-column mt-2 nav-width">
+            {sidebar?.map(
+              ({
+                path,
+                title,
+                icon,
+                reactIcon,
+                childMenu,
+                ariaControls,
+                dataBsTarget,
+              }) => {
+                return (
+                  <div>
+                    <li
+                      className={
+                        location?.pathname === path
+                          ? "active nav-item p-2"
+                          : "nav-item p-2"
+                      }
+                      key={path}
                     >
-                      <i className={`bi me-3 medium-font ${icon}`}>
-                        {reactIcon && reactIcon}
-                      </i>
-                      <span className="th-color medium-font">{title}</span>
-                    </Link>
-                  </li>
-                  <div className="collapse th-color" id={ariaControls}>
-                    {childMenu?.map(({ path, title, icon, reactIcon }) => {
-                      return (
-                        <li
-                          className={
-                            location?.pathname === path
-                              ? "active nav-item p-2"
-                              : "nav-item p-2"
-                          }
-                          key={path}
-                        >
-                          <Link
-                            to={path}
-                            className="p-1 th-color medium-font text-decoration-none"
+                      <Link
+                        to={path}
+                        className="p-1 th-color medium-font text-decoration-none"
+                        data-bs-toggle={childMenu && "collapse"}
+                        data-bs-target={dataBsTarget}
+                        aria-expanded="false"
+                        aria-controls={ariaControls}
+                      >
+                        <i className={`bi me-3 medium-font ${icon}`}>
+                          {reactIcon && reactIcon}
+                        </i>
+                        <span className="th-color medium-font">{title}</span>
+                      </Link>
+                    </li>
+                    <div className="collapse th-color" id={ariaControls}>
+                      {childMenu?.map(({ path, title, icon, reactIcon }) => {
+                        return (
+                          <li
+                            className={
+                              location?.pathname === path
+                                ? "active nav-item p-2"
+                                : "nav-item p-2"
+                            }
+                            key={path}
                           >
-                            <i
-                              className={`bi me-3 th-color medium-font ${icon}`}
+                            <Link
+                              to={path}
+                              className="p-1 th-color medium-font text-decoration-none"
                             >
-                              {reactIcon && reactIcon}
-                            </i>
-                            <span className="th-color medium-font">
-                              {title}
-                            </span>
-                          </Link>
-                        </li>
-                      );
-                    })}
+                              <i
+                                className={`bi me-3 th-color medium-font ${icon}`}
+                              >
+                                {reactIcon && reactIcon}
+                              </i>
+                              <span className="th-color medium-font">
+                                {title}
+                              </span>
+                            </Link>
+                          </li>
+                        );
+                      })}
+                    </div>
                   </div>
-                </div>
-              );
-            }
-          )}
-        </ul>
+                );
+              }
+            )}
+          </ul>
         </div>
       </div>
       <div>
         <hr className="text-white mt-2"></hr>
-        <div className="nav-item p-2">
-          <a href="" className="p-1 text-decoration-none text-white">
-            <i className="bi bi-person-circle me-3 fs-5"></i>
-            <span className="text-white fs-8">name</span>
+        <div className="nav-item p-2 d-flex align-items-center">
+          <a href="" className="d-flex align-items-center p-1 text-decoration-none text-white">
+            <i className="d-flex align-items-center bi bi-person-circle me-3 fs-5"></i>
+            <span className="text-white fs-8">Name</span>
           </a>
         </div>
       </div>
