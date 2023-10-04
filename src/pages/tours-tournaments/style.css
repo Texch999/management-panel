@@ -93,3 +93,17 @@
   position: relative;
   right: -75%;
 }
+.scroll-div {
+  height: 60vh;
+  overflow-y: scroll;
+}
+.input-custum {
+  background: #3a3c58;
+  border-radius: 5px;
+  width: 70px;
+  outline: none;
+  border: none;
+  color: #ffffff;
+  height: 30px;
+  margin: 5px;
+}
