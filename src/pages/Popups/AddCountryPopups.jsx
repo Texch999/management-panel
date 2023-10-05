@@ -36,7 +36,7 @@ function AddCountryPopups(props) {
     setData(null);
     // setData(null);
 
-    setCountryName("");
+        setCountryName("");
         setCurrencyName("");
         setPaymentGateway("Select");
         setPaymentDetails("");
@@ -129,6 +129,7 @@ function AddCountryPopups(props) {
         }
 
         const paymentRes = await call(paymentUrl, paymentData);
+        
         getData()
         // if (paymentRes.data.error) {
         //   console.error("Payment API Error:", paymentRes.data.message);

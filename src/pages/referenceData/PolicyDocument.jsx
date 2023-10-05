@@ -85,7 +85,7 @@ const searchContent =(value) =>{
           showwebsites:item?.website_name,
           status:
             item?.is_active === 1 ? (
-              <div className="font-green">Active</div>
+              <div className="custom-active-button px-2">Active</div>
             ) : (
               <div className="custom-deactive-button px-2">InActive</div>
             ),
