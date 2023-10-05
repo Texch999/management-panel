@@ -1,76 +1,97 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Table from "../table/Table";
-import { MdOutlineEdit } from "react-icons/md";
 import AddPolicyPopup from "../Popups/AddPolicyPopup";
-const POLICYDOCUMENT_DETAILS = [
-  {
-    countryname: "India ",
-    showwebsites: "www.texch.com",
-    status: "Active",
-    icon: <MdOutlineEdit className="eye-icon-size" />,
-  },
-  {
-    countryname: "USA ",
-    showwebsites: "www.we2call",
-    status: "Active",
-    icon: <MdOutlineEdit className="eye-icon-size" />,
-  },
-  {
-    countryname: "India ",
-    showwebsites: "www.ravanna.com",
-    status: "Active",
-    icon: <MdOutlineEdit className="eye-icon-size" />,
-  },
-  {
-    countryname: "Gemany ",
-    showwebsites: "we2call.com",
-    status: "Active",
-    icon: <MdOutlineEdit className="eye-icon-size" />,
-  },
-  {
-    countryname: "India ",
-    showwebsites: "www.texch.com",
-    status: "Active",
-    icon: <MdOutlineEdit className="eye-icon-size" />,
-  },
-];
-
-const cols = [
-  {
-    header: "COUNTRY NAME",
-    field: "countryname",
-  },
-
-  {
-    header: "SHOW WEBSITES",
-    field: "showwebsites",
-  },
-
-  {
-    header: "STATUS",
-    field: "status",
-    clr: true,
-  },
-  {
-    header: "Action",
-    field: "icon",
-  },
-];
-
-const modifiedPolicydocumentDetails = POLICYDOCUMENT_DETAILS.map((item) => ({
-  ...item,
-  countryname: (
-    <div className="role-color">
-      <span className="role-color">{item?.countryname}</span>{" "}
-    </div>
-  ),
-}));
+import { GET_POLICY_DOCUMENT } from "../../config/endpoints";
+import { call } from "../../config/axios";
 
 function PolicyDocument() {
+  // const POLICYDOCUMENT_DETAILS = [
+  //   {
+  //     countryname: "India ",
+  //     showwebsites: "www.texch.com",
+  //     status: "Active",
+  //     icon: <MdOutlineEdit className="eye-icon-size" />,
+  //   },
+  //   {
+  //     countryname: "USA ",
+  //     showwebsites: "www.we2call",
+  //     status: "Active",
+  //     icon: <MdOutlineEdit className="eye-icon-size" />,
+  //   },
+  //   {
+  //     countryname: "India ",
+  //     showwebsites: "www.ravanna.com",
+  //     status: "Active",
+  //     icon: <MdOutlineEdit className="eye-icon-size" />,
+  //   },
+  //   {
+  //     countryname: "Gemany ",
+  //     showwebsites: "we2call.com",
+  //     status: "Active",
+  //     icon: <MdOutlineEdit className="eye-icon-size" />,
+  //   },
+  //   {
+  //     countryname: "India ",
+  //     showwebsites: "www.texch.com",
+  //     status: "Active",
+  //     icon: <MdOutlineEdit className="eye-icon-size" />,
+  //   },
+  // ];
+  const cols = [
+    {
+      header: "COUNTRY NAME",
+      field: "country_name",
+    },
+
+    {
+      header: "SHOW WEBSITES",
+      field: "website_name",
+    },
+
+    {
+      header: "STATUS",
+      field: "is_active",
+      clr: true,
+    },
+    {
+      header: "Action",
+      field: "icon",
+    },
+  ];
+
   const [addPolicyOpen, setAddPolicyOpen] = useState(false);
   const handlePolicyOpen = () => {
     setAddPolicyOpen(true);
   };
+
+  const [getPolicy, setgetpolicy] = useState([]);
+  const getPolicyDocument = async () => {
+    const payload = {
+      register_id: "reg-20230710182031623",
+    };
+    await call(GET_POLICY_DOCUMENT, payload)
+      .then((res) => {
+        console.log("response==========>", res);
+        setgetpolicy(res?.data?.data);
+      })
+      .catch((err) => console.log(err));
+  };
+
+  const modifiedPolicydocumentDetails = getPolicy.map((item) => ({
+    ...item,
+    countryname: (
+      <div className="role-color">
+        <span className="role-color">{item?.field}</span>{" "}
+      </div>
+    ),
+  }));
+
+  useEffect(() => {
+    getPolicyDocument();
+  }, []);
+
+  console.log("getPolicy", getPolicy);
+
   return (
     <div className="p-4 w-100">
       <h6 className="h6 font-grey">Policy Document</h6>

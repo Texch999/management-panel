@@ -4,6 +4,7 @@ import { Col, Container, Dropdown, Modal, Row } from "react-bootstrap";
 function AddPolicyPopup(props) {
   const { addPolicyOpen, setAddPolicyOpen } = props;
   const [acceptClick, setAcceptClick] = useState(false);
+  const [addPolicyData, setAddPolicyData] = useState({});
   const handleAcceptClickPopupOpen = () => {
     setAcceptClick(true);
     setAddPolicyOpen(false);
@@ -11,6 +12,11 @@ function AddPolicyPopup(props) {
   const handleAddPolicyClose = () => {
     setAddPolicyOpen(false);
   };
+
+  const handleChange = (e) => {
+    setAddPolicyData({ ...addPolicyData, [e.target.name]: e.target.value });
+  };
+  console.log(addPolicyData, "........dadad");
   return (
     <div className="modal fade bd-example-modal-lg container mt-5">
       <Modal
@@ -33,6 +39,10 @@ function AddPolicyPopup(props) {
                 <input
                   type="text"
                   placeholder="Enter"
+                  name="country_name"
+                  id="country_name"
+                  value={addPolicyData[addPolicyData?.country_name || ""]}
+                  onChange={(e) => handleChange(e)}
                   className="w-100 custom-select small-font login-inputs input-btn-bg px-2 py-3 all-none rounded all-none"
                 ></input>
               </Col>
@@ -48,12 +58,18 @@ function AddPolicyPopup(props) {
               </Col>
               <Col className="pe-0">
                 <div className="small-font my-1">In Active *</div>
-                <select className="w-100 custom-select small-font input-btn-bg px-2 py-3 all-none rounded all-none">
-                  <option selected>Select</option>
-                  <option>Phone Pe</option>
-                  <option>NEFT/RTGS</option>
-                  <option>UPI</option>
-                  <option>Paytm</option>
+                <select
+                  className="w-100 custom-select small-font input-btn-bg px-2 py-3 all-none rounded all-none"
+                  onChange={(e) => handleChange(e)}
+                  name="payment_type"
+                >
+                  {/* <option selected value="">
+                    Select
+                  </option> */}
+                  <option value="phonepay">Phone Pe</option>
+                  <option value="rtgs">NEFT/RTGS</option>
+                  <option value="upi">UPI</option>
+                  <option value="paytm">Paytm</option>
                 </select>
               </Col>
             </Row>
@@ -64,6 +80,10 @@ function AddPolicyPopup(props) {
               <textarea
                 type="text"
                 placeholder="Type Here....."
+                name="payment_details"
+                id="payment_details"
+                value={addPolicyData[addPolicyData?.payment_details || ""]}
+                onChange={(e) => handleChange(e)}
                 className="w-100 custom-select small-font login-inputs input-btn-bg rounded h15vh"
               ></textarea>
             </Row>

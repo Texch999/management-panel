@@ -1,86 +1,35 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Table from "../table/Table";
-import { AiOutlineEye } from "react-icons/ai";
+//import { AiOutlineEye } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
+import { GET_BROADCASTING_EVENT } from "../../config/endpoints";
+import { call } from "../../config/axios";
 
 function Broadcasting() {
-  const BROADCASTING_DETAILS = [
-    {
-      title:
-        "16 Free Premiere Pro Title Templates Perfect for Any Video | Motion Array",
-      publishdate: "14/08/2023 15:37:00 PM",
-      publishwebsite: "www.texch.com www.we2call.com www.ravanna.com",
-      dateandtime: 1692966757289,
-      type: "Global",
-      status: "Active",
-      icon: <AiOutlineEye className="eye-icon-size" />,
-    },
-    {
-      title:
-        "16 Free Premiere Pro Title Templates Perfect for Any Video | Motion Array",
-      publishdate: "14/08/2023 15:37:00 PM",
-      publishwebsite: "www.texch.com www.we2call.com www.ravanna.com",
-      dateandtime: 1692966757289,
-      type: "India",
-      status: "Active",
-      icon: <AiOutlineEye className="eye-icon-size" />,
-    },
-    {
-      title:
-        "16 Free Premiere Pro Title Templates Perfect for Any Video | Motion Array",
-      publishdate: "14/08/2023 15:37:00 PM",
-      publishwebsite: "www.texch.com www.we2call.com www.ravanna.com",
-      dateandtime: 1692966757289,
-      type: "USA",
-      status: "In-active",
-      icon: <AiOutlineEye className="eye-icon-size" />,
-    },
-    {
-      title:
-        "16 Free Premiere Pro Title Templates Perfect for Any Video | Motion Array",
-      publishdate: "14/08/2023 15:37:00 PM",
-      publishwebsite: "www.texch.com www.we2call.com www.ravanna.com",
-      dateandtime: 1692966757289,
-      type: "Global",
-      status: "Active",
-      icon: <AiOutlineEye className="eye-icon-size" />,
-    },
-    {
-      title:
-        "16 Free Premiere Pro Title Templates Perfect for Any Video | Motion Array",
-      publishdate: "14/08/2023 15:37:00 PM",
-      publishwebsite: "www.texch.com www.we2call.com www.ravanna.com",
-      dateandtime: 1692966757289,
-      type: "Global",
-      status: "Active",
-      icon: <AiOutlineEye className="eye-icon-size" />,
-    },
-  ];
-
   const cols = [
     {
       header: "TITLE",
-      field: "title",
+      field: "event_name",
     },
     {
       header: "PUBLISH DATE",
-      field: "publishdate",
+      field: "publish_date",
     },
     {
       header: "PUBLISH WEBSITE",
-      field: "publishwebsite",
+      field: "website_name",
     },
     {
       header: "UTC TIME STAMP",
-      field: "dateandtime",
+      field: "create_at",
     },
     {
       header: "TYPE",
-      field: "type",
+      field: "event_location",
     },
     {
       header: "STATUS",
-      field: "status",
+      field: "is_active",
       clr: true,
     },
     {
@@ -89,11 +38,29 @@ function Broadcasting() {
     },
   ];
 
-  const modifiedBroadcastingDetails = BROADCASTING_DETAILS.map((item) => ({
+  const [getBroadcasting, setGetBroadcasting] = useState([]);
+  const getBroadcastingEvent = async () => {
+    const payload = {
+      register_id: "reg-20230710182031623",
+    };
+    await call(GET_BROADCASTING_EVENT, payload)
+      .then((res) => {
+        console.log("response=====>", res);
+        setGetBroadcasting(res?.data?.data);
+      })
+      .catch((err) => console.log(err));
+  };
+  useEffect(() => {
+    getBroadcastingEvent();
+  }, []);
+
+  console.log("getBroadcasting", getBroadcasting);
+
+  const modifiedBroadcastingDetails = getBroadcasting.map((item) => ({
     ...item,
     title: (
       <div className="role-color">
-        <span className="role-color">{item?.title}</span>{" "}
+        <span className="role-color">{item?.field}</span>{" "}
       </div>
     ),
   }));

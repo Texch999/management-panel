@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { AiOutlineClockCircle } from "react-icons/ai";
-import { BiSolidArrowFromBottom } from "react-icons/bi";
-import { BsChevronDown } from "react-icons/bs";
+// import { BiSolidArrowFromBottom } from "react-icons/bi";
+// import { BsChevronDown } from "react-icons/bs";
 import { FaCalendarDays } from "react-icons/fa6";
 import { HiMiniArrowUpCircle } from "react-icons/hi2";
 import ReturnedPaymentPopup from "../Popups/ReturnedPaymentPopup";
@@ -83,7 +83,7 @@ function AddTours() {
               <div className="btn-cls">
                 <button
                   type="button"
-                  class="btn btn-primary"
+                  className="btn btn-primary"
                   onClick={() => handleReturnPaymentpopup()}
                 >
                   Submit

@@ -1,50 +1,52 @@
-import React from "react";
+import React, { useState } from "react";
 import Table from "../table/Table";
 import { MdOutlineEdit } from "react-icons/md";
 
 function Paymentgateway() {
-  const PAYMENTGATEWAY_DETAILS = [
-    {
-      gatewayname: "Google Pay",
-      lastupdate: "18/08/2023",
-      country: "India ",
-      currency: "INR ₹",
-      status: "Active",
-      icon: <MdOutlineEdit className="eye-icon-size" />,
-    },
-    {
-      gatewayname: "Paytm",
-      lastupdate: "18/08/2023",
-      country: "India ",
-      currency: "INR ₹",
-      status: "Active",
-      icon: <MdOutlineEdit className="eye-icon-size" />,
-    },
-    {
-      gatewayname: "QR Code",
-      lastupdate: "18/08/2023",
-      country: "India ",
-      currency: "INR ₹",
-      status: "Active",
-      icon: <MdOutlineEdit className="eye-icon-size" />,
-    },
-    {
-      gatewayname: "Phone Pay",
-      lastupdate: "18/08/2023",
-      country: "India ",
-      currency: "INR ₹",
-      status: "Active",
-      icon: <MdOutlineEdit className="eye-icon-size" />,
-    },
-    {
-      gatewayname: "Google Pay",
-      lastupdate: "18/08/2023",
-      country: "India ",
-      currency: "INR ₹",
-      status: "Active",
-      icon: <MdOutlineEdit className="eye-icon-size" />,
-    },
-  ];
+  // const PAYMENTGATEWAY_DETAILS = [
+  //   {
+  //     gatewayname: "Google Pay",
+  //     lastupdate: "18/08/2023",
+  //     country: "India ",
+  //     currency: "INR ₹",
+  //     status: "Active",
+  //     icon: <MdOutlineEdit className="eye-icon-size" />,
+  //   },
+  //   {
+  //     gatewayname: "Paytm",
+  //     lastupdate: "18/08/2023",
+  //     country: "India ",
+  //     currency: "INR ₹",
+  //     status: "Active",
+  //     icon: <MdOutlineEdit className="eye-icon-size" />,
+  //   },
+  //   {
+  //     gatewayname: "QR Code",
+  //     lastupdate: "18/08/2023",
+  //     country: "India ",
+  //     currency: "INR ₹",
+  //     status: "Active",
+  //     icon: <MdOutlineEdit className="eye-icon-size" />,
+  //   },
+  //   {
+  //     gatewayname: "Phone Pay",
+  //     lastupdate: "18/08/2023",
+  //     country: "India ",
+  //     currency: "INR ₹",
+  //     status: "Active",
+  //     icon: <MdOutlineEdit className="eye-icon-size" />,
+  //   },
+  //   {
+  //     gatewayname: "Google Pay",
+  //     lastupdate: "18/08/2023",
+  //     country: "India ",
+  //     currency: "INR ₹",
+  //     status: "Active",
+  //     icon: <MdOutlineEdit className="eye-icon-size" />,
+  //   },
+  // ];
+
+  const [Paymentgateway, setpaymentgateway] = useState([]);
 
   const cols = [
     {
@@ -75,7 +77,7 @@ function Paymentgateway() {
     },
   ];
 
-  const modifiedPaymentgatewayDetails = PAYMENTGATEWAY_DETAILS.map((item) => ({
+  const modifiedPaymentgatewayDetails = Paymentgateway.map((item) => ({
     ...item,
     gatewayname: (
       <div className="role-color">

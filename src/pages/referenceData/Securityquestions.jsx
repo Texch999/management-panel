@@ -1,6 +1,6 @@
 import React from "react";
 import Table from "../table/Table";
-import { MdOutlineEdit } from "react-icons/md";
+// import { MdOutlineEdit } from "react-icons/md";
 import AddReasonPopup from "../Popups/AddReasonPopup";
 import { useEffect,useState} from "react";
 import { GET_ALL_SECURITY_QUESTIONS } from "../../config/endpoints";
