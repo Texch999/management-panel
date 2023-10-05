@@ -12,7 +12,7 @@ function ToursManagement() {
   return (
     <div className="tours-management-main p-3">
       <div className="row d-flex justify-content-between">
-        <div className="col-2 d-flex justify-content-between">
+        <div className="col-3 d-flex justify-content-between">
           <div
             className={`${
               activeHead === "add" ? "active-head" : ""

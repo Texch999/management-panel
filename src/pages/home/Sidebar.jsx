@@ -22,6 +22,7 @@ import { LuFilePlus2 } from "react-icons/lu";
 import { BsBroadcast } from "react-icons/bs";
 import { BiSolidOffer } from "react-icons/bi";
 import { PiAirplaneTiltBold } from "react-icons/pi";
+import { TiMessages } from "react-icons/ti";
 import { Images } from "../../images";
 import { BsChevronDown } from "react-icons/bs";
 function Sidebar() {
@@ -64,7 +65,7 @@ function Sidebar() {
       reactIcon: <ImTicket />,
     },
     {
-      title: "Reports", 
+      title: "Reports",
       path: "/reportsts",
       reactIcon: <LuFileBarChart />,
       dataBsTarget: "#reports",
@@ -148,90 +149,97 @@ function Sidebar() {
       path: "/tours-tournaments",
       reactIcon: <PiAirplaneTiltBold />,
     },
+    {
+      title: "Support",
+      path: "/support-chat",
+      reactIcon: <TiMessages />,
+    },
   ];
 
   return (
     <div className="d-flex justify-content-between flex-column sidebar-bg th-color p-1 vh-100">
       <div className="sidebar">
         <div className="d-flex align-items-center justfy-content-center p-2">
-        <img src={Images.SsevenLogo} className="sseven-logo-size" />
+          <img src={Images.SsevenLogo} className="sseven-logo-size" />
         </div>
         <hr className="th-color mt-2"></hr>
-        <ul className="nav nav-pills flex-column mt-2">
-          {sidebar?.map(
-            ({
-              path,
-              title,
-              icon,
-              reactIcon,
-              childMenu,
-              ariaControls,
-              dataBsTarget,
-            }) => {
-              return (
-                <div>
-                  <li
-                    className={
-                      location?.pathname === path
-                        ? "active nav-item p-2"
-                        : "nav-item p-2"
-                    }
-                    key={path}
-                  >
-                    <Link
-                      to={path}
-                      className="p-1 th-color medium-font text-decoration-none"
-                      data-bs-toggle={childMenu && "collapse"}
-                      data-bs-target={dataBsTarget}
-                      aria-expanded="false"
-                      aria-controls={ariaControls}
+        <div className="scroll-side-bar">
+          <ul className="nav nav-pills flex-column mt-2 nav-width">
+            {sidebar?.map(
+              ({
+                path,
+                title,
+                icon,
+                reactIcon,
+                childMenu,
+                ariaControls,
+                dataBsTarget,
+              }) => {
+                return (
+                  <div>
+                    <li
+                      className={
+                        location?.pathname === path
+                          ? "active nav-item p-2"
+                          : "nav-item p-2"
+                      }
+                      key={path}
                     >
-                      <i className={`bi me-3 medium-font ${icon}`}>
-                        {reactIcon && reactIcon}
-                      </i>
-                      <span className="th-color medium-font">{title}</span>
-                    </Link>
-                  </li>
-                  <div className="collapse th-color" id={ariaControls}>
-                    {childMenu?.map(({ path, title, icon, reactIcon }) => {
-                      return (
-                        <li
-                          className={
-                            location?.pathname === path
-                              ? "active nav-item p-2"
-                              : "nav-item p-2"
-                          }
-                          key={path}
-                        >
-                          <Link
-                            to={path}
-                            className="p-1 th-color medium-font text-decoration-none"
+                      <Link
+                        to={path}
+                        className="p-1 th-color medium-font text-decoration-none"
+                        data-bs-toggle={childMenu && "collapse"}
+                        data-bs-target={dataBsTarget}
+                        aria-expanded="false"
+                        aria-controls={ariaControls}
+                      >
+                        <i className={`bi me-3 medium-font ${icon}`}>
+                          {reactIcon && reactIcon}
+                        </i>
+                        <span className="th-color medium-font">{title}</span>
+                      </Link>
+                    </li>
+                    <div className="collapse th-color" id={ariaControls}>
+                      {childMenu?.map(({ path, title, icon, reactIcon }) => {
+                        return (
+                          <li
+                            className={
+                              location?.pathname === path
+                                ? "active nav-item p-2"
+                                : "nav-item p-2"
+                            }
+                            key={path}
                           >
-                            <i
-                              className={`bi me-3 th-color medium-font ${icon}`}
+                            <Link
+                              to={path}
+                              className="p-1 th-color medium-font text-decoration-none"
                             >
-                              {reactIcon && reactIcon}
-                            </i>
-                            <span className="th-color medium-font">
-                              {title}
-                            </span>
-                          </Link>
-                        </li>
-                      );
-                    })}
+                              <i
+                                className={`bi me-3 th-color medium-font ${icon}`}
+                              >
+                                {reactIcon && reactIcon}
+                              </i>
+                              <span className="th-color medium-font">
+                                {title}
+                              </span>
+                            </Link>
+                          </li>
+                        );
+                      })}
+                    </div>
                   </div>
-                </div>
-              );
-            }
-          )}
-        </ul>
+                );
+              }
+            )}
+          </ul>
+        </div>
       </div>
       <div>
         <hr className="text-white mt-2"></hr>
-        <div className="nav-item p-2">
-          <a href="" className="p-1 text-decoration-none text-white">
-            <i className="bi bi-person-circle me-3 fs-5"></i>
-            <span className="text-white fs-8">name</span>
+        <div className="nav-item p-2 d-flex align-items-center">
+          <a href="" className="d-flex align-items-center p-1 text-decoration-none text-white">
+            <i className="d-flex align-items-center bi bi-person-circle me-3 fs-5"></i>
+            <span className="text-white fs-8">Name</span>
           </a>
         </div>
       </div>

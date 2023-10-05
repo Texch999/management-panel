@@ -5,9 +5,10 @@ input::-webkit-calendar-picker-indicator {
 
 .header-div {
   width: 91%;
-  height: 8vh;
+  height: 10vh !important;
   position: fixed;
   top: 0;
+  background: #232333;
 }
 /* .homepage-div {
   width: 86%;
@@ -197,6 +198,11 @@ input::-webkit-calendar-picker-indicator {
 }
 .home-bg {
   background-color: #232333;
+  height: 100vh;
+  overflow-y: scroll;
+}
+.main {
+  height: 100vh;
 }
 .th-color {
   color: #cbcbe2;
@@ -209,6 +215,7 @@ input::-webkit-calendar-picker-indicator {
 }
 .role-color {
   color: #ffb400 !important;
+  font-weight: 600;
 }
 .bluecolor-text {
   color: #696cff !important;
@@ -445,4 +452,28 @@ input::placeholder {
 .casino-box-field-bg {
   background-color: #4a4c69;
   border-radius: 6px;
+}
+.nav-width {
+  width: 215px;
+}
+.scroll-side-bar {
+  height: 70vh;
+  overflow-y: scroll;
+}
+.scroll-side-bar::-webkit-scrollbar-track,
+.scroll-side-bar::-webkit-scrollbar-thumb,
+.scroll-side-bar::-webkit-scrollbar {
+  width: 5px;
+}
+::-webkit-scrollbar {
+  width: 5px;
+  display: none;
+}
+::-webkit-scrollbar-track {
+  border-radius: 10px;
+  background: #292a43;
+}
+::-webkit-scrollbar-thumb {
+  background: #4f506c;
+  border-radius: 10px;
 }

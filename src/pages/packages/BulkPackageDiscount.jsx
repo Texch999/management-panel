@@ -14,17 +14,17 @@ function BulkPackageDiscount() {
     },
   ];
   return (
-    <div className="W-100 medium-font font-grey package-bg p-3 package-radius">
+    <div className="W-100 medium-font font-grey package-bg p-3 package-radius package-input">
       {BULK_PACKAGES_DATA?.map((item, index) => (
         <div key={index} className="mt-3">
-          <div className="d-flex">
+          <div className="d-flex align-items-center justify-content-between">
             <div className="row w-90">
-              <div className="col-3">
+              <div className="col-2">
                 <div>
                   <div className="medium-font package-btn-bg p-2 rounded font-white fw-semibold">
-                    Package & Features
+                    Pkg & Features
                   </div>
-                  <div className="medium-font package-heading-bg p-2 rounded mt-1 font-orange">
+                  <div className="medium-font package-heading-bg p-2 rounded mt-1 role-color">
                     {item.packagename}
                   </div>
                 </div>
@@ -32,37 +32,42 @@ function BulkPackageDiscount() {
               <div className="col">
                 <div>
                   <div className="medium-font package-btn-bg p-2 rounded font-white fw-semibold">
-                    Bulk Package
+                    Ltd Members
                   </div>
-                  <div className="medium-font package-btn-bg p-2 rounded mt-1 font-grey d-flex align-items-center justify-content-between">
-                    <span>20</span> <span>M</span>
-                  </div>
-                  <div className="medium-font package-btn-bg p-2 rounded mt-1 font-grey d-flex align-items-center justify-content-between">
-                    <span>10</span> <span>Y</span>
-                  </div>
+                  <input
+                    className="medium-font package-btn-bg p-2 rounded mt-1 font-grey"
+                    placeholder={item.members}
+                  />
                 </div>
               </div>
               <div className="col">
                 <div>
                   <div className="medium-font package-btn-bg p-2 rounded font-white fw-semibold">
-                    Limited Members
+                    Bulk Pkg
                   </div>
-                  <div className="medium-font package-btn-bg p-2 rounded mt-1 font-grey">
-                    {item.members}
-                  </div>
+                  <input
+                    className="medium-font package-btn-bg p-2 rounded mt-1 font-grey"
+                    placeholder="20 M"
+                  />
+                  <input
+                    className="medium-font package-btn-bg p-2 rounded mt-1 font-grey"
+                    placeholder="10 Y"
+                  />
                 </div>
               </div>
               <div className="col">
                 <div>
                   <div className="medium-font package-btn-bg p-2 rounded font-white fw-semibold">
-                    Package Hours
+                    Pkg Hours
                   </div>
-                  <div className="medium-font package-btn-bg p-2 rounded mt-1 font-grey">
-                    40 Hours
-                  </div>
-                  <div className="medium-font package-btn-bg p-2 rounded mt-1 font-grey">
-                    4800 Hours
-                  </div>
+                  <input
+                    className="medium-font package-btn-bg p-2 rounded mt-1 font-grey"
+                    placeholder="40 Hours"
+                  />
+                  <input
+                    className="medium-font package-btn-bg p-2 rounded mt-1 font-grey"
+                    placeholder="4800 Hours"
+                  />
                 </div>
               </div>
               <div className="col">
@@ -70,12 +75,14 @@ function BulkPackageDiscount() {
                   <div className="medium-font package-btn-bg p-2 rounded font-white fw-semibold">
                     Price
                   </div>
-                  <div className="medium-font package-btn-bg p-2 rounded mt-1 font-grey d-flex align-items-center justify-content-between">
-                    <span>5000</span> <span>M</span>
-                  </div>
-                  <div className="medium-font package-btn-bg p-2 rounded mt-1 font-grey d-flex align-items-center justify-content-between">
-                    <span>45000</span> <span>Y</span>
-                  </div>
+                  <input
+                    className="medium-font package-btn-bg p-2 rounded mt-1 font-grey"
+                    placeholder="5000 M"
+                  />
+                  <input
+                    className="medium-font package-btn-bg p-2 rounded mt-1 font-grey"
+                    placeholder="50000 Y"
+                  />
                 </div>
               </div>
               <div className="col">
@@ -83,12 +90,14 @@ function BulkPackageDiscount() {
                   <div className="medium-font package-btn-bg p-2 rounded font-white fw-semibold">
                     Discount
                   </div>
-                  <div className="medium-font package-btn-bg p-2 rounded mt-1 font-grey d-flex align-items-center justify-content-between">
-                    <span>5%</span> <span>M</span>
-                  </div>
-                  <div className="medium-font package-btn-bg p-2 rounded mt-1 font-grey d-flex align-items-center justify-content-between">
-                    <span>15%</span> <span>Y</span>
-                  </div>
+                  <input
+                    className="medium-font package-btn-bg p-2 rounded mt-1 font-grey"
+                    placeholder="5% M"
+                  />
+                  <input
+                    className="medium-font package-btn-bg p-2 rounded mt-1 font-grey"
+                    placeholder="15% Y"
+                  />
                 </div>
               </div>
             </div>
