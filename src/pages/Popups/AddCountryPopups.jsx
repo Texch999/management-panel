@@ -177,8 +177,9 @@ function AddCountryPopups(props) {
               <Col className="ps-0">
                 <div className="small-font my-1">Country Name *</div>
                 <input
-                  type="text"
                   name="country_name"
+                  id="country_name"
+                  type="text"
                   placeholder="Enter"
                   className="w-100 custom-select small-font login-inputs input-btn-bg px-2 py-3 all-none rounded all-none"
                   value={countryName}
@@ -219,6 +220,7 @@ function AddCountryPopups(props) {
               <textarea
                 name="payment_details"
                 type="text"
+                id="payment_details"
                 placeholder="Type Here....."
                 value={paymentDetails}
                 onChange={(e) => setPaymentDetails(e.target.value)}

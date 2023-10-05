@@ -62,6 +62,7 @@ function AddPolicyPopup(props) {
       console.error("API Error:", err);
     }
   };
+
   return (
     <div className="modal fade bd-example-modal-lg container mt-5">
       <Modal
@@ -85,6 +86,7 @@ function AddPolicyPopup(props) {
                   type="text"
                   name="country_name"
                   placeholder="Enter"
+                  id="country_name"
                   className="w-100 custom-select small-font login-inputs input-btn-bg px-2 py-3 all-none rounded all-none"
                   value={countryName}
                   onChange={(e) => setCountryName(e.target.value)}
@@ -124,6 +126,7 @@ function AddPolicyPopup(props) {
               <textarea
                 type="text"
                 placeholder="Type Here....."
+                id="payment_details"
                 className="w-100 custom-select small-font login-inputs input-btn-bg rounded h15vh"
                 name="policy_description"
                 value={policyDetails}

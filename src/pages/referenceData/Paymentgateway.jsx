@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import Table from "../table/Table";
 import { MdOutlineEdit } from "react-icons/md";
-import { useEffect, useState } from "react";
+import { useEffect} from "react";
 import { GET_ALL_PAYMENTS } from "../../config/endpoints";
 import { call } from "../../config/axios";
 import AddCountryPopups from "../Popups/AddCountryPopups";
