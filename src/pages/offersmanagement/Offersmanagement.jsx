@@ -208,7 +208,7 @@ function Offersmanagement() {
       <div className="sidebar-bg rounded">
         <div className="d-flex align-items-center justify-content-between">
           <div className=" d-flex justify-content-between">
-            {offerDetails.map((offer, index) => (
+            {offerDetails?.map((offer, index) => (
               <div
                 key={index}
                 className={`col-md-auto medium-font justify-content-between p-2 px-4 m-1 ${

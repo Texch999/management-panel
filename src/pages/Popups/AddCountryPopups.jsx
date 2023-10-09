@@ -36,7 +36,7 @@ function AddCountryPopups(props) {
     setData(null);
     // setData(null);
 
-    setCountryName("");
+        setCountryName("");
         setCurrencyName("");
         setPaymentGateway("Select");
         setPaymentDetails("");
@@ -129,6 +129,7 @@ function AddCountryPopups(props) {
         }
 
         const paymentRes = await call(paymentUrl, paymentData);
+        
         getData()
         // if (paymentRes.data.error) {
         //   console.error("Payment API Error:", paymentRes.data.message);
@@ -178,7 +179,6 @@ function AddCountryPopups(props) {
                 <input
                   id="country_name"
                   type="text"
-                  name="country_name"
                   placeholder="Enter"
                   className="w-100 custom-select small-font login-inputs input-btn-bg px-2 py-3 all-none rounded all-none"
                   value={countryName}

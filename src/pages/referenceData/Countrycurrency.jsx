@@ -93,7 +93,7 @@ function Countrycurrency() {
             item?.status === "active" ? (
               <div className="font-green custom-active-button px-2">Active</div>
             ) : (
-              <div className="custom-deactive-butto px-2n">InActive</div>
+              <div className="custom-deactive-button px-2">InActive</div>
             ),
           icon: (
             <MdOutlineEdit

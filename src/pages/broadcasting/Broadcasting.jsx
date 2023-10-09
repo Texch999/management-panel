@@ -1,35 +1,93 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Table from "../table/Table";
-//import { AiOutlineEye } from "react-icons/ai";
+import { AiOutlineEye } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
-import { GET_BROADCASTING_EVENT } from "../../config/endpoints";
+import { useEffect, useState } from "react";
+import { GET_BROADCAST_EVENTS } from "../../config/endpoints";
 import { call } from "../../config/axios";
 
 function Broadcasting() {
+  const [allbroadcasts, setAllBroadcasts] = useState([]);
+  const [filteredBroadcasts, setFilteredBroadcasts] = useState([]);
+  const [searchText,setSearchText]=useState("");
+
+  // const BROADCASTING_DETAILS = [
+  //   {
+  //     title:
+  //       "16 Free Premiere Pro Title Templates Perfect for Any Video | Motion Array",
+  //     publishdate: "14/08/2023 15:37:00 PM",
+  //     publishwebsite: "www.texch.com www.we2call.com www.ravanna.com",
+  //     dateandtime: 1692966757289,
+  //     type: "Global",
+  //     status: "Active",
+  //     icon: <AiOutlineEye className="eye-icon-size" />,
+  //   },
+  //   {
+  //     title:
+  //       "16 Free Premiere Pro Title Templates Perfect for Any Video | Motion Array",
+  //     publishdate: "14/08/2023 15:37:00 PM",
+  //     publishwebsite: "www.texch.com www.we2call.com www.ravanna.com",
+  //     dateandtime: 1692966757289,
+  //     type: "India",
+  //     status: "Active",
+  //     icon: <AiOutlineEye className="eye-icon-size" />,
+  //   },
+  //   {
+  //     title:
+  //       "16 Free Premiere Pro Title Templates Perfect for Any Video | Motion Array",
+  //     publishdate: "14/08/2023 15:37:00 PM",
+  //     publishwebsite: "www.texch.com www.we2call.com www.ravanna.com",
+  //     dateandtime: 1692966757289,
+  //     type: "USA",
+  //     status: "In-active",
+  //     icon: <AiOutlineEye className="eye-icon-size" />,
+  //   },
+  //   {
+  //     title:
+  //       "16 Free Premiere Pro Title Templates Perfect for Any Video | Motion Array",
+  //     publishdate: "14/08/2023 15:37:00 PM",
+  //     publishwebsite: "www.texch.com www.we2call.com www.ravanna.com",
+  //     dateandtime: 1692966757289,
+  //     type: "Global",
+  //     status: "Active",
+  //     icon: <AiOutlineEye className="eye-icon-size" />,
+  //   },
+  //   {
+  //     title:
+  //       "16 Free Premiere Pro Title Templates Perfect for Any Video | Motion Array",
+  //     publishdate: "14/08/2023 15:37:00 PM",
+  //     publishwebsite: "www.texch.com www.we2call.com www.ravanna.com",
+  //     dateandtime: 1692966757289,
+  //     type: "Global",
+  //     status: "Active",
+  //     icon: <AiOutlineEye className="eye-icon-size" />,
+  //   },
+  // ];
+
   const cols = [
     {
       header: "TITLE",
-      field: "event_name",
+      field: "title",
     },
     {
       header: "PUBLISH DATE",
-      field: "publish_date",
+      field: "publishdate",
     },
     {
       header: "PUBLISH WEBSITE",
-      field: "website_name",
+      field: "publishwebsite",
     },
     {
       header: "UTC TIME STAMP",
-      field: "create_at",
+      field: "dateandtime",
     },
     {
       header: "TYPE",
-      field: "event_location",
+      field: "type",
     },
     {
       header: "STATUS",
-      field: "is_active",
+      field: "status",
       clr: true,
     },
     {
@@ -52,24 +110,24 @@ function Broadcasting() {
     const payload = {
       register_id: "reg-20230710182031623",
     };
-    await call(GET_BROADCASTING_EVENT, payload)
+    await call(GET_BROADCAST_EVENTS,payload)
       .then((res) => {
-        console.log("response=====>", res);
-        setGetBroadcasting(res?.data?.data);
+        console.log("response====>", res);
+        setAllBroadcasts(res?.data?.data);
       })
+
       .catch((err) => console.log(err));
   };
+  console.log("allbroadcasts===>", allbroadcasts);
   useEffect(() => {
-    getBroadcastingEvent();
+    getAllBroadcastEvents();
   }, []);
 
-  console.log("getBroadcasting", getBroadcasting);
-
-  const modifiedBroadcastingDetails = getBroadcasting.map((item) => ({
+  const modifiedBroadcastingDetails = allbroadcasts.map((item) => ({
     ...item,
     title: (
       <div className="role-color">
-        <span className="role-color">{item?.field}</span>{" "}
+        <span className="role-color">{item?.event_name}</span>{" "}
       </div>
     ),
     publishdate: (

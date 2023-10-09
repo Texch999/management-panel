@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { ADD_OFFERS } from "../../config/endpoints";
 import { call } from "../../config/axios";
 import { Navigate, useNavigate } from "react-router-dom";
+import { GrEdit } from "react-icons/gr";
 
 function DraftTable() {
   const [allOffers, setAllOffers] = useState([]);
@@ -106,10 +107,10 @@ function DraftTable() {
                 )}
               </span>
             ),
-            icon: <AiOutlineEye className="eye-icon-size" />,
+            icon: <GrEdit className="eye-icon-size" />,
           };
         })
-    : allOffers.map((item) => {
+    : allOffers?.map((item) => {
         return {
           title: (
             <div className="role-color">
@@ -134,7 +135,7 @@ function DraftTable() {
               )}
             </span>
           ),
-          icon: <AiOutlineEye className="eye-icon-size" />,
+          icon: <GrEdit className="eye-icon-size" />,
         };
       });
   console.log(modifiedOffersmanagementDetails, ",,,,,,live");

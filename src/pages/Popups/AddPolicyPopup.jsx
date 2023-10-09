@@ -63,10 +63,6 @@ function AddPolicyPopup(props) {
     }
   };
 
-  const handleChange = (e) => {
-    setAddPolicyData({ ...addPolicyData, [e.target.name]: e.target.value });
-  };
-  console.log(addPolicyData, "........dadad");
   return (
     <div className="modal fade bd-example-modal-lg container mt-5">
       <Modal

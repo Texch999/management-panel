@@ -45,7 +45,7 @@ function Sidebar() {
       reactIcon: <HiOutlineUserAdd />,
     },
     {
-      title: "Add TT/Ads",
+      title: "Add Team",
       path: "/addtt",
       reactIcon: <LiaAdSolid />,
     },

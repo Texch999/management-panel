@@ -3,6 +3,7 @@ import Table from "../table/Table";
 import AddPolicyPopup from "../Popups/AddPolicyPopup";
 import { GET_ALL_POLICY_DOCUMENTS } from "../../config/endpoints";
 import { call } from "../../config/axios";
+import { MdOutlineEdit } from "react-icons/md";
 
 function PolicyDocument() {
   // const POLICYDOCUMENT_DETAILS = [
@@ -37,20 +38,52 @@ function PolicyDocument() {
   //     icon: <MdOutlineEdit className="eye-icon-size" />,
   //   },
   // ];
+  const [addPolicyOpen, setAddPolicyOpen] = useState(false);
+  const [allPolicyDocuments, setAllPolicyDocuments] = useState([]);
+  const [filteredQuestions, setFilteredQuestions] = useState([]);
+  const [searchText, setSearchText] = useState("");
+  const [status, setStatus] = useState(false);
+  const [selectedPolicy, setSelectedPolicy] = useState();
+
+  const handlePolicyOpen = () => {
+    setAddPolicyOpen(true);
+  };
+  const searchContent = (value) => {
+    setSearchText(value);
+    const filteredSearchText = allPolicyDocuments.filter((res) =>
+      res?.country_name.toLowerCase().includes(searchText.toLowerCase())
+    );
+    setFilteredQuestions(filteredSearchText);
+  };
+  const getallPolicyDocuments = async () => {
+    const payload = {
+      register_id: "reg-20230710182031623",
+    };
+    await call(GET_ALL_POLICY_DOCUMENTS, payload)
+      .then((res) => {
+        console.log("response====>", res);
+        setAllPolicyDocuments(res?.data?.data);
+      })
+      .catch((err) => console.log(err));
+  };
+
+  useEffect(() => {
+    getallPolicyDocuments();
+  }, [status]);
   const cols = [
     {
       header: "COUNTRY NAME",
-      field: "country_name",
+      field: "countryname",
     },
 
     {
       header: "SHOW WEBSITES",
-      field: "website_name",
+      field: "showwebsites",
     },
 
     {
       header: "STATUS",
-      field: "is_active",
+      field: "status",
       clr: true,
     },
     {
@@ -59,72 +92,44 @@ function PolicyDocument() {
     },
   ];
 
-  const [addPolicyOpen, setAddPolicyOpen] = useState(false);
-  const [allPolicyDocuments, setAllPolicyDocuments] = useState([]);
-  const [filteredQuestions, setFilteredQuestions] = useState([]);
-  const [searchText,setSearchText]=useState("");
-  const [status, setStatus] = useState(false);
-  const [selectedPolicy, setSelectedPolicy] = useState();
-  
-  const handlePolicyOpen = () => {
-    setAddPolicyOpen(true);
-  };
-const searchContent =(value) =>{
-    setSearchText(value)
-    const filteredSearchText= allPolicyDocuments.filter((res)=>
-      res?.country_name.toLowerCase().includes(searchText.toLowerCase())
-    )
-    setFilteredQuestions(filteredSearchText)
-}
-  const getallPolicyDocuments = async () => {
-    const payload = {
-      register_id: "reg-20230710182031623",
-    };
-    await call(GET_ALL_POLICY_DOCUMENTS,payload)
-      .then((res) => {
-        console.log("response====>", res);
-        setAllPolicyDocuments(res?.data?.data);
-      })
-      .catch((err) => console.log(err));
-  };
-  
-  useEffect(() => {
-    getallPolicyDocuments();
-  },[status]);
   const modifiedPolicydocumentDetails = searchText.length
-  ? filteredQuestions
-      .filter((item) =>
-        item?.country_name.toLowerCase().includes(searchText.toLowerCase())
-      )
-      .map((item) => {
+    ? filteredQuestions
+        .filter((item) =>
+          item?.country_name.toLowerCase().includes(searchText.toLowerCase())
+        )
+        .map((item) => {
+          return {
+            countryname: <div className="role-color">{item?.country_name}</div>,
+            showwebsites: item?.website_name,
+            status:
+              item?.is_active === 1 ? (
+                <div className="font-green">Active</div>
+              ) : (
+                <div className="custom-deactive-button px-2">InActive</div>
+              ),
+            icon: <MdOutlineEdit className="eye-icon-size" />,
+          };
+        })
+    : allPolicyDocuments.map((item) => {
         return {
           countryname: <div className="role-color">{item?.country_name}</div>,
-          showwebsites:item?.website_name,
+          showwebsites: item?.website_name,
           status:
             item?.is_active === 1 ? (
-              <div className="font-green">Active</div>
+              <div className="custom-active-button px-2">Active</div>
             ) : (
               <div className="custom-deactive-button px-2">InActive</div>
             ),
-          icon: <MdOutlineEdit className="eye-icon-size" />,
-        };
-      })
-  : allPolicyDocuments
-      .map((item) => {
-        return {
-          countryname: <div className="role-color">{item?.country_name}</div>,
-          showwebsites:item?.website_name,
-          status:
-            item?.is_active === 1 ? (
-              <div className="font-green">Active</div>
-            ) : (
-              <div className="custom-deactive-button px-2">InActive</div>
-            ),
-          icon: <MdOutlineEdit className="eye-icon-size"  onClick={() => {
-            console.log("testetestste");
-            setSelectedPolicy(item);
-            handlePolicyOpen();
-          }}/>,
+          icon: (
+            <MdOutlineEdit
+              className="eye-icon-size"
+              onClick={() => {
+                console.log("testetestste");
+                setSelectedPolicy(item);
+                handlePolicyOpen();
+              }}
+            />
+          ),
         };
       });
   return (
@@ -143,8 +148,8 @@ const searchContent =(value) =>{
                   type="search"
                   placeholder="Search"
                   aria-label="Search"
-                  value={searchText} 
-                  onChange={(e)=> searchContent(e.target.value)}
+                  value={searchText}
+                  onChange={(e) => searchContent(e.target.value)}
                 />
               </form>
             </div>

@@ -28,6 +28,7 @@ import MyStatement from "./pages/reports/MyStatement";
 import Statement from "./pages/statement/Statement";
 import ToursManagement from "./pages/tours-tournaments/ToursManagement";
 import NotificationTextMsg from "./pages/broadcasting/NotificationTextMsg";
+import CreateNewOffers from "./pages/offersmanagement/CreateNewOffers";
 import Chats from "./pages/chat/Chats";
 function App() {
   return (
@@ -39,7 +40,7 @@ function App() {
         <div className="w-100 home-bg vh-100">
           {/*  */}
           <div className="w-100 homepage-div mt-8vh">
-          <Header />
+            <Header />
             <Routes>
               <Route path="/" element={<Homepage />}></Route>
               <Route path="/addwebsites" element={<Addwebsites />}></Route>
@@ -91,6 +92,8 @@ function App() {
               ></Route>
               <Route path="/statement" element={<Statement />} />
               <Route path="/tours-tournaments" element={<ToursManagement />} />
+              <Route path="/create-new-offer" element={<CreateNewOffers />} />
+
               <Route path="/support-chat" element={<Chats />} />
             </Routes>
           </div>
