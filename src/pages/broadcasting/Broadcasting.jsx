@@ -37,6 +37,15 @@ function Broadcasting() {
       field: "icon",
     },
   ];
+  const getAllBroadcastEvents = async () => {
+    const payload = {
+      register_id: "reg-20230710182031623",
+    };
+    await call(GET_BROADCAST_EVENTS,payload)
+      .then((res) => {
+        console.log("response====>", res);
+        setAllBroadcasts(res?.data?.data);
+      })
 
   const [getBroadcasting, setGetBroadcasting] = useState([]);
   const getBroadcastingEvent = async () => {
@@ -63,7 +72,24 @@ function Broadcasting() {
         <span className="role-color">{item?.field}</span>{" "}
       </div>
     ),
+    publishdate: (
+      <div>
+        <span>{item?.event_date}</span>
+        <br />
+        <span>{item?.start_time}</span>
+      </div>
+    ),
+    publishwebsite: <span>{item?.website_name}</span>,
+    dateandtime: <span>{item?.create_at}</span>,
+    type: <span>{item?.event_type}</span>,
+    status: (
+      <span>
+        {item?.event_status === 1 ? <div>active</div> : <div>inactive</div>}
+      </span>
+    ),
+    icon: <AiOutlineEye className="eye-icon-size" />,
   }));
+  
   const navigate = useNavigate();
   return (
     <div className="p-4 w-100">
@@ -116,6 +142,7 @@ function Broadcasting() {
       </div>
     </div>
   );
+}
 }
 
 export default Broadcasting;

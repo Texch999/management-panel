@@ -1,22 +1,22 @@
+import { useState } from "react";
 import { MdOutlineEdit } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 function Table(props) {
   const { data, columns } = props;
-
   const getColor = (clr) => {
     switch (clr) {
       case "Shedule":
         return "pending-button w-fit-content p-1 px-2";
       case "In-active":
-        return "reject-button w-fit-content p-1 px-2";
+        return "custom-deactive-button w-fit-content p-1 px-2";
       case "Rejected":
-        return "reject-button w-fit-content p-1 px-2";
+        return "custom-deactive-button w-fit-content p-1 px-2";
       case "Pending":
         return "pending-button w-fit-content p-1 px-2";
       case "Select":
         return "select-button w-fit-content p-1 px-2";
       default:
-        return "new-button w-fit-content p-1 px-2";
+        return "w-fit-content p-1 px-2";
     }
   };
   const navigate = useNavigate();
@@ -53,15 +53,7 @@ function Table(props) {
                         }
                         onClick={() => handleClickTable(column.field)}
                       >
-                        {column.field === "icon" ? (
-                          <MdOutlineEdit className="eye-icon-size" />
-                        ) : item[column.field] === 1 ? (
-                          "active"
-                        ) : item[column.field] === 0 ? (
-                          "inactive"
-                        ) : (
-                          item[column.field]
-                        )}
+                        <td>{item[column.field]}</td>
                       </div>
                     </div>
                   </td>

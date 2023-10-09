@@ -2,44 +2,28 @@ import React from "react";
 import Table from "../table/Table";
 import { MdOutlineEdit } from "react-icons/md";
 import AddReasonPopup from "../Popups/AddReasonPopup";
-import { useEffect,useState} from "react";
+import { useEffect, useState } from "react";
 import { GET_ALL_SECURITY_QUESTIONS } from "../../config/endpoints";
 import { call } from "../../config/axios";
 
 function Rejectionreason() {
   const [allQuestions, setAllQuestions] = useState([]);
-  const REJECTIONREASON_DETAILS = [
-    {
-      reason: "Insufficient Balance",
-      description: "Not enough balance in Users account",
-      status: "Active",
-      icon: <MdOutlineEdit className="eye-icon-size" />,
-    },
-    {
-      reason: "Insufficient Balance",
-      description: "Not enough balance in Users account",
-      status: "Active",
-      icon: <MdOutlineEdit className="eye-icon-size" />,
-    },
-    {
-      reason: "Insufficient Balance",
-      description: "Not enough balance in Users account",
-      status: "Active",
-      icon: <MdOutlineEdit className="eye-icon-size" />,
-    },
-    {
-      reason: "Insufficient Balance",
-      description: "Not enough balance in Users account",
-      status: "Active",
-      icon: <MdOutlineEdit className="eye-icon-size" />,
-    },
-    {
-      reason: "Insufficient Balance",
-      description: "Not enough balance in Users account",
-      status: "Active",
-      icon: <MdOutlineEdit className="eye-icon-size" />,
-    },
-  ];
+  const [selectedQuestion, setSelectedQuestion] = useState([]);
+  const [filteredQuestions, setFilteredQuestions] = useState([]);
+  const [selectedOption, setSelectedOption] = useState("Active");
+  const [searchText, setSearchText] = useState("");
+  const [status, setStatus] = useState(false);
+  const handleSelectChange = (event) => {
+    const selectedValue = event.target.value;
+    setSelectedOption(selectedValue);
+  };
+  const searchContent = (value) => {
+    setSearchText(value);
+    const filteredSearchText = allQuestions.filter((res) =>
+      res?.reason?.toLowerCase().includes(searchText.toLowerCase())
+    );
+    setFilteredQuestions(filteredSearchText);
+  };
 
   const cols = [
     {
@@ -53,8 +37,7 @@ function Rejectionreason() {
 
     {
       header: "STATUS",
-      field: "is_active",
-      clr: true,
+      field: "status",
     },
     {
       header: "Action",
@@ -62,29 +45,78 @@ function Rejectionreason() {
     },
   ];
   const getAllRejectQuestions = async () => {
-  
-    await call(GET_ALL_SECURITY_QUESTIONS)
+    const payload = {
+      register_id: "reg-20230710182031623",
+    };
+    await call(GET_ALL_SECURITY_QUESTIONS, payload)
       .then((res) => {
-        console.log("response====>",res)
-        setAllQuestions(res?.data?.data?.securityQuestions);
-      })
+         const responseArray=res?.data?.data?.securityQuestions
+         setAllQuestions(responseArray.length>0?responseArray.filter((item)=>item.reason!==""):[] )
 
+      })
       .catch((err) => console.log(err));
   };
   useEffect(() => {
     getAllRejectQuestions();
-  }, []);
+  }, [status]);
 
-  const modifiedRejectionreasonDetails = allQuestions.map(
-    (item) => ({
-      ...item,
-      reason: (
-        <div className="role-color">
-          <span className="role-color">{item?.question}</span>{" "}
-        </div>
-      ),
-    })
-  );
+  const modifiedRejectionreasonDetails = searchText.length
+    ? filteredQuestions
+        .filter((item) =>
+          selectedOption === "Active"
+            ? item?.is_active === 1
+            : item?.is_active === 0
+        )
+        .filter((item) =>
+          item?.reason?.toLowerCase().includes(searchText.toLowerCase())
+        )
+        .map((item) => {
+             if(item.reason!==""){
+              return {
+                reason: <div className="role-color">{item?.reason}</div>,
+                description: item?.description,
+                status:
+                  item?.is_active === 1 ? (
+                    <div className="font-green custom-active-button px-2">
+                    Active
+                  </div>
+                  ) : (
+                    <div className="custom-deactive-button px-2">InActive</div>
+                  ),
+                icon: <MdOutlineEdit className="eye-icon-size" />,
+              };
+                }
+         
+        })
+    : allQuestions
+        .filter((item) =>
+          selectedOption === "Active"
+            ? item?.is_active === 1
+            : item?.is_active === 0
+        )
+        .map((item) => {
+          return {
+            reason: <div className="role-color">{item?.reason}</div>,
+            description: item?.description,
+            status:
+              item?.is_active === 1 ? (
+                <div className="font-green custom-active-button px-2">Active</div>
+              ) : (
+                <div className="custom-deactive-button px-2">InActive</div>
+              ),
+            icon: (
+              <MdOutlineEdit
+                className="eye-icon-size"
+                onClick={() => {
+                  console.log("testetestste");
+                  setSelectedQuestion(item);
+                  handleRejectionPopupOpen();
+                }}
+              />
+            ),
+          };
+        });
+
   const [rejectPopupOpen, SetRejectpopupOpen] = useState(false);
   const handleRejectionPopupOpen = () => {
     SetRejectpopupOpen(true);
@@ -101,6 +133,8 @@ function Rejectionreason() {
                 type="search"
                 placeholder="Search"
                 aria-label="Search"
+                value={searchText}
+                onChange={(e) => searchContent(e.target.value)}
               />
             </form>
           </div>
@@ -124,6 +158,8 @@ function Rejectionreason() {
             <select
               className="form-select-option w-100 rounded p-2 px-3 m-1 mx-2 medium-font th-color"
               aria-label="Default select example"
+              value={selectedOption}
+              onChange={handleSelectChange}
             >
               <option selected>Active</option>
               <option value="1">In-active</option>
@@ -136,9 +172,12 @@ function Rejectionreason() {
       <AddReasonPopup
         rejectPopupOpen={rejectPopupOpen}
         SetRejectpopupOpen={SetRejectpopupOpen}
-        Heading="Add Reason"
+        Heading={`${selectedQuestion ? "Update Reason" : " Reason"} `}
         firstSelect="Reason"
         firstTextarea="Description"
+        setStatus={setStatus}
+        selectedQuestion={selectedQuestion}
+        setSelectedQuestion={setSelectedQuestion}
       />
     </div>
   );

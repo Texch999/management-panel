@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState,useEffect } from "react";
 import Table from "../table/Table";
 import AddPolicyPopup from "../Popups/AddPolicyPopup";
-import { GET_POLICY_DOCUMENT } from "../../config/endpoints";
+import { GET_ALL_POLICY_DOCUMENTS } from "../../config/endpoints";
 import { call } from "../../config/axios";
 
 function PolicyDocument() {
@@ -60,38 +60,73 @@ function PolicyDocument() {
   ];
 
   const [addPolicyOpen, setAddPolicyOpen] = useState(false);
+  const [allPolicyDocuments, setAllPolicyDocuments] = useState([]);
+  const [filteredQuestions, setFilteredQuestions] = useState([]);
+  const [searchText,setSearchText]=useState("");
+  const [status, setStatus] = useState(false);
+  const [selectedPolicy, setSelectedPolicy] = useState();
+  
   const handlePolicyOpen = () => {
     setAddPolicyOpen(true);
   };
-
-  const [getPolicy, setgetpolicy] = useState([]);
-  const getPolicyDocument = async () => {
+const searchContent =(value) =>{
+    setSearchText(value)
+    const filteredSearchText= allPolicyDocuments.filter((res)=>
+      res?.country_name.toLowerCase().includes(searchText.toLowerCase())
+    )
+    setFilteredQuestions(filteredSearchText)
+}
+  const getallPolicyDocuments = async () => {
     const payload = {
       register_id: "reg-20230710182031623",
     };
-    await call(GET_POLICY_DOCUMENT, payload)
+    await call(GET_ALL_POLICY_DOCUMENTS,payload)
       .then((res) => {
-        console.log("response==========>", res);
-        setgetpolicy(res?.data?.data);
+        console.log("response====>", res);
+        setAllPolicyDocuments(res?.data?.data);
       })
       .catch((err) => console.log(err));
   };
-
-  const modifiedPolicydocumentDetails = getPolicy.map((item) => ({
-    ...item,
-    countryname: (
-      <div className="role-color">
-        <span className="role-color">{item?.field}</span>{" "}
-      </div>
-    ),
-  }));
-
+  
   useEffect(() => {
-    getPolicyDocument();
-  }, []);
-
-  console.log("getPolicy", getPolicy);
-
+    getallPolicyDocuments();
+  },[status]);
+  const modifiedPolicydocumentDetails = searchText.length
+  ? filteredQuestions
+      .filter((item) =>
+        item?.country_name.toLowerCase().includes(searchText.toLowerCase())
+      )
+      .map((item) => {
+        return {
+          countryname: <div className="role-color">{item?.country_name}</div>,
+          showwebsites:item?.website_name,
+          status:
+            item?.is_active === 1 ? (
+              <div className="font-green">Active</div>
+            ) : (
+              <div className="custom-deactive-button px-2">InActive</div>
+            ),
+          icon: <MdOutlineEdit className="eye-icon-size" />,
+        };
+      })
+  : allPolicyDocuments
+      .map((item) => {
+        return {
+          countryname: <div className="role-color">{item?.country_name}</div>,
+          showwebsites:item?.website_name,
+          status:
+            item?.is_active === 1 ? (
+              <div className="font-green">Active</div>
+            ) : (
+              <div className="custom-deactive-button px-2">InActive</div>
+            ),
+          icon: <MdOutlineEdit className="eye-icon-size"  onClick={() => {
+            console.log("testetestste");
+            setSelectedPolicy(item);
+            handlePolicyOpen();
+          }}/>,
+        };
+      });
   return (
     <div className="p-4 w-100">
       <h6 className="h6 font-grey">Policy Document</h6>
@@ -108,6 +143,8 @@ function PolicyDocument() {
                   type="search"
                   placeholder="Search"
                   aria-label="Search"
+                  value={searchText} 
+                  onChange={(e)=> searchContent(e.target.value)}
                 />
               </form>
             </div>
@@ -128,6 +165,9 @@ function PolicyDocument() {
       <AddPolicyPopup
         addPolicyOpen={addPolicyOpen}
         setAddPolicyOpen={setAddPolicyOpen}
+        setStatus={setStatus}
+        selectedPolicy={selectedPolicy}
+        setSelectedPolicy={setSelectedPolicy}
       />
     </div>
   );

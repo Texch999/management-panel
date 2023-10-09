@@ -1,16 +1,66 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import MatchSubmitPopup from "../../matchpopups/MatchSubmitPopup";
 import { Col, Container, Dropdown, Modal, Row } from "react-bootstrap";
+import { ADD_POLICY,UPDATE_POLICY} from "../../config/endpoints"; 
+import { call } from "../../config/axios";
 function AddPolicyPopup(props) {
-  const { addPolicyOpen, setAddPolicyOpen } = props;
+  const { addPolicyOpen, setAddPolicyOpen,setStatus,setSelectedPolicy,selectedPolicy } = props;
   const [acceptClick, setAcceptClick] = useState(false);
-  const [addPolicyData, setAddPolicyData] = useState({});
-  const handleAcceptClickPopupOpen = () => {
-    setAcceptClick(true);
+  const [countryName, setCountryName] = useState("");
+  const [website, setWebsite] = useState("");
+  const [policyDetails, setPolicyDetails] = useState("");
+  const [active, setActive] = useState("Select");
+ 
+  const handleAddPolicyClose = () => {  
     setAddPolicyOpen(false);
+    setSelectedPolicy(null)
+    setCountryName("");
+    setPolicyDetails("");
+    setWebsite("Select");
+    setActive("Select");
   };
-  const handleAddPolicyClose = () => {
-    setAddPolicyOpen(false);
+  useEffect(() => {
+    if (selectedPolicy) {
+      setCountryName(selectedPolicy.country_name || "");
+      setPolicyDetails(selectedPolicy.policy_description || "");
+      setWebsite(selectedPolicy.website_name || "Select");
+      setActive(selectedPolicy.active || "Select");
+    } else {
+    }
+  }, [selectedPolicy]);
+  const handleCreateOrUpdatePolicy = async () => {
+    try {
+      const url = selectedPolicy ? UPDATE_POLICY : ADD_POLICY;
+      const requestData = {
+        register_id: "reg-20230710182031623",
+        country_name: countryName,
+        policy_description: policyDetails,
+        website_name: website,
+        active: active,
+      };
+
+      if (selectedPolicy) {
+        requestData.policy_id = selectedPolicy.policy_id;
+        requestData.p_id = selectedPolicy.p_id;
+      }
+
+      const res = await call(url, requestData);
+
+      if (res.data.error) {
+        console.error("API Error:", res.data.message);
+      } else {
+        setAcceptClick(true);
+        setAddPolicyOpen(false);
+        handleAddPolicyClose()
+        setStatus((prev) => !prev);
+        setCountryName("");
+        setPolicyDetails("");
+        setWebsite("Select");
+        setActive("Select");
+      }
+    } catch (err) {
+      console.error("API Error:", err);
+    }
   };
 
   const handleChange = (e) => {
@@ -38,53 +88,53 @@ function AddPolicyPopup(props) {
                 <div className="small-font my-1">Country Name *</div>
                 <input
                   type="text"
-                  placeholder="Enter"
                   name="country_name"
+                  placeholder="Enter"
                   id="country_name"
-                  value={addPolicyData[addPolicyData?.country_name || ""]}
-                  onChange={(e) => handleChange(e)}
                   className="w-100 custom-select small-font login-inputs input-btn-bg px-2 py-3 all-none rounded all-none"
+                  value={countryName}
+                  onChange={(e) => setCountryName(e.target.value)}
                 ></input>
               </Col>
               <Col className="pe-0">
                 <div className="small-font my-1">Show Website *</div>
-                <select className="w-100 custom-select small-font input-btn-bg px-2 py-3 all-none rounded all-none">
-                  <option selected>Select</option>
-                  <option>Phone Pe</option>
-                  <option>NEFT/RTGS</option>
-                  <option>UPI</option>
-                  <option>Paytm</option>
+                <select
+                  value={website}
+                  name="website_name"
+                  onChange={(e) => setWebsite(e.target.value)}
+                  className="w-100 custom-select small-font input-btn-bg px-2 py-3 all-none rounded all-none">
+                  <option value="Select">Select</option>
+                  <option>www.texch.com</option>
+                  <option>www.we2call.com</option>
+                  <option>www.ravana.com</option>
+                  <option>www.brahama.com</option>
                 </select>
               </Col>
               <Col className="pe-0">
                 <div className="small-font my-1">In Active *</div>
-                <select
-                  className="w-100 custom-select small-font input-btn-bg px-2 py-3 all-none rounded all-none"
-                  onChange={(e) => handleChange(e)}
-                  name="payment_type"
-                >
-                  {/* <option selected value="">
-                    Select
-                  </option> */}
-                  <option value="phonepay">Phone Pe</option>
-                  <option value="rtgs">NEFT/RTGS</option>
-                  <option value="upi">UPI</option>
-                  <option value="paytm">Paytm</option>
+                <select 
+                  name="active"
+                  value={active}
+                  onChange={(e) => setActive(e.target.value)}
+                   className="w-100 custom-select small-font input-btn-bg px-2 py-3 all-none rounded all-none">
+                  <option selected>Select</option>
+                  <option>Yes</option>
+                  <option>No</option>
                 </select>
               </Col>
             </Row>
           </Container>
           <Container fluid className="my-2">
             <Row>
-              <div className="small-font my-1">Payment Details *</div>
+              <div className="small-font my-1">Policy Details *</div>
               <textarea
                 type="text"
                 placeholder="Type Here....."
-                name="payment_details"
                 id="payment_details"
-                value={addPolicyData[addPolicyData?.payment_details || ""]}
-                onChange={(e) => handleChange(e)}
                 className="w-100 custom-select small-font login-inputs input-btn-bg rounded h15vh"
+                name="policy_description"
+                value={policyDetails}
+                onChange={(e) => setPolicyDetails(e.target.value)}
               ></textarea>
             </Row>
           </Container>
@@ -94,9 +144,9 @@ function AddPolicyPopup(props) {
                 <button
                   type="submit"
                   className="add-button  small-font rounded px-4 py-3 my-3 w-50 all-none"
-                  onClick={() => handleAcceptClickPopupOpen()}
+                  onClick={handleCreateOrUpdatePolicy}
                 >
-                  Create
+                   {selectedPolicy ? "Update" : "Create"}
                 </button>
               </Col>
             </Row>
@@ -107,6 +157,7 @@ function AddPolicyPopup(props) {
         header={"Ticket Upgraded Successfully"}
         state={acceptClick}
         setState={setAcceptClick}
+        setStatus={setStatus}
       />
     </div>
   );
