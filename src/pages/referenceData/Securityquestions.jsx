@@ -5,6 +5,7 @@ import AddReasonPopup from "../Popups/AddReasonPopup";
 import { useEffect, useState } from "react";
 import { GET_ALL_SECURITY_QUESTIONS } from "../../config/endpoints";
 import { call } from "../../config/axios";
+import { MdOutlineEdit } from "react-icons/md";
 
 function Securityquestions() {
   const [allQuestions, setAllQuestions] = useState([]);
@@ -46,9 +47,12 @@ function Securityquestions() {
     };
     await call(GET_ALL_SECURITY_QUESTIONS, payload)
       .then((res) => {
-        const responseArray=res?.data?.data?.securityQuestions
-         setAllQuestions(responseArray.length>0?responseArray.filter((item)=>item.question!==""):[] )
-
+        const responseArray = res?.data?.data?.securityQuestions;
+        setAllQuestions(
+          responseArray.length > 0
+            ? responseArray.filter((item) => item.question !== "")
+            : []
+        );
       })
       .catch((err) => console.log(err));
   };

@@ -30,7 +30,7 @@ function Table(props) {
       <table className="tickets-table table table-borderless">
         <thead className="th-color small-font text-center">
           <tr className="small-font th-color text-center">
-            {columns.map((column, index) => (
+            {columns?.map((column, index) => (
               <th key={index} className="text-center small-font th-color">
                 {column.header}
               </th>
@@ -38,7 +38,7 @@ function Table(props) {
           </tr>
         </thead>
         <tbody className="td-color">
-          {data.map((item, rowIndex) => (
+          {data?.map((item, rowIndex) => (
             <tr key={rowIndex} className="small-font td-color text-center">
               {columns.map((column, colIndex) => {
                 return (
