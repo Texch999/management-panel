@@ -30,6 +30,7 @@ import ToursManagement from "./pages/tours-tournaments/ToursManagement";
 import NotificationTextMsg from "./pages/broadcasting/NotificationTextMsg";
 import CreateNewOffers from "./pages/offersmanagement/CreateNewOffers";
 import Chats from "./pages/chat/Chats";
+import AddNewOffer from "./pages/offersmanagement/AddNewOffer";
 function App() {
   return (
     <BrowserRouter>
@@ -93,6 +94,10 @@ function App() {
               <Route path="/statement" element={<Statement />} />
               <Route path="/tours-tournaments" element={<ToursManagement />} />
               <Route path="/create-new-offer" element={<CreateNewOffers />} />
+              <Route
+                path="/create-new-offer-management"
+                element={<AddNewOffer />}
+              />
 
               <Route path="/support-chat" element={<Chats />} />
             </Routes>

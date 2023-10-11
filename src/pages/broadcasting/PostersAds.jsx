@@ -6,23 +6,33 @@ import "react-datepicker/dist/react-datepicker.css";
 import { MdUpload } from "react-icons/md";
 import { call } from "../../config/axios";
 import { ADD_POSTERS_AND_ADS } from "../../config/endpoints";
+import { GET_ALL_WEBSITES } from "../../config/endpoints";
+import { GET_ALL_USERS } from "../../config/endpoints";
+import { GET_COUNTRY_AND_CURRENCY } from "../../config/endpoints";
+import { GENERATE_SIGNED_URL } from "../../config/endpoints";
 
 function PostersAds() {
+  const ImageBaseUrl = "https://we2-call-images.s3.us-east-2.amazonaws.com";
   const [notificationtextmsg, setnotificationtextmsg] = useState({});
-  console.log(notificationtextmsg, "res----------->");
+  const [posterId, setPosterId] = useState("");
+  const [singedUrl, setSignedUrl] = useState("");
+  const [uploadImage, setuploadImage] = useState([]);
+  const [profileImage, setProfileImage] = useState("");
+  const [error, setError] = useState("");
+  //console.log(notificationtextmsg, "res----------->");
 
-  const [selectedDate, setSelectedDate] = useState(null);
   const uploadfileInputRef = useRef(null);
 
   const handleUploadFileSelect = (e) => {
     const file = e.target.files[0];
-    console.log("selected file", file);
+    setProfileImage(file);
+    generateSignedUrl();
   };
   const handleUploadButtonClick = () => {
     uploadfileInputRef.current.click();
   };
-  const handelPostersAds = async () => {
-    console.log("click me ............");
+  const handelPostersAds = async (status) => {
+    console.log("click me............");
     if (
       !(
         notificationtextmsg?.website_name ||
@@ -32,10 +42,10 @@ function PostersAds() {
         notificationtextmsg?.description
       )
     ) {
-      return {
-        message: "missing required fields",
-      };
+      console.log("testing.........");
+      return setError("missing required fields");
     } else {
+      setError("");
       await call(ADD_POSTERS_AND_ADS, {
         register_id: "reg-20230710182031623",
         website_name: notificationtextmsg.website_name,
@@ -46,12 +56,48 @@ function PostersAds() {
         start_date: notificationtextmsg.start_date,
         end_date: notificationtextmsg.end_date,
         publish_date: notificationtextmsg.publish_date,
-        upload_image: notificationtextmsg.upload_image,
-      }).then((res) => {
+        upload_image: `${ImageBaseUrl}/${"posters-images"}/${posterId}.png`,
+        status,
+      }).then(async (res) => {
         setnotificationtextmsg(res?.data);
+        singedUrl &&
+          profileImage &&
+          (await fetch(singedUrl, {
+            method: "PUT",
+            body: profileImage,
+            headers: {
+              "Content-Type": "image/jpeg",
+              "cache-control": "public, max-age=0",
+            },
+          })
+            .then((res) => {})
+            .catch((err) => {
+              console.log("err: ", err);
+            }));
       });
     }
   };
+
+  const generateSignedUrl = async () => {
+    setuploadImage(true);
+    const posetNewId = new Date().getTime();
+    await call(GENERATE_SIGNED_URL, {
+      register_id: `${posetNewId}`,
+      event_type: "user_profile_image",
+      folder_name: "posters-images",
+    })
+      .then(async (res) => {
+        setuploadImage(false);
+        let url = res?.data?.data?.result?.signed_url;
+        setSignedUrl(url);
+        setPosterId(posetNewId);
+      })
+      .catch((err) => {
+        setuploadImage(false);
+        console.log("generating signed url error", err);
+      });
+  };
+
   useEffect(() => {
     setnotificationtextmsg();
   }, []);
@@ -63,6 +109,59 @@ function PostersAds() {
       [e.target.name]: e.target.value,
     });
   };
+
+  const [websiteNames, setwebsiteNames] = useState([]);
+  const getwebsiteNames = async () => {
+    const payload = {
+      register_id: "reg-20230710182031623",
+    };
+    await call(GET_ALL_WEBSITES, payload)
+      .then((res) => {
+        console.log("response=====>", res);
+        setwebsiteNames(res?.data?.data);
+      })
+      .catch((err) => console.log(err));
+  };
+
+  useEffect(() => {
+    getwebsiteNames();
+  }, []);
+
+  console.log("websiteNames", websiteNames);
+
+  const [allUsers, setgetallUsers] = useState([]);
+  const getallUsers = async () => {
+    const payload = {
+      register_id: "reg-20230913085731533",
+    };
+    await call(GET_ALL_USERS, payload)
+      .then((res) => {
+        console.log("response=====>", res);
+        setgetallUsers(res?.data?.data);
+      })
+      .catch((err) => console.log(err));
+  };
+  useEffect(() => {
+    getallUsers();
+  }, []);
+  console.log("allUsers", allUsers);
+
+  const [allCountries, setallCountries] = useState([]);
+  const getallCountries = async () => {
+    const payload = {
+      register_id: "reg-20230909114353315",
+    };
+    await call(GET_COUNTRY_AND_CURRENCY, payload)
+      .then((res) => {
+        console.log("res", res);
+        setallCountries(res?.data?.data);
+      })
+      .catch((err) => console.log(err));
+  };
+  useEffect(() => {
+    getallCountries();
+  }, []);
+  console.log("allCountries", allCountries);
 
   return (
     <div className="p-4">
@@ -82,12 +181,14 @@ function PostersAds() {
                       value={notificationtextmsg?.website_name || ""}
                       onChange={(e) => handelChange(e)}
                       className="w-100 custom-select small-font input-btn-bg px-2 py-3 all-none rounded all-none"
-                    >
-                      <option selected>Select</option>
-                      <option value="Demo">Demo</option>
-                      <option value="Demo">Demo</option>
-                      <option value="Demo">Demo</option>
-                      <option value="Demo">Demo</option>
+                    > 
+                      <option value = "select">select</option>
+                      <option value = "All">All</option>
+                      {websiteNames.map((obj) => (
+                        <option value={obj.web_id} selected>
+                          {obj.web_url}
+                        </option>
+                      ))}
                     </select>
                   </div>
                 </Col>
@@ -104,13 +205,14 @@ function PostersAds() {
                       value={notificationtextmsg?.user || ""}
                       onChange={(e) => handelChange(e)}
                       className="w-100 custom-select small-font input-btn-bg px-2 py-3 all-none rounded all-none"
-                    >
-                      {/* <option selected>Select</option> */}
-                      <option selected>superadmin</option>
-                      <option value="superadmin">superadmin</option>
-                      <option value="superadmin">superadmin</option>
-                      <option value="superadmin">superadmin</option>
-                      <option value="superadmin">superadmin</option>
+                    > 
+                      <option value = "select">select</option>
+                      <option value = "All">All</option>
+                      {allUsers.map((obj) => (
+                        <option value={obj.user_name} selected>
+                          {obj.user_name}
+                        </option>
+                      ))}
                     </select>
                   </div>
                 </Col>
@@ -126,12 +228,13 @@ function PostersAds() {
                       onChange={(e) => handelChange(e)}
                       className="w-100 custom-select small-font input-btn-bg px-2 py-3 all-none rounded all-none"
                     >
-                      {/* <option selected>Select</option> */}
-                      <option selected>Select</option>
-                      <option value="Demo">Demo</option>
-                      <option value="Demo">Demo</option>
-                      <option value="Demo">Demo</option>
-                      <option value="Demo">Demo</option>
+                      <option value = "select">select</option>
+                      <option value = "All">All</option>
+                      {allCountries.map((obj) => (
+                        <option value={obj.country_name} selected>
+                          {obj.country_name}
+                        </option>
+                      ))}
                     </select>
                   </div>
                 </Col>
@@ -166,6 +269,7 @@ function PostersAds() {
                   <div
                     className="w-100 custom-select small-font input-btn-bg p-3 my-2 all-none rounded all-none d-flex flex-row justify-content-between align-items-center"
                     onClick={handleUploadButtonClick}
+                    disabled={uploadImage}
                   >
                     <div className="small-font font-grey">
                       Upload Screenshot
@@ -270,12 +374,13 @@ function PostersAds() {
         <input type="checkbox" />
         <div className="medium-font mx-2 clr-grey">Publish Now</div>
       </div>
+      {error && <div className="danger">{error}</div>}
       <div className="row w-100 d-flex flex-row justify-content-between my-3">
         <div className="col-sm d-flex flex-row">
           <button
             type="submit"
             className="add-button  medium-font rounded px-3 py-3 mx-2  all-none "
-            onClick={() => handelPostersAds()}
+            onClick={() => handelPostersAds(true)}
           >
             Publish
           </button>
@@ -283,6 +388,7 @@ function PostersAds() {
           <button
             type="submit"
             className="msg-deactive-button  medium-font rounded  mx-2 all-none px-3 py-3"
+            onClick={() => handelPostersAds(false)}
           >
             Save As Draft
           </button>

@@ -1,19 +1,26 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import MatchSubmitPopup from "../../matchpopups/MatchSubmitPopup";
 import { Col, Container, Dropdown, Modal, Row } from "react-bootstrap";
-import { ADD_POLICY,UPDATE_POLICY} from "../../config/endpoints"; 
+import { ADD_POLICY, UPDATE_POLICY } from "../../config/endpoints";
 import { call } from "../../config/axios";
 function AddPolicyPopup(props) {
-  const { addPolicyOpen, setAddPolicyOpen,setStatus,setSelectedPolicy,selectedPolicy } = props;
+  const {
+    addPolicyOpen,
+    setAddPolicyOpen,
+    setStatus,
+    setSelectedPolicy,
+    selectedPolicy,
+  } = props;
   const [acceptClick, setAcceptClick] = useState(false);
   const [countryName, setCountryName] = useState("");
   const [website, setWebsite] = useState("");
   const [policyDetails, setPolicyDetails] = useState("");
   const [active, setActive] = useState("Select");
- 
-  const handleAddPolicyClose = () => {  
+  const [addPolicyData, setAddPolicyData] = useState("");
+  
+  const handleAddPolicyClose = () => {
     setAddPolicyOpen(false);
-    setSelectedPolicy(null)
+    setSelectedPolicy(null);
     setCountryName("");
     setPolicyDetails("");
     setWebsite("Select");
@@ -51,7 +58,7 @@ function AddPolicyPopup(props) {
       } else {
         setAcceptClick(true);
         setAddPolicyOpen(false);
-        handleAddPolicyClose()
+        handleAddPolicyClose();
         setStatus((prev) => !prev);
         setCountryName("");
         setPolicyDetails("");
@@ -98,7 +105,8 @@ function AddPolicyPopup(props) {
                   value={website}
                   name="website_name"
                   onChange={(e) => setWebsite(e.target.value)}
-                  className="w-100 custom-select small-font input-btn-bg px-2 py-3 all-none rounded all-none">
+                  className="w-100 custom-select small-font input-btn-bg px-2 py-3 all-none rounded all-none"
+                >
                   <option value="Select">Select</option>
                   <option>www.texch.com</option>
                   <option>www.we2call.com</option>
@@ -108,11 +116,12 @@ function AddPolicyPopup(props) {
               </Col>
               <Col className="pe-0">
                 <div className="small-font my-1">In Active *</div>
-                <select 
+                <select
                   name="active"
                   value={active}
                   onChange={(e) => setActive(e.target.value)}
-                   className="w-100 custom-select small-font input-btn-bg px-2 py-3 all-none rounded all-none">
+                  className="w-100 custom-select small-font input-btn-bg px-2 py-3 all-none rounded all-none"
+                >
                   <option selected>Select</option>
                   <option>Yes</option>
                   <option>No</option>
@@ -142,7 +151,7 @@ function AddPolicyPopup(props) {
                   className="add-button  small-font rounded px-4 py-3 my-3 w-50 all-none"
                   onClick={handleCreateOrUpdatePolicy}
                 >
-                   {selectedPolicy ? "Update" : "Create"}
+                  {selectedPolicy ? "Update" : "Create"}
                 </button>
               </Col>
             </Row>

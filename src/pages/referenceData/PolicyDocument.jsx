@@ -1,10 +1,9 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import Table from "../table/Table";
 import AddPolicyPopup from "../Popups/AddPolicyPopup";
 import { GET_ALL_POLICY_DOCUMENTS } from "../../config/endpoints";
 import { call } from "../../config/axios";
 import { MdOutlineEdit } from "react-icons/md";
-
 function PolicyDocument() {
   // const POLICYDOCUMENT_DETAILS = [
   //   {

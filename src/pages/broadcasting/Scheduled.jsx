@@ -9,10 +9,8 @@ import {
   GET_BROADCAST_EVENTS,
 } from "../../config/endpoints";
 import { call } from "../../config/axios";
-import Scheduled from "./Scheduled";
-import DraftTable from "./DraftTable";
 
-function Broadcasting() {
+function Scheduled() {
   const cols = [
     {
       header: "TITLE",
@@ -113,74 +111,52 @@ function Broadcasting() {
     getAllposters();
   }, []);
 
-  const [activeIndex, setActiveIndex] = useState(0);
-
-  // const draftData = modifiedBroadcastingDetails.filter(
-  //   (res) => res.status === false
-  // );
-
-  // const filterData = [
-  //   ...getBroadcasting,
-  //   ...notifications,
-  //   ...getPoster,
-  // ].filter((item) => item?.event_status === true);
-
   const modifiedBroadcastingDetails = [
     ...getBroadcasting,
     ...notifications,
     ...getPoster,
-  ].map((item) => {
-    return {
-      ...item,
-      title: (
-        <div className="role-color">
-          <span className="role-color">{item?.event_name}</span>{" "}
-        </div>
-      ),
-      publishdate: (
-        <div>
-          <span>{item?.event_date}</span>
-          <br />
-          <span>{item?.start_time}</span>
-        </div>
-      ),
-      publishwebsite: item?.website_name,
-      dateandtime: item?.create_at,
-      type: item?.event_location,
-      //status: item?.event_status,
-      status: item?.event_status === 1 ? "Active" : "Inactive",
-      icon: <AiOutlineEdit className="eye-icon-size" />,
-    };
-  });
+  ].map((item) => ({
+    ...item,
+    title: (
+      <div className="role-color">
+        <span className="role-color">{item?.event_name}</span>{" "}
+      </div>
+    ),
+    publishdate: (
+      <div>
+        <span>{item?.event_date}</span>
+        <br />
+        <span>{item?.start_time}</span>
+      </div>
+    ),
+    publishwebsite: item?.website_name,
+    dateandtime: item?.create_at,
+    type: item?.event_location,
+    status: item?.event_status === 1 ? "Active" : "Inactive",
+    icon: <AiOutlineEdit className="eye-icon-size" />,
+  }));
 
   const navigate = useNavigate();
-
-  const headersList = ["Published", "Sheduled", "Draft"];
-
-  const handleHeader = (item) => {
-    setActiveIndex(item);
-  };
-
   return (
     <div className="p-4 w-100">
-      <h6 className="h6 font-grey">Broadcasting & Notifications</h6>
+      {/* <h6 className="h6 font-grey">Broadcasting & Notifications</h6> */}
       <div className="sidebar-bg rounded">
-        <div className="d-flex align-items-center justify-content-between">
+        {/* <div className="d-flex align-items-center justify-content-between">
           <div className=" d-flex justify-content-between">
             <div className="row justify-content-md-center mx-1 p-1">
-              {headersList.map((item, index) => {
-                return (
-                  <div
-                    key={index}
-                    className={`${
-                      activeIndex === index ? "active" : "table-header-box"
-                    } text-white col-md-auto medium-font justify-content-between p-2 px-4 m-1`}
-                    onClick={() => handleHeader(index)}
-                  >
-                    {item}
-                  </div>
-                );
-              })}
+              <div className="active text-white col-md-auto medium-font justify-content-between p-2 px-4 m-1">
+                Published
+              </div>
+            </div>
+            <div className="row justify-content-md-center mx-1 p-1">
+              <div className="table-header-box col-md-auto medium-font justify-content-between p-2 px-4 m-1">
+                Sheduled
+              </div>
+            </div>
+            <div className="row justify-content-md-center mx-1 p-1">
+              <div className="table-header-box col-md-auto medium-font justify-content-between p-2 px-4 m-1">
+                Draft
+              </div>
             </div>
           </div>
           <div className=" d-flex justify-content-between align-items-center">
@@ -206,19 +182,12 @@ function Broadcasting() {
         </div>
         <div className=" medium-font font-weight-bold px-2 p-2 pt-0 mt-0 th-color">
           All Notifications
-        </div>
-        {activeIndex === 0 && (
-          <Table columns={cols} data={modifiedBroadcastingDetails} />
-        )}
-        {activeIndex === 1 && (
-          <Scheduled columns={cols} data={modifiedBroadcastingDetails} />
-        )}
-        {activeIndex === 2 && (
-          <DraftTable columns={cols} data={modifiedBroadcastingDetails} />
-        )}
+        </div> */}
+
+        <Table columns={cols} data={modifiedBroadcastingDetails} />
       </div>
     </div>
   );
 }
 
-export default Broadcasting;
+export default Scheduled;

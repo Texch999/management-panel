@@ -736,7 +736,20 @@ function ManageTournament() {
         {(activeManageIndex === 0 ||
           activeManageIndex === 1 ||
           activeManageIndex === 2) && (
-          <Table columns={tableHeading} data={tableData} />
+          <div>
+            <Table columns={tableHeading} data={tableData} />
+            {activeManageIndex === 2 && (
+              <div>
+                <textarea
+                  className="manage-text-area p-2"
+                  placeholder="Message Type Here"
+                ></textarea>
+                <div className="w-100 d-flex justify-content-end">
+                  <button className="submit p-2">Submit</button>
+                </div>
+              </div>
+            )}
+          </div>
         )}
         {activeManageIndex === 3 && (
           <DocTable columns={tableDocHeading} data={tableDocData} />
