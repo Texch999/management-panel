@@ -27,7 +27,7 @@ function DraftTable() {
     {
       header: "STATUS",
       field: "status",
-      clr: true,
+      // clr: true,
     },
     {
       header: "Action",
@@ -52,7 +52,8 @@ function DraftTable() {
   useEffect(() => {
     getAllOffers();
   }, []);
-
+  const currentDate = new Date().toISOString().split("T")[0];
+  console.log("---------->", currentDate);
   const filterData = Offersmanagement.filter((res) => res.status === false);
   const modifiedOffersmanagementDetails = filterData.map((item) => ({
     ...item,
@@ -61,14 +62,19 @@ function DraftTable() {
         <span className="role-color">{item?.title}</span>{" "}
       </div>
     ),
-    publishdate: item?.update_at,
+    publishdate: item?.publish_date,
     publishwebsite: item?.website_name,
     type: item?.country_name,
-    status: item?.status === true ? "Active" : "In Active",
+    status: item?.status === false && (
+      <div>
+        <div className="active rounded px-1">Sheduled</div>
+        <div className="active rounded px-1 mt-1">Published</div>
+      </div>
+    ),
     icon: <AiOutlineEdit className="eye-icon-size" />,
   }));
 
-  console.log(filterData,"..........filterData")
+  console.log(filterData, "..........filterData");
   return (
     <div className="p-4 w-100">
       <div className="sidebar-bg rounded">

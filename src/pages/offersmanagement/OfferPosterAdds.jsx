@@ -162,6 +162,7 @@ function OfferPosterAdds() {
     getallCountries();
   }, []);
   console.log("allCountries", allCountries);
+  console.log(allOffers, ".........allOffers");
   return (
     <div className="p-4">
       <Container fluid className="my-2">
@@ -184,7 +185,7 @@ function OfferPosterAdds() {
                       <option value="select">selecte...</option>
                       <option value="All">All</option>
                       {websiteNames.map((obj) => (
-                        <option value={obj.web_id} selected>
+                        <option value={obj.web_url} selected>
                           {obj.web_url}
                         </option>
                       ))}

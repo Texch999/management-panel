@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Table from "../table/Table";
 import DocTable from "../table/DocTable";
 import { BsArrowDown } from "react-icons/bs";
-import { MdInsertPhoto, MdUpload } from "react-icons/md";
+import { MdInsertPhoto } from "react-icons/md";
 import ConformBookingTable from "../table/ConformBookingTable";
 
 function ManageTournament() {

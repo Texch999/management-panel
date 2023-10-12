@@ -36,7 +36,7 @@ function Broadcasting() {
     },
     {
       header: "STATUS",
-      field: "event_status",
+      field: "status",
     },
     {
       header: "Action",
@@ -70,8 +70,15 @@ function Broadcasting() {
           return {
             ...obj,
             event_name: "scroll notification",
-            event_status:
-              obj.status === true ? <div>inactive</div> : <div>active</div>,
+            status:
+              obj?.status === "true" ? (
+                <div className="font-green custom-active-button px-2">
+                  Active
+                </div>
+              ) : (
+                <div className="custom-deactive-button px-2">InActive</div>
+              ),
+            //obj.status === true ? <div>inactive</div> : <div>active</div>,
             event_location: obj.country_name,
             event_date: obj.publish_date,
             create_at: new Date().toISOString(),
@@ -81,11 +88,11 @@ function Broadcasting() {
       })
       .catch((err) => console.log(err));
   };
+ 
 
   const [getPoster, setgetPoster] = useState([]);
   const getAllposters = async () => {
     const payload = {
-      //notification_type: getPoster.notification_type,
       notification_type: "Demo",
     };
     await call(GET_ALL_POSTERS, payload)
@@ -95,7 +102,15 @@ function Broadcasting() {
           return {
             ...obj,
             event_name: "poster notification",
-            event_status: obj.status,
+            status:obj.status === "true" ? "Active" : "Inactive",
+              // obj.status === true ? (
+              //   <div className="font-green custom-active-button px-2">
+              //     Active
+              //   </div>
+              // ) : (
+              //   <div className="custom-deactive-button px-2">InActive</div>
+              // ),
+            //obj.status,
             event_location: obj.country_name,
             event_date: obj.publish_date,
             create_at: new Date().toISOString(),
@@ -106,25 +121,17 @@ function Broadcasting() {
       .catch((err) => console.log(err));
   };
   console.log("getPoster", getPoster);
+  console.log('notifications',notifications);
 
   useEffect(() => {
     getBroadcastingEvent();
     getNotifications();
     getAllposters();
   }, []);
-
   const [activeIndex, setActiveIndex] = useState(0);
-
-  // const draftData = modifiedBroadcastingDetails.filter(
-  //   (res) => res.status === false
-  // );
-
-  // const filterData = [
-  //   ...getBroadcasting,
-  //   ...notifications,
-  //   ...getPoster,
-  // ].filter((item) => item?.event_status === true);
-
+  // const currentDate = new Date().toISOString().split('T')[0];
+  // console.log('---------->',currentDate);
+  // const publishedData = [].filter((item)=> item.status === true && item.publish_date<= currentDate)
   const modifiedBroadcastingDetails = [
     ...getBroadcasting,
     ...notifications,
@@ -147,8 +154,13 @@ function Broadcasting() {
       publishwebsite: item?.website_name,
       dateandtime: item?.create_at,
       type: item?.event_location,
-      //status: item?.event_status,
-      status: item?.event_status === 1 ? "Active" : "Inactive",
+      status:
+        item?.status === "true" ? (
+          <div className="font-green custom-active-button px-2">Active</div>
+        ) : (
+          <div className="custom-deactive-button px-2">InActive</div>
+        ),
+      //status: item?.event_status === true ? "Active" : "Inactive",
       icon: <AiOutlineEdit className="eye-icon-size" />,
     };
   });

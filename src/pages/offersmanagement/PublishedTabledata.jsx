@@ -52,7 +52,11 @@ function PublishedTabledata() {
   useEffect(() => {
     getAllOffers();
   }, []);
-  const filterStatus = Offersmanagement.filter((res) => res.status === true);
+  const currentDate = new Date().toISOString().split('T')[0];
+  console.log('---------->',currentDate);
+  //const publishDate = new Date(res.publish_date);
+  const filterStatus = Offersmanagement.filter((res) => res.status === true && res.publish_date <= currentDate);
+  console.log('----------->filterdata',filterStatus)
   const modifiedOffersmanagementDetails = filterStatus.map((item) => ({
     ...item,
     title: (
@@ -60,10 +64,15 @@ function PublishedTabledata() {
         <span className="role-color">{item?.title}</span>{" "}
       </div>
     ),
-    publishdate: item?.update_at,
+    publishdate: item?.publish_date,
     publishwebsite: item?.website_name,
     type: item?.country_name,
-    status: item?.status === true ? "Active" : "In Active",
+    status:
+      item?.status === true ? (
+        <div className="font-green custom-active-button px-2">Active</div>
+      ) : (
+        <div className="custom-deactive-button px-2">InActive</div>
+      ),
     icon: <AiOutlineEdit className="eye-icon-size" />,
   }));
 

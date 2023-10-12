@@ -11,9 +11,9 @@ import { GET_ALL_USERS } from "../../config/endpoints";
 import { GET_COUNTRY_AND_CURRENCY } from "../../config/endpoints";
 import { GENERATE_SIGNED_URL } from "../../config/endpoints";
 
-function PostersAds() {
+function OfferPosterAdds() {
   const ImageBaseUrl = "https://we2-call-images.s3.us-east-2.amazonaws.com";
-  const [notificationtextmsg, setnotificationtextmsg] = useState({});
+  const [allPosters, setallPosters] = useState({});
   const [posterId, setPosterId] = useState("");
   const [singedUrl, setSignedUrl] = useState("");
   const [uploadImage, setuploadImage] = useState([]);
@@ -31,15 +31,15 @@ function PostersAds() {
   const handleUploadButtonClick = () => {
     uploadfileInputRef.current.click();
   };
-  const handelPostersAds = async (status) => {
-    console.log("click me............");
+  const handelOffers = async (status) => {
+    console.log("click me............", status);
     if (
       !(
-        notificationtextmsg?.website_name ||
-        notificationtextmsg?.country_name ||
-        notificationtextmsg?.user ||
-        notificationtextmsg?.notification_type ||
-        notificationtextmsg?.description
+        allPosters?.website_name ||
+        allPosters?.country_name ||
+        allPosters?.user ||
+        allPosters?.notification_type ||
+        allPosters?.description
       )
     ) {
       console.log("testing.........");
@@ -48,18 +48,18 @@ function PostersAds() {
       setError("");
       await call(ADD_POSTERS_AND_ADS, {
         register_id: "reg-20230710182031623",
-        website_name: notificationtextmsg.website_name,
-        user: notificationtextmsg.user,
-        country_name: notificationtextmsg.country_name,
-        notification_type: notificationtextmsg.notification_type,
-        description: notificationtextmsg.description,
-        start_date: notificationtextmsg.start_date,
-        end_date: notificationtextmsg.end_date,
-        publish_date: notificationtextmsg.publish_date,
+        website_name: allPosters.website_name,
+        user: allPosters.user,
+        country_name: allPosters.country_name,
+        notification_type: allPosters.notification_type,
+        description: allPosters.description,
+        start_date: allPosters.start_date,
+        end_date: allPosters.end_date,
+        publish_date: allPosters.publish_date,
         upload_image: `${ImageBaseUrl}/${"posters-images"}/${posterId}.png`,
         status,
       }).then(async (res) => {
-        setnotificationtextmsg(res?.data);
+        setallPosters(res?.data);
         singedUrl &&
           profileImage &&
           (await fetch(singedUrl, {
@@ -99,13 +99,13 @@ function PostersAds() {
   };
 
   useEffect(() => {
-    setnotificationtextmsg();
+    setallPosters();
   }, []);
 
   const handelChange = (e) => {
     //console.log("result", [e.target.name], e.target.value);
-    setnotificationtextmsg({
-      ...notificationtextmsg,
+    setallPosters({
+      ...allPosters,
       [e.target.name]: e.target.value,
     });
   };
@@ -162,7 +162,6 @@ function PostersAds() {
     getallCountries();
   }, []);
   console.log("allCountries", allCountries);
-
   return (
     <div className="p-4">
       <Container fluid className="my-2">
@@ -178,12 +177,12 @@ function PostersAds() {
                     <select
                       name="website_name"
                       id="website_name"
-                      value={notificationtextmsg?.website_name || ""}
+                      value={allPosters?.website_name || ""}
                       onChange={(e) => handelChange(e)}
                       className="w-100 custom-select small-font input-btn-bg px-2 py-3 all-none rounded all-none"
-                    > 
-                      <option value = "select">select</option>
-                      <option value = "All">All</option>
+                    >
+                      <option value="select">selecte...</option>
+                      <option value="All">All</option>
                       {websiteNames.map((obj) => (
                         <option value={obj.web_id} selected>
                           {obj.web_url}
@@ -202,12 +201,14 @@ function PostersAds() {
                     <select
                       name="user"
                       id="user"
-                      value={notificationtextmsg?.user || ""}
+                      value={allPosters?.user || ""}
                       onChange={(e) => handelChange(e)}
                       className="w-100 custom-select small-font input-btn-bg px-2 py-3 all-none rounded all-none"
-                    > 
-                      <option value = "select">select</option>
-                      <option value = "All">All</option>
+                    >
+                      <option value="" selected>
+                        Select...
+                      </option>
+                      <option value="All">All</option>
                       {allUsers.map((obj) => (
                         <option value={obj.user_name} selected>
                           {obj.user_name}
@@ -224,12 +225,12 @@ function PostersAds() {
                     <select
                       name="country_name"
                       id="country_name"
-                      value={notificationtextmsg?.country_name || ""}
+                      value={allPosters?.country_name || ""}
                       onChange={(e) => handelChange(e)}
                       className="w-100 custom-select small-font input-btn-bg px-2 py-3 all-none rounded all-none"
                     >
-                      <option value = "select">select</option>
-                      <option value = "All">All</option>
+                      <option value="select">select..</option>
+                      <option value="All">All</option>
                       {allCountries.map((obj) => (
                         <option value={obj.country_name} selected>
                           {obj.country_name}
@@ -249,12 +250,12 @@ function PostersAds() {
                     <select
                       name="notification_type"
                       id="notification_type"
-                      value={notificationtextmsg?.notification_type || ""}
+                      value={allPosters?.notification_type || ""}
                       onChange={(e) => handelChange(e)}
                       className="w-100 custom-select small-font input-btn-bg px-2 py-3 all-none rounded all-none"
                     >
                       {/* <option selected>Select</option> */}
-                      <option selected>Select</option>
+                      <option value="select">Select</option>
                       <option value="Demo">Demo</option>
                       <option value="Demo">Demo</option>
                       <option value="Demo">Demo</option>
@@ -293,7 +294,7 @@ function PostersAds() {
               type="text"
               name="description"
               id="description"
-              value={notificationtextmsg?.description || ""}
+              value={allPosters?.description || ""}
               onChange={(e) => handelChange(e)}
               placeholder="Type Here ............"
               className="w-100 custom-select small-font input-btn-bg rounded all-none py-3 px-2 h-85"
@@ -317,7 +318,7 @@ function PostersAds() {
                   type="date"
                   className="login-input all-none w-50"
                   name="start_date"
-                  value={notificationtextmsg?.start_date || ""}
+                  value={allPosters?.start_date || ""}
                   onChange={(e) => handelChange(e)}
                 ></input>
                 <FaRegCalendarAlt className="upload-icon p-1 font-size-30" />
@@ -328,18 +329,11 @@ function PostersAds() {
             <div>
               <div className="medium-font mb-2 clr-grey">To</div>
               <div className="w-100 custom-select small-font input-btn-bg px-2 py-2 all-none rounded all-none d-flex flex-row align-items-center">
-                {/* <DatePicker
-                  className="login-input all-none w-50"
-                  selected={selectedDate}
-                  onChange={(date) => setSelectedDate(date)}
-                  dateFormat="yyyy-MM-dd"
-                  placeholderText="Select a date"
-                /> */}
                 <input
                   className="login-input all-none w-50"
                   type="date"
                   name="end_date"
-                  value={notificationtextmsg?.end_date || ""}
+                  value={allPosters?.end_date || ""}
                   onChange={(e) => handelChange(e)}
                 ></input>
                 <FaRegCalendarAlt className="upload-icon p-1 font-size-30" />
@@ -350,18 +344,11 @@ function PostersAds() {
             <div>
               <div className="medium-font mb-2 clr-grey">Publish Date</div>
               <div className="w-100 custom-select small-font input-btn-bg px-2 py-2 all-none rounded all-none d-flex flex-row align-items-center">
-                {/* <DatePicker
-                  className="login-input all-none w-50"
-                  selected={selectedDate}
-                  onChange={(date) => setSelectedDate(date)}
-                  dateFormat="yyyy-MM-dd"
-                  placeholderText="Select a date"
-                /> */}
                 <input
                   type="date"
                   className="login-input all-none w-50"
                   name="publish_date"
-                  value={notificationtextmsg?.publish_date || ""}
+                  value={allPosters?.publish_date || ""}
                   onChange={(e) => handelChange(e)}
                 ></input>
                 <FaRegCalendarAlt className="upload-icon p-1 font-size-30" />
@@ -380,7 +367,7 @@ function PostersAds() {
           <button
             type="submit"
             className="add-button  medium-font rounded px-3 py-3 mx-2  all-none "
-            onClick={() => handelPostersAds(true)}
+            onClick={() => handelOffers(true)}
           >
             Publish
           </button>
@@ -388,7 +375,7 @@ function PostersAds() {
           <button
             type="submit"
             className="msg-deactive-button  medium-font rounded  mx-2 all-none px-3 py-3"
-            onClick={() => handelPostersAds(false)}
+            onClick={() => handelOffers(false)}
           >
             Save As Draft
           </button>
@@ -406,4 +393,4 @@ function PostersAds() {
   );
 }
 
-export default PostersAds;
+export default OfferPosterAdds;

@@ -7,51 +7,51 @@ import { useNavigate } from "react-router-dom";
 
 function Offersmanagement() {
   const OFFERSMANAGEMENT_DETAILS = [
-    // {
-    //   title:
-    //     "16 Free Premiere Pro Title Templates Perfect for Any Video | Motion Array",
-    //   publishdate: "14/08/2023 15:37:00 PM",
-    //   publishwebsite: "www.texch.com www.we2call.com www.ravanna.com",
-    //   type: "Global",
-    //   status: "Active",
-    //   icon: <AiOutlineEye className="eye-icon-size" />,
-    // },
-    // {
-    //   title:
-    //     "16 Free Premiere Pro Title Templates Perfect for Any Video | Motion Array",
-    //   publishdate: "14/08/2023 15:37:00 PM",
-    //   publishwebsite: "www.texch.com www.we2call.com www.ravanna.com",
-    //   type: "India",
-    //   status: "Active",
-    //   icon: <AiOutlineEye className="eye-icon-size" />,
-    // },
-    // {
-    //   title:
-    //     "16 Free Premiere Pro Title Templates Perfect for Any Video | Motion Array",
-    //   publishdate: "14/08/2023 15:37:00 PM",
-    //   publishwebsite: "www.texch.com www.we2call.com www.ravanna.com",
-    //   type: "USA",
-    //   status: "In-active",
-    //   icon: <AiOutlineEye className="eye-icon-size" />,
-    // },
-    // {
-    //   title:
-    //     "16 Free Premiere Pro Title Templates Perfect for Any Video | Motion Array",
-    //   publishdate: "14/08/2023 15:37:00 PM",
-    //   publishwebsite: "www.texch.com www.we2call.com www.ravanna.com",
-    //   type: "Global",
-    //   status: "Active",
-    //   icon: <AiOutlineEye className="eye-icon-size" />,
-    // },
-    // {
-    //   title:
-    //     "16 Free Premiere Pro Title Templates Perfect for Any Video | Motion Array",
-    //   publishdate: "14/08/2023 15:37:00 PM",
-    //   publishwebsite: "www.texch.com www.we2call.com www.ravanna.com",
-    //   type: "Global",
-    //   status: "Active",
-    //   icon: <AiOutlineEye className="eye-icon-size" />,
-    // },
+    {
+      title:
+        "16 Free Premiere Pro Title Templates Perfect for Any Video | Motion Array",
+      publishdate: "14/08/2023 15:37:00 PM",
+      publishwebsite: "www.texch.com www.we2call.com www.ravanna.com",
+      type: "Global",
+      status: "Active",
+      icon: <AiOutlineEye className="eye-icon-size" />,
+    },
+    {
+      title:
+        "16 Free Premiere Pro Title Templates Perfect for Any Video | Motion Array",
+      publishdate: "14/08/2023 15:37:00 PM",
+      publishwebsite: "www.texch.com www.we2call.com www.ravanna.com",
+      type: "India",
+      status: "Active",
+      icon: <AiOutlineEye className="eye-icon-size" />,
+    },
+    {
+      title:
+        "16 Free Premiere Pro Title Templates Perfect for Any Video | Motion Array",
+      publishdate: "14/08/2023 15:37:00 PM",
+      publishwebsite: "www.texch.com www.we2call.com www.ravanna.com",
+      type: "USA",
+      status: "In-active",
+      icon: <AiOutlineEye className="eye-icon-size" />,
+    },
+    {
+      title:
+        "16 Free Premiere Pro Title Templates Perfect for Any Video | Motion Array",
+      publishdate: "14/08/2023 15:37:00 PM",
+      publishwebsite: "www.texch.com www.we2call.com www.ravanna.com",
+      type: "Global",
+      status: "Active",
+      icon: <AiOutlineEye className="eye-icon-size" />,
+    },
+    {
+      title:
+        "16 Free Premiere Pro Title Templates Perfect for Any Video | Motion Array",
+      publishdate: "14/08/2023 15:37:00 PM",
+      publishwebsite: "www.texch.com www.we2call.com www.ravanna.com",
+      type: "Global",
+      status: "Active",
+      icon: <AiOutlineEye className="eye-icon-size" />,
+    },
   ];
 
   const cols = [

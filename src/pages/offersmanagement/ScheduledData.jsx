@@ -2,7 +2,7 @@ import React from "react";
 import Table from "../table/Table";
 import { AiOutlineEdit } from "react-icons/ai";
 import { useEffect, useState } from "react";
-import { GET_ALL_OFFERS} from "../../config/endpoints";
+import { GET_ALL_OFFERS } from "../../config/endpoints";
 import { call } from "../../config/axios";
 
 function PublishedTabledata() {
@@ -49,20 +49,30 @@ function PublishedTabledata() {
       setOffermanagement(arr);
     });
   };
-  useEffect(()=>{
+  useEffect(() => {
     getAllOffers();
-  },[])
-  const modifiedOffersmanagementDetails = Offersmanagement.map((item) => ({
+  }, []);
+  const currentDate = new Date().toISOString().split("T")[0];
+  console.log("---------->", currentDate);
+  const scheduledData = Offersmanagement.filter(
+    (res) => res.publish_date > currentDate
+  );
+  const modifiedOffersmanagementDetails = scheduledData.map((item) => ({
     ...item,
     title: (
       <div className="role-color">
         <span className="role-color">{item?.title}</span>{" "}
       </div>
     ),
-    publishdate: item?.update_at,
+    publishdate: item?.publish_date,
     publishwebsite: item?.website_name,
     type: item?.country_name,
-    status: item?.status === true ? "Active" : "In Active",
+    status:
+      item?.status === true ? (
+        <div className="font-green custom-active-button px-2">Active</div>
+      ) : (
+        <div className="custom-deactive-button px-2">InActive</div>
+      ),
     icon: <AiOutlineEdit className="eye-icon-size" />,
   }));
 
