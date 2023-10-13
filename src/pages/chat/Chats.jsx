@@ -7,7 +7,8 @@ import { BiSolidCamera } from "react-icons/bi";
 import { ImAttachment } from "react-icons/im";
 import { MdMicNone } from "react-icons/md";
 import { LuUsers } from "react-icons/lu";
-
+import { BiSolidMessageSquareDetail } from "react-icons/bi";
+import { RiCheckDoubleLine } from "react-icons/ri";
 function Chats() {
   return (
     <div class="container">
@@ -289,7 +290,11 @@ function Chats() {
               <div class="outgoing_msg">
                 <div class="sent_msg">
                   <p>Test which is a new approach to have all solutions</p>
-                  <span class="time_date"> 11:01 AM | June 9</span>{" "}
+                  <div className="d-flex justify-content-between align-items-center">
+                    <span class="time_date"> 11:01 AM | June 9</span>{" "}
+                    <RiCheckDoubleLine
+                      style={{ fontSize: "20px", color: "#70dc37" }}                      />
+                  </div>
                 </div>
               </div>
               <div className="d-flex justify-content-center my-4">
@@ -321,7 +326,12 @@ function Chats() {
               <div class="outgoing_msg">
                 <div class="sent_msg">
                   <p>Apollo University, Delhi, India Test</p>
-                  <span class="time_date"> 11:01 AM | Today</span>{" "}
+                  <div className="d-flex justify-content-between align-items-center">
+                    <span class="time_date"> 11:01 AM | June 9</span>{" "}
+                    <RiCheckDoubleLine
+                      style={{ fontSize: "20px", color: "#70dc37" }}
+                    />
+                  </div>{" "}
                 </div>
               </div>
               <div class="incoming_msg">
@@ -385,21 +395,16 @@ function Chats() {
               </div>
             </div>
 
-            {/* <div className="d-flex flex-row align-items-center">
-              <div className="bg-clr-chat px-2 py-2 rounded mx-2">
-                <BiSolidCamera className="upload-icon" />
-              </div>
-              <div className="bg-clr-chat px-2 py-2 rounded mx-2">
-                <GrAttachment className="upload-icon" />
-              </div>
-              <div className="bg-clr-chat px-2 py-2 rounded mx-2">
-                <MdMicNone className="upload-icon" />
-              </div>
-            </div> */}
           </div>
         </div>
       </div>
-    </div>
+      <div className="d-flex flex-row justify-content-end">
+        <div className="chat-blow-button d-flex justify-content-between align-items-center">
+          <BiSolidMessageSquareDetail style={{ fontSize: "30px" }} />
+          <span className="clr-corn-flower ms-1">Chat With Us</span>
+        </div>
+      </div>
+    </div>   
   );
 }
 
