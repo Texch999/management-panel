@@ -15,12 +15,12 @@ function Chats() {
       <div class="messaging">
         <div class="inbox_msg">
           <div class="inbox_people">
-            <div class="headind_srch d-flex flex-column ">
+            <div class="headind_srch d-flex flex-column mb-2">
               <div class="recent_heading d-flex flex-start my-2">
                 <h4>Support</h4>
               </div>
-              <div class="srch_bar d-flex w-100 ">
-                <div class="stylish-input-group w-100">
+              <div class="srch_bar d-flex justify-content-center w-100">
+                <div class="stylish-input-group w-80">
                   <input
                     type="text"
                     class="search-bar px-4 py-2 rounded"
@@ -43,7 +43,7 @@ function Chats() {
 
             <div class="inbox_chat">
               <div class="chat_list active_chat">
-                <div class="chat_people">
+                <div class="chat_people d-flex justify-content-between align-items-center">
                   <div class="chat_img">
                     {" "}
                     <img
@@ -61,7 +61,7 @@ function Chats() {
                 </div>
               </div>
               <div class="chat_list">
-                <div class="chat_people">
+                <div class="chat_people d-flex justify-content-between align-items-center">
                   <div class="chat_img">
                     <img
                       className="rounded-circle"
@@ -83,7 +83,7 @@ function Chats() {
                 </div>
               </div>
               <div class="chat_list">
-                <div class="chat_people">
+                <div class="chat_people d-flex justify-content-between align-items-center">
                   <div class="chat_img">
                     {" "}
                     <img
@@ -101,13 +101,13 @@ function Chats() {
                 </div>
               </div>
             </div>
-            <div class="headind_srch d-flex flex-row align-items-center">
+            <div class="headind_srch d-flex flex-row align-items-center mb-2">
               <LuUsers className="upload-icon mx-2" />
               <span className="clr-cornflower large-font mx-2">Contacts</span>
             </div>
             <div className="inbox-chat-contacts">
               <div class="chat_list">
-                <div class="chat_people">
+                <div class="chat_people d-flex justify-content-between align-items-center">
                   <div class="chat_img">
                     <img
                       className="rounded-circle"
@@ -124,7 +124,7 @@ function Chats() {
                 </div>
               </div>
               <div class="chat_list">
-                <div class="chat_people">
+                <div class="chat_people d-flex justify-content-between align-items-center">
                   <div class="chat_img">
                     {" "}
                     <img
@@ -142,7 +142,7 @@ function Chats() {
                 </div>
               </div>{" "}
               <div class="chat_list">
-                <div class="chat_people">
+                <div class="chat_people d-flex justify-content-between align-items-center">
                   <div class="chat_img">
                     <img
                       className="rounded-circle"
@@ -159,7 +159,77 @@ function Chats() {
                 </div>
               </div>
               <div class="chat_list">
-                <div class="chat_people">
+                <div class="chat_people d-flex justify-content-between align-items-center">
+                  <div class="chat_img">
+                    {" "}
+                    <img
+                      className="rounded-circle"
+                      src="https://bootdey.com/img/Content/avatar/avatar3.png"
+                      alt="sunil"
+                    />{" "}
+                  </div>
+                  <div class="chat_ib">
+                    <h5>
+                      Sunil Rajput <span class="chat_date">Dec 25</span>
+                    </h5>
+                    <p>Available </p>
+                  </div>
+                </div>
+              </div>
+              <div class="chat_list">
+                <div class="chat_people d-flex justify-content-between align-items-center">
+                  <div class="chat_img">
+                    <img
+                      className="rounded-circle"
+                      src="https://bootdey.com/img/Content/avatar/avatar2.png"
+                      alt="sunil"
+                    />{" "}
+                  </div>
+                  <div class="chat_ib">
+                    <h5>
+                      Sunil Rajput <span class="chat_date">Dec 25</span>
+                    </h5>
+                    <p>Available </p>
+                  </div>
+                </div>
+              </div>
+              <div class="chat_list">
+                <div class="chat_people d-flex justify-content-between align-items-center">
+                  <div class="chat_img">
+                    {" "}
+                    <img
+                      className="rounded-circle"
+                      src="https://bootdey.com/img/Content/avatar/avatar3.png"
+                      alt="sunil"
+                    />{" "}
+                  </div>
+                  <div class="chat_ib">
+                    <h5>
+                      Sunil Rajput <span class="chat_date">Dec 25</span>
+                    </h5>
+                    <p>Available </p>
+                  </div>
+                </div>
+              </div>{" "}
+              <div class="chat_list">
+                <div class="chat_people d-flex justify-content-between align-items-center">
+                  <div class="chat_img">
+                    <img
+                      className="rounded-circle"
+                      src="https://bootdey.com/img/Content/avatar/avatar2.png"
+                      alt="sunil"
+                    />{" "}
+                  </div>
+                  <div class="chat_ib">
+                    <h5>
+                      Sunil Rajput <span class="chat_date">Dec 25</span>
+                    </h5>
+                    <p>Available </p>
+                  </div>
+                </div>
+              </div>
+              <div class="chat_list">
+                <div class="chat_people d-flex justify-content-between align-items-center">
                   <div class="chat_img">
                     {" "}
                     <img
@@ -179,7 +249,7 @@ function Chats() {
             </div>
           </div>
           <div class="mesgs">
-            <div class="headind_srch d-flex flex-column ">
+            <div class="headind_srch d-flex flex-column h-8vh mb-2">
               <div class="recent_heading d-flex flex-start my-2 align-items-center justify-content-between w-100">
                 <div className="d-flex flex-row justify-content-between align-items-center">
                   <div>
@@ -290,10 +360,24 @@ function Chats() {
               </div>
               <div className="d-flex flex-row align-items-center">
                 <div className="bg-clr-chat px-2 py-2 rounded mx-2">
-                  <BiSolidCamera className="upload-icon" />
+                  <label htmlFor="camera-button">
+                    <BiSolidCamera className="upload-icon" />
+                  </label>
+                  <input
+                    type="file"
+                    id="camera-button"
+                    style={{ display: "none" }}
+                  />
                 </div>
                 <div className="bg-clr-chat px-2 py-2 rounded mx-2">
-                  <ImAttachment className="upload-icon" />
+                  <label htmlFor="upload-button">
+                    <ImAttachment className="upload-icon" />
+                  </label>
+                  <input
+                    type="file"
+                    id="upload-button"
+                    style={{ display: "none" }}
+                  />
                 </div>
                 <div className="bg-clr-chat px-2 py-2 rounded mx-2">
                   <MdMicNone className="upload-icon" />
