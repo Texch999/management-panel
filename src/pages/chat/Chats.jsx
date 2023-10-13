@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "./styles.css";
 import { PiClockClockwiseBold } from "react-icons/pi";
 import { IoCall } from "react-icons/io5";
@@ -9,7 +9,191 @@ import { MdMicNone } from "react-icons/md";
 import { LuUsers } from "react-icons/lu";
 import { BiSolidMessageSquareDetail } from "react-icons/bi";
 import { RiCheckDoubleLine } from "react-icons/ri";
+import { Images } from "../../images";
+import { GET_USER_MESSAGES } from "../../config/endpoints";
+import { call } from "../../config/axios";
+import { open, send } from "../utils/WebSocket";
+
 function Chats() {
+  let register_id = localStorage?.getItem("register_id");
+  let creator_id = localStorage?.getItem("creator_id");
+  const [supportData, setSupportData] = useState([]);
+
+  const [messages, setMessages] = useState([
+    {
+      content: "We need to know it,Because it's about our community",
+      sender: "user",
+      img: Images.DhoniImage02,
+    },
+    {
+      content: "We need to know it,Because it's about our community",
+      sender: "computer",
+      img: Images.ViratImage02,
+    },
+    {
+      content: "We need to know it,Because it's about our community",
+      sender: "user",
+      img: Images.DhoniImage02,
+    },
+    {
+      content: "We need to know it,Because it's about our community",
+      sender: "computer",
+      img: Images.ViratImage02,
+    },
+    {
+      content: "We need to know it,Because it's about our community",
+      sender: "user",
+      img: Images.DhoniImage02,
+    },
+    {
+      content: "We need to know it,Because it's about our community",
+      sender: "computer",
+      img: Images.ViratImage02,
+    },
+    {
+      content: "We need to know it,Because it's about our community",
+      sender: "user",
+      img: Images.DhoniImage02,
+    },
+    {
+      content: "We need to know it,Because it's about our community",
+      sender: "computer",
+      img: Images.ViratImage02,
+    },
+  ]);
+  const date = new Date().toLocaleDateString();
+  const [userInput, setUserInput] = useState("");
+  // const inputFile = useRef(null);
+
+  const videoRef = useRef(null);
+
+  const [file, setFile] = useState([]);
+  const inputFile = useRef(null);
+
+  const handleChange = (e) => {
+    setFile([...file, e.target.files[0]]);
+  };
+
+  const handleUserInput = () => {
+    if (userInput.trim() !== "") {
+      setMessages((prevMessages) => [
+        ...prevMessages,
+        {
+          content: reply,
+          sender: "computer",
+          img: Images.ViratImage02,
+        },
+      ]);
+      const reply = generateReply(userInput);
+      setMessages((prevMessages) => [
+        ...prevMessages,
+
+        { content: userInput, sender: "user", img: Images.DhoniImage02 },
+      ]);
+      setUserInput("");
+    }
+  };
+  const generateReply = (message) => {
+    return message;
+  };
+  const [currentTime, setCurrentTime] = useState(
+    new Date().toLocaleTimeString()
+  );
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentTime(new Date().toLocaleTimeString());
+    }, 1000);
+
+    return () => {
+      clearInterval(interval);
+    };
+  }, []);
+
+  const inputHandler = async () => {
+    // addMessage(userInput, 1);
+    setUserInput("");
+    await send(userInput);
+    // await getAllUserMessages();
+  };
+
+  const addMessage = (message, msg_c = 0) => {
+    // console.log("new message : ", message);
+    let temp = { message, ts: new Date().getTime(), msg_c };
+    setSupportData((prev) => [...prev, temp]);
+    // console.log(supportData)
+  };
+
+  const handleInputChange = (e) => {
+    setUserInput(e.target.value);
+  };
+  const hanldeKeyDown = (event) => {
+    if (event.key === "Enter" && !event.shiftyKey) {
+      event.preventDefault();
+      inputHandler();
+    }
+  };
+
+  const getAllUserMessages = async () => {
+    await call("", {
+      register_id,
+      creator_id,
+    })
+      .then((res) => {
+        console.log(res.data.data);
+        setSupportData(res?.data?.data);
+        // scroll();
+      })
+      .catch((err) => {
+        // setLoading(false);
+        console.log(err);
+      });
+  };
+
+  const onMessageRecieve = (event) => {
+    console.log("onMessageRecieve : ", event);
+    if (!event.data) {
+      return;
+    }
+    const msg = JSON.parse(event.data);
+    // if (msg.from_user_id === register_id) {
+    //   return;
+    // }
+    addMessage(msg.message);
+  };
+  const scroll = () => {
+    var objDiv = document.getElementById("chat");
+    if (objDiv) {
+      objDiv.scrollTop = objDiv?.scrollHeight;
+    }
+  };
+  useEffect(() => {
+    getAllUserMessages();
+    open({ onmessage: onMessageRecieve });
+  }, []);
+  const [webcamVisible, setWebcamVisible] = useState(false);
+  const webcamRef = useRef(null);
+  const toggleWebCam = () => {
+    setWebcamVisible((prevVisible) => !prevVisible);
+  };
+  const captureSnapshot = () => {
+    const imgSrc = webcamRef.current.getScreenshot();
+    console.log(imgSrc);
+    setWebcamVisible(false);
+  };
+  const handleFileUpload = (event) => {
+    console.log(event);
+    const selectedFile = event.target.files[0];
+    console.log(selectedFile);
+  };
+  const [selectedDate, setSelectedDate] = useState(null);
+  const uploadfileInputRef = useRef(null);
+  const handleUploadFileSelect = (e) => {
+    const file = e.target.files[0];
+    console.log("selected file", file);
+  };
+  const handleUploadButtonClick = () => {
+    uploadfileInputRef.current.click();
+  };
   return (
     <div class="container">
       <h3 class=" text-center">Messaging</h3>
@@ -49,7 +233,8 @@ function Chats() {
                     {" "}
                     <img
                       className="rounded-circle"
-                      src="https://bootdey.com/img/Content/avatar/avatar1.png"
+                      src={Images.sachin_image}
+                      // src="https://bootdey.com/img/Content/avatar/avatar1.png"
                       alt="sunil"
                     />{" "}
                   </div>
@@ -66,7 +251,8 @@ function Chats() {
                   <div class="chat_img">
                     <img
                       className="rounded-circle"
-                      src="https://bootdey.com/img/Content/avatar/avatar2.png"
+                      src={Images.raina_image}
+                      // src="https://bootdey.com/img/Content/avatar/avatar2.png"
                       alt="sunil"
                     />{" "}
                   </div>
@@ -89,7 +275,8 @@ function Chats() {
                     {" "}
                     <img
                       className="rounded-circle"
-                      src="https://bootdey.com/img/Content/avatar/avatar3.png"
+                      src={Images.rohit_image}
+                      // src="https://bootdey.com/img/Content/avatar/avatar3.png"
                       alt="sunil"
                     />{" "}
                   </div>
@@ -112,7 +299,8 @@ function Chats() {
                   <div class="chat_img">
                     <img
                       className="rounded-circle"
-                      src="https://bootdey.com/img/Content/avatar/avatar2.png"
+                      src={Images.rohit_image}
+                      // src="https://bootdey.com/img/Content/avatar/avatar2.png"
                       alt="sunil"
                     />{" "}
                   </div>
@@ -130,7 +318,8 @@ function Chats() {
                     {" "}
                     <img
                       className="rounded-circle"
-                      src="https://bootdey.com/img/Content/avatar/avatar3.png"
+                      src={Images.raina_image}
+                      // src="https://bootdey.com/img/Content/avatar/avatar3.png"
                       alt="sunil"
                     />{" "}
                   </div>
@@ -147,7 +336,8 @@ function Chats() {
                   <div class="chat_img">
                     <img
                       className="rounded-circle"
-                      src="https://bootdey.com/img/Content/avatar/avatar2.png"
+                      src={Images.dhawan_image}
+                      // src="https://bootdey.com/img/Content/avatar/avatar2.png"
                       alt="sunil"
                     />{" "}
                   </div>
@@ -165,7 +355,8 @@ function Chats() {
                     {" "}
                     <img
                       className="rounded-circle"
-                      src="https://bootdey.com/img/Content/avatar/avatar3.png"
+                      src={Images.dhawan_image}
+                      // src="https://bootdey.com/img/Content/avatar/avatar3.png"
                       alt="sunil"
                     />{" "}
                   </div>
@@ -182,7 +373,8 @@ function Chats() {
                   <div class="chat_img">
                     <img
                       className="rounded-circle"
-                      src="https://bootdey.com/img/Content/avatar/avatar2.png"
+                      src={Images.raina_image}
+                      // src="https://bootdey.com/img/Content/avatar/avatar2.png"
                       alt="sunil"
                     />{" "}
                   </div>
@@ -200,7 +392,8 @@ function Chats() {
                     {" "}
                     <img
                       className="rounded-circle"
-                      src="https://bootdey.com/img/Content/avatar/avatar3.png"
+                      src={Images.raina_image}
+                      // src="https://bootdey.com/img/Content/avatar/avatar3.png"
                       alt="sunil"
                     />{" "}
                   </div>
@@ -217,7 +410,8 @@ function Chats() {
                   <div class="chat_img">
                     <img
                       className="rounded-circle"
-                      src="https://bootdey.com/img/Content/avatar/avatar2.png"
+                      src={Images.dhawan_image}
+                      // src="https://bootdey.com/img/Content/avatar/avatar2.png"
                       alt="sunil"
                     />{" "}
                   </div>
@@ -235,7 +429,8 @@ function Chats() {
                     {" "}
                     <img
                       className="rounded-circle"
-                      src="https://bootdey.com/img/Content/avatar/avatar3.png"
+                      src={Images.sachin_image}
+                      // src="https://bootdey.com/img/Content/avatar/avatar3.png"
                       alt="sunil"
                     />{" "}
                   </div>
@@ -256,13 +451,14 @@ function Chats() {
                   <div>
                     <img
                       className="rounded-circle h-30px mx-2"
-                      src="https://bootdey.com/img/Content/avatar/avatar2.png"
+                      src={Images.dhoni_image}
                       alt="sunil"
                     />{" "}
                   </div>
-                  <div className="large-font clr-white mx-2">Felecia Rower</div>
+                  <div className="large-font clr-white mx-2">
+                    Mahendra Singh Dhoni
+                  </div>
                 </div>
-
                 <div className="d-flex flex-row align-items-center justify-content-between">
                   <IoCall className="upload-icon clr-grey mx-2" />
                   <HiVideoCamera className="upload-icon clr-grey mx-2" />
@@ -276,7 +472,7 @@ function Chats() {
                   {" "}
                   <img
                     className="rounded-circle"
-                    src="https://bootdey.com/img/Content/avatar/avatar1.png"
+                    src={Images.dhoni_image}
                     alt="sunil"
                   />{" "}
                 </div>
@@ -293,7 +489,8 @@ function Chats() {
                   <div className="d-flex justify-content-between align-items-center">
                     <span class="time_date"> 11:01 AM | June 9</span>{" "}
                     <RiCheckDoubleLine
-                      style={{ fontSize: "20px", color: "#70dc37" }}                      />
+                      style={{ fontSize: "20px", color: "#70dc37" }}
+                    />
                   </div>
                 </div>
               </div>
@@ -307,7 +504,7 @@ function Chats() {
                   {" "}
                   <img
                     className="rounded-circle"
-                    src="https://bootdey.com/img/Content/avatar/avatar1.png"
+                    src={Images.kohli_image}
                     alt="sunil"
                   />{" "}
                 </div>
@@ -339,7 +536,7 @@ function Chats() {
                   {" "}
                   <img
                     className="rounded-circle"
-                    src="https://bootdey.com/img/Content/avatar/avatar1.png"
+                    src={Images.dhoni_image}
                     alt="sunil"
                   />{" "}
                 </div>
@@ -368,7 +565,7 @@ function Chats() {
                   </button>
                 </div>
               </div>
-              <div className="d-flex flex-row align-items-center">
+              <div className="d-flex w-25 flex-row justify-content-around align-items-center">
                 <div className="bg-clr-chat px-2 py-2 rounded mx-2">
                   <label htmlFor="camera-button">
                     <BiSolidCamera className="upload-icon" />
@@ -394,7 +591,6 @@ function Chats() {
                 </div>
               </div>
             </div>
-
           </div>
         </div>
       </div>
@@ -404,7 +600,7 @@ function Chats() {
           <span className="clr-corn-flower ms-1">Chat With Us</span>
         </div>
       </div>
-    </div>   
+    </div>
   );
 }
 
