@@ -70,15 +70,7 @@ function Broadcasting() {
           return {
             ...obj,
             event_name: "scroll notification",
-            status:
-              obj?.status === "true" ? (
-                <div className="font-green custom-active-button px-2">
-                  Active
-                </div>
-              ) : (
-                <div className="custom-deactive-button px-2">InActive</div>
-              ),
-            //obj.status === true ? <div>inactive</div> : <div>active</div>,
+            status: obj.status,
             event_location: obj.country_name,
             event_date: obj.publish_date,
             create_at: new Date().toISOString(),
@@ -88,7 +80,6 @@ function Broadcasting() {
       })
       .catch((err) => console.log(err));
   };
- 
 
   const [getPoster, setgetPoster] = useState([]);
   const getAllposters = async () => {
@@ -102,15 +93,14 @@ function Broadcasting() {
           return {
             ...obj,
             event_name: "poster notification",
-            status:obj.status === "true" ? "Active" : "Inactive",
-              // obj.status === true ? (
-              //   <div className="font-green custom-active-button px-2">
-              //     Active
-              //   </div>
-              // ) : (
-              //   <div className="custom-deactive-button px-2">InActive</div>
-              // ),
-            //obj.status,
+            status: obj.status,
+            // obj.status === true ? (
+            //   <div className="font-green custom-active-button px-2">
+            //     Active
+            //   </div>
+            // ) : (
+            //   <div className="custom-deactive-button px-2">InActive</div>
+            // ),
             event_location: obj.country_name,
             event_date: obj.publish_date,
             create_at: new Date().toISOString(),
@@ -121,7 +111,7 @@ function Broadcasting() {
       .catch((err) => console.log(err));
   };
   console.log("getPoster", getPoster);
-  console.log('notifications',notifications);
+  console.log("notifications", notifications);
 
   useEffect(() => {
     getBroadcastingEvent();
@@ -129,10 +119,12 @@ function Broadcasting() {
     getAllposters();
   }, []);
   const [activeIndex, setActiveIndex] = useState(0);
+  
   // const currentDate = new Date().toISOString().split('T')[0];
   // console.log('---------->',currentDate);
   // const publishedData = [].filter((item)=> item.status === true && item.publish_date<= currentDate)
-  const modifiedBroadcastingDetails = [
+  const modifiedBroadcastingDetails = 
+  [
     ...getBroadcasting,
     ...notifications,
     ...getPoster,

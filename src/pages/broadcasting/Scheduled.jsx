@@ -68,8 +68,7 @@ function Scheduled() {
           return {
             ...obj,
             event_name: "scroll notification",
-            status:
-              obj.status === true ? <div>inactive</div> : <div>active</div>,
+            status: obj.status,
             event_location: obj.country_name,
             event_date: obj.publish_date,
             create_at: new Date().toISOString(),
@@ -83,7 +82,6 @@ function Scheduled() {
   const [getPoster, setgetPoster] = useState([]);
   const getAllposters = async () => {
     const payload = {
-      //notification_type: getPoster.notification_type,
       notification_type: "Demo",
     };
     await call(GET_ALL_POSTERS, payload)
@@ -135,7 +133,12 @@ function Scheduled() {
       publishwebsite: item?.website_name,
       dateandtime: item?.create_at,
       type: item?.event_location,
-      status: item?.status === 1 ? "Active" : "Inactive",
+      status:
+        item?.status === "true" ? (
+          <div className="font-green custom-active-button px-2">Active</div>
+        ) : (
+          <div className="custom-deactive-button px-2">InActive</div>
+        ),
       icon: <AiOutlineEdit className="eye-icon-size" />,
     }));
 

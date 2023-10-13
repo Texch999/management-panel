@@ -64,8 +64,7 @@ function DraftTable() {
           return {
             ...obj,
             event_name: "scroll notification",
-            status:
-              obj.status === true ? <div>inactive</div> : <div>active</div>,
+            status: obj.status,
             event_location: obj.country_name,
             event_date: obj.publish_date,
             create_at: new Date().toISOString(),
@@ -107,38 +106,37 @@ function DraftTable() {
     getAllposters();
   }, []);
 
-  // const currentDate = new Date().toISOString().split("T")[0];
-  // console.log("---------->", currentDate);
-  // const draftData = [...getBroadcasting, ...notifications, ...getPoster].filter(
-  //   (res) => res.status === false
-  // );
-  const modifiedOffersmanagementDetails =
-     [
-      ...getBroadcasting,
-      ...notifications,
-      ...getPoster,
-    ]
-    .map((item) => ({
-      ...item,
-      title: (
-        <div className="role-color">
-          <span className="role-color">{item?.event_name}</span>{" "}
-        </div>
+  const currentDate = new Date().toISOString().split("T")[0];
+  console.log("---------->", currentDate);
+  const draftData = [...getBroadcasting, ...notifications, ...getPoster].filter(
+    (res) => res.status === false
+  );
+  const modifiedOffersmanagementDetails = 
+  draftData.map((item) => ({
+    ...item,
+    title: (
+      <div className="role-color">
+        <span className="role-color">{item?.event_name}</span>{" "}
+      </div>
+    ),
+    publishdate: (
+      <div>
+        <span>{item?.event_date}</span>
+        <br />
+        <span>{item?.start_time}</span>
+      </div>
+    ),
+    publishwebsite: item?.website_name,
+    dateandtime: item?.create_at,
+    type: item?.event_location,
+    status:
+      item?.status === "true" ? (
+        <div className="font-green custom-active-button px-2">Active</div>
+      ) : (
+        <div className="custom-deactive-button px-2">InActive</div>
       ),
-      publishdate: (
-        <div>
-          <span>{item?.event_date}</span>
-          <br />
-          <span>{item?.start_time}</span>
-        </div>
-      ),
-      publishwebsite: item?.website_name,
-      dateandtime: item?.create_at,
-      type: item?.event_location,
-      status: item?.status === 1 ? "Active" : "Inactive",
-      //status: item?.status,
-      icon: <AiOutlineEdit className="eye-icon-size" />,
-    }));
+    icon: <AiOutlineEdit className="eye-icon-size" />,
+  }));
 
   //console.log(filterData,"..........filterData")
   return (
