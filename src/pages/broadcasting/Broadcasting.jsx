@@ -56,7 +56,7 @@ function Broadcasting() {
 
       .catch((err) => console.log(err));
   };
-  console.log("getBroadcasting", getBroadcasting);
+  // console.log("getBroadcasting", getBroadcasting);
 
   const [notifications, setnotifications] = useState([]);
   const getNotifications = async () => {
@@ -65,7 +65,7 @@ function Broadcasting() {
     };
     await call(GET_ALL_NOTIFICATIONS, payload)
       .then((res) => {
-        console.log("response=====>", res);
+        // console.log("response=====>", res);
         const arr = res?.data?.data?.map((obj) => {
           return {
             ...obj,
@@ -119,12 +119,11 @@ function Broadcasting() {
     getAllposters();
   }, []);
   const [activeIndex, setActiveIndex] = useState(0);
-  
+
   // const currentDate = new Date().toISOString().split('T')[0];
   // console.log('---------->',currentDate);
   // const publishedData = [].filter((item)=> item.status === true && item.publish_date<= currentDate)
-  const modifiedBroadcastingDetails = 
-  [
+  const modifiedBroadcastingDetails = [
     ...getBroadcasting,
     ...notifications,
     ...getPoster,
