@@ -91,7 +91,7 @@
   color: #71dd37;
 }
 .font-grey {
-  color: #a3a4cc !important;
+  color: #a3a4cc;
 }
 .zoom-icon {
   position: absolute;
@@ -181,4 +181,14 @@
 }
 .clr-grey {
   color: #cbcbe2;
+}
+.custom-active-button {
+  border-radius: 2px;
+  background-color: #36483f;
+  color: #71dd37;
+}
+.custom-deactive-button {
+  border-radius: 2px;
+  background-color: #4d2f3a !important; 
+  color: #ff5426 !important;
 }

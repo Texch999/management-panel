@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import Table from "../table/Table";
 import DocTable from "../table/DocTable";
 import { BsArrowDown } from "react-icons/bs";
-import { MdInsertPhoto } from "react-icons/md";
+import { MdInsertPhoto, MdUpload } from "react-icons/md";
+import ConformBookingTable from "../table/ConformBookingTable";
 
 function ManageTournament() {
   const [activeManageIndex, setActiveManageIndex] = useState(0);
@@ -278,8 +279,8 @@ function ManageTournament() {
           <br />
           <div className="p-2 download-div">
             id Proof
-            <MdInsertPhoto className="ms-1 ions-clr"/>
-            <BsArrowDown className="ms-1 ions-clr"/>
+            <MdInsertPhoto className="ms-1 ions-clr" />
+            <BsArrowDown className="ms-1 ions-clr" />
           </div>
         </div>
       ),
@@ -288,8 +289,8 @@ function ManageTournament() {
           Confirm
           <div className="p-2 download-div">
             Payment
-            <MdInsertPhoto className="ms-1 ions-clr"/>
-            <BsArrowDown className="ms-1 ions-clr"/>
+            <MdInsertPhoto className="ms-1 ions-clr" />
+            <BsArrowDown className="ms-1 ions-clr" />
           </div>
         </div>
       ),
@@ -327,8 +328,8 @@ function ManageTournament() {
           <br />
           <div className="p-2 download-div">
             id Proof
-            <MdInsertPhoto className="ms-1 ions-clr"/>
-            <BsArrowDown className="ms-1 ions-clr"/>
+            <MdInsertPhoto className="ms-1 ions-clr" />
+            <BsArrowDown className="ms-1 ions-clr" />
           </div>
         </div>
       ),
@@ -337,8 +338,8 @@ function ManageTournament() {
           Confirm
           <div className="p-2 download-div">
             Payment
-            <MdInsertPhoto className="ms-1 ions-clr"/>
-            <BsArrowDown className="ms-1 ions-clr"/>
+            <MdInsertPhoto className="ms-1 ions-clr" />
+            <BsArrowDown className="ms-1 ions-clr" />
           </div>
         </div>
       ),
@@ -377,8 +378,8 @@ function ManageTournament() {
           <br />
           <div className="p-2 download-div">
             id Proof
-            <MdInsertPhoto className="ms-1 ions-clr"/>
-            <BsArrowDown className="ms-1 ions-clr"/>
+            <MdInsertPhoto className="ms-1 ions-clr" />
+            <BsArrowDown className="ms-1 ions-clr" />
           </div>
         </div>
       ),
@@ -387,8 +388,8 @@ function ManageTournament() {
           Confirm
           <div className="p-2 download-div">
             Payment
-            <MdInsertPhoto className="ms-1 ions-clr"/>
-            <BsArrowDown className="ms-1 ions-clr"/>
+            <MdInsertPhoto className="ms-1 ions-clr" />
+            <BsArrowDown className="ms-1 ions-clr" />
           </div>
         </div>
       ),
@@ -427,8 +428,8 @@ function ManageTournament() {
           <br />
           <div className="p-2 download-div">
             id Proof
-            <MdInsertPhoto className="ms-1 ions-clr"/>
-            <BsArrowDown className="ms-1 ions-clr"/>
+            <MdInsertPhoto className="ms-1 ions-clr" />
+            <BsArrowDown className="ms-1 ions-clr" />
           </div>
         </div>
       ),
@@ -437,8 +438,8 @@ function ManageTournament() {
           Confirm
           <div className="p-2 download-div">
             Payment
-            <MdInsertPhoto className="ms-1 ions-clr"/>
-            <BsArrowDown className="ms-1 ions-clr"/>
+            <MdInsertPhoto className="ms-1 ions-clr" />
+            <BsArrowDown className="ms-1 ions-clr" />
           </div>
         </div>
       ),
@@ -477,8 +478,8 @@ function ManageTournament() {
           <br />
           <div className="p-2 download-div">
             id Proof
-            <MdInsertPhoto className="ms-1 ions-clr"/>
-            <BsArrowDown className="ms-1 ions-clr"/>
+            <MdInsertPhoto className="ms-1 ions-clr" />
+            <BsArrowDown className="ms-1 ions-clr" />
           </div>
         </div>
       ),
@@ -487,11 +488,209 @@ function ManageTournament() {
           Confirm
           <div className="p-2 download-div">
             Payment
-            <MdInsertPhoto className="ms-1 ions-clr"/>
-            <BsArrowDown className="ms-1 ions-clr"/>
+            <MdInsertPhoto className="ms-1 ions-clr" />
+            <BsArrowDown className="ms-1 ions-clr" />
           </div>
         </div>
       ),
+    },
+  ];
+
+  const ConfirmBookingHeading = [
+    {
+      header: "S NO",
+      field: "sl",
+    },
+    {
+      header: "WEBSITE",
+      field: "website",
+    },
+    {
+      header: "DATE & TIME",
+      field: "dateTime",
+    },
+    {
+      header: "NAME & ROLE",
+      field: "nameRole",
+    },
+    {
+      header: "GUEST NAME",
+      field: "guestName",
+    },
+    {
+      header: "GENDER",
+      field: "gender",
+    },
+    {
+      header: "TOUR PACK",
+      field: "tourPack",
+    },
+    {
+      header: "TOTAL AMOUNT",
+      field: "tatalAmount",
+    },
+    {
+      header: "PAID AMOUNT",
+      field: "paidAmount",
+    },
+    {
+      field: "clr",
+    },
+  ];
+
+  const ConfirmBookingData = [
+    {
+      sl: 1,
+      website: "we2call.com",
+      dateTime: (
+        <div>
+          31/08/2023
+          <br />
+          14:51:20 PM
+        </div>
+      ),
+      nameRole: (
+        <div>
+          Srinivas
+          <br />
+          Super Admin
+          <br />
+          Hyderabad
+        </div>
+      ),
+      guestName: (
+        <div>
+          10 <BsArrowDown />
+        </div>
+      ),
+      gender: "Male",
+      tourPack: "jej",
+      tatalAmount: "31/08/2023",
+      paidAmount: "10000",
+      clr: "Confirm",
+    },
+    {
+      sl: 2,
+      website: "we2call.com",
+      dateTime: (
+        <div>
+          31/08/2023
+          <br />
+          14:51:20 PM
+        </div>
+      ),
+      nameRole: (
+        <div>
+          Srinivas
+          <br />
+          Super Admin
+          <br />
+          Hyderabad
+        </div>
+      ),
+      guestName: (
+        <div>
+          10 <BsArrowDown />
+        </div>
+      ),
+      gender: "Male",
+      tourPack: "jej",
+      tatalAmount: "31/08/2023",
+      paidAmount: "10000",
+      clr: "Confirm",
+    },
+    ,
+    {
+      sl: 3,
+      website: "we2call.com",
+      dateTime: (
+        <div>
+          31/08/2023
+          <br />
+          14:51:20 PM
+        </div>
+      ),
+      nameRole: (
+        <div>
+          Srinivas
+          <br />
+          Super Admin
+          <br />
+          Hyderabad
+        </div>
+      ),
+      guestName: (
+        <div>
+          10 <BsArrowDown />
+        </div>
+      ),
+      gender: "Male",
+      tourPack: "jej",
+      tatalAmount: "31/08/2023",
+      paidAmount: "10000",
+      clr: "Confirm",
+    },
+    ,
+    {
+      sl: 4,
+      website: "we2call.com",
+      dateTime: (
+        <div>
+          31/08/2023
+          <br />
+          14:51:20 PM
+        </div>
+      ),
+      nameRole: (
+        <div>
+          Srinivas
+          <br />
+          Super Admin
+          <br />
+          Hyderabad
+        </div>
+      ),
+      guestName: (
+        <div>
+          10 <BsArrowDown />
+        </div>
+      ),
+      gender: "Male",
+      tourPack: "jej",
+      tatalAmount: "31/08/2023",
+      paidAmount: "10000",
+      clr: "Confirm",
+    },
+    ,
+    {
+      sl: 5,
+      website: "we2call.com",
+      dateTime: (
+        <div>
+          31/08/2023
+          <br />
+          14:51:20 PM
+        </div>
+      ),
+      nameRole: (
+        <div>
+          Srinivas
+          <br />
+          Super Admin
+          <br />
+          Hyderabad
+        </div>
+      ),
+      guestName: (
+        <div>
+          10 +<BsArrowDown />
+        </div>
+      ),
+      gender: "Male",
+      tourPack: "jej",
+      tatalAmount: "31/08/2023",
+      paidAmount: "10000",
+      clr: "Confirm",
     },
   ];
 
@@ -543,7 +742,10 @@ function ManageTournament() {
           <DocTable columns={tableDocHeading} data={tableDocData} />
         )}
         {activeManageIndex === 4 && (
-          <DocTable columns={tableHeading} data={tableData} />
+          <ConformBookingTable
+            columns={ConfirmBookingHeading}
+            data={ConfirmBookingData}
+          />
         )}
       </div>
     </div>
