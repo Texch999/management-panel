@@ -465,3 +465,15 @@ input::placeholder {
 .scroll-side-bar::-webkit-scrollbar {
   width: 5px;
 }
+::-webkit-scrollbar {
+  width: 5px;
+  display: none;
+}
+::-webkit-scrollbar-track {
+  border-radius: 10px;
+  background: #292a43;
+}
+::-webkit-scrollbar-thumb {
+  background: #4f506c;
+  border-radius: 10px;
+}

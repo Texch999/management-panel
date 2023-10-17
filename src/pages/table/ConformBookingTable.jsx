@@ -1,10 +1,10 @@
-import React, { useRef, useState } from "react";
+import React, { useRef } from "react";
 import { MdUpload } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 
 function ConformBookingTable(props) {
   const { data, columns } = props;
-  const [selectedDate, setSelectedDate] = useState(null);
+  //const [selectedDate, setSelectedDate] = useState(null);
   const uploadfileInputRef = useRef(null);
   const handleUploadFileSelect = (e) => {
     const file = e.target.files[0];

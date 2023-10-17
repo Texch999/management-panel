@@ -7,7 +7,13 @@ import { HiMiniArrowUpCircle } from "react-icons/hi2";
 import ReturnedPaymentPopup from "../Popups/ReturnedPaymentPopup";
 
 function AddTours() {
-  const toursType = ["1.Tour", "2.Cricket Tour", "3.Sports Tour"];
+  const toursType = [
+    "1.Tour",
+    "2.Cricket Tour",
+    "3.Sports Tour",
+    "4.Casino Tour",
+    "5.Entertainment Tour",
+  ];
   const [showReturnPopup, setShowReturnPopup] = useState(false);
   const handleReturnPaymentpopup = () => {
     setShowReturnPopup(true);
@@ -51,14 +57,14 @@ function AddTours() {
                 </div>
                 <div className="row mt-2">
                   <div className="col-6">
-                    <div className="medium-font font-grey">Upload Poster</div>
+                    <div className="medium-font font-grey">Date</div>
                     <div className="upload-poster-div p-2 d-flex align-items-center">
                       <input type="date" className="file-input"></input>
                       <FaCalendarDays className="ions-clr" />
                     </div>
                   </div>
                   <div className="col-6">
-                    <div className="medium-font font-grey">Upload Poster</div>
+                    <div className="medium-font font-grey">Time</div>
                     <div className="upload-poster-div p-2 d-flex align-items-center">
                       <input type="time" className="file-input"></input>
                       <AiOutlineClockCircle className="ions-clr" />

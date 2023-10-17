@@ -2,12 +2,16 @@ import React, { useEffect, useState } from "react";
 import { Col, Container, Row } from "react-bootstrap";
 import "react-datepicker/dist/react-datepicker.css";
 import { ADD_NOTIFICATIONS_TEXT_MESSAGES } from "../../config/endpoints";
+import { GET_COUNTRY_AND_CURRENCY } from "../../config/endpoints";
+import { GET_ALL_WEBSITES } from "../../config/endpoints";
+import { GET_ALL_USERS } from "../../config/endpoints";
 import { call } from "../../config/axios";
 import { FaRegCalendarAlt } from "react-icons/fa";
 
 function TextMessage() {
   const [textmessage, setTextMessage] = useState({});
-  const handelTextMessage = async () => {
+  const [error, setError] = useState("");
+  const handelTextMessage = async (status) => {
     console.log("click me.........", textmessage);
     if (
       !(
@@ -18,8 +22,9 @@ function TextMessage() {
         textmessage?.website_name
       )
     ) {
-      return "missing required field";
+      return setError("missing required field");
     } else {
+      setError("");
       await call(ADD_NOTIFICATIONS_TEXT_MESSAGES, {
         register_id: "reg-20230710182031623",
         country_name: textmessage.country_name,
@@ -30,6 +35,7 @@ function TextMessage() {
         end_date: textmessage.end_date,
         publish_date: textmessage.publish_date,
         user: textmessage.user,
+        status,
       }).then((res) => {
         console.log("------------>", res);
         setTextMessage(res?.data?.data);
@@ -41,9 +47,61 @@ function TextMessage() {
   }, []);
 
   const handleChange = (e) => {
-    //console.log(e.target.value, e.target.name);
+    console.log(e.target.value, e.target.name);
     setTextMessage({ ...textmessage, [e.target.name]: e.target.value });
   };
+
+  const [websiteNames, setwebsiteNames] = useState([]);
+  const getwebsiteNames = async () => {
+    const payload = {
+      register_id: "reg-20230710182031623",
+    };
+    await call(GET_ALL_WEBSITES, payload)
+      .then((res) => {
+        console.log("response=====>", res);
+        setwebsiteNames(res?.data?.data);
+      })
+      .catch((err) => console.log(err));
+  };
+  useEffect(() => {
+    getwebsiteNames();
+  }, []);
+
+  console.log("websiteNames", websiteNames);
+
+  const [allUsers, setgetallUsers] = useState([]);
+  const getallUsers = async () => {
+    const payload = {
+      register_id: "reg-20230913085731533",
+    };
+    await call(GET_ALL_USERS, payload)
+      .then((res) => {
+        console.log("response=====>", res);
+        setgetallUsers(res?.data?.data);
+      })
+      .catch((err) => console.log(err));
+  };
+  useEffect(() => {
+    getallUsers();
+  }, []);
+  console.log("allUsers", allUsers);
+
+  const [allCountries, setallCountries] = useState([]);
+  const getallCountries = async () => {
+    const payload = {
+      register_id: "reg-20230909114353315",
+    };
+    await call(GET_COUNTRY_AND_CURRENCY, payload)
+      .then((res) => {
+        console.log("res", res);
+        setallCountries(res?.data?.data);
+      })
+      .catch((err) => console.log(err));
+  };
+  useEffect(() => {
+    getallCountries();
+  }, []);
+  console.log("allCountries", allCountries);
 
   return (
     <div className="p-4">
@@ -64,13 +122,13 @@ function TextMessage() {
                       value={textmessage?.website_name || ""}
                       onChange={(e) => handleChange(e)}
                     >
-                      <option selected>Select</option>
-                      <option value="www.texch.com">www.texch.com</option>
-                      <option value="www.we2call.com">www.we2call.com</option>
-                      <option value="www.ravana.com">www.ravana.com</option>
-                      <option value="www.texchmaster.com">
-                        www.texchmaster.com
-                      </option>
+                      <option value="select">select</option>
+                      <option value="All">All</option>
+                      {websiteNames.map((obj) => (
+                        <option value={obj.web_url} selected>
+                          {obj.web_url}
+                        </option>
+                      ))}
                     </select>
                   </div>
                 </Col>
@@ -87,12 +145,15 @@ function TextMessage() {
                       className="w-100 custom-select small-font input-btn-bg px-2 py-3 all-none rounded all-none"
                       onChange={(e) => handleChange(e)}
                     >
-                      {/* <option selected>Select</option> */}
-                      <option selected>Select</option>
-                      <option value="Demo">Demo</option>
-                      <option value="Demo">Demo</option>
-                      <option value="Demo">Demo</option>
-                      <option value="Demo">Demo</option>
+                      <option value="" selected>
+                        Select...
+                      </option>
+                      <option value="All">All</option>
+                      {allUsers.map((obj) => (
+                        <option value={obj.user_name} selected>
+                          {obj.user_name}
+                        </option>
+                      ))}
                     </select>
                   </div>
                 </Col>
@@ -107,12 +168,13 @@ function TextMessage() {
                       className="w-100 custom-select small-font input-btn-bg px-2 py-3 all-none rounded all-none"
                       onChange={(e) => handleChange(e)}
                     >
-                      {/* <option selected>Select</option> */}
-                      <option selected>Select</option>
-                      <option value="Demo1">Demo1</option>
-                      <option value="Demo2">Demo2</option>
-                      <option value="Demo3">Demo3</option>
-                      <option value="Demo4">Demo4</option>
+                      <option value="select">select</option>
+                      <option value="All">All</option>
+                      {allCountries.map((obj) => (
+                        <option value={obj.country_name} selected>
+                          {obj.country_name}
+                        </option>
+                      ))}
                     </select>
                   </div>
                 </Col>
@@ -128,12 +190,22 @@ function TextMessage() {
                     onChange={(e) => handleChange(e)}
                     className="w-100 custom-select small-font input-btn-bg px-2 py-3 all-none rounded all-none"
                   >
-                    {/* <option selected>Select</option> */}
-                    <option selected>Select</option>
-                    <option value="notification1">notification1</option>
-                    <option value="notification2">notification2</option>
-                    <option value="notification3">notification3</option>
-                    <option value="notification4">notification4</option>
+                    {textmessage?.user === "All" ? (
+                      <>
+                        <option value="" selected>
+                          Select....
+                        </option>
+                        <option value="user">user</option>
+                        <option value="Admin">Admin</option>
+                      </>
+                    ) : (
+                      <>
+                        <option value="" selected>
+                          Select
+                        </option>
+                        <option value="personal">personal</option>
+                      </>
+                    )}
                   </select>
                 </div>
               </Col>
@@ -211,18 +283,20 @@ function TextMessage() {
         <input type="checkbox" />
         <div className="medium-font mx-2 clr-grey">Publish Now</div>
       </div>
+      {error && <div className="danger">{error}</div>}
       <div className="row w-100 d-flex flex-row justify-content-between my-3">
         <div className="col-sm d-flex flex-row">
           <button
             type="submit"
             className="add-button  medium-font rounded px-3 py-3 mx-2  all-none "
-            onClick={() => handelTextMessage()}
+            onClick={() => handelTextMessage(true)}
           >
             Publish
           </button>
           <button
             type="submit"
             className="msg-deactive-button  medium-font rounded  mx-2 all-none px-3 py-3"
+            onClick={() => handelTextMessage(false)}
           >
             Save As Draft
           </button>

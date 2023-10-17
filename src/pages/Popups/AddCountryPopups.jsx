@@ -177,7 +177,6 @@ function AddCountryPopups(props) {
               <Col className="ps-0">
                 <div className="small-font my-1">Country Name *</div>
                 <input
-                  name="country_name"
                   id="country_name"
                   type="text"
                   placeholder="Enter"
