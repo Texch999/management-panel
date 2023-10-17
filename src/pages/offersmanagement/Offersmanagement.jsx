@@ -6,6 +6,8 @@ import { ADD_OFFERS } from "../../config/endpoints";
 import { call } from "../../config/axios";
 import { Navigate, useNavigate } from "react-router-dom";
 import DraftTable from "./DraftTable";
+import PublishedTabledata from "./PublishedTabledata";
+import ScheduledData from "./ScheduledData";
 
 function Offersmanagement() {
   const [allOffers, setAllOffers] = useState([]);
@@ -268,8 +270,8 @@ function Offersmanagement() {
         <div className=" medium-font font-weight-bold px-2 p-2 pt-0 mt-0 th-color">
           All Notifications
         </div>
-        {activeOffer === "Published" && <DraftTable />}
-        {activeOffer === "Scheduled" && <DraftTable />}
+        {activeOffer === "Published" && <PublishedTabledata />}
+        {activeOffer === "Scheduled" && <ScheduledData />}
         {activeOffer === "Draft" && <DraftTable />}
       </div>
     </div>

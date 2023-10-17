@@ -115,7 +115,7 @@ function AddCountryPopups(props) {
 
         const paymentData = {
           register_id: "reg-20230710182031623",
-          payment_details: paymentDetails,
+          payment_details: paymentDetails,                                                                
           country_name: countryName,
           currency_name: currencyName,
           payment_gateway: paymentGateway,
