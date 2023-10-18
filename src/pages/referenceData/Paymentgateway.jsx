@@ -62,8 +62,6 @@ function Paymentgateway() {
     await call(GET_ALL_PAYMENTS, payload)
       .then((res) => {
         console.log("API Response:", res);
-        // const responseArray=res?.data?.data
-        // setAllPayments(responseArray.length>0?responseArray.filter((item)=>item.pg_upi!==""):[] )
         setAllPayments(res?.data?.data);
       })
       .catch((err) => console.log(err));
@@ -72,24 +70,6 @@ function Paymentgateway() {
   useEffect(() => {
     getPaymentWay();
   }, [status]);
-
-  // const modifiedPaymentgatewayDetails = allPayments.map((item) => ({
-  //   ...item,
-  //   gatewayname: (
-  //     <div className="role-color">
-  //       <span className="role-color">{item?.pg_name}</span>{" "}
-  //     </div>
-  //   ),
-  //   country: <span>{item?.country_name}</span>,
-  //   lastupdate: <span>{item?.update_at}</span>,
-  //   currency: <span>{item?.currency_name}</span>,
-  //   status: (
-  //     <span>
-  //       {item?.is_active === 1 ? <div>active</div> : <div>inactive</div>}
-  //     </span>
-  //   ),
-  //   icon: <MdOutlineEdit className="eye-icon-size" />,
-  // }));
   const modifiedPaymentgatewayDetails = searchText.length
     ? filteredQuestions
         .filter((item) =>
