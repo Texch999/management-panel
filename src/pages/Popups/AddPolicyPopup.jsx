@@ -1,7 +1,11 @@
 import React, { useState, useEffect } from "react";
 import MatchSubmitPopup from "../../matchpopups/MatchSubmitPopup";
 import { Col, Container, Dropdown, Modal, Row } from "react-bootstrap";
-import { ADD_POLICY, UPDATE_POLICY } from "../../config/endpoints";
+import {
+  ADD_POLICY,
+  UPDATE_POLICY,
+  GET_ALL_WEBSITES,
+} from "../../config/endpoints";
 import { call } from "../../config/axios";
 function AddPolicyPopup(props) {
   const {
@@ -17,7 +21,7 @@ function AddPolicyPopup(props) {
   const [policyDetails, setPolicyDetails] = useState("");
   const [active, setActive] = useState("Select");
   const [addPolicyData, setAddPolicyData] = useState("");
-  
+
   const handleAddPolicyClose = () => {
     setAddPolicyOpen(false);
     setSelectedPolicy(null);
@@ -35,6 +39,22 @@ function AddPolicyPopup(props) {
     } else {
     }
   }, [selectedPolicy]);
+  const [websiteNames, setwebsiteNames] = useState([]);
+  const getwebsiteNames = async () => {
+    const payload = {
+      register_id: "reg-20230710182031623",
+    };
+    await call(GET_ALL_WEBSITES, payload)
+      .then((res) => {
+        console.log("response=====>", res);
+        setwebsiteNames(res?.data?.data);
+      })
+      .catch((err) => console.log(err));
+  };
+
+  useEffect(() => {
+    getwebsiteNames();
+  }, []);
   const handleCreateOrUpdatePolicy = async () => {
     try {
       const url = selectedPolicy ? UPDATE_POLICY : ADD_POLICY;
@@ -108,10 +128,11 @@ function AddPolicyPopup(props) {
                   className="w-100 custom-select small-font input-btn-bg px-2 py-3 all-none rounded all-none"
                 >
                   <option value="Select">Select</option>
-                  <option>www.texch.com</option>
-                  <option>www.we2call.com</option>
-                  <option>www.ravana.com</option>
-                  <option>www.brahama.com</option>
+                  {websiteNames.map((obj) => (
+                    <option value={obj.web_url} selected>
+                      {obj.web_url}
+                    </option>
+                  ))}
                 </select>
               </Col>
               <Col className="pe-0">
