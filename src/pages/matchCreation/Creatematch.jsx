@@ -7,40 +7,36 @@ import { AiOutlineEdit } from "react-icons/ai";
 import { MdDateRange } from "react-icons/md";
 import { BiTimeFive } from "react-icons/bi";
 import { MdOutlineEdit } from "react-icons/md";
-import { GET_MATCHES_DATA } from "../../config/endpoints";
+import { GET_MATCHES_DATA, GET_ALL_WEBSITES } from "../../config/endpoints";
 import { CREATE_OFFLINE_MATCHES } from "../../config/endpoints";
 import { call } from "../../config/axios";
 
 function Creatematch() {
   const [createMatch, setcreateMatch] = useState({});
-  const [sportsName, setsportsName] = useState(" ");
-  const [Error, setError] = useState("");
+  const [Error, setError] = useState(false);
   const handleSubmitMatch = async () => {
     if (
-      !(
-        createMatch.series_name ||
-        createMatch.account_role ||
-        createMatch.team1 ||
-        createMatch.team2 ||
-        sportsName ||
-        createMatch.client_name ||
-        createMatch.match_place ||
-        createMatch.stadium ||
-        createMatch.gender ||
-        createMatch.date ||
-        createMatch.time ||
-        createMatch.game_object
-      )
+      !createMatch.series_name ||
+      !createMatch.sports_name ||
+      !createMatch.team1 ||
+      !createMatch.team2 ||
+      !createMatch.match_place ||
+      !createMatch.client_name ||
+      !createMatch.stadium ||
+      !createMatch.gender ||
+      !createMatch.date ||
+      !createMatch.time ||
+      !createMatch.match_type
     ) {
       return setError("Missing Required feilds");
     } else {
       await call(CREATE_OFFLINE_MATCHES, {
-        register_id: "reg-20230920132711772",
+        register_id: "company",
         series_name: createMatch.series_name,
-        account_role: createMatch.account_role,
+        account_role: "company",
         team1: createMatch.team1,
         team2: createMatch.team2,
-        sport_name: sportsName,
+        sport_name: createMatch.sports_name,
         client_name: createMatch.client_name,
         match_place: createMatch.match_place,
         stadium: createMatch.stadium,
@@ -107,27 +103,43 @@ function Creatematch() {
     },
   ];
 
-  // const matchType =
-  //   createMatch?.match_type === "10"
-  //     ? [1, 3, 5, 8]
-  //     : createMatch?.match_type === "20"
-  //     ? [1, 3, 5, 8, 12, 15, 18]
-  //     : createMatch?.match_type === "odi"
-  //     ? [1, 3, 5, 8, 15, 20, 25]
-  //     : createMatch?.match_type === "test"
-  //     ? [50, 60]
-  //     : "";
+  const matchType =
+    createMatch?.match_type === "T10"
+      ? [1, 3, 5, 8]
+      : createMatch?.match_type === "T20"
+      ? [1, 3, 5, 8, 12, 15, 18]
+      : createMatch?.match_type === "odi"
+      ? [1, 3, 5, 8, 15, 20, 25]
+      : createMatch?.match_type === "test"
+      ? [50, 60]
+      : "";
 
   const MatchTypeDropdown = [
     {
       heading: "1st Inn",
       cspan: "col",
-      // overs: matchType,
+      name: "first_fancy",
+      overs:
+        createMatch?.match_type === "T10"
+          ? [1, 3, 5, 8]
+          : createMatch?.match_type === "T20"
+          ? [1, 3, 5, 8, 12, 15, 18]
+          : createMatch?.match_type === "odi"
+          ? [1, 3, 5, 8, 15, 20, 25]
+          : "",
     },
     {
       heading: "2nd Inn",
       cspan: "col",
-      //overs: matchType,
+      name: "second_fancy",
+      overs:
+        createMatch?.match_type === "T10"
+          ? [1, 3]
+          : createMatch?.match_type === "T20"
+          ? [1, 5, 10]
+          : createMatch?.match_type === "odi"
+          ? [1, 10, 20]
+          : "",
     },
   ];
 
@@ -165,8 +177,8 @@ function Creatematch() {
   const [getMatches, setgetMatches] = useState([]);
   const getAllMatches = async () => {
     const payload = {
-      register_id: "reg-20230920132711772",
-      account_role: "admin",
+      register_id: "company",
+      account_role: "company",
     };
     await call(GET_MATCHES_DATA, payload)
       .then((res) => {
@@ -179,7 +191,25 @@ function Creatematch() {
     getAllMatches();
   }, []);
 
-  //console.log(".....getMatches", getMatches);
+  console.log(".....getMatches", getMatches);
+
+  const [websiteNames, setwebsiteNames] = useState([]);
+  const getwebsiteNames = async () => {
+    const payload = {
+      register_id: "reg-20230710182031623",
+    };
+    await call(GET_ALL_WEBSITES, payload)
+      .then((res) => {
+        console.log("response=====>", res);
+        setwebsiteNames(res?.data?.data);
+      })
+      .catch((err) => console.log(err));
+  };
+  useEffect(() => {
+    getwebsiteNames();
+  }, []);
+
+  console.log("websiteNames", websiteNames);
 
   const modifiedCreatematchDetails = getMatches.liveMatches?.map((item) => ({
     ...item,
@@ -224,9 +254,9 @@ function Creatematch() {
                 <select
                   className="sport-management-input d-flex p-1 th-color small-font w-100 sport-management-select"
                   name={item?.keyValue}
-                  value={createMatch?.item?.keyValue || ""}
                   onChange={(e) => handelChange(e)}
                 >
+                  <option>Select</option>
                   {item.options}
                 </select>
               </div>
@@ -302,7 +332,26 @@ function Creatematch() {
               <BiTimeFive className="bluecolor-text medium-font" />
             </div>
           </div>
-          <div className="col"></div>
+          <div className="col">
+            <div className="th-color small-font">Websites</div>
+            <div className="sport-management-input d-flex p-1 th-color small-font p-1">
+              <select
+                className="sport-management-input d-flex p-1 th-color small-font w-100 sport-management-select"
+                name="website_name"
+                id="website_name"
+                value={createMatch?.website_name || ""}
+                onChange={(e) => handelChange(e)}
+              >
+                <option value="select">select</option>
+                      <option value="All">All</option>
+                      {websiteNames.map((obj) => (
+                        <option value={obj.web_url} selected>
+                          {obj.web_url}
+                        </option>
+                      ))}
+              </select>
+            </div>
+          </div>
         </div>
         <div className="row gutter-1rem mt-3 p-2 th-color small-font">
           <div className="col">
@@ -312,8 +361,9 @@ function Creatematch() {
               name="match_type"
               onChange={(e) => handelChange(e)}
             >
-              <option value="10">T10</option>
-              <option value="20">T20</option>
+              <option value="select">select</option>
+              <option value="T10">T10</option>
+              <option value="T20">T20</option>
               <option value="odi">ODI</option>
               <option value="test">TEST</option>
             </select>
@@ -326,7 +376,9 @@ function Creatematch() {
                   <input
                     className="w-90 th-color small-font "
                     placeholder="Enter"
-                    value={createMatch?.match_type ? item.overs : ""}
+                    name={item.name}
+                    value={item.overs}
+                    onChange={(e) => handelChange(e)}
                   ></input>
                 </div>
               </div>

@@ -166,10 +166,10 @@ function Adddirector() {
           return {
             role: (
               <div className="role-color">
-                <span className="role-color">{item?.creator_role}</span>{" "}
+                <span className="role-color">{item?.account_role}</span>{" "}
               </div>
             ),
-            username: item?.account_role,
+            username: item?.user_name,
             inused: item?.country_name,
             website1Andwebsite2Andwebsite3: (
               <div>
@@ -179,7 +179,7 @@ function Adddirector() {
                 {""}
               </div>
             ),
-            status : "Active", 
+            status: "Active",
             // status:
             //   item?.is_active === "active" ? (
             //     <div className="font-green custom-active-button px-2">
@@ -195,19 +195,20 @@ function Adddirector() {
         return {
           role: (
             <div className="role-color">
-              <span className="role-color">{item?.creator_role}</span>{" "}
+              <span className="role-color">{item?.account_role}</span>{" "}
             </div>
           ),
-          username: item?.account_role,
+          username: item?.user_name,
           inused: item?.country_name,
           website1Andwebsite2Andwebsite3: (
             <div>
-              {item?.website_name} <br /> <span>{item?.website_name}</span> <br />
+              {item?.website_name} <br /> <span>{item?.website_name}</span>{" "}
+              <br />
               {item?.website_name}
               {""}
             </div>
           ),
-          status : "Active",
+          status: "Active",
           // status:
           //   item?.is_active === "active" ? (
           //     <div className="font-green custom-active-button px-2">Active</div>

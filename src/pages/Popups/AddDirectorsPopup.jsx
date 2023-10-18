@@ -190,21 +190,6 @@ function AddDirectorsPopup(props) {
         </Modal.Header>
         <Modal.Body>
           <div className="w-100 px-4">
-            {/* <Row className="d-flex">
-               <div className="small-font my-1">Role *</div>
-                <Col className="col-6">
-                  <select
-                    value={role}
-                    name="account_role"
-                    onChange={(e) => setRole(e.target.value)}
-                    className="w-100 custom-select small-font login-inputs input-btn-bg px-2 py-2 all-none rounded all-none"
-                  >
-                    <option selected>Select</option>
-                    <option> Director </option>
-                    <option> SuperAdmin</option>
-                  </select>
-                </Col>
-          </Row> */}
             <Container fluid className="my-2">
               <Row>
                 <Col className="col-6">
