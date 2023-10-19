@@ -58,21 +58,6 @@ function BulkPackageDiscount() {
               <div className="col">
                 <div>
                   <div className="medium-font package-btn-bg p-2 rounded font-white fw-semibold">
-                    No.of Pkgs
-                  </div>
-                  <input
-                    className="medium-font package-btn-bg p-2 rounded mt-1 font-grey"
-                    placeholder="10 M"
-                  />
-                  <input
-                    className="medium-font package-btn-bg p-2 rounded mt-1 font-grey"
-                    placeholder="15 Y"
-                  />
-                </div>
-              </div>
-              <div className="col">
-                <div>
-                  <div className="medium-font package-btn-bg p-2 rounded font-white fw-semibold">
                     Pkg Hours
                   </div>
                   <input

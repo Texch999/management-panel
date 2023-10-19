@@ -1,132 +1,31 @@
 import React, { useState, useEffect } from "react";
 import Table from "../table/Table";
 import { MdOutlineEdit } from "react-icons/md";
-import Totalaccount from "../home/Totalaccount";  
+import Totalaccount from "../home/Totalaccount";
 import { MdKeyboardArrowUp, MdKeyboardArrowDown } from "react-icons/md";
 import { AiOutlineSetting } from "react-icons/ai";
 import { TbUserEdit } from "react-icons/tb";
 import { LuFileClock } from "react-icons/lu";
 import { TbFileText } from "react-icons/tb";
 import AddDirectorsPopup from "../Popups/AddDirectorsPopup";
-import { GET_ADMIN_ACCOUNTS,GET_USER_LIST} from "../../config/endpoints";
+import { GET_ADMIN_ACCOUNTS } from "../../config/endpoints";
 import { call } from "../../config/axios";
 
 function Adddirector() {
-  const [getAllDirectors,setAllDirectors]=useState([])
+  const [getAllDirectors, setAllDirectors] = useState([]);
   const [selectedDirector, setSelectedDirector] = useState(null);
   const [filteredDirectors, setFilteredDirectors] = useState([]);
-  const [searchText,setSearchText]=useState("");
+  const [searchText, setSearchText] = useState("");
   const [status, setStatus] = useState(false);
-  // const ADDDIRECTOR_DETAILS = [
-  //   {
-  //     role: "Director",
-  //     username: "Srinivas",
-  //     inused: "India--Hyderabad",
-  //     website1: "www.we2call.com",
-  //     website2: "www.we2call.com",
-  //     website3: " www.we2call.com",
-  //     billing: "Cash-INR",
-  //     profitloss: <div className="fa-fileinvo-doll-icon">500K</div>,
-  //     status: "Active",
-  //     icon: (
-  //       <div className="d-flex align-items-center justify-content-evenly">
-  //         {" "}
-  //         <TbFileText className="eye-icon-size" />
-  //         <LuFileClock className="eye-icon-size" />
-  //         <AiOutlineSetting className="eye-icon-size" />
-  //         <TbUserEdit className="eye-icon-size" />
-  //       </div>
-  //     ),
-  //   },
-  //   {
-  //     role: "Director",
-  //     username: "Srinivas",
-  //     inused: "India--Hyderabad",
-  //     website1: "www.we2call.com",
-  //     website2: "www.we2call.com",
-  //     website3: " www.we2call.com",
-  //     billing: "Cash-INR",
-  //     profitloss: <div className="red-text">2K</div>,
-  //     status: "In-active",
-  //     icon: (
-  //       <div className="d-flex align-items-center justify-content-evenly">
-  //         {" "}
-  //         <TbFileText className="eye-icon-size" />
-  //         <LuFileClock className="eye-icon-size" />
-  //         <AiOutlineSetting className="eye-icon-size" />
-  //         <TbUserEdit className="eye-icon-size" />
-  //       </div>
-  //     ),
-  //   },
-  //   {
-  //     role: "SA",
-  //     username: "Srinivas",
-  //     inused: "India--Hyderabad",
-  //     website1: "www.we2call.com",
-  //     website2: "www.we2call.com",
-  //     website3: " www.we2call.com",
-  //     billing: "Cash-INR",
-  //     profitloss: <div className="fa-fileinvo-doll-icon">500K</div>,
-  //     status: "Active",
-  //     icon: (
-  //       <div className="d-flex align-items-center justify-content-evenly">
-  //         {" "}
-  //         <TbFileText className="eye-icon-size" />
-  //         <LuFileClock className="eye-icon-size" />
-  //         <AiOutlineSetting className="eye-icon-size" />
-  //         <TbUserEdit className="eye-icon-size" />
-  //       </div>
-  //     ),
-  //   },
-  //   {
-  //     role: "Director",
-  //     username: "Srinivas",
-  //     inused: "India--Hyderabad",
-  //     website1: "www.we2call.com",
-  //     website2: "www.we2call.com",
-  //     website3: " www.we2call.com",
-  //     billing: "Cash-INR",
-  //     profitloss: <div className="fa-fileinvo-doll-icon">500K</div>,
-  //     status: "Active",
-  //     icon: (
-  //       <div className="d-flex align-items-center justify-content-evenly">
-  //         {" "}
-  //         <TbFileText className="eye-icon-size" />
-  //         <LuFileClock className="eye-icon-size" />
-  //         <AiOutlineSetting className="eye-icon-size" />
-  //         <TbUserEdit className="eye-icon-size" />
-  //       </div>
-  //     ),
-  //   },
-  //   {
-  //     role: "Director",
-  //     username: "Srinivas",
-  //     inused: "India--Hyderabad",
-  //     website1: "www.we2call.com",
-  //     website2: "www.we2call.com",
-  //     website3: " www.we2call.com",
-  //     billing: "Cash-INR",
-  //     profitloss: <div className="red-text">20K</div>,
-  //     status: "In-active",
-  //     icon: (
-  //       <div className="d-flex align-items-center justify-content-evenly">
-  //         {" "}
-  //         <TbFileText className="eye-icon-size" />
-  //         <LuFileClock className="eye-icon-size" />
-  //         <AiOutlineSetting className="eye-icon-size" />
-  //         <TbUserEdit className="eye-icon-size" />
-  //       </div>
-  //     ),
-  //   },
-  // ];
 
-const searchContent =(value) =>{
-    setSearchText(value)
-    const filteredSearchText= getAllDirectors.filter((res)=>
+  const searchContent = (value) => {
+    setSearchText(value);
+    const filteredSearchText = getAllDirectors.filter((res) =>
       res?.creator_role?.toLowerCase().includes(searchText.toLowerCase())
-    )
-    setFilteredDirectors(filteredSearchText)
-}
+    );
+    setFilteredDirectors(filteredSearchText);
+  };
+
   const cols = [
     {
       header: (
@@ -244,7 +143,7 @@ const searchContent =(value) =>{
   ];
   const getDirectors = async () => {
     const payload = {
-      register_id: "reg-20230827110322593",
+      creator_id: "company",
     };
     await call(GET_ADMIN_ACCOUNTS, payload)
       .then((res) => {
@@ -254,69 +153,45 @@ const searchContent =(value) =>{
       .catch((err) => console.log(err));
   };
   useEffect(() => {
-    getDirectors()
+    getDirectors();
   }, [status]);
-  console.log("getAllDirectors=====>",getAllDirectors)
-  // const modifiedAdddirectorDetails = getAllDirectors.map((item) => ({
-  //   ...item,
-  //   role: (
-  //     <div className="role-color">
-  //       <span className="role-color">{item?.creator_role}</span>{" "}
-  //     </div>
-  //   ),
-  //   username: item?.account_role,
-  //   website1Andwebsite2Andwebsite3: (
-  //     <div>
-  //       {item?.website1} <br /> <span>{item?.website2}</span> <br />
-  //       {item?.website3}
-  //       {""}
-  //     </div>
-  //   ),
-  //   status:
-  //   item?.is_active === "active" ? (
-  //     <div className="font-green custom-active-button px-2">
-  //     Active
-  //   </div>
-  //   ) : (
-  //     <div className="custom-deactive-button px-2">InActive</div>
-  //   ),
-  // // icon: <AiOutlineSetting className="eye-icon-size" />,
-  // icon: <MdOutlineEdit className="eye-icon-size" />,
-  // }));
+  console.log("getAllDirectors=====>", getAllDirectors);
+
   const modifiedAdddirectorDetails = searchText.length
-  ? filteredDirectors
-      .filter((item) =>
-        item?.creator_role.toLowerCase().includes(searchText.toLowerCase())
-      )
-      .map((item) => {
-        return {
-                    role: (
+    ? filteredDirectors
+        .filter((item) =>
+          item?.creator_role.toLowerCase().includes(searchText.toLowerCase())
+        )
+        .map((item) => {
+          return {
+            role: (
               <div className="role-color">
                 <span className="role-color">{item?.creator_role}</span>{" "}
               </div>
             ),
             username: item?.account_role,
+            inused: item?.country_name,
             website1Andwebsite2Andwebsite3: (
               <div>
-                {item?.website1} <br /> <span>{item?.website2}</span> <br />
-                {item?.website3}
+                {item?.website_name} <br />
+                <span>{item?.website_name}</span> <br />
+                {item?.website_name}
                 {""}
               </div>
             ),
-            status:
-            item?.is_active === "active" ? (
-              <div className="font-green custom-active-button px-2">
-              Active
-            </div>
-            ) : (
-              <div className="custom-deactive-button px-2">InActive</div>
-            ),
-          // icon: <AiOutlineSetting className="eye-icon-size" />,
-          icon: <MdOutlineEdit className="eye-icon-size" />,
-        };
-      })
-  : getAllDirectors
-      .map((item) => {
+            status : "Active", 
+            // status:
+            //   item?.is_active === "active" ? (
+            //     <div className="font-green custom-active-button px-2">
+            //       Active
+            //     </div>
+            //   ) : (
+            //     <div className="custom-deactive-button px-2">InActive</div>
+            //   ),
+            icon: <MdOutlineEdit className="eye-icon-size" />,
+          };
+        })
+    : getAllDirectors.map((item) => {
         return {
           role: (
             <div className="role-color">
@@ -324,28 +199,31 @@ const searchContent =(value) =>{
             </div>
           ),
           username: item?.account_role,
+          inused: item?.country_name,
           website1Andwebsite2Andwebsite3: (
             <div>
-              {item?.website1} <br /> <span>{item?.website2}</span> <br />
-              {item?.website3}
+              {item?.website_name} <br /> <span>{item?.website_name}</span> <br />
+              {item?.website_name}
               {""}
             </div>
           ),
-          status:
-          item?.is_active === "active" ? (
-            <div className="font-green custom-active-button px-2">
-            Active
-          </div>
-          ) : (
-            <div className="custom-deactive-button px-2">InActive</div>
+          status : "Active",
+          // status:
+          //   item?.is_active === "active" ? (
+          //     <div className="font-green custom-active-button px-2">Active</div>
+          //   ) : (
+          //     <div className="custom-deactive-button px-2">InActive</div>
+          //   ),
+          // icon: <AiOutlineSetting className="eye-icon-size" />,
+          icon: (
+            <MdOutlineEdit
+              className="eye-icon-size"
+              onClick={() => {
+                setSelectedDirector(item);
+                handleAddDirectorPopup();
+              }}
+            />
           ),
-        // icon: <AiOutlineSetting className="eye-icon-size" />,
-        icon: <MdOutlineEdit className="eye-icon-size" 
-        onClick={() => {
-          // console.log("testetestste");
-          setSelectedDirector(item);
-          handleAddDirectorPopup();
-        }}/>,
         };
       });
   const [showAddDirectorPopup, setShowAddDirectorPopup] = useState(false);
@@ -371,8 +249,8 @@ const searchContent =(value) =>{
                   type="search"
                   placeholder="Search"
                   aria-label="Search"
-                  value={searchText} 
-                  onChange={(e)=> searchContent(e.target.value)}
+                  value={searchText}
+                  onChange={(e) => searchContent(e.target.value)}
                 />
               </form>
             </div>

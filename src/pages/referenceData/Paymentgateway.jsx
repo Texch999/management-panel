@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Table from "../table/Table";
 import { MdOutlineEdit } from "react-icons/md";
-import { useEffect} from "react";
+import { useEffect } from "react";
 import { GET_ALL_PAYMENTS } from "../../config/endpoints";
 import { call } from "../../config/axios";
 import AddCountryPopups from "../Popups/AddCountryPopups";
@@ -12,48 +12,6 @@ function Paymentgateway() {
   const [searchText, setSearchText] = useState("");
   const [status, setStatus] = useState(false);
   const [selectedPayment, setSelectedPayment] = useState();
-  // const PAYMENTGATEWAY_DETAILS = [
-  //   {
-  //     gatewayname: "Google Pay",
-  //     lastupdate: "18/08/2023",
-  //     country: "India ",
-  //     currency: "INR ₹",
-  //     status: "Active",
-  //     icon: <MdOutlineEdit className="eye-icon-size" />,
-  //   },
-  //   {
-  //     gatewayname: "Paytm",
-  //     lastupdate: "18/08/2023",
-  //     country: "India ",
-  //     currency: "INR ₹",
-  //     status: "Active",
-  //     icon: <MdOutlineEdit className="eye-icon-size" />,
-  //   },
-  //   {
-  //     gatewayname: "QR Code",
-  //     lastupdate: "18/08/2023",
-  //     country: "India ",
-  //     currency: "INR ₹",
-  //     status: "Active",
-  //     icon: <MdOutlineEdit className="eye-icon-size" />,
-  //   },
-  //   {
-  //     gatewayname: "Phone Pay",
-  //     lastupdate: "18/08/2023",
-  //     country: "India ",
-  //     currency: "INR ₹",
-  //     status: "Active",
-  //     icon: <MdOutlineEdit className="eye-icon-size" />,
-  //   },
-  //   {
-  //     gatewayname: "Google Pay",
-  //     lastupdate: "18/08/2023",
-  //     country: "India ",
-  //     currency: "INR ₹",
-  //     status: "Active",
-  //     icon: <MdOutlineEdit className="eye-icon-size" />,
-  //   },
-  // ];
 
   const cols = [
     {
@@ -104,8 +62,6 @@ function Paymentgateway() {
     await call(GET_ALL_PAYMENTS, payload)
       .then((res) => {
         console.log("API Response:", res);
-        // const responseArray=res?.data?.data
-        // setAllPayments(responseArray.length>0?responseArray.filter((item)=>item.pg_upi!==""):[] )
         setAllPayments(res?.data?.data);
       })
       .catch((err) => console.log(err));
@@ -114,24 +70,6 @@ function Paymentgateway() {
   useEffect(() => {
     getPaymentWay();
   }, [status]);
-
-  // const modifiedPaymentgatewayDetails = allPayments.map((item) => ({
-  //   ...item,
-  //   gatewayname: (
-  //     <div className="role-color">
-  //       <span className="role-color">{item?.pg_name}</span>{" "}
-  //     </div>
-  //   ),
-  //   country: <span>{item?.country_name}</span>,
-  //   lastupdate: <span>{item?.update_at}</span>,
-  //   currency: <span>{item?.currency_name}</span>,
-  //   status: (
-  //     <span>
-  //       {item?.is_active === 1 ? <div>active</div> : <div>inactive</div>}
-  //     </span>
-  //   ),
-  //   icon: <MdOutlineEdit className="eye-icon-size" />,
-  // }));
   const modifiedPaymentgatewayDetails = searchText.length
     ? filteredQuestions
         .filter((item) =>
@@ -145,11 +83,13 @@ function Paymentgateway() {
             lastupdate: item?.update_at,
             status:
               item?.is_active === 1 ? (
-                <div className="font-green custom-active-button px-2">Active</div>
+                <div className="font-green custom-active-button px-2">
+                  Active
+                </div>
               ) : (
                 <div className="custom-deactive-butto px-2">InActive</div>
               ),
-            icon: <MdOutlineEdit className="eye-icon-size" />
+            icon: <MdOutlineEdit className="eye-icon-size" />,
           };
         })
     : allPayments.map((item) => {

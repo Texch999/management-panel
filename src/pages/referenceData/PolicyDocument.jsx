@@ -4,40 +4,7 @@ import AddPolicyPopup from "../Popups/AddPolicyPopup";
 import { GET_ALL_POLICY_DOCUMENTS } from "../../config/endpoints";
 import { call } from "../../config/axios";
 import { MdOutlineEdit } from "react-icons/md";
-
 function PolicyDocument() {
-  // const POLICYDOCUMENT_DETAILS = [
-  //   {
-  //     countryname: "India ",
-  //     showwebsites: "www.texch.com",
-  //     status: "Active",
-  //     icon: <MdOutlineEdit className="eye-icon-size" />,
-  //   },
-  //   {
-  //     countryname: "USA ",
-  //     showwebsites: "www.we2call",
-  //     status: "Active",
-  //     icon: <MdOutlineEdit className="eye-icon-size" />,
-  //   },
-  //   {
-  //     countryname: "India ",
-  //     showwebsites: "www.ravanna.com",
-  //     status: "Active",
-  //     icon: <MdOutlineEdit className="eye-icon-size" />,
-  //   },
-  //   {
-  //     countryname: "Gemany ",
-  //     showwebsites: "we2call.com",
-  //     status: "Active",
-  //     icon: <MdOutlineEdit className="eye-icon-size" />,
-  //   },
-  //   {
-  //     countryname: "India ",
-  //     showwebsites: "www.texch.com",
-  //     status: "Active",
-  //     icon: <MdOutlineEdit className="eye-icon-size" />,
-  //   },
-  // ];
   const [addPolicyOpen, setAddPolicyOpen] = useState(false);
   const [allPolicyDocuments, setAllPolicyDocuments] = useState([]);
   const [filteredQuestions, setFilteredQuestions] = useState([]);

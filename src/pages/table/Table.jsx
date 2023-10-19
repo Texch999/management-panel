@@ -1,5 +1,3 @@
-import { useState } from "react";
-import { MdOutlineEdit } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 function Table(props) {
   const { data, columns } = props;

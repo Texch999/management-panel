@@ -6,6 +6,8 @@ import {
   UPDATE_COUNTRY_CURRENCY,
   ADD_PAYMENT_GATEWAY,
   UPDATE_PAYMENT_GATEWAY,
+  GET_ALL_WEBSITES,
+  GET_ALL_PAYMENTS,
 } from "../../config/endpoints";
 import { call } from "../../config/axios";
 
@@ -19,7 +21,7 @@ function AddCountryPopups(props) {
     selectedCountry,
     setData,
     selectedPayment,
-    getData
+    getData,
   } = props;
 
   const [acceptClick, setAcceptClick] = useState(false);
@@ -34,14 +36,13 @@ function AddCountryPopups(props) {
   const handleAddCountryOpenClose = () => {
     setAddCountryOpen(false);
     setData(null);
-    // setData(null);
 
-        setCountryName("");
-        setCurrencyName("");
-        setPaymentGateway("Select");
-        setPaymentDetails("");
-        setWebsite("Select");
-        setActive("Select");
+    setCountryName("");
+    setCurrencyName("");
+    setPaymentGateway("Select");
+    setPaymentDetails("");
+    setWebsite("Select");
+    setActive("Select");
   };
 
   useEffect(() => {
@@ -63,36 +64,64 @@ function AddCountryPopups(props) {
       setActive(selectedPayment.active || "Select");
     }
   }, [selectedCountry, selectedPayment]);
+  const [websiteNames, setwebsiteNames] = useState([]);
+  const getwebsiteNames = async () => {
+    const payload = {
+      register_id: "reg-20230710182031623",
+    };
+    await call(GET_ALL_WEBSITES, payload)
+      .then((res) => {
+        console.log("response=====>", res);
+        setwebsiteNames(res?.data?.data);
+      })
+      .catch((err) => console.log(err));
+  };
+
+  useEffect(() => {
+    getwebsiteNames();
+  }, []);
+  const [allPayments, setAllPayments] = useState([]);
+  const getPaymentWay = async () => {
+    const payload = {
+      register_id: "reg-20230710182031623",
+    };
+    await call(GET_ALL_PAYMENTS, payload)
+      .then((res) => {
+        console.log("API Response:", res);
+        setAllPayments(res?.data?.data);
+      })
+      .catch((err) => console.log(err));
+  };
+
+  useEffect(() => {
+    getPaymentWay();
+  }, []);
 
   const handleCreateOrUpdateCountryCurrency = async () => {
     try {
-
-      if(componentType === "CURRENCY"){
+      if (componentType === "CURRENCY") {
         const countryCurrencyUrl = selectedCountry
-        ? UPDATE_COUNTRY_CURRENCY
-        : ADD_COUNTRY_AND_CURRENCY;
+          ? UPDATE_COUNTRY_CURRENCY
+          : ADD_COUNTRY_AND_CURRENCY;
 
-      const requestData = {
-        register_id: "reg-20230909114353315",
-        country_name: countryName,
-        currency_name: currencyName,
-        payment_gateway: paymentGateway,
-        payment_details: paymentDetails,
-        website: website,
-        active: active,
-      };
+        const requestData = {
+          register_id: "reg-20230909114353315",
+          country_name: countryName,
+          currency_name: currencyName,
+          payment_gateway: paymentGateway,
+          payment_details: paymentDetails,
+          website: website,
+          active: active,
+        };
 
-      if (selectedCountry) {
-        requestData.payment_id = selectedCountry.payment_id;
-        requestData.p_id = selectedCountry.p_id;
-      }
+        if (selectedCountry) {
+          requestData.payment_id = selectedCountry.payment_id;
+          requestData.p_id = selectedCountry.p_id;
+        }
 
-      const res = await call(countryCurrencyUrl, requestData);
-      console.log('res____', res)
-      // if (res.data.error) {
-      //   console.error("API Error:", res.data.message);
-      // } else {
-        getData()
+        const res = await call(countryCurrencyUrl, requestData);
+        console.log("res____", res);
+        getData();
         setAcceptClick(true);
         setAddCountryOpen(false);
         handleAddCountryOpenClose();
@@ -103,10 +132,9 @@ function AddCountryPopups(props) {
         setPaymentDetails("");
         setWebsite("Select");
         setActive("Select");
-      // }
-
+        // }
       }
-      
+
       // Logic to call ADD_PAYMENT_GATEWAY or UPDATE_PAYMENT_GATEWAY based on selectedPayment
       if (componentType === "PAYMENT") {
         const paymentUrl = selectedPayment
@@ -129,21 +157,18 @@ function AddCountryPopups(props) {
         }
 
         const paymentRes = await call(paymentUrl, paymentData);
-        
-        getData()
-        // if (paymentRes.data.error) {
-        //   console.error("Payment API Error:", paymentRes.data.message);
-        // } else {
-          setAcceptClick(true);
-          handleAddCountryOpenClose();
-          setAddCountryOpen(false);
-          setStatus((prev) => !prev);
-          setCountryName("");
-          setCurrencyName("");
-          setPaymentGateway("Select");
-          setPaymentDetails("");
-          setWebsite("Select");
-          setActive("Select");
+
+        getData();
+        setAcceptClick(true);
+        handleAddCountryOpenClose();
+        setAddCountryOpen(false);
+        setStatus((prev) => !prev);
+        setCountryName("");
+        setCurrencyName("");
+        setPaymentGateway("Select");
+        setPaymentDetails("");
+        setWebsite("Select");
+        setActive("Select");
         // }
       }
 
@@ -177,7 +202,6 @@ function AddCountryPopups(props) {
               <Col className="ps-0">
                 <div className="small-font my-1">Country Name *</div>
                 <input
-                  name="country_name"
                   id="country_name"
                   type="text"
                   placeholder="Enter"
@@ -206,10 +230,12 @@ function AddCountryPopups(props) {
                   className="w-100 custom-select small-font input-btn-bg px-2 py-3 all-none rounded all-none"
                 >
                   <option value="Select">Select</option>
-                  <option>Phonepe</option>
-                  <option>NEFT/RTGS</option>
-                  <option>UPI</option>
-                  <option>paytm</option>
+                  <option value="All">All</option>
+                  {allPayments.map((obj) => (
+                    <option value={obj.pg_upi} selected>
+                      {obj.pg_upi}
+                    </option>
+                  ))}
                 </select>
               </Col>
             </Row>
@@ -239,10 +265,12 @@ function AddCountryPopups(props) {
                   className="w-100 custom-select small-font input-btn-bg px-2 py-3 all-none rounded all-none"
                 >
                   <option value="Select">Select</option>
-                  <option>www.texch.com</option>
-                  <option>www.we2call.com</option>
-                  <option>www.ravana.com</option>
-                  <option>www.brahama.com</option>
+                  <option value="All">All</option>
+                  {websiteNames.map((obj) => (
+                    <option value={obj.web_url} selected>
+                      {obj.web_url}
+                    </option>
+                  ))}
                 </select>
               </Col>
               <Col className="pe-0">
@@ -268,7 +296,11 @@ function AddCountryPopups(props) {
                   className="add-button  small-font rounded px-4 py-3 mx-2 my-3 w-50 all-none"
                   onClick={handleCreateOrUpdateCountryCurrency}
                 >
-                  {selectedCountry ? "Update" : selectedPayment ? "Update" : "Create"}
+                  {selectedCountry
+                    ? "Update"
+                    : selectedPayment
+                    ? "Update"
+                    : "Create"}
                 </button>
               </Col>
             </Row>
@@ -286,7 +318,3 @@ function AddCountryPopups(props) {
 }
 
 export default AddCountryPopups;
-
-
-
-
