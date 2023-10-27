@@ -197,51 +197,49 @@ function AddCountryPopups(props) {
           </div>
         </Modal.Header>
         <Modal.Body className="px-5">
-          <Container fluid className="my-2">
-            <Row>
-              <Col className="ps-0">
-                <div className="small-font my-1">Country Name *</div>
-                <input
-                  id="country_name"
-                  type="text"
-                  placeholder="Enter"
-                  className="w-100 custom-select small-font login-inputs input-btn-bg px-2 py-3 all-none rounded all-none"
-                  value={countryName}
-                  onChange={(e) => setCountryName(e.target.value)}
-                ></input>
-              </Col>
-              <Col className="pe-0">
-                <div className="small-font my-1">Currency Name *</div>
-                <input
-                  type="text"
-                  placeholder="Enter"
-                  name="currency_name"
-                  className="w-100 custom-select small-font login-inputs input-btn-bg px-2 py-3 all-none rounded all-none"
-                  value={currencyName}
-                  onChange={(e) => setCurrencyName(e.target.value)}
-                ></input>
-              </Col>
-              <Col className="pe-0">
-                <div className="small-font my-1">Payment Gateway *</div>
-                <select
-                  name="payment_gateway"
-                  value={paymentGateway}
-                  onChange={(e) => setPaymentGateway(e.target.value)}
-                  className="w-100 custom-select small-font input-btn-bg px-2 py-3 all-none rounded all-none"
-                >
-                  <option value="Select">Select</option>
-                  <option value="All">All</option>
-                  {allPayments.map((obj) => (
-                    <option value={obj.pg_upi} selected>
-                      {obj.pg_upi}
-                    </option>
-                  ))}
-                </select>
-              </Col>
-            </Row>
-          </Container>
-          <Container fluid className="my-2">
-            <Row>
+          <Row>
+            <Col>
+              <div className="small-font my-1">Country Name *</div>
+              <input
+                id="country_name"
+                type="text"
+                placeholder="Enter"
+                className="w-100 custom-select small-font login-inputs input-btn-bg px-2 py-3 all-none rounded all-none"
+                value={countryName}
+                onChange={(e) => setCountryName(e.target.value)}
+              ></input>
+            </Col>
+            <Col>
+              <div className="small-font my-1">Currency Name *</div>
+              <input
+                type="text"
+                placeholder="Enter"
+                name="currency_name"
+                className="w-100 custom-select small-font login-inputs input-btn-bg px-2 py-3 all-none rounded all-none"
+                value={currencyName}
+                onChange={(e) => setCurrencyName(e.target.value)}
+              ></input>
+            </Col>
+            <Col>
+              <div className="small-font my-1">Payment Gateway *</div>
+              <select
+                name="payment_gateway"
+                value={paymentGateway}
+                onChange={(e) => setPaymentGateway(e.target.value)}
+                className="w-100 custom-select small-font input-btn-bg px-2 py-3 all-none rounded all-none"
+              >
+                <option value="Select">Select</option>
+                <option value="All">All</option>
+                {allPayments.map((obj) => (
+                  <option value={obj.pg_upi} selected>
+                    {obj.pg_upi}
+                  </option>
+                ))}
+              </select>
+            </Col>
+          </Row>
+          <Row className="mt-2">
+            <Col className="col-8">
               <div className="small-font my-1">Payment Details *</div>
               <textarea
                 name="payment_details"
@@ -252,9 +250,23 @@ function AddCountryPopups(props) {
                 onChange={(e) => setPaymentDetails(e.target.value)}
                 className="w-100 custom-select small-font login-inputs input-btn-bg rounded h9vh"
               ></textarea>
-            </Row>
-          </Container>
-          <Container fluid className="my-2">
+            </Col>
+            <Col className="col-4">
+              <div className="small-font my-1">In Active *</div>
+              <select
+                name="active"
+                value={active}
+                onChange={(e) => setActive(e.target.value)}
+                className="w-100 custom-select small-font input-btn-bg px-2 py-3 all-none rounded all-none"
+              >
+                <option value="Select">Select</option>
+                <option>Yes</option>
+                <option>No</option>
+              </select>
+            </Col>
+          </Row>
+
+          {/* <Container fluid className="my-2">
             <Row>
               <Col className="ps-0" xs={8}>
                 <div className="small-font my-1">Show Website *</div>
@@ -273,38 +285,23 @@ function AddCountryPopups(props) {
                   ))}
                 </select>
               </Col>
-              <Col className="pe-0">
-                <div className="small-font my-1">In Active *</div>
-                <select
-                  name="active"
-                  value={active}
-                  onChange={(e) => setActive(e.target.value)}
-                  className="w-100 custom-select small-font input-btn-bg px-2 py-3 all-none rounded all-none"
-                >
-                  <option value="Select">Select</option>
-                  <option>Yes</option>
-                  <option>No</option>
-                </select>
-              </Col>
-            </Row>
-          </Container>
-          <Container>
-            <Row>
-              <Col xs={8}>
-                <button
-                  type="submit"
-                  className="add-button  small-font rounded px-4 py-3 mx-2 my-3 w-50 all-none"
-                  onClick={handleCreateOrUpdateCountryCurrency}
-                >
-                  {selectedCountry
-                    ? "Update"
-                    : selectedPayment
-                    ? "Update"
-                    : "Create"}
-                </button>
-              </Col>
-            </Row>
-          </Container>
+            </Row> 
+          </Container>*/}
+          <Row>
+            <Col className="col-8">
+              <button
+                type="submit"
+                className="add-button  small-font rounded px-4 py-3 my-3 w-50 all-none"
+                onClick={handleCreateOrUpdateCountryCurrency}
+              >
+                {selectedCountry
+                  ? "Update"
+                  : selectedPayment
+                  ? "Update"
+                  : "Create"}
+              </button>
+            </Col>
+          </Row>
         </Modal.Body>
       </Modal>
       <MatchSubmitPopup

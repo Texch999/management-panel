@@ -190,57 +190,77 @@ function AddDirectorsPopup(props) {
         </Modal.Header>
         <Modal.Body>
           <div className="w-100 px-4">
-            <Container fluid className="my-2">
-              <Row>
-                <Col className="col-6">
-                  <div className="small-font my-1">Role *</div>
+            <Row>
+              <Col>
+                <div className="small-font my-1">Role *</div>
+                <select
+                  value={role || " "}
+                  name="account_role"
+                  onChange={(e) => setRole(e.target.value)}
+                  className="w-100 custom-select small-font login-inputs input-btn-bg px-2 py-2 all-none rounded all-none"
+                >
+                  <option value="select">Select</option>
+                  <option value="director"> Director </option>
+                  <option value="superadmin"> SuperAdmin</option>
+                </select>
+              </Col>
+              <Col>
+                <div className="small-font my-1">Select Country *</div>
+                <select
+                  value={countryName}
+                  name="country_name"
+                  onChange={(e) => setCountryName(e.target.value)}
+                  className="w-100 custom-select small-font login-inputs input-btn-bg px-2 py-2 all-none rounded all-none"
+                >
+                  <option value="select">select</option>
+                  <option value="All">All</option>
+                  {allCountries.map((obj) => (
+                    <option value={obj.country_name} selected>
+                      {obj.country_name}
+                    </option>
+                  ))}
+                </select>
+              </Col>
+            </Row>
+            <Row className="mt-2">
+              <Col>
+                {" "}
+                <div className="d-flex flex-column">
+                  <div className="small-font mb-1">{firstTextBox}</div>
                   <select
-                    value={role || " "}
-                    name="account_role"
-                    onChange={(e) => setRole(e.target.value)}
-                    className="w-100 custom-select small-font login-inputs input-btn-bg px-2 py-2 all-none rounded all-none"
-                  >
-                    <option value="select">Select</option>
-                    <option value="director"> Director </option>
-                    <option value="superadmin"> SuperAdmin</option>
-                  </select>
-                </Col>
-                <Col className="col-6">
-                  <div className="small-font my-1">Select Country *</div>
-                  <select
-                    value={countryName}
-                    name="country_name"
-                    onChange={(e) => setCountryName(e.target.value)}
-                    className="w-100 custom-select small-font login-inputs input-btn-bg px-2 py-2 all-none rounded all-none"
+                    value={website}
+                    name="website_name"
+                    onChange={(e) => setWebsite(e.target.value)}
+                    className="w-100 custom-select small-font input-btn-bg px-2 py-2 all-none rounded all-none"
                   >
                     <option value="select">select</option>
                     <option value="All">All</option>
-                    {allCountries.map((obj) => (
-                      <option value={obj.country_name} selected>
-                        {obj.country_name}
+                    {websiteNames.map((obj) => (
+                      <option value={obj.web_url} selected>
+                        {obj.web_url}
                       </option>
                     ))}
                   </select>
-                </Col>
-              </Row>
-            </Container>
-            <div className="d-flex flex-column">
-              <div className="small-font mb-1">{firstTextBox}</div>
-              <select
-                value={website}
-                name="website_name"
-                onChange={(e) => setWebsite(e.target.value)}
-                className="w-100 custom-select small-font input-btn-bg px-2 py-2 all-none rounded all-none"
-              >
-                <option value="select">select</option>
-                <option value="All">All</option>
-                {websiteNames.map((obj) => (
-                  <option value={obj.web_url} selected>
-                    {obj.web_url}
-                  </option>
-                ))}
-              </select>
-            </div>
+                </div>
+              </Col>
+              <Col>
+                {" "}
+                <div className="d-flex flex-column">
+                  <div className="small-font mb-1">Payment Gateway *</div>
+                  <select
+                    value={website}
+                    name="website_name"
+                    onChange={(e) => setWebsite(e.target.value)}
+                    className="w-100 custom-select small-font input-btn-bg px-2 py-2 all-none rounded all-none"
+                  >
+                    <option value="select">Select</option>
+                    <option value="select">AAA</option>
+                    <option value="select">BBB</option>
+                  </select>
+                </div>
+              </Col>
+            </Row>
+
             <div className="d-flex flex-column w-100 mt-2">
               <div className="small-font mb-1 mt-1">User ID *</div>
               <div className="w-100">
