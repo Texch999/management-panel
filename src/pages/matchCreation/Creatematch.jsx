@@ -342,13 +342,13 @@ function Creatematch() {
                 value={createMatch?.website_name || ""}
                 onChange={(e) => handelChange(e)}
               >
-                <option value="select">select</option>
-                      <option value="All">All</option>
-                      {websiteNames.map((obj) => (
-                        <option value={obj.web_url} selected>
-                          {obj.web_url}
-                        </option>
-                      ))}
+                <option>select</option>
+                <option value="All">All</option>
+                {websiteNames.map((obj) => (
+                  <option value={obj.web_url} selected>
+                    {obj.web_url}
+                  </option>
+                ))}
               </select>
             </div>
           </div>

@@ -31,12 +31,12 @@ function Adddirector() {
       header: (
         <div className="d-flex justify-content-center align-items-center ">
           <div className="marginright-10">ROLE</div>
-          <div>
+          {/* <div>
             <div>
               <MdKeyboardArrowUp className="fs-6" />
             </div>
             <MdKeyboardArrowDown className="fs-6 margintop-10" />
-          </div>
+          </div> */}
         </div>
       ),
       field: "role",
@@ -45,12 +45,12 @@ function Adddirector() {
       header: (
         <div className="d-flex justify-content-center align-items-center">
           <div className="marginright-10">USER NAME</div>
-          <div>
+          {/* <div>
             <div>
               <MdKeyboardArrowUp className="fs-6" />
             </div>
             <MdKeyboardArrowDown className="fs-6 margintop-10" />
-          </div>
+          </div> */}
         </div>
       ),
       field: "username",
@@ -59,12 +59,12 @@ function Adddirector() {
       header: (
         <div className="d-flex justify-content-center align-items-center">
           <div className="marginright-10">In USED</div>
-          <div>
+          {/* <div>
             <div>
               <MdKeyboardArrowUp className="fs-6" />
             </div>
             <MdKeyboardArrowDown className="fs-6 margintop-10" />
-          </div>
+          </div> */}
         </div>
       ),
       field: "inused",
@@ -73,12 +73,12 @@ function Adddirector() {
       header: (
         <div className="d-flex justify-content-center align-items-center">
           <div className="marginright-10">WEBSITE</div>
-          <div>
+          {/* <div>
             <div>
               <MdKeyboardArrowUp className="fs-6" />
             </div>
             <MdKeyboardArrowDown className="fs-6 margintop-10" />
-          </div>
+          </div> */}
         </div>
       ),
       field: "website1Andwebsite2Andwebsite3",
@@ -87,12 +87,12 @@ function Adddirector() {
       header: (
         <div className="d-flex justify-content-center align-items-center">
           <div className="marginright-10">BILLING</div>
-          <div>
+          {/* <div>
             <div>
               <MdKeyboardArrowUp className="fs-6" />
             </div>
             <MdKeyboardArrowDown className="fs-6 margintop-10" />
-          </div>
+          </div> */}
         </div>
       ),
       field: "billing",
@@ -101,12 +101,12 @@ function Adddirector() {
       header: (
         <div className="d-flex justify-content-center align-items-center">
           <div className="marginright-10">PROFIT/LOSS</div>
-          <div>
+          {/* <div>
             <div>
               <MdKeyboardArrowUp className="fs-6" />
             </div>
             <MdKeyboardArrowDown className="fs-6 margintop-10" />
-          </div>
+          </div> */}
         </div>
       ),
       field: "profitloss",
@@ -115,12 +115,12 @@ function Adddirector() {
       header: (
         <div className="d-flex justify-content-center align-items-center">
           <div className="marginright-10">STATUS</div>
-          <div>
+          {/* <div>
             <div>
               <MdKeyboardArrowUp className="fs-6" />
             </div>
             <MdKeyboardArrowDown className="fs-6 margintop-10" />
-          </div>
+          </div> */}
         </div>
       ),
       field: "status",
@@ -130,12 +130,12 @@ function Adddirector() {
       header: (
         <div className="d-flex justify-content-center align-items-center">
           <div className="marginright-10">ACTION</div>
-          <div>
+          {/* <div>
             <div>
               <MdKeyboardArrowUp className="fs-6" />
             </div>
             <MdKeyboardArrowDown className="fs-6 margintop-10" />
-          </div>
+          </div> */}
         </div>
       ),
       field: "icon",
@@ -171,14 +171,7 @@ function Adddirector() {
             ),
             username: item?.user_name,
             inused: item?.country_name,
-            website1Andwebsite2Andwebsite3: (
-              <div>
-                {item?.website_name} <br />
-                <span>{item?.website_name}</span> <br />
-                {item?.website_name}
-                {""}
-              </div>
-            ),
+            website1Andwebsite2Andwebsite3: item?.website_name,
             status: "Active",
             // status:
             //   item?.is_active === "active" ? (
@@ -200,22 +193,11 @@ function Adddirector() {
           ),
           username: item?.user_name,
           inused: item?.country_name,
-          website1Andwebsite2Andwebsite3: (
-            <div>
-              {item?.website_name} <br /> <span>{item?.website_name}</span>{" "}
-              <br />
-              {item?.website_name}
-              {""}
-            </div>
+          website1Andwebsite2Andwebsite3: item?.website_name,
+          //status: "Active",
+          status: (
+            <div className="font-green custom-active-button px-2">Active</div>
           ),
-          status: "Active",
-          // status:
-          //   item?.is_active === "active" ? (
-          //     <div className="font-green custom-active-button px-2">Active</div>
-          //   ) : (
-          //     <div className="custom-deactive-button px-2">InActive</div>
-          //   ),
-          // icon: <AiOutlineSetting className="eye-icon-size" />,
           icon: (
             <MdOutlineEdit
               className="eye-icon-size"

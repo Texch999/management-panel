@@ -254,12 +254,22 @@ function OfferPosterAdds() {
                       onChange={(e) => handelChange(e)}
                       className="w-100 custom-select small-font input-btn-bg px-2 py-3 all-none rounded all-none"
                     >
-                      {/* <option selected>Select</option> */}
-                      <option value="select">Select</option>
-                      <option value="Demo">Demo</option>
-                      <option value="Demo">Demo</option>
-                      <option value="Demo">Demo</option>
-                      <option value="Demo">Demo</option>
+                      {allPosters?.user === "All" ? (
+                        <>
+                          <option value="" selected>
+                            Select....
+                          </option>
+                          <option value="user">user</option>
+                          <option value="Admin">Admin</option>
+                        </>
+                      ) : (
+                        <>
+                          <option value="" selected>
+                            Select
+                          </option>
+                          <option value="personal">personal</option>
+                        </>
+                      )}
                     </select>
                   </div>
                 </Col>

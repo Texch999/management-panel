@@ -3,7 +3,7 @@ import Table from "../table/Table";
 import Totalaccount from "../home/Totalaccount";
 import { MdKeyboardArrowUp, MdKeyboardArrowDown } from "react-icons/md";
 import AddWebsitePopup from "../Popups/AddWebsitePopup";
-import { useEffect,useState} from "react";
+import { useEffect, useState } from "react";
 import { GET_ALL_WEBSITES } from "../../config/endpoints";
 import { call } from "../../config/axios";
 function Addwebsites() {
@@ -87,12 +87,12 @@ function Addwebsites() {
       header: (
         <div className="d-flex justify-content-center align-items-center">
           <div className="marginright-10">WEBSITE NAME</div>
-          <div>
+          {/* <div>
             <div>
               <MdKeyboardArrowUp className="fs-6" />
             </div>
             <MdKeyboardArrowDown className="fs-6 margintop-10" />
-          </div>
+          </div> */}
         </div>
       ),
       field: "websitename",
@@ -101,12 +101,12 @@ function Addwebsites() {
       header: (
         <div className="d-flex justify-content-center align-items-center">
           <div className="marginright-10">IS USED</div>
-          <div>
+          {/* <div>
             <div>
               <MdKeyboardArrowUp className="fs-6" />
             </div>
             <MdKeyboardArrowDown className="fs-6 margintop-10" />
-          </div>
+          </div> */}
         </div>
       ),
       field: "isAndusedAndthree",
@@ -115,12 +115,12 @@ function Addwebsites() {
       header: (
         <div className="d-flex justify-content-center align-items-center">
           <div className="marginright-10">USER NAME</div>
-          <div>
+          {/* <div>
             <div>
               <MdKeyboardArrowUp className="fs-6" />
             </div>
             <MdKeyboardArrowDown className="fs-6 margintop-10" />
-          </div>
+          </div> */}
         </div>
       ),
       field: "userAndfullAndname",
@@ -129,12 +129,12 @@ function Addwebsites() {
       header: (
         <div className="d-flex justify-content-center align-items-center ">
           <div className="marginright-10">ROLE</div>
-          <div>
+          {/* <div>
             <div>
               <MdKeyboardArrowUp className="fs-6" />
             </div>
             <MdKeyboardArrowDown className="fs-6 margintop-10" />
-          </div>
+          </div> */}
         </div>
       ),
       field: "role1Androle2Androle3",
@@ -144,9 +144,9 @@ function Addwebsites() {
     const payload = {
       register_id: "reg-20230710182031623",
     };
-    await call(GET_ALL_WEBSITES,payload)
+    await call(GET_ALL_WEBSITES, payload)
       .then((res) => {
-        console.log("response====>",res)
+        console.log("response====>", res);
         setAllWebsites(res?.data?.data);
       })
 
@@ -207,33 +207,35 @@ function Addwebsites() {
                 {item?.account_role} <br /> <span>{item?.role2}</span> <br />
                 {item?.role3}
                 {""}
-              </div>)
+              </div>
+            ),
           };
         })
     : allWebsites.map((item) => {
         return {
           websitename: <span>{item?.web_url}</span>,
-            isAndusedAndthree: (
-              <div>
-                {item?.is_used} <br /> <span>{item?.used}</span> <br />
-                {item?.three}
-                {""}
-              </div>
-            ),
-            userAndfullAndname: (
-              <div>
-                {item?.user_name} <br /> <span>{item?.full}</span> <br />
-                {item?.name}
-              </div>
-            ),
-            role1Androle2Androle3: (
-              <div className="role-color">
-                {item?.account_role} <br /> <span>{item?.role2}</span> <br />
-                {item?.role3}
-                {""}
-              </div>)
+          isAndusedAndthree: (
+            <div>
+              {item?.is_used} <br /> <span>{item?.used}</span> <br />
+              {item?.three}
+              {""}
+            </div>
+          ),
+          userAndfullAndname: (
+            <div>
+              {item?.user_name} <br /> <span>{item?.full}</span> <br />
+              {item?.name}
+            </div>
+          ),
+          role1Androle2Androle3: (
+            <div className="role-color">
+              {item?.account_role} <br /> <span>{item?.role2}</span> <br />
+              {item?.role3}
+              {""}
+            </div>
+          ),
         };
-  });
+      });
   const [showAddWebPopup, setShowAddWebPopup] = useState(false);
   const handleShowAddWebPopup = () => {
     setShowAddWebPopup(true);
@@ -247,9 +249,7 @@ function Addwebsites() {
 
       <div className="sidebar-bg rounded">
         <div className="d-flex row">
-          <h6 className="h6 font-grey m-0 px-4 pt-3">
-            Add Website
-          </h6>
+          <h6 className="h6 font-grey m-0 px-4 pt-3">Add Website</h6>
           <div className=" d-flex justify-conten-around">
             <div className="containaer-fluid ps-2 w-20">
               <form className="d-flex" role="search">
