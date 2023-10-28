@@ -8,7 +8,7 @@ import { TbUserEdit } from "react-icons/tb";
 import { LuFileClock } from "react-icons/lu";
 import { TbFileText } from "react-icons/tb";
 import AddDirectorsPopup from "../Popups/AddDirectorsPopup";
-import { GET_ADMIN_ACCOUNTS } from "../../config/endpoints";
+import { GET_ADMIN_USER_INFO } from "../../config/endpoints";
 import { call } from "../../config/axios";
 
 function Adddirector() {
@@ -145,7 +145,7 @@ function Adddirector() {
     const payload = {
       creator_id: "company",
     };
-    await call(GET_ADMIN_ACCOUNTS, payload)
+    await call(GET_ADMIN_USER_INFO, payload)
       .then((res) => {
         setAllDirectors(res?.data?.data);
       })

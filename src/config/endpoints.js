@@ -17,7 +17,6 @@ const ADD_POLICY = "/management/add_policy";
 const UPDATE_COUNTRY_CURRENCY = "/management/update_countryand_currency";
 const UPDATE_POLICY = "/management/update_policy";
 const GET_ALL_PACKAGES = "/packages/get_packages";
-const GET_ADMIN_ACCOUNTS = "/admin/get_admin_accounts_user_info";
 const GET_USER_LIST = "offline-management/get_user_list";
 const ACCOUNT_REGISTERATION = "/account_register";
 const UPDATE_PROFILE = "/admin/admin_profile_update_info";
@@ -160,11 +159,6 @@ exports.GET_ALL_PACKAGES = {
   method: POST,
 };
 
-exports.GET_ADMIN_ACCOUNTS = {
-  url: GET_ADMIN_ACCOUNTS,
-  method: POST,
-};
-
 exports.ACCOUNT_REGISTERATION = {
   url: ACCOUNT_REGISTERATION,
   method: POST,
@@ -280,13 +274,13 @@ exports.GET_ADMIN_USER_INFO = {
 
 exports.GET_MATCHES_DATA = {
   url: GET_MATCHES_DATA,
-  method: POST
-}
+  method: POST,
+};
 
-exports.CREATE_OFFLINE_MATCHES= {
+exports.CREATE_OFFLINE_MATCHES = {
   url: CREATE_OFFLINE_MATCHES,
-  method: POST
-}
+  method: POST,
+};
 
 exports.GENERATE_SIGNED_URL = {
   url: GENERATE_SIGNED_URL,

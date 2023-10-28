@@ -253,9 +253,26 @@ function AddDirectorsPopup(props) {
                     onChange={(e) => setWebsite(e.target.value)}
                     className="w-100 custom-select small-font input-btn-bg px-2 py-2 all-none rounded all-none"
                   >
-                    <option value="select">Select</option>
-                    <option value="select">AAA</option>
-                    <option value="select">BBB</option>
+                    {/* <option value=""selected>select</option>
+                    <option value="All">All</option>  */}
+                    {role?.account_role === "director" ? (
+                      <>
+                        <option value="" selected>
+                          Select....
+                        </option>
+                        <option value="all">All</option>
+                      </>
+                    ) : (
+                      <>
+                        <option value="" selected>
+                          Select
+                        </option>
+                        <option value="select">BBB</option>
+                      </>
+                    )}
+
+                    {/* <option value="select">AAA</option>
+                    <option value="select">BBB</option> */}
                   </select>
                 </div>
               </Col>
