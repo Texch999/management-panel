@@ -17,7 +17,7 @@ function ManageTournament() {
   const manageDropdown = [
     {
       head: "Tours",
-      options: ["All", "Tour", "Cricket Tour", "Sports Tour", "Casino TOur"],
+      options: ["All Tour", "Cricket Tour", "Sports Tour", "Casino TOur", "Entertainment Tour"],
     },
     {
       head: "Website",

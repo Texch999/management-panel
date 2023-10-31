@@ -5,34 +5,74 @@ import { AiOutlineClockCircle } from "react-icons/ai";
 import { FaCalendarDays } from "react-icons/fa6";
 import { HiMiniArrowUpCircle } from "react-icons/hi2";
 import ReturnedPaymentPopup from "../Popups/ReturnedPaymentPopup";
+import { call } from '../../config/axios';
+import { ADD_TOURS } from '../../config/endpoints'
 
 function AddTours() {
+  const [website, setWebsite] = useState([]);
+  const [country, setCountry] = useState("");
+  // const [quotation, setQuotation] = useState("");
+  // const [date, setDate] = useState("");
+  // const [time, setTime] = useState("");
+  // const [title, setTitle] = useState("");
   const toursType = [
-    "1.Tour",
-    "2.Cricket Tour",
-    "3.Sports Tour",
-    "4.Casino Tour",
-    "5.Entertainment Tour",
+    "1.Cricket Tour",
+    "2.Sports Tour",
+    "3.Casino Tour",
+    "4.Entertainment Tour"
   ];
   const [showReturnPopup, setShowReturnPopup] = useState(false);
-  const handleReturnPaymentpopup = () => {
-    setShowReturnPopup(true);
+  const [formData, setFormData] = useState({});
+  const [activeIndex, setActiveIndex] = useState();
+
+  const handleChange = (e, i) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+    setActiveIndex(i);
   };
+  const handleReturnPaymentpopup = () => {
+    // setShowReturnPopup(true);
+    const payload = {
+      scheduled_date:formData.date,
+      time:formData.time,
+      poster_title:formData.title,
+      quotations:formData.quotation,
+      tour_name:formData.tourtype,
+      website,
+      country,
+      uploadposter:formData.poster
+    }
+    // console.log(formData,website,country)
+    call(ADD_TOURS, payload)
+      // .then((res)=>res.json())
+      .then((da) => console.log("response====>", da))
+      .catch((err) => console.log(err));
+    };
+  // console.log(formData,website,country, "..formdata");
   return (
     <div className="add-tours p-3 mt-3">
       <div className="row d-flex justify-content-end">
         <div className="col-4 d-flex justify-content-between">
-          <select className="tours-box p-2 medium-font rounded-top text-center">
-            <option>Select Websites</option>
-            <option></option>
-            <option></option>
-            <option></option>
+          <select
+            className="tours-box p-2 medium-font rounded-top text-center"
+            onChange={(e) => setWebsite(e.target.value)}
+            value={website || ""}
+            name="selectedWebsite"
+          >
+            <option selected>Select Websites</option>
+            <option value="www.we2call.com">www.we2call.com</option>
+            <option value="www.texchange.com">www.texchange.com</option>
+            <option value="www.brahma.com">www.brahma.com</option>
           </select>
-          <select className="tours-box p-2 medium-font rounded-top text-center">
-            <option>Select Country</option>
-            <option></option>
-            <option></option>
-            <option></option>
+          <select
+            className="tours-box p-2 medium-font rounded-top text-center"
+            onChange={(e) => setCountry(e.target.value)}
+            value={country || ""}
+            name="selectedCountry"
+          >
+            <option selected>Select Country</option>
+            <option value="malaysia">Malaysia</option>
+            <option value="USA">USA</option>
+            <option value="India">India</option>
           </select>
         </div>
       </div>
@@ -40,6 +80,7 @@ function AddTours() {
         return (
           <div>
             <div className="sub-head medium-font">{item}</div>
+            {activeIndex===index?formData['tourtype']=item:''}
             <div className="row mt-2 vh-17vh">
               <div className="col-3">
                 <div>
@@ -51,6 +92,9 @@ function AddTours() {
                       className="file-input"
                       placeholder="Select file"
                       styles="visibility:hidden;"
+                      name="poster"
+                      onChange={(e)=>handleChange(e, index)}
+                      value={activeIndex === index ? formData.poster : ""}
                     ></input>
                     <HiMiniArrowUpCircle className="ions-clr" />
                   </div>
@@ -59,14 +103,27 @@ function AddTours() {
                   <div className="col-6">
                     <div className="medium-font font-grey">Date</div>
                     <div className="upload-poster-div p-2 d-flex align-items-center">
-                      <input type="date" className="file-input"></input>
+                      <input
+                        type="date"
+                        className="file-input"
+                        name="date"
+                        // onChange={(e) => setFormData(e.target.value)}
+                        onChange={(e) => handleChange(e, index)}
+                        value={activeIndex === index ? formData.date : ""}
+                      ></input>
                       <FaCalendarDays className="ions-clr" />
                     </div>
                   </div>
                   <div className="col-6">
                     <div className="medium-font font-grey">Time</div>
                     <div className="upload-poster-div p-2 d-flex align-items-center">
-                      <input type="time" className="file-input"></input>
+                      <input
+                        type="time"
+                        className="file-input"
+                        name="time"
+                        onChange={(e) => handleChange(e, index)}
+                        value={activeIndex === index ? formData.time : ""}
+                      ></input>
                       <AiOutlineClockCircle className="ions-clr" />
                     </div>
                   </div>
@@ -75,13 +132,23 @@ function AddTours() {
               <div className="col">
                 <div className="medium-font font-grey">Poster Title</div>
                 <div className="upload-poster-div p-2 d-flex align-items-center">
-                  <textarea className="text-input"></textarea>
+                  <textarea
+                    className="text-input"
+                    onChange={(e) => handleChange(e, index)}
+                    value={activeIndex === index ? formData.title : ""}
+                    name="title"
+                  ></textarea>
                 </div>
               </div>
               <div className="col">
                 <div className="medium-font font-grey">Quotations</div>
                 <div className="upload-poster-div p-2 d-flex align-items-center">
-                  <textarea className="text-input"></textarea>
+                  <textarea
+                    className="text-input"
+                    onChange={(e) => handleChange(e, index)}
+                    name="quotation"
+                    value={activeIndex === index ? formData.quotation : ""}
+                  ></textarea>
                 </div>
               </div>
             </div>
@@ -90,6 +157,7 @@ function AddTours() {
                 <button
                   type="button"
                   className="btn btn-primary"
+                  // value={activeIndex.inculdes(index) ? toursType[index]: ""}
                   onClick={() => handleReturnPaymentpopup()}
                 >
                   Submit
