@@ -162,7 +162,7 @@ function OfferPosterAdds() {
     getallCountries();
   }, []);
   console.log("allCountries", allCountries);
-  console.log(allOffers, ".........allOffers");
+
   return (
     <div className="p-4">
       <Container fluid className="my-2">

@@ -13,7 +13,6 @@ import { call } from "../../config/axios";
 
 function Creatematch() {
   const [createMatch, setcreateMatch] = useState({});
-  const [matchTypeSelect, setMatchTypeSelect] = useState("");
   const [Error, setError] = useState(false);
   const handleSubmitMatch = async () => {
     if (
@@ -29,7 +28,7 @@ function Creatematch() {
     ) {
       return setError("Missing Required feilds");
     } else {
-      console.log("createMatch", createMatch)
+      console.log("createMatch", createMatch);
       await call(CREATE_OFFLINE_MATCHES, {
         register_id: "company",
         series_name: createMatch.series_name,
@@ -45,12 +44,14 @@ function Creatematch() {
         time: createMatch.time,
         game_object: {
           first_innings_fancy_overs: getOvers(createMatch?.match_type, "first"),
-          second_innings_fancy_overs: getOvers(createMatch?.match_type, "second"),
+          second_innings_fancy_overs: getOvers(
+            createMatch?.match_type,
+            "second"
+          ),
           match_type: createMatch?.match_type,
         },
       }).then((res) => {
         console.log("------------>", res.data);
-        // setcreateMatch(res?.data);
       });
     }
   };
@@ -59,13 +60,8 @@ function Creatematch() {
   }, []);
 
   const handelChange = (e) => {
-    //console.log(itm, "$$$$$$$$$$$$$$$$");
-    console.log("e.target.name", e.target.name)
+    console.log("e.target.name", e.target.name);
     setcreateMatch({ ...createMatch, [e.target.name]: e.target.value });
-  };
-
-  const handleMatchTypeSelect = (value) => {
-    setMatchTypeSelect(value);
   };
 
   const top_cricket_countries = [
@@ -78,8 +74,9 @@ function Creatematch() {
     "SL",
     "WI",
     "BAN",
-    "AFG"
+    "AFG",
   ];
+
   const sportsDropdowns = [
     {
       headName: "Sports Name",
@@ -89,11 +86,7 @@ function Creatematch() {
     {
       headName: "Team1",
       keyValue: "team1",
-      options: top_cricket_countries
-      // .filter(
-      //   (keyValue) => keyValue !== createMatch?.team1 && keyValue !== createMatch?.team2
-      // )
-      ?.map((item, index) => {
+      options: top_cricket_countries?.map((item, index) => {
         return (
           <option key={index} value={item}>
             {item}
@@ -105,16 +98,14 @@ function Creatematch() {
       headName: "Team2",
       keyValue: "team2",
       options: top_cricket_countries
-      // .filter(
-      //   (keyValue) => keyValue !== createMatch?.team1 && keyValue !== createMatch?.team2
-      // )?
-      .map((item, index) => {
-        return (
-          <option key={index} value={item}>
-            {item}
-          </option>
-        );
-      }),
+        ?.filter((country) => country !== createMatch?.team1)
+        .map((item, index) => {
+          return (
+            <option key={index} value={item}>
+              {item}
+            </option>
+          );
+        }),
     },
   ];
 
@@ -146,27 +137,12 @@ function Creatematch() {
       cspan: "col",
       name: "first_fancy",
       overs: getOvers(createMatch?.match_type, "first"),
-      // createMatch?.match_type === "T10"
-      //   ? [1, 3, 5, 8]
-      //   : createMatch?.match_type === "T20"
-      //   ? [1, 3, 5, 8, 12, 15, 18]
-      //   : createMatch?.match_type === "odi"
-      //   ? [1, 3, 5, 8, 15, 20, 25]
-      //   : "",
     },
     {
       heading: "2nd Inn",
       cspan: "col",
       name: "second_fancy",
       overs: getOvers(createMatch?.match_type, "second"),
-      // overs:
-      //   createMatch?.match_type === "T10"
-      //     ? [1, 3]
-      //     : createMatch?.match_type === "T20"
-      //     ? [1, 5, 10]
-      //     : createMatch?.match_type === "odi"
-      //     ? [1, 10, 20]
-      //     : "",
     },
   ];
 
@@ -406,7 +382,7 @@ function Creatematch() {
                     name={value.name}
                     value={value.overs}
                     disabled
-                    onChange={(e)=>handelChange(e)}
+                    onChange={(e) => handelChange(e)}
                   ></input>
                 </div>
               </div>

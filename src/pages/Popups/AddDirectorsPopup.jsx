@@ -158,23 +158,6 @@ function AddDirectorsPopup(props) {
   }, []);
   console.log("allCountries", allCountries);
 
-  // const [allUsers, setgetallUsers] = useState([]);
-  // const getallUsers = async () => {
-  //   const payload = {
-  //     creator_id: "company",
-  //   };
-  //   await call(GET_ADMIN_USER_INFO, payload)
-  //     .then((res) => {
-  //       console.log("response=====>", res);
-  //       setgetallUsers(res?.data?.data);
-  //     })
-  //     .catch((err) => console.log(err));
-  // };
-  // useEffect(() => {
-  //   getallUsers();
-  // }, []);
-  // console.log("allUsers", allUsers);
-
   return (
     <div className="modal fade bd-example-modal-lg container mt-5">
       <Modal
@@ -233,13 +216,30 @@ function AddDirectorsPopup(props) {
                     onChange={(e) => setWebsite(e.target.value)}
                     className="w-100 custom-select small-font input-btn-bg px-2 py-2 all-none rounded all-none"
                   >
-                    <option value="select">select</option>
-                    <option value="All">All</option>
-                    {websiteNames.map((obj) => (
-                      <option value={obj.web_url} selected>
-                        {obj.web_url}
-                      </option>
-                    ))}
+                    {role === "director" ? (
+                      <>
+                        <option value="select">select</option>
+                        <option value="All">
+                          ALL
+                          <input type="checkbox" />
+                          RRR
+                        </option>
+                        {websiteNames.map((obj) => (
+                          <option value={obj.web_url}>
+                            <input type="checkbox" /> {obj.web_url}
+                          </option>
+                        ))}
+                      </>
+                    ) : (
+                      <>
+                        <option value="select">select</option>
+                        {websiteNames.map((obj) => (
+                          <option value={obj.web_url} selected>
+                            {obj.web_url}
+                          </option>
+                        ))}
+                      </>
+                    )}
                   </select>
                 </div>
               </Col>
@@ -249,24 +249,22 @@ function AddDirectorsPopup(props) {
                   <div className="small-font mb-1">Payment Gateway *</div>
                   <select
                     value={website}
-                    name="website_name"
+                    name="pg_name"
                     onChange={(e) => setWebsite(e.target.value)}
                     className="w-100 custom-select small-font input-btn-bg px-2 py-2 all-none rounded all-none"
                   >
                     {/* <option value=""selected>select</option>
                     <option value="All">All</option>  */}
-                    {role?.account_role === "director" ? (
+                    {role === "director" ? (
                       <>
-                        <option value="" selected>
-                          Select....
-                        </option>
+                        <option value="">Select</option>
                         <option value="all">All</option>
                       </>
                     ) : (
                       <>
-                        <option value="" selected>
-                          Select
-                        </option>
+                        <option value="">Select</option>
+                        <option value="select">BBB</option>
+                        <option value="select">BBB</option>
                         <option value="select">BBB</option>
                       </>
                     )}
