@@ -24,6 +24,15 @@
 .upload-poster-div {
   background: #3a3c58;
   border-radius: 10px;
+  display: flex;
+}
+.text-input-poster {
+  height: 4vh;
+  background: none;
+  border: none;
+  outline: none;
+  color: #fff;
+  width: 100%;
 }
 .file-input {
   background: none;

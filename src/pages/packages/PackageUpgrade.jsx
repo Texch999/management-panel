@@ -31,6 +31,24 @@ function PackageUpgrade() {
       audioCalls: "Audio calls only",
       members: 20,
     },
+    {
+      packagename: "Diamond",
+      packageLogo: Images.GoldSmallImg,
+      userText: "Join call with 10 users",
+      meetingstext: "Use 5 personal meetings",
+      numberOfMeetings: "Monthly 10 meetings",
+      audioCalls: "Audio calls only",
+      members: 20,
+    },
+    {
+      packagename: "VIP",
+      packageLogo: Images.GoldSmallImg,
+      userText: "Join call with 10 users",
+      meetingstext: "Use 5 personal meetings",
+      numberOfMeetings: "Monthly 10 meetings",
+      audioCalls: "Audio calls only",
+      members: 20,
+    },
   ];
   return (
     <div className="W-100 medium-font font-grey package-bg p-3 package-radius package-input">
