@@ -41,10 +41,10 @@ function AddTours() {
           <div>
             <div className="sub-head medium-font">{item}</div>
             <div className="row mt-2 vh-17vh">
-              <div className="col-3">
+              <div className="col-4">
                 <div>
                   <div className="medium-font font-grey">Upload Poster</div>
-                  <div className="upload-poster-div p-2">
+                  <div className="upload-poster-div d-felx align-items-center justify-content-between p-2">
                     <input
                       id="files"
                       // type="file"
@@ -57,17 +57,17 @@ function AddTours() {
                 </div>
                 <div className="row mt-2">
                   <div className="col-6">
-                    <div className="medium-font font-grey">Date</div>
+                    <div className="medium-font font-grey">From</div>
                     <div className="upload-poster-div p-2 d-flex align-items-center">
                       <input type="date" className="file-input"></input>
                       <FaCalendarDays className="ions-clr" />
                     </div>
                   </div>
                   <div className="col-6">
-                    <div className="medium-font font-grey">Time</div>
+                    <div className="medium-font font-grey">To</div>
                     <div className="upload-poster-div p-2 d-flex align-items-center">
-                      <input type="time" className="file-input"></input>
-                      <AiOutlineClockCircle className="ions-clr" />
+                      <input type="date" className="file-input"></input>
+                      <FaCalendarDays className="ions-clr" />
                     </div>
                   </div>
                 </div>
@@ -75,7 +75,23 @@ function AddTours() {
               <div className="col">
                 <div className="medium-font font-grey">Poster Title</div>
                 <div className="upload-poster-div p-2 d-flex align-items-center">
-                  <textarea className="text-input"></textarea>
+                  <textarea className="text-input-poster"></textarea>
+                </div>
+                <div className="row d-flex mt-2">
+                  <div className="col-6">
+                    <div className="medium-font font-grey">To</div>
+                    <div className="upload-poster-div p-2 d-flex align-items-center">
+                      <input type="date" className="file-input"></input>
+                      <FaCalendarDays className="ions-clr" />
+                    </div>
+                  </div>
+                  <div className="col-6">
+                    <div className="medium-font font-grey">To</div>
+                    <div className="upload-poster-div p-2 d-flex align-items-center">
+                      <input type="date" className="file-input"></input>
+                      <FaCalendarDays className="ions-clr" />
+                    </div>
+                  </div>
                 </div>
               </div>
               <div className="col">
