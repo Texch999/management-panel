@@ -1,12 +1,39 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Table from "../table/Table";
 import DocTable from "../table/DocTable";
 import { BsArrowDown } from "react-icons/bs";
 import { MdInsertPhoto } from "react-icons/md";
 import ConformBookingTable from "../table/ConformBookingTable";
+import { call } from "../../config/axios";
+import { GET_INTERESTED } from "../../config/endpoints";
 
 function ManageTournament() {
   const [activeManageIndex, setActiveManageIndex] = useState(0);
+  const [interestedData, setInterestedData] = useState([]);
+  const [selectedOption, setSelectedOption] = useState({});
+
+  const handleOptions = (e) => {
+    setSelectedOption({
+      ...selectedOption,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  // console.log(selec/tedOption, "......selectedoptions");
+
+  const fetchData = async () => {
+    const payload = {};
+    await call(GET_INTERESTED, payload).then((res) =>
+      setInterestedData(res?.data?.data)
+    );
+  };
+
+  // console.log(interestedData);
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
   const manageButtons = [
     "Interested Team",
     "Selected Team",
@@ -17,24 +44,35 @@ function ManageTournament() {
   const manageDropdown = [
     {
       head: "Tours",
-      options: ["All Tour", "Cricket Tour", "Sports Tour", "Casino TOur", "Entertainment Tour"],
+      name: "tour_name",
+      options: [
+        "",
+        "1.Cricket Tour",
+        "2.Sports Tour",
+        "3.Casino Tour",
+        "4.Entertainment Tour",
+      ],
     },
     {
       head: "Website",
-      options: ["All", "w2Call", "texch.com", "ravanna.com"],
+      name: "website",
+      options: ["", "www.we2call.com", "www.texch.com", "www.ravanna.com"],
     },
     {
       head: "Location",
-      options: ["All", "Hongkong", "Goa", "Srilanka", "Japan", "Thailand"],
+      name: "location",
+      options: ["", "Hongkong", "Goa", "Srilanka", "Japan", "Thailand"],
     },
     {
       head: "Name",
-      options: ["All", "jay", "vinod", "ravi", "babu"],
+      name: "username",
+      options: ["", "jay", "vinod", "ravi", "babu"],
     },
     {
       head: "Role",
+      name: "role",
       options: [
-        "All",
+        "",
         "Director",
         "Super Admin",
         "Sub Admin",
@@ -45,7 +83,7 @@ function ManageTournament() {
       ],
     },
   ];
-
+  
   const tableHeading = [
     {
       header: "S NO",
@@ -84,124 +122,60 @@ function ManageTournament() {
       clr: true,
     },
   ];
+  console.log(selectedOption)
+  console.log(interestedData)
 
-  const tableData = [
-    {
-      sl: 1,
-      website: "we2call.com",
-      dateTime: (
-        <div>
-          31/08/2023
-          <br />
-          14:51:20 PM
-        </div>
-      ),
-      name: (
-        <div>
-          Srinivas
-          <br />
-          Hyderabad
-        </div>
-      ),
-      role: "Super Admin",
-      tours: "Sports Tours",
-      schedule: "31/08/2023",
-      location: "Dubai",
-      clr: "Select",
-    },
-    {
-      sl: 2,
-      website: "we2call.com",
-      dateTime: (
-        <div>
-          31/08/2023
-          <br />
-          14:51:20 PM
-        </div>
-      ),
-      name: (
-        <div>
-          Srinivas
-          <br />
-          Hyderabad
-        </div>
-      ),
-      role: "Super Admin",
-      tours: "Sports Tours",
-      schedule: "31/08/2023",
-      location: "Dubai",
-      clr: "Select",
-    },
-    {
-      sl: 3,
-      website: "we2call.com",
-      dateTime: (
-        <div>
-          31/08/2023
-          <br />
-          14:51:20 PM
-        </div>
-      ),
-      name: (
-        <div>
-          Srinivas
-          <br />
-          Hyderabad
-        </div>
-      ),
-      role: "Super Admin",
-      tours: "Sports Tours",
-      schedule: "31/08/2023",
-      location: "Dubai",
-      clr: "Select",
-    },
-    {
-      sl: 4,
-      website: "we2call.com",
-      dateTime: (
-        <div>
-          31/08/2023
-          <br />
-          14:51:20 PM
-        </div>
-      ),
-      name: (
-        <div>
-          Srinivas
-          <br />
-          Hyderabad
-        </div>
-      ),
-      role: "Super Admin",
-      tours: "Sports Tours",
-      schedule: "31/08/2023",
-      location: "Dubai",
-      clr: "Select",
-    },
-    {
-      sl: 4,
-      website: "we2call.com",
-      dateTime: (
-        <div>
-          31/08/2023
-          <br />
-          14:51:20 PM
-        </div>
-      ),
-      name: (
-        <div>
-          Srinivas
-          <br />
-          Hyderabad
-        </div>
-      ),
-      role: "Super Admin",
-      tours: "Sports Tours",
-      schedule: "31/08/2023",
-      location: "Dubai",
-      clr: "Select",
-    },
-  ];
+  const tableData =
+    interestedData?.length > 0 &&
+    interestedData
+      ?.filter((item) => {
+        if(selectedOption?.tour_name===undefined){
+          return item
+        }else{
+          return item?.tour_name === selectedOption?.tour_name;
+        }
+      })
+      .filter((item) => {
+        if(selectedOption?.website===undefined){
+          return item
+        }else{
+          return item?.website === selectedOption?.website;
+        }
+      })
+      .filter((item) => {
+        if(selectedOption?.location===undefined){
+          return item
+        }else{
+          return item?.location === selectedOption?.location;
+        }
+      })
+      .filter((item) => {
+        if(selectedOption?.username===undefined){
+          return item
+        }else{
+          return item?.user_name === selectedOption?.username;
+        }
+      })
+      .filter((item) => {
+        if(selectedOption?.role===undefined){
+          return item
+        }else{
+          return item?.role === selectedOption?.role;
+        }
+      })
+      .map((item, index) => {
+        return {
+          sl: index,
+          website: item.website,
+          dateTime: item.date_and_time,
+          name: item.user_name,
+          role: item.role,
+          tours: item.tour_name,
+          schedule: item.schedule,
+          location: item.location,
+          clr: "Select",
+        };
+      });
 
   const tableDocHeading = [
     {
@@ -723,9 +697,17 @@ function ManageTournament() {
           return (
             <div className="col" key={index}>
               <div className="font-grey">{item.head}</div>
-              <select className="tours-box p-2 medium-font rounded-top text-center w-100">
+              <select
+                className="tours-box p-2 medium-font rounded-top text-center w-100"
+                name={item.name}
+                onChange={(e) => handleOptions(e)}
+              >
                 {item.options.map((items, i) => {
-                  return <option key={i}>{items}</option>;
+                  return (
+                    <option key={i} value={items}>
+                      {items}
+                    </option>
+                  );
                 })}
               </select>
             </div>

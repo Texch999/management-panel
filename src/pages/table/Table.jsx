@@ -36,29 +36,30 @@ function Table(props) {
           </tr>
         </thead>
         <tbody className="td-color">
-          {data?.map((item, rowIndex) => (
-            <tr key={rowIndex} className="small-font td-color text-center">
-              {columns.map((column, colIndex) => {
-                return (
-                  <td
-                    key={colIndex}
-                    className=" text-center d-felx align-items-center"
-                  >
-                    <div className="d-flex justify-content-center align-items-center">
-                      <div
-                        className={
-                          column?.clr ? getColor(item[column.field]) : ""
-                        }
-                        onClick={() => handleClickTable(column.field)}
-                      >
-                        <td>{item[column.field]}</td>
+          {data?.length > 0 &&
+            data?.map((item, rowIndex) => (
+              <tr key={rowIndex} className="small-font td-color text-center">
+                {columns.map((column, colIndex) => {
+                  return (
+                    <td
+                      key={colIndex}
+                      className=" text-center d-felx align-items-center"
+                    >
+                      <div className="d-flex justify-content-center align-items-center">
+                        <div
+                          className={
+                            column?.clr ? getColor(item[column.field]) : ""
+                          }
+                          onClick={() => handleClickTable(column.field)}
+                        >
+                          <td>{item[column.field]}</td>
+                        </div>
                       </div>
-                    </div>
-                  </td>
-                );
-              })}
-            </tr>
-          ))}
+                    </td>
+                  );
+                })}
+              </tr>
+            ))}
         </tbody>
         {/* <tfoot>
           <tr>
