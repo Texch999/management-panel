@@ -5,6 +5,7 @@ import { BsChevronDown } from "react-icons/bs";
 import { FaCalendarDays } from "react-icons/fa6";
 import { HiMiniArrowUpCircle } from "react-icons/hi2";
 import ReturnedPaymentPopup from "../Popups/ReturnedPaymentPopup";
+import MatchSubmitPopup from "../../matchpopups/MatchSubmitPopup";
 
 function AddTours() {
   const toursType = ["1.Tour", "2.Cricket Tour", "3.Sports Tour"];
@@ -109,9 +110,10 @@ function AddTours() {
           </div>
         );
       })}
-      <ReturnedPaymentPopup
-        showReturnPopup={showReturnPopup}
-        setShowReturnPopup={setShowReturnPopup}
+      <MatchSubmitPopup
+        header={" Successfully Completed"}
+        state={showReturnPopup}
+        setState={setShowReturnPopup}
       />
     </div>
   );

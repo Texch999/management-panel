@@ -738,6 +738,15 @@ function ManageTournament() {
           activeManageIndex === 2) && (
           <Table columns={tableHeading} data={tableData} />
         )}
+        {activeManageIndex === 2 && (
+          <div>
+            <textarea
+              className="tours-box w-100 h-100px"
+              placeholder="Please enter Tour Details"
+            ></textarea>
+            <button className="select-button button-position">Submit</button>
+          </div>
+        )}
         {activeManageIndex === 3 && (
           <DocTable columns={tableDocHeading} data={tableDocData} />
         )}
