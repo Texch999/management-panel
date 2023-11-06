@@ -8,7 +8,7 @@ import ReturnedPaymentPopup from "../Popups/ReturnedPaymentPopup";
 import MatchSubmitPopup from "../../matchpopups/MatchSubmitPopup";
 
 function AddTours() {
-  const toursType = ["1.Tour", "2.Cricket Tour", "3.Sports Tour"];
+  const toursType = ["1.Take Part in Tour", "2.Cricket Tour", "3.Sports Tour", "4.Casino Tour", "5.Entertainment Tour"];
   const [showReturnPopup, setShowReturnPopup] = useState(false);
   const handleReturnPaymentpopup = () => {
     setShowReturnPopup(true);
@@ -19,15 +19,17 @@ function AddTours() {
         <div className="col-4 d-flex justify-content-between">
           <select className="tours-box p-2 medium-font rounded-top text-center">
             <option>Select Websites</option>
-            <option></option>
-            <option></option>
-            <option></option>
+            <option>www.we2call.com</option>
+            <option>www.texchange.com</option>
+            <option>www.brahma.com</option>
+            <option>www.ravahna.com</option>
           </select>
           <select className="tours-box p-2 medium-font rounded-top text-center">
             <option>Select Country</option>
-            <option></option>
-            <option></option>
-            <option></option>
+            <option>India</option>
+            <option>Europe</option>
+            <option>Bangladesh</option>
+            <option>Srilanka</option>
           </select>
         </div>
       </div>
@@ -52,14 +54,14 @@ function AddTours() {
                 </div>
                 <div className="row mt-2">
                   <div className="col-6">
-                    <div className="medium-font font-grey">From</div>
+                    <div className="medium-font font-grey">Publish From</div>
                     <div className="upload-poster-div p-2 d-flex align-items-center">
                       <input type="date" className="file-input"></input>
                       <FaCalendarDays className="ions-clr" />
                     </div>
                   </div>
                   <div className="col-6">
-                    <div className="medium-font font-grey">To</div>
+                    <div className="medium-font font-grey">Publish Upto</div>
                     <div className="upload-poster-div p-2 d-flex align-items-center">
                       <input type="date" className="file-input"></input>
                       <FaCalendarDays className="ions-clr" />
@@ -68,20 +70,20 @@ function AddTours() {
                 </div>
               </div>
               <div className="col">
-                <div className="medium-font font-grey">Poster Title</div>
+                <div className="medium-font font-grey">Tour Title</div>
                 <div className="upload-poster-div p-2 d-flex align-items-center">
                   <textarea className="text-input-poster"></textarea>
                 </div>
                 <div className="row d-flex mt-2">
                   <div className="col-6">
-                    <div className="medium-font font-grey">To</div>
+                    <div className="medium-font font-grey">Schedule From</div>
                     <div className="upload-poster-div p-2 d-flex align-items-center">
                       <input type="date" className="file-input"></input>
                       <FaCalendarDays className="ions-clr" />
                     </div>
                   </div>
                   <div className="col-6">
-                    <div className="medium-font font-grey">To</div>
+                    <div className="medium-font font-grey">Schedule Upto</div>
                     <div className="upload-poster-div p-2 d-flex align-items-center">
                       <input type="date" className="file-input"></input>
                       <FaCalendarDays className="ions-clr" />
@@ -111,7 +113,7 @@ function AddTours() {
         );
       })}
       <MatchSubmitPopup
-        header={" Successfully Completed"}
+        header={"Tour added Successfully"}
         state={showReturnPopup}
         setState={setShowReturnPopup}
       />
