@@ -7,7 +7,7 @@ import { call } from "../../config/axios";
 function ToursAmount() {
   const [activeHeadIndex, setActiveHeadIndex] = useState(0);
   const [tours, setTours] = useState([]);
-  const [tourname, setTourname] = useState("")
+  const [tourname, setTourname] = useState("All Tours")
 
   const getTours = async()=>{
     const payload = {}
@@ -31,8 +31,12 @@ function ToursAmount() {
     setActiveHeadIndex(index);
     setTourname(item);
   };
+
+  const addingTourPackages=(e,item)=>{
+    
+  }
   const filteredTours = tours.filter((item)=>item.tour_name===tourname)
-  const mappingArray = tourname =="All Tours"? tours : filteredTours
+  const mappingArray = tourname ==="All Tours"? tours : filteredTours
   const tableHeading = [
     {
       header: "TOURS DATE",
@@ -43,8 +47,8 @@ function ToursAmount() {
       field: "location",
     },
     {
-      header: "TOUR",
-      field: "tour",
+      header: "TOUR_TITLE",
+      field: "tour_title",
     },
     {
       header: "WEBSITE",
@@ -55,19 +59,12 @@ function ToursAmount() {
       field: "cost",
     },
   ];
-  const tableData = [
-    {
-      tour_date: "29 / 11 / 23",
-      location: "Goa",
-      website: (
-        <div>
-          <div>we2call.com</div>
-          <div>spark999.com</div>
-          <div>spark777.com</div>
-          <div>spark247.com</div>
-        </div>
-      ),
-      tour: "Casio",
+  const tableData = mappingArray.map((item, index)=>{
+    return {
+      tour_date: item.schedule_from,
+      location: item.country,
+      website: item.website.map((item)=>{return item}),
+      tour_title: item.tour_title,
       cost: (
         <div>
           <div className="d-flex justify-content-center ms-2">
@@ -78,49 +75,43 @@ function ToursAmount() {
               Max Amount
             </div>
             <div className="input-custum text-center d-flex align-items-center">
-              Adults
-            </div>
-            <div className="input-custum text-center d-flex align-items-center">
-              Child
+              Allowed Persons
             </div>
           </div>
           <div className="d-flex align-items-center">
-            <div>1.</div>
-            <input className="input-custum text-center" type="number"></input>
-            <input className="input-custum text-center" type="number"></input>
-            <input className="input-custum text-center" type="number"></input>
-            <input className="input-custum text-center" type="number"></input>
-          </div>
-          <div className="d-flex align-items-center">
-            <div>2.</div>
-            <input className="input-custum text-center" type="number"></input>
+            <div>1.Regular Pack</div>
             <input className="input-custum text-center" type="number"></input>
             <input className="input-custum text-center" type="number"></input>
             <input className="input-custum text-center" type="number"></input>
           </div>
           <div className="d-flex align-items-center">
-            <div>3.</div>
-            <input className="input-custum text-center" type="number"></input>
-            <input className="input-custum text-center" type="number"></input>
-            <input className="input-custum text-center" type="number"></input>
-            <input className="input-custum text-center" type="number"></input>
-          </div>
-          <div className="d-flex align-items-center">
-            <div>4.</div>
-            <input className="input-custum text-center" type="number"></input>
+            <div>2.Premium Pack</div>
             <input className="input-custum text-center" type="number"></input>
             <input className="input-custum text-center" type="number"></input>
             <input className="input-custum text-center" type="number"></input>
           </div>
           <div className="d-flex align-items-center">
-            <div>5.</div>
+            <div>3.Luxury Pack</div>
             <input className="input-custum text-center" type="number"></input>
+            <input className="input-custum text-center" type="number"></input>
+            <input className="input-custum text-center" type="number"></input>
+          </div>
+          <div className="d-flex align-items-center">
+            <div>4.Vip Pack</div>
+            <input className="input-custum text-center" type="number"></input>
+            <input className="input-custum text-center" type="number"></input>
+            <input className="input-custum text-center" type="number"></input>
+          </div>
+          <div className="d-flex align-items-center">
+            <div>5.Vvip Pack</div>
             <input className="input-custum text-center" type="number"></input>
             <input className="input-custum text-center" type="number"></input>
             <input className="input-custum text-center" type="number"></input>
           </div>
           <div className="d-flex align-items-center ms-2">
-            <button className="input-custum text-center select-button">
+            <button className="input-custum text-center select-button"
+                    onClick={(e)=>addingTourPackages(e,item)}
+            >
               SUBMIT
             </button>
             <button className="input-custum text-center select-button" disabled>
@@ -129,82 +120,8 @@ function ToursAmount() {
           </div>
         </div>
       ),
-    },
-    {
-      tour_date: "29 / 11 / 23",
-      location: "Goa",
-      website: (
-        <div>
-          <div>we2call.com</div>
-          <div>spark999.com</div>
-          <div>spark777.com</div>
-          <div>spark247.com</div>
-        </div>
-      ),
-      tour: "Casio",
-      cost: (
-        <div>
-          <div className="d-flex justify-content-center ms-2">
-            <div className="input-custum text-center d-flex align-items-center">
-              Min Amount
-            </div>
-            <div className="input-custum text-center d-flex align-items-center">
-              Min Amount
-            </div>
-            <div className="input-custum text-center d-flex align-items-center">
-              Min Amount
-            </div>
-            <div className="input-custum text-center d-flex align-items-center">
-              Min Amount
-            </div>
-          </div>
-          <div className="d-flex align-items-center">
-            <div>1.</div>
-            <input className="input-custum text-center" type="number"></input>
-            <input className="input-custum text-center" type="number"></input>
-            <input className="input-custum text-center" type="number"></input>
-            <input className="input-custum text-center" type="number"></input>
-          </div>
-          <div className="d-flex align-items-center">
-            <div>2.</div>
-            <input className="input-custum text-center" type="number"></input>
-            <input className="input-custum text-center" type="number"></input>
-            <input className="input-custum text-center" type="number"></input>
-            <input className="input-custum text-center" type="number"></input>
-          </div>
-          <div className="d-flex align-items-center">
-            <div>3.</div>
-            <input className="input-custum text-center" type="number"></input>
-            <input className="input-custum text-center" type="number"></input>
-            <input className="input-custum text-center" type="number"></input>
-            <input className="input-custum text-center" type="number"></input>
-          </div>
-          <div className="d-flex align-items-center">
-            <div>4.</div>
-            <input className="input-custum text-center" type="number"></input>
-            <input className="input-custum text-center" type="number"></input>
-            <input className="input-custum text-center" type="number"></input>
-            <input className="input-custum text-center" type="number"></input>
-          </div>
-          <div className="d-flex align-items-center">
-            <div>5.</div>
-            <input className="input-custum text-center" type="number"></input>
-            <input className="input-custum text-center" type="number"></input>
-            <input className="input-custum text-center" type="number"></input>
-            <input className="input-custum text-center" type="number"></input>
-          </div>
-          <div className="d-flex align-items-center ms-2">
-            <button className="input-custum text-center select-button">
-              SUBMIT
-            </button>
-            <button className="input-custum text-center select-button" disabled>
-              EDIT
-            </button>
-          </div>
-        </div>
-      ),
-    },
-  ];
+    };
+  })
   return (
     <div className="add-tours p-3 mt-3">
       <div className="row">
