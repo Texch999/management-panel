@@ -1,20 +1,38 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { HiPhotograph } from "react-icons/hi";
 import Table from "../table/Table";
+import { GET_TOURS } from "../../config/endpoints";
+import { call } from "../../config/axios";
 
 function ToursAmount() {
   const [activeHeadIndex, setActiveHeadIndex] = useState(0);
+  const [tours, setTours] = useState([]);
+  const [tourname, setTourname] = useState("")
+
+  const getTours = async()=>{
+    const payload = {}
+    await call(GET_TOURS, payload)
+            .then((res)=>setTours(res?.data?.data))
+  }
+
+  useEffect(()=>{
+    getTours();
+  },[])
+  console.log(tours)
   const scheduleButtons = [
-    "Tours",
-    "Cricket Tours",
-    "Sports Tours",
-    "Casino Tours",
-    "Entertainment Tours",
+    "All Tours",
+    "1.Take Part in Tour",
+    "2.Cricket Tour",
+    "3.Sports Tour",
+    "4.Casino Tour",
+    "5.Entertainment Tour",
   ];
-  const handleScheduleHead = (index) => {
+  const handleScheduleHead = (item, index) => {
     setActiveHeadIndex(index);
+    setTourname(item);
   };
-  const scheduleContentList = [{}, {}];
+  const filteredTours = tours.filter((item)=>item.tour_name===tourname)
+  const mappingArray = tourname =="All Tours"? tours : filteredTours
   const tableHeading = [
     {
       header: "TOURS DATE",
@@ -200,7 +218,7 @@ function ToursAmount() {
                     ? "active-schedule-head"
                     : "header-schedule"
                 }  p-2 me-2`}
-                onClick={() => handleScheduleHead(index)}
+                onClick={() => handleScheduleHead(item, index)}
               >
                 {item}
               </div>
