@@ -1,21 +1,20 @@
 import { useNavigate } from "react-router-dom";
 function Table(props) {
-const { data, columns } = props;
-
+  const { data, columns } = props;
   const getColor = (clr) => {
     switch (clr) {
       case "Shedule":
         return "pending-button w-fit-content p-1 px-2";
       case "In-active":
-        return "reject-button w-fit-content p-1 px-2";
+        return "custom-deactive-button w-fit-content p-1 px-2";
       case "Rejected":
-        return "reject-button w-fit-content p-1 px-2";
+        return "custom-deactive-button w-fit-content p-1 px-2";
       case "Pending":
         return "pending-button w-fit-content p-1 px-2";
-        case "Select":
+      case "Select":
         return "select-button w-fit-content p-1 px-2";
       default:
-        return "new-button w-fit-content p-1 px-2";
+        return "w-fit-content p-1 px-2";
     }
   };
   const navigate = useNavigate();
@@ -29,7 +28,7 @@ const { data, columns } = props;
       <table className="tickets-table table table-borderless">
         <thead className="th-color small-font text-center">
           <tr className="small-font th-color text-center">
-            {columns.map((column, index) => (
+            {columns?.map((column, index) => (
               <th key={index} className="text-center small-font th-color">
                 {column.header}
               </th>
@@ -37,7 +36,7 @@ const { data, columns } = props;
           </tr>
         </thead>
         <tbody className="td-color">
-          {data.map((item, rowIndex) => (
+          {data?.map((item, rowIndex) => (
             <tr key={rowIndex} className="small-font td-color text-center">
               {columns.map((column, colIndex) => {
                 return (
@@ -52,7 +51,7 @@ const { data, columns } = props;
                         }
                         onClick={() => handleClickTable(column.field)}
                       >
-                        {item[column.field]}
+                        <td>{item[column.field]}</td>
                       </div>
                     </div>
                   </td>

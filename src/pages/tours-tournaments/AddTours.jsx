@@ -1,14 +1,24 @@
 import React, { useState } from "react";
 import { AiOutlineClockCircle } from "react-icons/ai";
-import { BiSolidArrowFromBottom } from "react-icons/bi";
-import { BsChevronDown } from "react-icons/bs";
+// import { BiSolidArrowFromBottom } from "react-icons/bi";
+// import { BsChevronDown } from "react-icons/bs";
 import { FaCalendarDays } from "react-icons/fa6";
 import { HiMiniArrowUpCircle } from "react-icons/hi2";
 import ReturnedPaymentPopup from "../Popups/ReturnedPaymentPopup";
 import MatchSubmitPopup from "../../matchpopups/MatchSubmitPopup";
 
 function AddTours() {
+<<<<<<< HEAD
   const toursType = ["1.Take Part in Tour", "2.Cricket Tour", "3.Sports Tour", "4.Casino Tour", "5.Entertainment Tour"];
+=======
+  const toursType = [
+    "1.Tour",
+    "2.Cricket Tour",
+    "3.Sports Tour",
+    "4.Casino Tour",
+    "5.Entertainment Tour",
+  ];
+>>>>>>> 046c986c4dcfff1daaf5126f09cbe53459db2ace
   const [showReturnPopup, setShowReturnPopup] = useState(false);
   const handleReturnPaymentpopup = () => {
     setShowReturnPopup(true);
@@ -102,7 +112,7 @@ function AddTours() {
               <div className="btn-cls">
                 <button
                   type="button"
-                  class="btn btn-primary"
+                  className="btn btn-primary"
                   onClick={() => handleReturnPaymentpopup()}
                 >
                   Submit
