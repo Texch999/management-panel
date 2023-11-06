@@ -32,12 +32,18 @@ const GET_ADMIN_USER_INFO = "/admin/get_admin_accounts_user_info";
 const GENERATE_SIGNED_URL = "/admin/profile_signed_url";
 const GET_MATCHES_DATA = "/offline-management/get_matches_data";
 const CREATE_OFFLINE_MATCHES = "/offline-management/match_creation";
+const ADD_TOURS = "/tours/add_tours"
 
 // methods
 const DELETE = "DELETE";
 const POST = "POST";
 const GET = "POST";
 const PUT = "PUT";
+
+exports.ADD_TOURS = {
+  url: ADD_TOURS,
+  method: POST
+}
 
 exports.GET_ALL_SECURITY_QUESTIONS = {
   url: GET_ALL_SECURITY_QUESTIONS,
