@@ -24,6 +24,22 @@
 .upload-poster-div {
   background: #3a3c58;
   border-radius: 10px;
+  display: flex;
+}
+.text-input-poster {
+  height: 4vh;
+  background: none;
+  border: none;
+  outline: none;
+  color: #fff;
+  width: 100%;
+}
+.button-position{
+  position: relative;
+  left: 93%;
+}
+.h-100px {
+  height: 100px;
 }
 .file-input {
   background: none;
@@ -93,22 +109,17 @@
   position: relative;
   right: -75%;
 }
-
-.manage-text-area {
-  width: 100%;
-  height: 20vh;
-  border-radius: 10px;
-  border: none;
-  outline: none;
-  background: #3a3c58;
+.scroll-div {
+  height: 60vh;
+  overflow-y: scroll;
 }
-
-.submit {
+.input-custum {
   background: #3a3c58;
-  color: #ffff;
-  font-weight: bold;
-  border-radius: 10px;
+  border-radius: 5px;
+  width: 70px;
   outline: none;
   border: none;
-  width: fit-content;
+  color: #ffffff;
+  height: 30px;
+  margin: 5px;
 }
