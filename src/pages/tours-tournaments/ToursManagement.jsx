@@ -37,7 +37,7 @@ function ToursManagement() {
             onClick={() => handleToursHead("amount")}
           >
             Tour Packages
-          </div>
+          </div>  
         </div>
         <div className="col-2">
           <div

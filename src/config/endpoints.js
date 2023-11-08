@@ -34,12 +34,18 @@ const GET_MATCHES_DATA = "/offline-management/get_matches_data";
 const CREATE_OFFLINE_MATCHES = "/offline-management/match_creation";
 const ADD_TOURS = "/tours/add_tours";
 const GET_TOURS = "/tours/get_tours";
+const UPDATE_TOURS = "/tours/update_tours"
 
 // methods
 const DELETE = "DELETE";
 const POST = "POST";
 const GET = "POST";
 const PUT = "PUT";
+
+exports.UPDATE_TOURS = {
+  url: UPDATE_TOURS,
+  method: POST
+}
 
 exports.GET_TOURS = {
   url: GET_TOURS,

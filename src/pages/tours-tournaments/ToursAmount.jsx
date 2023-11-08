@@ -2,23 +2,30 @@ import React, { useEffect, useState } from "react";
 import { HiPhotograph } from "react-icons/hi";
 import Table from "../table/Table";
 import { GET_TOURS } from "../../config/endpoints";
+import { UPDATE_TOURS } from "../../config/endpoints";
 import { call } from "../../config/axios";
 
 function ToursAmount() {
   const [activeHeadIndex, setActiveHeadIndex] = useState(0);
   const [tours, setTours] = useState([]);
-  const [tourname, setTourname] = useState("All Tours")
+  const [editingTours, setEditingTours] = useState([]);
+  const [edit, setEdit] = useState(false)
+  const [tourname, setTourname] = useState("All Tours");
 
-  const getTours = async()=>{
-    const payload = {}
-    await call(GET_TOURS, payload)
-            .then((res)=>setTours(res?.data?.data))
+  const packOnchangeHandle = (e,pkgtype,item)=>{
+    // setTours([...tours,])
+    console.log(tours,'.........tours')
+    console.log(item,'.....item')
   }
 
-  useEffect(()=>{
+  const getTours = async () => {
+    const payload = {};
+    await call(GET_TOURS, payload).then((res) => setTours(res?.data?.data));
+  };
+
+  useEffect(() => {
     getTours();
-  },[])
-  console.log(tours)
+  }, []);
   const scheduleButtons = [
     "All Tours",
     "1.Take Part in Tour",
@@ -31,12 +38,17 @@ function ToursAmount() {
     setActiveHeadIndex(index);
     setTourname(item);
   };
+  // const changingarray = edit ? editingTours : tours 
 
-  const addingTourPackages=(e,item)=>{
-    
-  }
-  const filteredTours = tours.filter((item)=>item.tour_name===tourname)
-  const mappingArray = tourname ==="All Tours"? tours : filteredTours
+  const filteredTours = tours.filter((item) => item.tour_name === tourname);
+  const mappingArray = tourname === "All Tours" ? tours : filteredTours;
+  const packagesType = [
+    "regularpack",
+    "premiumpack",
+    "luxurypack",
+    "vippack",
+    "vvippack",
+  ];
   const tableHeading = [
     {
       header: "TOURS DATE",
@@ -55,17 +67,19 @@ function ToursAmount() {
       field: "website",
     },
     {
-      header: "COST/ALLOWED MEMBERS",
-      field: "cost",
+      header: "PACKAGES",
+      field: "packages",
     },
   ];
-  const tableData = mappingArray.map((item, index)=>{
+  const tableData = mappingArray.map((item) => {
     return {
       tour_date: item.schedule_from,
       location: item.country,
-      website: item.website.map((item)=>{return item}),
+      website: item.website.map((item) => {
+        return item;
+      }),
       tour_title: item.tour_title,
-      cost: (
+      packages: (
         <div>
           <div className="d-flex justify-content-center ms-2">
             <div className="input-custum text-center d-flex align-items-center">
@@ -78,50 +92,54 @@ function ToursAmount() {
               Allowed Persons
             </div>
           </div>
-          <div className="d-flex align-items-center">
-            <div>1.Regular Pack</div>
-            <input className="input-custum text-center" type="number"></input>
-            <input className="input-custum text-center" type="number"></input>
-            <input className="input-custum text-center" type="number"></input>
-          </div>
-          <div className="d-flex align-items-center">
-            <div>2.Premium Pack</div>
-            <input className="input-custum text-center" type="number"></input>
-            <input className="input-custum text-center" type="number"></input>
-            <input className="input-custum text-center" type="number"></input>
-          </div>
-          <div className="d-flex align-items-center">
-            <div>3.Luxury Pack</div>
-            <input className="input-custum text-center" type="number"></input>
-            <input className="input-custum text-center" type="number"></input>
-            <input className="input-custum text-center" type="number"></input>
-          </div>
-          <div className="d-flex align-items-center">
-            <div>4.Vip Pack</div>
-            <input className="input-custum text-center" type="number"></input>
-            <input className="input-custum text-center" type="number"></input>
-            <input className="input-custum text-center" type="number"></input>
-          </div>
-          <div className="d-flex align-items-center">
-            <div>5.Vvip Pack</div>
-            <input className="input-custum text-center" type="number"></input>
-            <input className="input-custum text-center" type="number"></input>
-            <input className="input-custum text-center" type="number"></input>
-          </div>
+          {packagesType.map((pkgtype, index) => {
+            return (
+              <div className="d-flex align-items-center"
+                    key={index}
+              >
+                <div>{pkgtype}</div>
+                <input
+                  className="input-custum text-center"
+                  type="number"
+                  name="minamount"
+                  defaultValue={item?.packages[pkgtype]?.minamount || ""}
+                  // value={item?.packages[pkgtype]?.minamount || ""}
+                  onChange={(e) => packOnchangeHandle(e,pkgtype,item)}
+                ></input>
+                <input
+                  className="input-custum text-center"
+                  type="number"
+                  name="maxamount"
+                  value={item?.packages[pkgtype]?.maxamount}
+                  onChange={(e) => packOnchangeHandle(e, pkgtype)}
+                ></input>
+                <input
+                  className="input-custum text-center"
+                  type="number"
+                  name="allowedpersons"
+                  value={item?.packages[pkgtype]?.allowedpersons}
+                  onChange={(e) => packOnchangeHandle(e, pkgtype)}
+                ></input>
+              </div>
+            );
+          })}
           <div className="d-flex align-items-center ms-2">
-            <button className="input-custum text-center select-button"
-                    onClick={(e)=>addingTourPackages(e,item)}
+            <button
+              className="input-custum text-center select-button"
+              // onClick={() => addingTourPackages(item)}
             >
               SUBMIT
             </button>
-            <button className="input-custum text-center select-button" disabled>
+            <button className="input-custum text-center select-button" 
+                    // onClick={()=>onedit()}
+            >
               EDIT
             </button>
           </div>
         </div>
       ),
     };
-  })
+  });
   return (
     <div className="add-tours p-3 mt-3">
       <div className="row">
