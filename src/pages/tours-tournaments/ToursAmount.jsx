@@ -11,11 +11,14 @@ function ToursAmount() {
   const [editingTours, setEditingTours] = useState([]);
   const [edit, setEdit] = useState(false)
   const [tourname, setTourname] = useState("All Tours");
+  const [data, setData] = useState({})
 
-  const packOnchangeHandle = (e,pkgtype,item)=>{
+  const packOnchangeHandle = (e,pkgtype,item,minamount)=>{
     // setTours([...tours,])
-    console.log(tours,'.........tours')
-    console.log(item,'.....item')
+    // console.log(tours,'.........tours')
+    // console.log(item,'.....item')
+    setData({...data,[e.target.name]:e.target.value})
+    console.log(data,'....data')
   }
 
   const getTours = async () => {
@@ -101,7 +104,7 @@ function ToursAmount() {
                 <input
                   className="input-custum text-center"
                   type="number"
-                  name="minamount"
+                  name={pkgtype+'minamount'}
                   defaultValue={item?.packages[pkgtype]?.minamount || ""}
                   // value={item?.packages[pkgtype]?.minamount || ""}
                   onChange={(e) => packOnchangeHandle(e,pkgtype,item)}
@@ -109,16 +112,16 @@ function ToursAmount() {
                 <input
                   className="input-custum text-center"
                   type="number"
-                  name="maxamount"
-                  value={item?.packages[pkgtype]?.maxamount}
-                  onChange={(e) => packOnchangeHandle(e, pkgtype)}
+                  name={pkgtype+"maxamount"}
+                  value={item?.packages[pkgtype]?.maxamount || ""}
+                  onChange={(e) => packOnchangeHandle(e, pkgtype, item)}
                 ></input>
                 <input
                   className="input-custum text-center"
                   type="number"
-                  name="allowedpersons"
-                  value={item?.packages[pkgtype]?.allowedpersons}
-                  onChange={(e) => packOnchangeHandle(e, pkgtype)}
+                  name={pkgtype+"allowedpersons"}
+                  value={item?.packages[pkgtype]?.allowedpersons  || ""}
+                  onChange={(e) => packOnchangeHandle(e, pkgtype, item)}
                 ></input>
               </div>
             );
