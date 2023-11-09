@@ -4,23 +4,58 @@ import Table from "../table/Table";
 import { GET_TOURS } from "../../config/endpoints";
 import { UPDATE_TOURS } from "../../config/endpoints";
 import { call } from "../../config/axios";
+import MatchSubmitPopup from "../../matchpopups/MatchSubmitPopup";
 
 function ToursAmount() {
+  const [showReturnPopup, setShowReturnPopup] = useState(false);
+  const [headerMessage, setHeaderMessage] = useState("")
   const [activeHeadIndex, setActiveHeadIndex] = useState(0);
   const [tours, setTours] = useState([]);
-  const [editingTours, setEditingTours] = useState([]);
-  const [edit, setEdit] = useState(false)
   const [tourname, setTourname] = useState("All Tours");
-  const [data, setData] = useState({})
 
-  const packOnchangeHandle = (e,pkgtype,item,minamount)=>{
-    // setTours([...tours,])
-    // console.log(tours,'.........tours')
-    // console.log(item,'.....item')
-    setData({...data,[e.target.name]:e.target.value})
-    console.log(data,'....data')
+  const submitTourPackages = async(item)=>{
+    const payload = {
+      tour_id:item.tour_id,
+      packages:item.packages
+    }
+    await call(UPDATE_TOURS, payload)
+            // setShowReturnPopup(true)
+            // .then((res)=>(res.data,'.....res'))
+            .then((res)=>{
+              console.log(res,'......res')
+              if(res.status==200){
+                setShowReturnPopup(true);
+                setHeaderMessage("Tour Updated Successfully")
+              }
+            })
+            .catch((error)=>{
+              setShowReturnPopup(true)
+              setHeaderMessage(error)
+            })
   }
-
+  const packOnchangeHandle = (tourId, pkgtype, field, value) => {
+    setTours((prevTours) =>
+      prevTours.map((tour) => {
+        // console.log(tour,'.......tourfromsettours')
+        if (tour.tour_id === tourId) {
+          return {
+            ...tour,
+            packages: {
+              ...tour.packages,
+              [pkgtype]: {
+                ...tour.packages[pkgtype],
+                [field]: value,
+              },
+            },
+          };
+        } else {
+          return tour;
+        }
+      })
+    );
+  };
+  
+  // console.log(tours,'......tours')
   const getTours = async () => {
     const payload = {};
     await call(GET_TOURS, payload).then((res) => setTours(res?.data?.data));
@@ -29,6 +64,7 @@ function ToursAmount() {
   useEffect(() => {
     getTours();
   }, []);
+
   const scheduleButtons = [
     "All Tours",
     "1.Take Part in Tour",
@@ -37,11 +73,11 @@ function ToursAmount() {
     "4.Casino Tour",
     "5.Entertainment Tour",
   ];
+
   const handleScheduleHead = (item, index) => {
     setActiveHeadIndex(index);
     setTourname(item);
   };
-  // const changingarray = edit ? editingTours : tours 
 
   const filteredTours = tours.filter((item) => item.tour_name === tourname);
   const mappingArray = tourname === "All Tours" ? tours : filteredTours;
@@ -104,24 +140,23 @@ function ToursAmount() {
                 <input
                   className="input-custum text-center"
                   type="number"
-                  name={pkgtype+'minamount'}
+                  name="minamount"
                   defaultValue={item?.packages[pkgtype]?.minamount || ""}
-                  // value={item?.packages[pkgtype]?.minamount || ""}
-                  onChange={(e) => packOnchangeHandle(e,pkgtype,item)}
+                  onChange={(e) => packOnchangeHandle(item.tour_id,pkgtype, "minamount", e.target.value)}
                 ></input>
                 <input
                   className="input-custum text-center"
                   type="number"
-                  name={pkgtype+"maxamount"}
-                  value={item?.packages[pkgtype]?.maxamount || ""}
-                  onChange={(e) => packOnchangeHandle(e, pkgtype, item)}
+                  name="maxamount"
+                  defaultValue={item?.packages[pkgtype]?.maxamount || ""}
+                  onChange={(e) => packOnchangeHandle(item.tour_id,pkgtype, "maxamount", e.target.value)}
                 ></input>
                 <input
                   className="input-custum text-center"
                   type="number"
-                  name={pkgtype+"allowedpersons"}
-                  value={item?.packages[pkgtype]?.allowedpersons  || ""}
-                  onChange={(e) => packOnchangeHandle(e, pkgtype, item)}
+                  name="allowedpersons"
+                  defaultValue={item?.packages[pkgtype]?.allowedpersons  || ""}
+                  onChange={(e) => packOnchangeHandle(item.tour_id,pkgtype, "allowedpersons", e.target.value)}
                 ></input>
               </div>
             );
@@ -129,13 +164,11 @@ function ToursAmount() {
           <div className="d-flex align-items-center ms-2">
             <button
               className="input-custum text-center select-button"
-              // onClick={() => addingTourPackages(item)}
+              onClick={() => submitTourPackages(item)}
             >
               SUBMIT
             </button>
-            <button className="input-custum text-center select-button" 
-                    // onClick={()=>onedit()}
-            >
+            <button className="input-custum text-center select-button" disabled>
               EDIT
             </button>
           </div>
@@ -167,6 +200,11 @@ function ToursAmount() {
       <div className="scroll-div mt-2">
         <Table columns={tableHeading} data={tableData} />
       </div>
+      <MatchSubmitPopup
+        header={headerMessage}
+        state={showReturnPopup}
+        setState={setShowReturnPopup}
+      />
     </div>
   );
 }
