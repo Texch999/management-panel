@@ -214,7 +214,7 @@ function Creatematch() {
 
   console.log("websiteNames", websiteNames);
 
-  const modifiedCreatematchDetails = getMatches.liveMatches?.map((item) => ({
+  const modifiedCreatematchDetails = getMatches?.map((item) => ({
     ...item,
     team: (
       <div className="role-color">
