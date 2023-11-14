@@ -51,6 +51,7 @@ function Rejectionreason() {
     await call(GET_ALL_SECURITY_QUESTIONS, payload)
       .then((res) => {
          const responseArray=res?.data?.data?.securityQuestions
+         console.log("responseArray====>",responseArray)
          setAllQuestions(responseArray.length>0?responseArray.filter((item)=>item.reason!==""):[] )
 
       })
