@@ -36,12 +36,18 @@ const ADD_TOURS = "/tours/add_tours";
 const GET_TOURS = "/tours/get_tours";
 const UPDATE_TOURS = "/tours/update_tours";
 const GET_INTERESTED = "/tours/get_interested"
+const UPDATE_INTERESTED = "/tours/update_interested"
 
 // methods
 const DELETE = "DELETE";
 const POST = "POST";
 const GET = "POST";
 const PUT = "PUT";
+
+exports.UPDATE_INTERESTED = {
+  url: UPDATE_INTERESTED,
+  method: POST
+}
 
 exports.GET_INTERESTED = {
   url: GET_INTERESTED,

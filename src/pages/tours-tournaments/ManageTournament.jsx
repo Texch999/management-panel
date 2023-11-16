@@ -5,27 +5,67 @@ import { BsArrowDown } from "react-icons/bs";
 import { MdInsertPhoto } from "react-icons/md";
 import ConformBookingTable from "../table/ConformBookingTable";
 import { call } from "../../config/axios";
-import { GET_INTERESTED } from "../../config/endpoints"
+import { GET_INTERESTED } from "../../config/endpoints";
+import { UPDATE_INTERESTED } from "../../config/endpoints";
 
 function ManageTournament() {
   const [activeManageIndex, setActiveManageIndex] = useState(0);
-  const [interestedMembers, setInterestedMembers] = useState([])
+  const [interestedMembers, setInterestedMembers] = useState([]);
+  const [selectButton, setSelectButton] = useState(false);
+  const [deselectButton, setDeselectButton] = useState(true)
+  const [status, setStatus] = useState(false);
+  const [selectedFilter, setSelectedFilter] = useState({
+    tour_name: "All",
+    website: "All",
+    role: "All",
+    user_name: "All",
+    location: "All",
+  });
 
-  const gettingInterestedMembers = async() =>{
+  const gettingInterestedMembers = async () => {
     const payload = {};
     await call(GET_INTERESTED, payload)
-            .then((res)=>setInterestedMembers(res.data.data))
-            .catch((error)=>console.log(error))
-  }
-  console.log(interestedMembers)
+      .then((res) => {
+        setInterestedMembers(res?.data?.data);
+      })
+      .catch((error) => console.log(error));
+  };
 
-  useEffect(()=>{
+  useEffect(() => {
     gettingInterestedMembers();
-  },[])
+  }, [status]);
 
-  const handleChange =(e)=>{
-    
-  }
+  const handleSelectButton = async (interested_id) => {
+    setSelectButton(true);
+    const payload = {
+      interested_id,
+      select: selectButton,
+    };
+    await call(UPDATE_INTERESTED, payload)
+      .then((res) => {
+        setStatus((prev)=>!prev)
+      })
+      .catch((error) => console.log(error));
+  };
+  const handleDeSelectButton = async (interested_id) => {
+    setDeselectButton(false);
+    const payload = {
+      interested_id,
+      select: deselectButton,
+    };
+    await call(UPDATE_INTERESTED, payload)
+      .then((res) => {
+        setStatus((prev)=>!prev)
+      })
+      .catch((error) => console.log(error));
+  };
+  
+  const handleChange = (e) => {
+    setSelectedFilter({
+      ...selectedFilter,
+      [e.target.name]: e.target.value,
+    });
+  };
 
   const manageButtons = [
     "Interested Team",
@@ -37,32 +77,49 @@ function ManageTournament() {
   const manageDropdown = [
     {
       head: "Tours",
-      options: ["All", "1.Take Part in Our Tour", "2.Cricket Tour", "3.Sports Tour", "4.Casino Tour", "5.Entertainment Tour"],
+      name: "tour_name",
+      options: [
+        "All",
+        "1.Take Part in Our Tour",
+        "2.Cricket Tour",
+        "3.Sports Tour",
+        "4.Casino Tour",
+        "5.Entertainment Tour",
+      ],
     },
     {
       head: "Website",
-      options: ["All", "www.we2call.com", "www.texchange.com", "www.raavana.com"],
-    },
-    {
-      head: "Location",
-      options: ["All", "India", "Srilanka", "Bangladesh", "Dubai"],
-    },
-    {
-      head: "Name",
-      options: ["All", "jay", "vinod", "ravi", "babu"],
+      name: "website",
+      options: [
+        "All",
+        "www.we2call.com",
+        "www.texchange.com",
+        "www.raavana.com",
+      ],
     },
     {
       head: "Role",
+      name: "role",
       options: [
         "All",
         "Director",
-        "Super Admin",
+        "super-admin",
         "Sub Admin",
-        "Admin",
+        "admin",
         "Super Master",
         "Master",
         "Agent",
       ],
+    },
+    {
+      head: "Location",
+      name: "location",
+      options: ["All", "India", "Srilanka", "Bangladesh", "Dubai"],
+    },
+    {
+      head: "Name",
+      name: "user_name",
+      options: ["All", "jay", "vinod", "ravi", "babu"],
     },
   ];
 
@@ -100,24 +157,117 @@ function ManageTournament() {
       field: "location",
     },
     {
-      field: "clr",
+      field: "cl",
       clr: true,
     },
   ];
 
-  const tableData = interestedMembers && interestedMembers.length>0 ? interestedMembers.map((item, index)=>{
-    return ({
-      sl: index+1,
-      website: item.website,
-      tour_title: item.tour_title,
-      name: item.user_name,
-      role: item.role,
-      tour_name: item.tour_name,
-      schedule: item.schedule,
-      location: item.location,
-      clr: "Select",
-    })
-  }):[];
+  const tableData =
+    interestedMembers && interestedMembers.length > 0
+      ? interestedMembers
+          .filter((item) => {
+            if (selectedFilter?.tour_name === "All") {
+              return item;
+            } else {
+              return item.tour_name === selectedFilter.tour_name;
+            }
+          })
+          .filter((item) => {
+            if (selectedFilter?.website === "All") {
+              return item;
+            } else {
+              return item.website === selectedFilter.website;
+            }
+          })
+          .filter((item) => {
+            if (selectedFilter?.role === "All") {
+              return item;
+            } else {
+              return item.role === selectedFilter.role;
+            }
+          })
+          .map((item, index) => {
+            return {
+              sl: index + 1,
+              website: item.website,
+              tour_title: item.tour_title,
+              name: item.user_name,
+              role: item.role,
+              tour_name: item.tour_name,
+              schedule: item.schedule,
+              location: item.location,
+              cl:
+                item.selected === false ? (
+                  <button
+                    className="select-button"
+                    name="select"
+                    value={selectButton}
+                    onClick={() => handleSelectButton(item.interested_id)}
+                  >
+                    Select
+                  </button>
+                ) : (
+                  <button
+                    disabled
+                    className="select-button btn-color2"
+                  >
+                    Selected
+                  </button>
+                ),
+            };
+          })
+      : [];
+  const tableData2 =
+    interestedMembers && interestedMembers.length > 0
+      ? interestedMembers
+          .filter((item) => {
+            return item.selected === true;
+          })
+          .filter((item) => {
+            if (selectedFilter?.tour_name === "All") {
+              return item;
+            } else {
+              return item.tour_name === selectedFilter.tour_name;
+            }
+          })
+          .filter((item) => {
+            if (selectedFilter?.website === "All") {
+              return item;
+            } else {
+              return item.website === selectedFilter.website;
+            }
+          })
+          .filter((item) => {
+            if (selectedFilter?.role === "All") {
+              return item;
+            } else {
+              return item.role === selectedFilter.role;
+            }
+          })
+          .map((item, index) => {
+            return {
+              sl: index + 1,
+              website: item.website,
+              tour_title: item.tour_title,
+              name: item.user_name,
+              role: item.role,
+              tour_name: item.tour_name,
+              schedule: item.schedule,
+              location: item.location,
+              cl:
+                item.selected === true && (
+                  <button
+                    className="select-button btn-color"
+                    name="deselect"
+                    value={deselectButton}
+                    onClick={() => handleDeSelectButton(item.interested_id)}
+                  >
+                    De-select
+                  </button>
+                )
+            };
+          })
+      : [];
 
   const tableDocHeading = [
     {
@@ -639,14 +789,17 @@ function ManageTournament() {
           return (
             <div className="col" key={index}>
               <div className="font-grey">{item.head}</div>
-              <select className="tours-box p-2 medium-font rounded-top text-center w-100"
-                      name={item.head}
-                      onChange={(e)=>handleChange(e)}
+              <select
+                className="tours-box p-2 medium-font rounded-top text-center w-100"
+                name={item.name}
+                onChange={(e) => handleChange(e)}
               >
                 {item.options.map((items, i) => {
-                  return <option key={i}
-                                 value={items}
-                          >{items}</option>;
+                  return (
+                    <option key={i} value={items}>
+                      {items}
+                    </option>
+                  );
                 })}
               </select>
             </div>
@@ -654,22 +807,14 @@ function ManageTournament() {
         })}
       </div>
       <div className="mt-3">
-        {(activeManageIndex === 0 ||
-          activeManageIndex === 1 ||
-          activeManageIndex === 2) && (
+        {activeManageIndex === 0 && (
           <div>
             <Table columns={tableHeading} data={tableData} />
-            {activeManageIndex === 2 && (
-              <div>
-                <textarea
-                  className="manage-text-area p-2"
-                  placeholder="Message Type Here"
-                ></textarea>
-                <div className="w-100 d-flex justify-content-end">
-                  <button className="submit p-2">Submit</button>
-                </div>
-              </div>
-            )}
+          </div>
+        )}
+        {(activeManageIndex === 1 || activeManageIndex === 2) && (
+          <div>
+            <Table columns={tableHeading} data={tableData2} />
           </div>
         )}
         {activeManageIndex === 2 && (

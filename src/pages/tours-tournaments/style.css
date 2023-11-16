@@ -7,6 +7,13 @@
   border: none;
   outline: none;
 }
+.btn-color {
+  background: #fa2424 !important;
+  color: whitesmoke;
+}
+.btn-color2 {
+  background: #a6a6fa !important;
+}
 .active-head {
   color: #696cff !important;
   border: 1px solid #696cff;
@@ -34,7 +41,7 @@
   color: #fff;
   width: 100%;
 }
-.button-position{
+.button-position {
   position: relative;
   left: 93%;
 }
