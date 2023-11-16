@@ -67,7 +67,7 @@ function AddCountryPopups(props) {
   const [websiteNames, setwebsiteNames] = useState([]);
   const getwebsiteNames = async () => {
     const payload = {
-      register_id: "reg-20230710182031623",
+      register_id: "company",
     };
     await call(GET_ALL_WEBSITES, payload)
       .then((res) => {
@@ -83,7 +83,7 @@ function AddCountryPopups(props) {
   const [allPayments, setAllPayments] = useState([]);
   const getPaymentWay = async () => {
     const payload = {
-      register_id: "reg-20230710182031623",
+      register_id: "comapany",
     };
     await call(GET_ALL_PAYMENTS, payload)
       .then((res) => {
@@ -105,7 +105,7 @@ function AddCountryPopups(props) {
           : ADD_COUNTRY_AND_CURRENCY;
 
         const requestData = {
-          register_id: "reg-20230909114353315",
+          register_id: "company",
           country_name: countryName,
           currency_name: currencyName,
           payment_gateway: paymentGateway,
@@ -142,7 +142,7 @@ function AddCountryPopups(props) {
           : ADD_PAYMENT_GATEWAY;
 
         const paymentData = {
-          register_id: "reg-20230710182031623",
+          register_id: "company",
           payment_details: paymentDetails,
           country_name: countryName,
           currency_name: currencyName,

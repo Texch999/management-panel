@@ -26,7 +26,7 @@ function TextMessage() {
     } else {
       setError("");
       await call(ADD_NOTIFICATIONS_TEXT_MESSAGES, {
-        register_id: "reg-20230710182031623",
+        register_id: "company",
         country_name: textmessage.country_name,
         notification_type: textmessage.notification_type,
         website_name: textmessage.website_name,
@@ -54,7 +54,7 @@ function TextMessage() {
   const [websiteNames, setwebsiteNames] = useState([]);
   const getwebsiteNames = async () => {
     const payload = {
-      register_id: "reg-20230710182031623",
+      register_id: "company",
     };
     await call(GET_ALL_WEBSITES, payload)
       .then((res) => {
@@ -89,7 +89,7 @@ function TextMessage() {
   const [allCountries, setallCountries] = useState([]);
   const getallCountries = async () => {
     const payload = {
-      register_id: "reg-20230909114353315",
+      register_id: "company",
     };
     await call(GET_COUNTRY_AND_CURRENCY, payload)
       .then((res) => {

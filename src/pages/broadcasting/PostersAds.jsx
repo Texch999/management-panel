@@ -47,7 +47,7 @@ function OfferPosterAdds() {
     } else {
       setError("");
       await call(ADD_POSTERS_AND_ADS, {
-        register_id: "reg-20230710182031623",
+        register_id: "company",
         website_name: allPosters.website_name,
         user: allPosters.user,
         country_name: allPosters.country_name,
@@ -113,7 +113,7 @@ function OfferPosterAdds() {
   const [websiteNames, setwebsiteNames] = useState([]);
   const getwebsiteNames = async () => {
     const payload = {
-      register_id: "reg-20230710182031623",
+      register_id: "company",
     };
     await call(GET_ALL_WEBSITES, payload)
       .then((res) => {
@@ -149,7 +149,7 @@ function OfferPosterAdds() {
   const [allCountries, setallCountries] = useState([]);
   const getallCountries = async () => {
     const payload = {
-      register_id: "reg-20230909114353315",
+      register_id: "company",
     };
     await call(GET_COUNTRY_AND_CURRENCY, payload)
       .then((res) => {

@@ -46,7 +46,7 @@ function Broadcasting() {
   const [getBroadcasting, setGetBroadcasting] = useState([]);
   const getBroadcastingEvent = async () => {
     const payload = {
-      register_id: "reg-20230710182031623",
+      register_id: "company",
     };
     await call(GET_BROADCAST_EVENTS, payload)
       .then((res) => {
@@ -61,7 +61,7 @@ function Broadcasting() {
   const [notifications, setnotifications] = useState([]);
   const getNotifications = async () => {
     const payload = {
-      register_id: "reg-20230710182031623",
+      register_id: "company",
     };
     await call(GET_ALL_NOTIFICATIONS, payload)
       .then((res) => {
@@ -84,7 +84,7 @@ function Broadcasting() {
   const [getPoster, setgetPoster] = useState([]);
   const getAllposters = async () => {
     const payload = {
-      notification_type: "Demo",
+      register_id: "company",
     };
     await call(GET_ALL_POSTERS, payload)
       .then((res) => {
@@ -94,7 +94,7 @@ function Broadcasting() {
             ...obj,
             event_name: "poster notification",
             status: obj.status,
-            // obj.status === true ? (
+             // obj.status === true ? (
             //   <div className="font-green custom-active-button px-2">
             //     Active
             //   </div>
@@ -120,9 +120,13 @@ function Broadcasting() {
   }, []);
   const [activeIndex, setActiveIndex] = useState(0);
 
-  // const currentDate = new Date().toISOString().split('T')[0];
-  // console.log('---------->',currentDate);
-  // const publishedData = [].filter((item)=> item.status === true && item.publish_date<= currentDate)
+  const currentDate = new Date().toISOString().split("T")[0];
+  console.log("---------->", currentDate);
+  const publishedData = [
+    ...getBroadcasting,
+    ...notifications,
+    ...getPoster,
+  ].filter((item) => item.status === true && item.publish_date <= currentDate);
   const modifiedBroadcastingDetails = [
     ...getBroadcasting,
     ...notifications,
@@ -146,12 +150,11 @@ function Broadcasting() {
       dateandtime: item?.create_at,
       type: item?.event_location,
       status:
-        item?.status === "true" ? (
+        item?.status === true ? (
           <div className="font-green custom-active-button px-2">Active</div>
         ) : (
           <div className="custom-deactive-button px-2">InActive</div>
         ),
-      //status: item?.event_status === true ? "Active" : "Inactive",
       icon: <AiOutlineEdit className="eye-icon-size" />,
     };
   });

@@ -1,9 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Modal, Container, Row, Col, Button } from "react-bootstrap";
-import {
-  ADD_SECURITY_QUESTIONS,
-  UPDATE_SETTINGS,
-} from "../../config/endpoints";
+import { ADD_REASON_REJECTIONS, UPDATE_SETTINGS } from "../../config/endpoints";
 import { call } from "../../config/axios";
 import MatchSubmitPopup from "../../matchpopups/MatchSubmitPopup";
 
@@ -23,7 +20,8 @@ function AddReasonPopup(props) {
 
   const [acceptClick, setAcceptClick] = useState(false);
   const [formData, setFormData] = useState({
-    register_id: "reg-20230710182031623",
+    p_id: "REJECT-REASON",
+    register_id: "company",
     question: "",
     reason: "",
     active: "Select",
@@ -33,7 +31,8 @@ function AddReasonPopup(props) {
   useEffect(() => {
     if (selectedQuestion) {
       setFormData({
-        register_id: "reg-20230710182031623",
+        p_id: "REJECT-REASON",
+        register_id: "company",
         question: selectedQuestion.question || "",
         reason: selectedQuestion.reason || "",
         active: selectedQuestion.is_active || "Select",
@@ -42,7 +41,8 @@ function AddReasonPopup(props) {
     } else {
       // Clear the form when creating a new question
       setFormData({
-        register_id: "reg-20230710182031623",
+        p_id: "REJECT-REASON",
+        register_id: "company",
         question: "",
         reason: "",
         active: "Select",
@@ -64,11 +64,12 @@ function AddReasonPopup(props) {
     });
   };
 
-  const handleCreateOrUpdateSecurityQuestion = async () => {
+  const handleCreateOrUpdateReasons = async () => {
     try {
-      const url = selectedQuestion ? UPDATE_SETTINGS : ADD_SECURITY_QUESTIONS;
+      const url = selectedQuestion ? UPDATE_SETTINGS : ADD_REASON_REJECTIONS;
       const requestData = {
-        register_id: "reg-20230710182031623",
+        p_id: "REJECT-REASON",
+        register_id: "company",
         question: formData.question,
         reason: formData.reason,
         active: formData.active,
@@ -181,7 +182,7 @@ function AddReasonPopup(props) {
                   type="submit"
                   variant="primary"
                   className="add-button small-font rounded px-4 py-3 mx-2 my-3 w-50 all-none"
-                  onClick={handleCreateOrUpdateSecurityQuestion}
+                  onClick={handleCreateOrUpdateReasons}
                 >
                   {selectedQuestion ? "Update" : "Create"}
                 </button>

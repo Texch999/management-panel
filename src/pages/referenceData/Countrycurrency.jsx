@@ -45,12 +45,12 @@ function Countrycurrency() {
     {
       header: "Action",
       field: "icon",
-      render: () => <p>Test</p>
+      render: () => <p>Test</p>,
     },
   ];
   const getAllCountries = async () => {
     const payload = {
-      register_id: "reg-20230909114353315",
+      register_id: "company",
     };
     await call(GET_COUNTRY_AND_CURRENCY, payload)
       .then((res) => {
@@ -75,8 +75,10 @@ function Countrycurrency() {
             availableaccounts: item?.payment_details,
             showwebsites: item?.website,
             status:
-              item?.status === "active" ? (
-                <div className="font-green custom-active-button px-2">Active</div>
+              item?.active === "Yes" ? (
+                <div className="font-green custom-active-button px-2">
+                  Active
+                </div>
               ) : (
                 <div className="custom-deactive-button px-2">InActive</div>
               ),
@@ -90,7 +92,7 @@ function Countrycurrency() {
           availableaccounts: item?.payment_details,
           showwebsites: item?.website,
           status:
-            item?.status === "active" ? (
+            item?.active === "Yes" ? (
               <div className="font-green custom-active-button px-2">Active</div>
             ) : (
               <div className="custom-deactive-button px-2">InActive</div>
@@ -146,7 +148,9 @@ function Countrycurrency() {
       </div>
       <AddCountryPopups
         addCountryOpen={addCountryOpen}
-        Heading={`${selectedCountry ? "Update" : "Add"}  Country, Currency, and Payment Gateways`}
+        Heading={`${
+          selectedCountry ? "Update" : "Add"
+        }  Country, Currency, and Payment Gateways`}
         // Heading={`${selectedCountry ? "Update Country, Currency, and Payment Gateways" : "Add Country, Currency, and Payment Gateways"} `}
         setAddCountryOpen={setAddCountryOpen}
         setStatus={setStatus}

@@ -6,7 +6,7 @@ import { call } from "../../config/axios";
 function AddWebsitePopup(props) {
   const { showAddWebPopup, setShowAddWebPopup, setStatus } = props;
   const [formData, setFormData] = useState({
-    register_id: "reg-20230710182031623",
+    register_id: "company",
     web_url: "",
   });
   const handleAddWebPopupClose = () => {

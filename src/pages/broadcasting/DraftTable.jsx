@@ -40,7 +40,7 @@ function DraftTable() {
   ];
   const getBroadcastingEvent = async () => {
     const payload = {
-      register_id: "reg-20230710182031623",
+      register_id: "company",
     };
     await call(GET_BROADCAST_EVENTS, payload)
       .then((res) => {
@@ -55,7 +55,7 @@ function DraftTable() {
   const [notifications, setnotifications] = useState([]);
   const getNotifications = async () => {
     const payload = {
-      register_id: "reg-20230710182031623",
+      register_id: "company",
     };
     await call(GET_ALL_NOTIFICATIONS, payload)
       .then((res) => {
@@ -79,7 +79,7 @@ function DraftTable() {
   const [getPoster, setgetPoster] = useState([]);
   const getAllposters = async () => {
     const payload = {
-      notification_type: "Demo",
+      register_id: "company",
     };
     await call(GET_ALL_POSTERS, payload)
       .then((res) => {
@@ -107,12 +107,11 @@ function DraftTable() {
   }, []);
 
   const currentDate = new Date().toISOString().split("T")[0];
-  console.log("---------->", currentDate);
+  // console.log("---------->", currentDate);
   const draftData = [...getBroadcasting, ...notifications, ...getPoster].filter(
     (res) => res.status === false
   );
-  const modifiedOffersmanagementDetails = 
-  draftData.map((item) => ({
+  const modifiedOffersmanagementDetails = draftData.map((item) => ({
     ...item,
     title: (
       <div className="role-color">
@@ -137,7 +136,6 @@ function DraftTable() {
       ),
     icon: <AiOutlineEdit className="eye-icon-size" />,
   }));
-
   //console.log(filterData,"..........filterData")
   return (
     <div className="p-4 w-100">

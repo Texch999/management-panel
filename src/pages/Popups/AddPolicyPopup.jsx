@@ -42,7 +42,7 @@ function AddPolicyPopup(props) {
   const [websiteNames, setwebsiteNames] = useState([]);
   const getwebsiteNames = async () => {
     const payload = {
-      register_id: "reg-20230710182031623",
+      register_id: "company",
     };
     await call(GET_ALL_WEBSITES, payload)
       .then((res) => {
@@ -59,7 +59,7 @@ function AddPolicyPopup(props) {
     try {
       const url = selectedPolicy ? UPDATE_POLICY : ADD_POLICY;
       const requestData = {
-        register_id: "reg-20230710182031623",
+        register_id: "company",
         country_name: countryName,
         policy_description: policyDetails,
         website_name: website,

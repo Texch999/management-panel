@@ -43,11 +43,11 @@ function Securityquestions() {
   ];
   const getAllSecurityQuestions = async () => {
     const payload = {
-      register_id: "reg-20230710182031623",
+      p_id: "REJECT-REASON",
     };
     await call(GET_ALL_SECURITY_QUESTIONS, payload)
       .then((res) => {
-        const responseArray = res?.data?.data?.securityQuestions;
+        const responseArray = res?.data?.data;
         setAllQuestions(
           responseArray.length > 0
             ? responseArray.filter((item) => item.question !== "")

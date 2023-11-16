@@ -30,9 +30,9 @@ function Creatematch() {
     } else {
       console.log("createMatch", createMatch);
       await call(CREATE_OFFLINE_MATCHES, {
-        register_id: "company",
+        register_id: "reg-20230920132711772",
         series_name: createMatch.series_name,
-        account_role: "company",
+        account_role: "admin",
         team1: createMatch.team1,
         team2: createMatch.team2,
         sport_name: createMatch.sports_name,
@@ -180,8 +180,8 @@ function Creatematch() {
   const [getMatches, setgetMatches] = useState([]);
   const getAllMatches = async () => {
     const payload = {
-      register_id: "company",
-      account_role: "company",
+      register_id: "reg-20230920132711772",
+      account_role: "admin",
     };
     await call(GET_MATCHES_DATA, payload)
       .then((res) => {
@@ -214,7 +214,7 @@ function Creatematch() {
 
   console.log("websiteNames", websiteNames);
 
-  const modifiedCreatematchDetails = getMatches?.map((item) => ({
+  const modifiedCreatematchDetails = getMatches?.liveMatches?.map((item) => ({
     ...item,
     team: (
       <div className="role-color">
