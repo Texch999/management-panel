@@ -7,6 +7,7 @@ import ConformBookingTable from "../table/ConformBookingTable";
 import { call } from "../../config/axios";
 import { GET_INTERESTED } from "../../config/endpoints";
 import { UPDATE_INTERESTED } from "../../config/endpoints";
+import { BOOKNOW_FOR_INTERESTED } from "../../config/endpoints";
 
 function ManageTournament() {
   const [activeManageIndex, setActiveManageIndex] = useState(0);
@@ -14,6 +15,7 @@ function ManageTournament() {
   const [selectButton, setSelectButton] = useState(false);
   const [deselectButton, setDeselectButton] = useState(true)
   const [status, setStatus] = useState(false);
+  const [addingTourDetails, setAddingTourDetails] = useState("")
   const [selectedFilter, setSelectedFilter] = useState({
     tour_name: "All",
     website: "All",
@@ -30,6 +32,17 @@ function ManageTournament() {
       })
       .catch((error) => console.log(error));
   };
+
+  const tourdetailsSubmitButton = async(tableData2)=>{
+    const interestedMembersIds = tableData2.map((i)=>{return i.id})
+    const payload = {
+      selectedTeam:interestedMembersIds,
+      tour_details:addingTourDetails
+    }
+    await call(BOOKNOW_FOR_INTERESTED, payload)
+            .then((res)=>console.log(res))
+            .catch((error)=>console.log(error))
+  }
 
   useEffect(() => {
     gettingInterestedMembers();
@@ -88,6 +101,11 @@ function ManageTournament() {
       ],
     },
     {
+      head: "Location",
+      name: "location",
+      options: ["All", "India", "Srilanka", "Bangladesh", "Dubai"],
+    },
+    {
       head: "Website",
       name: "website",
       options: [
@@ -110,11 +128,6 @@ function ManageTournament() {
         "Master",
         "Agent",
       ],
-    },
-    {
-      head: "Location",
-      name: "location",
-      options: ["All", "India", "Srilanka", "Bangladesh", "Dubai"],
     },
     {
       head: "Name",
@@ -170,6 +183,13 @@ function ManageTournament() {
               return item;
             } else {
               return item.tour_name === selectedFilter.tour_name;
+            }
+          })
+          .filter((item)=>{
+            if (selectedFilter?.location === "All"){
+              return item;
+            }else {
+              return item.location === selectedFilter.location;
             }
           })
           .filter((item) => {
@@ -230,6 +250,13 @@ function ManageTournament() {
               return item.tour_name === selectedFilter.tour_name;
             }
           })
+          .filter((item)=>{
+            if (selectedFilter?.location === "All"){
+              return item;
+            }else {
+              return item.location === selectedFilter.location;
+            }
+          })
           .filter((item) => {
             if (selectedFilter?.website === "All") {
               return item;
@@ -246,6 +273,7 @@ function ManageTournament() {
           })
           .map((item, index) => {
             return {
+              id: item.interested_id,
               sl: index + 1,
               website: item.website,
               tour_title: item.tour_title,
@@ -268,7 +296,7 @@ function ManageTournament() {
             };
           })
       : [];
-
+  // console.log(tableData2,'.....tabledata2')
   const tableDocHeading = [
     {
       header: "S NO",
@@ -822,8 +850,13 @@ function ManageTournament() {
             <textarea
               className="tours-box w-100 h-100px"
               placeholder="Please enter Tour Details"
+              name="tourdetails"
+              value={addingTourDetails}
+              onChange={(e)=>{setAddingTourDetails(e.target.value)}}
             ></textarea>
-            <button className="select-button button-position">Submit</button>
+            <button className="select-button button-position"
+                    onClick={()=>{tourdetailsSubmitButton(tableData2)}}
+            >Submit</button>
           </div>
         )}
         {activeManageIndex === 3 && (

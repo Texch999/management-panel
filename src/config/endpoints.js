@@ -35,14 +35,20 @@ const CREATE_OFFLINE_MATCHES = "/offline-management/match_creation";
 const ADD_TOURS = "/tours/add_tours";
 const GET_TOURS = "/tours/get_tours";
 const UPDATE_TOURS = "/tours/update_tours";
-const GET_INTERESTED = "/tours/get_interested"
-const UPDATE_INTERESTED = "/tours/update_interested"
+const GET_INTERESTED = "/tours/get_interested";
+const UPDATE_INTERESTED = "/tours/update_interested";
+const BOOKNOW_FOR_INTERESTED = "/tours/booknow_for_interested"
 
 // methods
 const DELETE = "DELETE";
 const POST = "POST";
 const GET = "POST";
 const PUT = "PUT";
+
+exports.BOOKNOW_FOR_INTERESTED = {
+  url: BOOKNOW_FOR_INTERESTED,
+  method: POST
+}
 
 exports.UPDATE_INTERESTED = {
   url: UPDATE_INTERESTED,
