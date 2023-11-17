@@ -30,9 +30,9 @@ function Creatematch() {
     } else {
       console.log("createMatch", createMatch);
       await call(CREATE_OFFLINE_MATCHES, {
-        register_id: "reg-20230920132711772",
+        register_id: "company",
         series_name: createMatch.series_name,
-        account_role: "admin",
+        account_role: "company",
         team1: createMatch.team1,
         team2: createMatch.team2,
         sport_name: createMatch.sports_name,
@@ -60,21 +60,18 @@ function Creatematch() {
   }, []);
 
   const handelChange = (e) => {
-    console.log("e.target.name", e.target.name);
     setcreateMatch({ ...createMatch, [e.target.name]: e.target.value });
   };
 
   const top_cricket_countries = [
-    "IND",
-    "AUS",
-    "ENG",
-    "PAK",
-    "SA",
-    "NZ",
-    "SL",
-    "WI",
-    "BAN",
-    "AFG",
+   {
+    headName: "Team1",
+    name: "team1"
+   },
+   {
+    headName: "Team2",
+    name:"team2"
+   }
   ];
 
   const sportsDropdowns = [
@@ -82,31 +79,7 @@ function Creatematch() {
       headName: "Sports Name",
       keyValue: "sports_name",
       options: <option value="cricket">Cricket</option>,
-    },
-    {
-      headName: "Team1",
-      keyValue: "team1",
-      options: top_cricket_countries?.map((item, index) => {
-        return (
-          <option key={index} value={item}>
-            {item}
-          </option>
-        );
-      }),
-    },
-    {
-      headName: "Team2",
-      keyValue: "team2",
-      options: top_cricket_countries
-        ?.filter((country) => country !== createMatch?.team1)
-        .map((item, index) => {
-          return (
-            <option key={index} value={item}>
-              {item}
-            </option>
-          );
-        }),
-    },
+    }
   ];
 
   const matchType = [
@@ -126,10 +99,6 @@ function Creatematch() {
       return results?.second;
     }
   };
-  const inningsCreation = [
-    { title: "1st Inn", value: "first" },
-    { title: "2nd Inn", value: "second" },
-  ];
 
   const MatchTypeDropdown = [
     {
@@ -180,12 +149,11 @@ function Creatematch() {
   const [getMatches, setgetMatches] = useState([]);
   const getAllMatches = async () => {
     const payload = {
-      register_id: "reg-20230920132711772",
-      account_role: "admin",
+      register_id: "company",
+      account_role: "company",
     };
     await call(GET_MATCHES_DATA, payload)
       .then((res) => {
-        console.log("..............res", res);
         setgetMatches(res?.data?.data);
       })
       .catch((err) => console.log(err));
@@ -194,16 +162,13 @@ function Creatematch() {
     getAllMatches();
   }, []);
 
-  console.log(".....getMatches", getMatches);
-
   const [websiteNames, setwebsiteNames] = useState([]);
   const getwebsiteNames = async () => {
     const payload = {
-      register_id: "reg-20230710182031623",
+      register_id: "company",
     };
     await call(GET_ALL_WEBSITES, payload)
       .then((res) => {
-        console.log("response=====>", res);
         setwebsiteNames(res?.data?.data);
       })
       .catch((err) => console.log(err));
@@ -212,10 +177,7 @@ function Creatematch() {
     getwebsiteNames();
   }, []);
 
-  console.log("websiteNames", websiteNames);
-
   const modifiedCreatematchDetails = getMatches?.liveMatches?.map((item) => ({
-    ...item,
     team: (
       <div className="role-color">
         <span className="role-color">{item?.match_name}</span>{" "}
@@ -265,7 +227,22 @@ function Creatematch() {
               </div>
             );
           })}
-
+          {top_cricket_countries.map((item, index) => {
+            return (
+            <div key={index} className="col">
+              <div className="th-color small-font">{item.headName}</div>
+              <div className="sport-management-input d-flex justify-content-between p-1 th-color small-font">
+              <input
+                className="w-90 th-color small-font p-1"
+                onChange={(e) => handelChange(e)}
+                placeholder="Enter Team"
+                name={item?.name}
+                value={createMatch?.[item?.name] || ""}
+              ></input>
+            </div>
+            </div>
+            )
+          })}
           <div className="col">
             <div className="th-color small-font">Match place</div>
             <div className="sport-management-input d-flex justify-content-between p-1 th-color small-font">
