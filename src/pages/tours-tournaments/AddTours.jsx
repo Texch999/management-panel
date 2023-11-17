@@ -93,20 +93,18 @@ function AddTours() {
             name="website"
             onChange={(e) => setWebsite(e.target.value)}
           >
-            <option value="select">selecte website</option>
-            <option value="All">All</option>
-            {allWebsites.map((obj) => (
-              <option value={obj.web_url} selected>
-                {obj.web_url}
-              </option>
-            ))}
+            <option selected>select website</option>
+            <option value="www.we2call.com">www.we2call.com</option>
+            <option value="www.texchange.com">www.texchange.com</option>
+            <option value="www.raavana.com">www.raavana.com</option>
+            <option value="www.brahma.com">www.brahma.com</option>
           </select>
           <select
             className="tours-box p-2 medium-font rounded-top text-center"
             name="country"
             onChange={(e) => setCountry(e.target.value)}
           >
-            <option value="select">select..</option>
+            <option selected>select country</option>
           {/* <option value="All">All</option>
           {allCountries.map((obj) => (
             <option value={obj.country_name} selected>
