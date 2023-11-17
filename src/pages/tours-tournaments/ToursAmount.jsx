@@ -22,7 +22,7 @@ function ToursAmount() {
             // setShowReturnPopup(true)
             // .then((res)=>(res.data,'.....res'))
             .then((res)=>{
-              console.log(res,'......res')
+              // console.log(res,'......res')
               if(res.status==200){
                 setShowReturnPopup(true);
                 setHeaderMessage("Tour Updated Successfully")
@@ -79,7 +79,7 @@ function ToursAmount() {
     setTourname(item);
   };
 
-  const filteredTours = tours.filter((item) => item.tour_name === tourname);
+  const filteredTours = tours?.filter((item) => item.tour_name === tourname);
   const mappingArray = tourname === "All Tours" ? tours : filteredTours;
   const packagesType = [
     "regularpack",
@@ -110,7 +110,7 @@ function ToursAmount() {
       field: "packages",
     },
   ];
-  const tableData = mappingArray.map((item) => {
+  const tableData = mappingArray?.map((item) => {
     return {
       tour_date: item.schedule_from,
       location: item.country,

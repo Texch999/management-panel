@@ -162,8 +162,8 @@ function ManageTournament() {
       field: "tour_name",
     },
     {
-      header: "SCHEDULE",
-      field: "schedule",
+      header: "SCHEDULE_START",
+      field: "schedule_start",
     },
     {
       header: "LOCATION",
@@ -208,13 +208,15 @@ function ManageTournament() {
           })
           .map((item, index) => {
             return {
+              id: item.interested_id,
               sl: index + 1,
               website: item.website,
               tour_title: item.tour_title,
               name: item.user_name,
               role: item.role,
               tour_name: item.tour_name,
-              schedule: item.schedule,
+              schedule_start: item.schedule_start,
+              schedule_end: item.schedule_end,
               location: item.location,
               cl:
                 item.selected === false ? (
@@ -280,7 +282,8 @@ function ManageTournament() {
               name: item.user_name,
               role: item.role,
               tour_name: item.tour_name,
-              schedule: item.schedule,
+              schedule_start: item.schedule_start,
+              schedule_end: item.schedule_end,
               location: item.location,
               cl:
                 item.selected === true && (
