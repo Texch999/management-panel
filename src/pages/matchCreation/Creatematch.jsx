@@ -21,7 +21,7 @@ function Creatematch() {
       !createMatch.team1 ||
       !createMatch.team2 ||
       !createMatch.match_place ||
-      !createMatch.client_name ||
+      // !createMatch.client_name ||
       !createMatch.stadium ||
       !createMatch.gender ||
       !createMatch.date ||
@@ -196,7 +196,7 @@ function Creatematch() {
   const [websiteNames, setwebsiteNames] = useState([]);
   const getwebsiteNames = async () => {
     const payload = {
-      register_id: "reg-20230710182031623",
+      register_id: "company",
     };
     await call(GET_ALL_WEBSITES, payload)
       .then((res) => {
@@ -211,7 +211,7 @@ function Creatematch() {
 
   console.log("websiteNames", websiteNames);
 
-  const modifiedCreatematchDetails = getMatches.liveMatches?.map((item) => ({
+  const modifiedCreatematchDetails = getMatches?.liveMatches?.map((item) => ({
     ...item,
     team: (
       <div className="role-color">

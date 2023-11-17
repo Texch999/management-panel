@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Modal, Container, Row, Col, Button } from "react-bootstrap";
 import {
   ADD_SECURITY_QUESTIONS,
-  UPDATE_SETTINGS,
+  UPDATE_SETTINGS
 } from "../../config/endpoints";
 import { call } from "../../config/axios";
 import MatchSubmitPopup from "../../matchpopups/MatchSubmitPopup";

@@ -58,7 +58,7 @@ function AddCountryPopups(props) {
     if (selectedPayment) {
       setCountryName(selectedPayment.country_name || "");
       setCurrencyName(selectedPayment.currency_name || "");
-      setPaymentGateway(selectedPayment.payment_gateway || "Select");
+      setPaymentGateway(selectedPayment.pg_upi || "Select");
       setPaymentDetails(selectedPayment.payment_details || "");
       setWebsite(selectedPayment.website || "Select");
       setActive(selectedPayment.active || "Select");
@@ -146,7 +146,7 @@ function AddCountryPopups(props) {
           payment_details: paymentDetails,
           country_name: countryName,
           currency_name: currencyName,
-          payment_gateway: paymentGateway,
+          pg_upi: paymentGateway,
           website: website,
           active: active,
         };
@@ -223,7 +223,7 @@ function AddCountryPopups(props) {
             <Col>
               <div className="small-font my-1">Payment Gateway *</div>
               <select
-                name="payment_gateway"
+                name="pg_upi"
                 value={paymentGateway}
                 onChange={(e) => setPaymentGateway(e.target.value)}
                 className="w-100 custom-select small-font input-btn-bg px-2 py-3 all-none rounded all-none"

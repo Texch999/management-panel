@@ -1,11 +1,20 @@
 import { Col, Container, Modal, Row } from "react-bootstrap";
 import { Button, Table, Dropdown } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { PiArrowsOutLight } from "react-icons/pi";
 import MatchSubmitPopup from "../../matchpopups/MatchSubmitPopup";
+import {
+  GET_ADMIN_PACKAGE_REQUEST,
+  GET_REASON_REJECTIONS,
+} from "../../config/endpoints";
+import { call } from "../../config/axios";
 function PackageViewPoup(props) {
-  const { showPackageUpgrade, setShowPackageUpgrade } = props;
+  const { showPackageUpgrade, setShowPackageUpgrade, requestedPackages } =
+    props;
+
+  const [saleTicket, setSaleTicket] = useState([]);
+  const [rejectionDropDown, setRejectionDropDown] = useState([]);
   const handleAdminTicketPopupClose = () => {
     setShowPackageUpgrade(false);
   };
@@ -14,6 +23,43 @@ function PackageViewPoup(props) {
     setAcceptClick(true);
     setShowPackageUpgrade(false);
   };
+
+  const getAllsaleTickets = async () => {
+    const payload = {
+      register_id: "reg-20230920132711772",
+    };
+    await call(GET_ADMIN_PACKAGE_REQUEST, payload)
+      .then((res) => {
+        setSaleTicket(res?.data?.data);
+      })
+      .catch((err) => console.log(err));
+  };
+
+  useEffect(() => {
+    getAllsaleTickets();
+  }, []);
+
+  const handelChange = (e) => {
+    setSaleTicket({
+      ...saleTicket,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const getAllRejections = async () => {
+    const payload = {
+      p_id: "REJECT-REASON",
+    };
+    await call(GET_REASON_REJECTIONS, payload)
+      .then((res) => {
+        setRejectionDropDown(res?.data?.data);
+      })
+      .catch((err) => console.log(err));
+  };
+  useEffect(() => {
+    getAllRejections();
+  }, []);
+
 
   const selectReasons = [
     { header: "Insufficient Balance" },
@@ -81,16 +127,16 @@ function PackageViewPoup(props) {
             </div>
             <div className="d-flex flex-row w-100 custom-select small-font input-btn-bg rounded align-items-center justify-content-between my-2 px-2 py-2">
               <div className="font-grey">Trx ID</div>
-              <div>#trx-id-20230713134510227530</div>
+              <div>{requestedPackages?.transaction_id}</div>
             </div>
             <div className="d-flex flex-row w-100 custom-select small-font input-btn-bg rounded align-items-center justify-content-between my-2 px-2 py-2">
               <div className="font-grey">Reference ID</div>
-              <div>mast-20221219180735153168</div>
+              <div>{requestedPackages?.package_requester_id}</div>
             </div>
             <div className="d-flex flex-column px-2 input-btn-bg rounded">
               <div className="d-flex flex-row justify-content-between small-font  all-none  align-items-center justify-content-between my-1 ">
                 <div className="font-grey">Amount</div>
-                <div>20000</div>
+                <div>{requestedPackages?.summary?.final_package_cost}</div>
               </div>
               <div className="d-flex flex-row justify-content-between small-font  all-none  align-items-center justify-content-between my-1 ">
                 <div className="font-grey">Payment Method</div>
@@ -106,25 +152,30 @@ function PackageViewPoup(props) {
               </div>
               <div className="d-flex flex-row justify-content-between small-font  all-none  align-items-center justify-content-between my-1 ">
                 <div className="font-grey">Time</div>
-                <div>2023-07-13, 13:45:10 PM</div>
+                <div>
+                  {requestedPackages?.created_date}{" "}
+                  {requestedPackages.created_time}
+                </div>
               </div>
             </div>
+
             <div className="w-100 my-1 relative-position">
               <img
                 className="w-100 h9vh rounded"
                 src={process.env.PUBLIC_URL + "./assets/dog_imge.jpg"}
+                alt=""
               />
               <PiArrowsOutLight className="zoom-icon" />
             </div>
             <Container fluid className="my-1 w-100">
               <Row>
-                <Col className="ps-0">
+                <Col className="ps-0 col-12">
                   <Dropdown
                     size="lg"
                     className="user-dropdown-toggle custom-button-drop small-font mt-2"
                   >
                     <Dropdown.Toggle className="w-100">
-                      <div className="d-flex align-itens-center justify-content-between p-1">
+                      <div className=" w-100 d-flex align-itens-center justify-content-between p-1">
                         <div className="font-grey">Package List</div>
                         <span style={{ float: "right" }} className="clr-yellow">
                           View
@@ -195,14 +246,14 @@ function PackageViewPoup(props) {
                     size="lg"
                     className="user-dropdown-toggle custom-button-drop small-font mt-2"
                   >
-                    <Dropdown.Toggle className="w-100">
+                    {/* <Dropdown.Toggle className="w-100">
                       <div className="d-flex align-itens-center justify-content-between p-1">
                         <div className="font-grey">Special Offer</div>
                         <span style={{ float: "right" }} className="clr-yellow">
                           View
                         </span>
                       </div>
-                    </Dropdown.Toggle>
+                    </Dropdown.Toggle> */}
                     <Dropdown.Menu className="custom-menu-item px-1">
                       <table className="w-100 match-position-table small-font clr-white">
                         <thead>
@@ -271,14 +322,14 @@ function PackageViewPoup(props) {
                     size="lg"
                     className="user-dropdown-toggle custom-button-drop small-font mt-2"
                   >
-                    <Dropdown.Toggle className="w-100">
+                    {/* <Dropdown.Toggle className="w-100">
                       <div className="d-flex align-itens-center justify-content-between p-1">
                         <div className="font-grey">Sports Chips</div>
                         <span style={{ float: "right" }} className="clr-yellow">
                           View
                         </span>
                       </div>
-                    </Dropdown.Toggle>
+                    </Dropdown.Toggle> */}
                   </Dropdown>
                 </Col>
                 <Col className="pe-0">
@@ -286,27 +337,41 @@ function PackageViewPoup(props) {
                     size="lg"
                     className="user-dropdown-toggle custom-button-drop small-font mt-2"
                   >
-                    <Dropdown.Toggle className="w-100">
+                    {/* <Dropdown.Toggle className="w-100">
                       <div className="d-flex align-itens-center justify-content-between p-1">
                         <div className="font-grey">Casino Chips</div>
                         <span style={{ float: "right" }} className="clr-yellow">
                           View
                         </span>
                       </div>
-                    </Dropdown.Toggle>
+                    </Dropdown.Toggle> */}
                   </Dropdown>
                 </Col>
               </Row>
             </Container>
             <div>
-              <select className="w-100 custom-select small-font input-btn-bg px-2 py-2 all-none rounded all-none my-2">
-                <option selected>Select</option>
-                <option>No Money</option>
+              <select
+                id="reason"
+                name="reason"
+                value={saleTicket?.reason || ""}
+                onChange={(e) => handelChange(e)}
+                className="w-100 custom-select small-font input-btn-bg px-2 py-2 all-none rounded all-none my-2"
+              >
+                <option value="">Select</option>
+                {/* <option>No Money</option>
                 <option>Money Borrowed</option>
                 <option>Insufficient Balance</option>
-                <option>www.brahama.com</option>
+                <option>www.brahama.com</option> */}
+                {rejectionDropDown.map((obj) => (
+                  <option value={obj.reason}>{obj.reason}</option>
+                ))}
               </select>
             </div>
+            <hr />
+              <div className="d-flex justify-content-between medium-font mt-2 mb-2">
+                <div>Total</div>
+                <div>{requestedPackages?.summary?.total_packages_cost}</div>
+              </div>
             <div className="d-flex justify-content-between mt-3 w-100">
               <button
                 type="submit"
