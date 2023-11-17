@@ -13,6 +13,8 @@ function Table(props) {
         return "pending-button w-fit-content p-1 px-2";
       case "Select":
         return "select-button w-fit-content p-1 px-2";
+      case "DeSelect":
+        return "select-button w-fit-content p-1 px-2";
       default:
         return "w-fit-content p-1 px-2";
     }
