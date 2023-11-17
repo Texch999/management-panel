@@ -8,6 +8,7 @@ import {
   UPDATE_PAYMENT_GATEWAY,
   GET_ALL_WEBSITES,
   GET_ALL_PAYMENTS,
+  GET_COUNTRY_AND_CURRENCY,
 } from "../../config/endpoints";
 import { call } from "../../config/axios";
 
@@ -25,7 +26,7 @@ function AddCountryPopups(props) {
   } = props;
 
   const [acceptClick, setAcceptClick] = useState(false);
-
+  const [allCountries, setAllCountries] = useState([]);
   const [countryName, setCountryName] = useState("");
   const [currencyName, setCurrencyName] = useState("");
   const [paymentGateway, setPaymentGateway] = useState("Select");
@@ -58,12 +59,13 @@ function AddCountryPopups(props) {
     if (selectedPayment) {
       setCountryName(selectedPayment.country_name || "");
       setCurrencyName(selectedPayment.currency_name || "");
-      setPaymentGateway(selectedPayment.payment_gateway || "Select");
+      setPaymentGateway(selectedPayment.pg_upi || "Select");
       setPaymentDetails(selectedPayment.payment_details || "");
       setWebsite(selectedPayment.website || "Select");
       setActive(selectedPayment.active || "Select");
     }
   }, [selectedCountry, selectedPayment]);
+
   const [websiteNames, setwebsiteNames] = useState([]);
   const getwebsiteNames = async () => {
     const payload = {
@@ -77,9 +79,23 @@ function AddCountryPopups(props) {
       .catch((err) => console.log(err));
   };
 
+  const getAllCountries = async () => {
+    const payload = {
+      register_id: "company",
+    };
+    await call(GET_COUNTRY_AND_CURRENCY, payload)
+      .then((res) => {
+        setAllCountries(res?.data?.data);
+      })
+
+      .catch((err) => console.log(err));
+  };
+
   useEffect(() => {
     getwebsiteNames();
+    getAllCountries();
   }, []);
+
   const [allPayments, setAllPayments] = useState([]);
   const getPaymentWay = async () => {
     const payload = {
@@ -146,7 +162,7 @@ function AddCountryPopups(props) {
           payment_details: paymentDetails,
           country_name: countryName,
           currency_name: currencyName,
-          payment_gateway: paymentGateway,
+          pg_upi: paymentGateway,
           website: website,
           active: active,
         };
@@ -200,14 +216,20 @@ function AddCountryPopups(props) {
           <Row>
             <Col>
               <div className="small-font my-1">Country Name *</div>
-              <input
-                id="country_name"
-                type="text"
-                placeholder="Enter"
-                className="w-100 custom-select small-font login-inputs input-btn-bg px-2 py-3 all-none rounded all-none"
+              <select
                 value={countryName}
+                name="country_name"
                 onChange={(e) => setCountryName(e.target.value)}
-              ></input>
+                className="w-100 custom-select small-font login-inputs input-btn-bg px-2 py-2 all-none rounded all-none"
+              >
+                <option value="select">select</option>
+                <option value="All">All</option>
+                {allCountries.map((obj) => (
+                  <option value={obj.country_name} selected>
+                    {obj.country_name}
+                  </option>
+                ))}
+              </select>
             </Col>
             <Col>
               <div className="small-font my-1">Currency Name *</div>
@@ -223,13 +245,16 @@ function AddCountryPopups(props) {
             <Col>
               <div className="small-font my-1">Payment Gateway *</div>
               <select
-                name="payment_gateway"
+                name="pg_upi"
                 value={paymentGateway}
                 onChange={(e) => setPaymentGateway(e.target.value)}
                 className="w-100 custom-select small-font input-btn-bg px-2 py-3 all-none rounded all-none"
               >
                 <option value="Select">Select</option>
                 <option value="All">All</option>
+                <option value="Phonepay">Phonepay</option>
+                <option value="Gpay">Gpay</option>
+                <option value="Paytm">Paytm</option>
                 {allPayments.map((obj) => (
                   <option value={obj.pg_upi} selected>
                     {obj.pg_upi}
