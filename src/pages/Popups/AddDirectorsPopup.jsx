@@ -19,10 +19,8 @@ function AddDirectorsPopup(props) {
     firstSelect,
     selectedDirector,
     setStatus,
-    setSelectedDirector,
+    //setSelectedDirector,
   } = props;
-
-  console.log("selectedDirector====>", selectedDirector);
 
   const [userId, setUserId] = useState("");
   const [firstName, setFirstName] = useState("");
@@ -32,8 +30,6 @@ function AddDirectorsPopup(props) {
   const [phonenumber, setPhoneNumber] = useState("");
   const [website, setWebsite] = useState("");
   const [timezone, setTimeZone] = useState("");
-
-  console.log("role", role);
 
   const handleAddDirectorClose = () => {
     setShowAddDirectorPopup(false);
@@ -103,7 +99,7 @@ function AddDirectorsPopup(props) {
       } else {
         setAddDirectorPopup(false);
         handleAddDirectorPopup();
-        //setStatus((prev) => !prev);
+        setStatus((prev) => !prev);
         setFirstName("");
         setLastName("");
         setWebsite("");
@@ -129,7 +125,6 @@ function AddDirectorsPopup(props) {
     };
     await call(GET_ALL_WEBSITES, payload)
       .then((res) => {
-        console.log("response=====>", res);
         setwebsiteNames(res?.data?.data);
       })
       .catch((err) => console.log(err));
@@ -138,12 +133,10 @@ function AddDirectorsPopup(props) {
     getwebsiteNames();
   }, []);
 
-  console.log("websiteNames", websiteNames);
-
   const [allCountries, setallCountries] = useState([]);
   const getallCountries = async () => {
     const payload = {
-      register_id: "reg-20230909114353315",
+      register_id: "company",
     };
     await call(GET_COUNTRY_AND_CURRENCY, payload)
       .then((res) => {
@@ -155,24 +148,6 @@ function AddDirectorsPopup(props) {
   useEffect(() => {
     getallCountries();
   }, []);
-  console.log("allCountries", allCountries);
-
-  // const [allUsers, setgetallUsers] = useState([]);
-  // const getallUsers = async () => {
-  //   const payload = {
-  //     creator_id: "company",
-  //   };
-  //   await call(GET_ADMIN_USER_INFO, payload)
-  //     .then((res) => {
-  //       console.log("response=====>", res);
-  //       setgetallUsers(res?.data?.data);
-  //     })
-  //     .catch((err) => console.log(err));
-  // };
-  // useEffect(() => {
-  //   getallUsers();
-  // }, []);
-  // console.log("allUsers", allUsers);
 
   return (
     <div className="modal fade bd-example-modal-lg container mt-5">
@@ -232,13 +207,30 @@ function AddDirectorsPopup(props) {
                     onChange={(e) => setWebsite(e.target.value)}
                     className="w-100 custom-select small-font input-btn-bg px-2 py-2 all-none rounded all-none"
                   >
-                    <option value="select">select</option>
-                    <option value="All">All</option>
-                    {websiteNames.map((obj) => (
-                      <option value={obj.web_url} selected>
-                        {obj.web_url}
-                      </option>
-                    ))}
+                    {role === "director" ? (
+                      <>
+                        <option value="select">select</option>
+                        <option value="All">
+                          ALL
+                          <input type="checkbox" />
+                          RRR
+                        </option>
+                        {websiteNames.map((obj) => (
+                          <option value={obj.web_url}>
+                            <input type="checkbox" /> {obj.web_url}
+                          </option>
+                        ))}
+                      </>
+                    ) : (
+                      <>
+                        <option value="select">select</option>
+                        {websiteNames.map((obj) => (
+                          <option value={obj.web_url} selected>
+                            {obj.web_url}
+                          </option>
+                        ))}
+                      </>
+                    )}
                   </select>
                 </div>
               </Col>
@@ -248,13 +240,25 @@ function AddDirectorsPopup(props) {
                   <div className="small-font mb-1">Payment Gateway *</div>
                   <select
                     value={website}
-                    name="website_name"
+                    name="pg_name"
                     onChange={(e) => setWebsite(e.target.value)}
                     className="w-100 custom-select small-font input-btn-bg px-2 py-2 all-none rounded all-none"
                   >
-                    <option value="select">Select</option>
-                    <option value="select">AAA</option>
-                    <option value="select">BBB</option>
+                    {/* <option value=""selected>select</option>
+                    <option value="All">All</option>  */}
+                    {role === "director" ? (
+                      <>
+                        <option value="">Select</option>
+                        <option value="all">All</option>
+                      </>
+                    ) : (
+                      <>
+                        <option value="">Select</option>
+                        <option value="select">BBB</option>
+                        <option value="select">BBB</option>
+                        <option value="select">BBB</option>
+                      </>
+                    )}
                   </select>
                 </div>
               </Col>
@@ -364,21 +368,21 @@ function AddDirectorsPopup(props) {
                 </Col>
                 <Col className="pe-0">
                   <div className="small-font my-1">{firstSelect}</div>
-                  <select
+                  {/* <select
                     value={timezone}
                     name="time_zone"
                     onChange={(e) => setTimeZone(e.target.value)}
                     className="w-100 custom-select small-font login-inputs input-btn-bg px-2 py-2 all-none rounded all-none"
-                  >
-                    <option selected>Select</option>
+                  > */}
+                  {/* <option selected>Select</option>
                     <option> UTC+5:30 (India)</option>
                     <option> UTC+5:30 (India)</option>
                     <option> UTC+5:30 (India)</option>
                     <option> UTC+5:30 (India)</option>
                     <option> UTC+5:30 (India)</option>
                     <option> UTC+5:30 (India)</option>
-                    <option> UTC+5:30 (India)</option>
-                  </select>
+                    <option> UTC+5:30 (India)</option> */}
+                  {/* </select> */}
                 </Col>
               </Row>
             </Container>

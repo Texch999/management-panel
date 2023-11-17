@@ -1,34 +1,36 @@
-import React from "react";
-import { useState, useEffect } from "react";
-import {
-  GET_COUNTRY_AND_CURRENCY,
-  GET_ALL_WEBSITES,
-} from "../../config/endpoints";
+import React, { useState, useEffect } from "react";
+import { GET_ALL_WEBSITES, GET_COUNTRY_AND_CURRENCY } from "../../config/endpoints";
 import { call } from "../../config/axios";
-function PackageSelect(props) {
-  const { setSelectedPackage, packageInputs, setPackageInputs } = props;
+
+function PackageSelect() {
+  const [selectPackages, setSelectPackages] = useState([]);
+
+  const handelChange = (e)=>{
+    setSelectPackages({
+      ...selectPackages,
+      [e.target.name]:e.target.value
+    })
+  }
+
   const [websiteNames, setwebsiteNames] = useState([]);
-  const [allCountries, setallCountries] = useState([]);
-
-  const handlePackageInput = (e) => {
-    setPackageInputs({ ...packageInputs, [e.target.name]: e.target.value });
-  };
-
   const getwebsiteNames = async () => {
     const payload = {
       register_id: "reg-20230710182031623",
     };
     await call(GET_ALL_WEBSITES, payload)
       .then((res) => {
+        console.log("response=====>", res);
         setwebsiteNames(res?.data?.data);
       })
       .catch((err) => console.log(err));
   };
-
   useEffect(() => {
     getwebsiteNames();
   }, []);
 
+  console.log("websiteNames", websiteNames);
+
+  const [allCountries, setallCountries] = useState([]);
   const getallCountries = async () => {
     const payload = {
       register_id: "reg-20230909114353315",
@@ -40,14 +42,10 @@ function PackageSelect(props) {
       })
       .catch((err) => console.log(err));
   };
-
-  const handleFilter = (e) => {
-    console.log("e=======>",e)
-    setSelectedPackage(e.target.value);
-  };
   useEffect(() => {
     getallCountries();
   }, []);
+  console.log("allCountries", allCountries);
 
   return (
     <div className="row mt-3">
@@ -56,14 +54,17 @@ function PackageSelect(props) {
           <div className="medium-font font-grey">Website</div>
           <select
             name="website_name"
-            value={packageInputs?.website_name || ""}
-            onChange={(e) => handlePackageInput(e)}
+            id="website_name"
+            value={selectPackages?.website_name || ""}
+            onChange={(e) => handelChange(e)}
             className="w-100 select-bg p-3 rounded medium-font"
           >
-            <option value="">Select</option>
+            <option value="select">selecte...</option>
             <option value="All">All</option>
             {websiteNames.map((obj) => (
-              <option value={obj.web_url}>{obj.web_url}</option>
+              <option value={obj.web_url} selected>
+                {obj.web_url}
+              </option>
             ))}
           </select>
         </div>
@@ -71,17 +72,22 @@ function PackageSelect(props) {
       <div className="col-3">
         <div>
           <div className="medium-font font-grey">Country</div>
-          <select
-            name="country_name"
-            value={packageInputs?.country_name || ""}
-            onChange={(e) => handlePackageInput(e)}
-            className="w-100 select-bg p-3 rounded medium-font"
-          >
-            <option value="">Select</option>
-            <option value="All">All</option>
-            {allCountries.map((obj) => (
-              <option value={obj.country_name}>{obj.country_name}</option>
-            ))}
+          <select name="country_name"
+                      id="country_name"
+                      value={selectPackages?.country_name || ""}
+                      onChange={(e) => handelChange(e)}
+                      className="w-100 select-bg p-3 rounded medium-font" 
+                    >
+                      <option value="select">select..</option>
+                      <option value="All">All</option>
+                      {allCountries.map((obj) => (
+                        <option value={obj.country_name} selected>
+                          {obj.country_name}
+                        </option>
+                      ))}
+            <option>Select</option>
+            <option>India</option>
+            <option>SriLanka</option>
           </select>
         </div>
       </div>
@@ -91,7 +97,7 @@ function PackageSelect(props) {
           <select
             name="package_name"
             className="w-100 select-bg p-3 rounded medium-font"
-            onChange={(e) => handleFilter(e)}
+            // onChange={(e) => handleFilter(e)}
             // name="package_name"
           >
             <option value="all">All</option>

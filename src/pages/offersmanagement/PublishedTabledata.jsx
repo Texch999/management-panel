@@ -36,10 +36,9 @@ function PublishedTabledata() {
   ];
   const getAllOffers = async () => {
     const payload = {
-      register_id: "reg-20230710182031623",
+      register_id: "company",
     };
     await call(GET_ALL_OFFERS, payload).then((res) => {
-      console.log("res-------->", res);
       const arr = res?.data?.data.map((obj) => {
         return {
           ...obj,

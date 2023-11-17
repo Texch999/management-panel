@@ -24,7 +24,7 @@ function PolicyDocument() {
   };
   const getallPolicyDocuments = async () => {
     const payload = {
-      register_id: "reg-20230710182031623",
+      register_id: "company",
     };
     await call(GET_ALL_POLICY_DOCUMENTS, payload)
       .then((res) => {

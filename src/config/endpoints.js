@@ -17,7 +17,6 @@ const ADD_POLICY = "/management/add_policy";
 const UPDATE_COUNTRY_CURRENCY = "/management/update_countryand_currency";
 const UPDATE_POLICY = "/management/update_policy";
 const GET_ALL_PACKAGES = "/packages/get_packages";
-const GET_ADMIN_ACCOUNTS = "/admin/get_admin_accounts_user_info";
 const GET_USER_LIST = "offline-management/get_user_list";
 const ACCOUNT_REGISTERATION = "/account_register";
 const UPDATE_PROFILE = "/admin/admin_profile_update_info";
@@ -39,12 +38,37 @@ const GET_ADMIN_PACKAGE_REQUEST = "/packages/get_all_admin_package_request";
 const GET_REASON_REJECTIONS = "/settings/getall_security_questions";
 
 
+const ADD_REASON_REJECTIONS = "/settings/add_reason_rejection";
+const ADD_TOURS = "/tours/add_tours";
+const GET_TOURS = "/tours/get_tours";
+const UPDATE_TOURS = "/tours/update_tours";
+const GET_INTERESTED = "/tours/get_interested";
 
 // methods
 const DELETE = "DELETE";
 const POST = "POST";
 const GET = "POST";
 const PUT = "PUT";
+
+exports.GET_INTERESTED = {
+  url: GET_INTERESTED,
+  method: POST,
+};
+
+exports.UPDATE_TOURS = {
+  url: UPDATE_TOURS,
+  method: POST,
+};
+
+exports.GET_TOURS = {
+  url: GET_TOURS,
+  method: POST,
+};
+
+exports.ADD_TOURS = {
+  url: ADD_TOURS,
+  method: POST,
+};
 
 exports.GET_ALL_SECURITY_QUESTIONS = {
   url: GET_ALL_SECURITY_QUESTIONS,
@@ -166,11 +190,6 @@ exports.GET_ALL_PACKAGES = {
   method: POST,
 };
 
-exports.GET_ADMIN_ACCOUNTS = {
-  url: GET_ADMIN_ACCOUNTS,
-  method: POST,
-};
-
 exports.ACCOUNT_REGISTERATION = {
   url: ACCOUNT_REGISTERATION,
   method: POST,
@@ -286,13 +305,18 @@ exports.GET_ADMIN_USER_INFO = {
 
 exports.GET_MATCHES_DATA = {
   url: GET_MATCHES_DATA,
-  method: POST
-}
+  method: POST,
+};
 
-exports.CREATE_OFFLINE_MATCHES= {
+exports.CREATE_OFFLINE_MATCHES = {
   url: CREATE_OFFLINE_MATCHES,
-  method: POST
-}
+  method: POST,
+};
+
+exports.ADD_REASON_REJECTIONS = {
+  url: ADD_REASON_REJECTIONS,
+  method: POST,
+};
 
 exports.GENERATE_SIGNED_URL = {
   url: GENERATE_SIGNED_URL,

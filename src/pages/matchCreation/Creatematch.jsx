@@ -21,32 +21,37 @@ function Creatematch() {
       !createMatch.team1 ||
       !createMatch.team2 ||
       !createMatch.match_place ||
-      // !createMatch.client_name ||
       !createMatch.stadium ||
-      !createMatch.gender ||
       !createMatch.date ||
       !createMatch.time ||
       !createMatch.match_type
     ) {
       return setError("Missing Required feilds");
     } else {
+      console.log("createMatch", createMatch);
       await call(CREATE_OFFLINE_MATCHES, {
-        register_id: "company",
+        register_id: "reg-20230920132711772",
         series_name: createMatch.series_name,
-        account_role: "company",
+        account_role: "admin",
         team1: createMatch.team1,
         team2: createMatch.team2,
         sport_name: createMatch.sports_name,
         client_name: createMatch.client_name,
         match_place: createMatch.match_place,
         stadium: createMatch.stadium,
-        gender: createMatch.gender === "Male" ? "M" : "F",
+        gender: createMatch.gender === "Female" ? "F" : "M",
         date: createMatch.date,
         time: createMatch.time,
-        game_object: createMatch.game_object,
+        game_object: {
+          first_innings_fancy_overs: getOvers(createMatch?.match_type, "first"),
+          second_innings_fancy_overs: getOvers(
+            createMatch?.match_type,
+            "second"
+          ),
+          match_type: createMatch?.match_type,
+        },
       }).then((res) => {
-        console.log("------------>", res);
-        setcreateMatch(res?.data);
+        console.log("------------>", res.data);
       });
     }
   };
@@ -54,25 +59,24 @@ function Creatematch() {
     setcreateMatch();
   }, []);
 
-  console.log("......createMatch", createMatch);
-
   const handelChange = (e) => {
-    console.log(e.target.value, e.target.name);
+    console.log("e.target.name", e.target.name);
     setcreateMatch({ ...createMatch, [e.target.name]: e.target.value });
   };
 
   const top_cricket_countries = [
-    "India",
-    "Australia",
-    "England",
-    "New Zealand",
-    "Pakistan",
-    "South Africa",
-    "Sri Lanka",
-    "West Indies",
-    "Bangladesh",
-    "Zimbabwe",
+    "IND",
+    "AUS",
+    "ENG",
+    "PAK",
+    "SA",
+    "NZ",
+    "SL",
+    "WI",
+    "BAN",
+    "AFG",
   ];
+
   const sportsDropdowns = [
     {
       headName: "Sports Name",
@@ -82,7 +86,7 @@ function Creatematch() {
     {
       headName: "Team1",
       keyValue: "team1",
-      options: top_cricket_countries.map((item, index) => {
+      options: top_cricket_countries?.map((item, index) => {
         return (
           <option key={index} value={item}>
             {item}
@@ -93,53 +97,52 @@ function Creatematch() {
     {
       headName: "Team2",
       keyValue: "team2",
-      options: top_cricket_countries.map((item, index) => {
-        return (
-          <option key={index} value={item}>
-            {item}
-          </option>
-        );
-      }),
+      options: top_cricket_countries
+        ?.filter((country) => country !== createMatch?.team1)
+        .map((item, index) => {
+          return (
+            <option key={index} value={item}>
+              {item}
+            </option>
+          );
+        }),
     },
   ];
 
-  const matchType =
-    createMatch?.match_type === "T10"
-      ? [1, 3, 5, 8]
-      : createMatch?.match_type === "T20"
-      ? [1, 3, 5, 8, 12, 15, 18]
-      : createMatch?.match_type === "odi"
-      ? [1, 3, 5, 8, 15, 20, 25]
-      : createMatch?.match_type === "test"
-      ? [50, 60]
+  const matchType = [
+    { name: "T10", first: [1, 4, 5], second: [2, 3] },
+    { name: "T20", first: [1, 4, 5], second: [2, 3] },
+    { name: "ODI", first: [1, 4, 5, 6, 9], second: [2] },
+    { name: "TEST", first: [], second: [] },
+  ];
+
+  const getOvers = (match_type, innings) => {
+    const results = matchType
+      ? matchType?.filter((i) => i.name === match_type)[0]
       : "";
+    if (innings === "first") {
+      return results?.first;
+    } else {
+      return results?.second;
+    }
+  };
+  const inningsCreation = [
+    { title: "1st Inn", value: "first" },
+    { title: "2nd Inn", value: "second" },
+  ];
 
   const MatchTypeDropdown = [
     {
       heading: "1st Inn",
       cspan: "col",
       name: "first_fancy",
-      overs:
-        createMatch?.match_type === "T10"
-          ? [1, 3, 5, 8]
-          : createMatch?.match_type === "T20"
-          ? [1, 3, 5, 8, 12, 15, 18]
-          : createMatch?.match_type === "odi"
-          ? [1, 3, 5, 8, 15, 20, 25]
-          : "",
+      overs: getOvers(createMatch?.match_type, "first"),
     },
     {
       heading: "2nd Inn",
       cspan: "col",
       name: "second_fancy",
-      overs:
-        createMatch?.match_type === "T10"
-          ? [1, 3]
-          : createMatch?.match_type === "T20"
-          ? [1, 5, 10]
-          : createMatch?.match_type === "odi"
-          ? [1, 10, 20]
-          : "",
+      overs: getOvers(createMatch?.match_type, "second"),
     },
   ];
 
@@ -177,8 +180,8 @@ function Creatematch() {
   const [getMatches, setgetMatches] = useState([]);
   const getAllMatches = async () => {
     const payload = {
-      register_id: "company",
-      account_role: "company",
+      register_id: "reg-20230920132711772",
+      account_role: "admin",
     };
     await call(GET_MATCHES_DATA, payload)
       .then((res) => {
@@ -364,20 +367,21 @@ function Creatematch() {
               <option value="select">select</option>
               <option value="T10">T10</option>
               <option value="T20">T20</option>
-              <option value="odi">ODI</option>
-              <option value="test">TEST</option>
+              <option value="ODI">ODI</option>
+              <option value="TEST">TEST</option>
             </select>
           </div>
-          {MatchTypeDropdown.map((item, index) => {
+          {MatchTypeDropdown?.map((value, index) => {
             return (
-              <div className={item.cspan}>
-                <div className="th-color small-font">{item.heading}</div>
+              <div className={value.cspan}>
+                <div className="th-color small-font">{value.heading}</div>
                 <div className="sport-management-input d-flex justify-content-between p-1 th-color small-font">
                   <input
                     className="w-90 th-color small-font "
                     placeholder="Enter"
-                    name={item.name}
-                    value={item.overs}
+                    name={value.name}
+                    value={value.overs}
+                    disabled
                     onChange={(e) => handelChange(e)}
                   ></input>
                 </div>

@@ -34,6 +34,13 @@
   color: #fff;
   width: 100%;
 }
+.button-position{
+  position: relative;
+  left: 93%;
+}
+.h-100px {
+  height: 100px;
+}
 .file-input {
   background: none;
   border: none;

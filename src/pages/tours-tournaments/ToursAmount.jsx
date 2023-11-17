@@ -1,20 +1,93 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { HiPhotograph } from "react-icons/hi";
 import Table from "../table/Table";
+import { GET_TOURS } from "../../config/endpoints";
+import { UPDATE_TOURS } from "../../config/endpoints";
+import { call } from "../../config/axios";
+import MatchSubmitPopup from "../../matchpopups/MatchSubmitPopup";
 
 function ToursAmount() {
+  const [showReturnPopup, setShowReturnPopup] = useState(false);
+  const [headerMessage, setHeaderMessage] = useState("")
   const [activeHeadIndex, setActiveHeadIndex] = useState(0);
-  const scheduleButtons = [
-    "Tours",
-    "Cricket Tours",
-    "Sports Tours",
-    "Casino Tours",
-    "Entertainment Tours",
-  ];
-  const handleScheduleHead = (index) => {
-    setActiveHeadIndex(index);
+  const [tours, setTours] = useState([]);
+  const [tourname, setTourname] = useState("All Tours");
+
+  const submitTourPackages = async(item)=>{
+    const payload = {
+      tour_id:item.tour_id,
+      packages:item.packages
+    }
+    await call(UPDATE_TOURS, payload)
+            // setShowReturnPopup(true)
+            // .then((res)=>(res.data,'.....res'))
+            .then((res)=>{
+              console.log(res,'......res')
+              if(res.status==200){
+                setShowReturnPopup(true);
+                setHeaderMessage("Tour Updated Successfully")
+              }
+            })
+            .catch((error)=>{
+              setShowReturnPopup(true)
+              setHeaderMessage(error)
+            })
+  }
+  const packOnchangeHandle = (tourId, pkgtype, field, value) => {
+    setTours((prevTours) =>
+      prevTours.map((tour) => {
+        // console.log(tour,'.......tourfromsettours')
+        if (tour.tour_id === tourId) {
+          return {
+            ...tour,
+            packages: {
+              ...tour.packages,
+              [pkgtype]: {
+                ...tour.packages[pkgtype],
+                [field]: value,
+              },
+            },
+          };
+        } else {
+          return tour;
+        }
+      })
+    );
   };
-  const scheduleContentList = [{}, {}];
+  
+  // console.log(tours,'......tours')
+  const getTours = async () => {
+    const payload = {};
+    await call(GET_TOURS, payload).then((res) => setTours(res?.data?.data));
+  };
+
+  useEffect(() => {
+    getTours();
+  }, []);
+
+  const scheduleButtons = [
+    "All Tours",
+    "1.Take Part in Tour",
+    "2.Cricket Tour",
+    "3.Sports Tour",
+    "4.Casino Tour",
+    "5.Entertainment Tour",
+  ];
+
+  const handleScheduleHead = (item, index) => {
+    setActiveHeadIndex(index);
+    setTourname(item);
+  };
+
+  const filteredTours = tours.filter((item) => item.tour_name === tourname);
+  const mappingArray = tourname === "All Tours" ? tours : filteredTours;
+  const packagesType = [
+    "regularpack",
+    "premiumpack",
+    "luxurypack",
+    "vippack",
+    "vvippack",
+  ];
   const tableHeading = [
     {
       header: "TOURS DATE",
@@ -25,32 +98,27 @@ function ToursAmount() {
       field: "location",
     },
     {
-      header: "TOUR",
-      field: "tour",
+      header: "TOUR_TITLE",
+      field: "tour_title",
     },
     {
       header: "WEBSITE",
       field: "website",
     },
     {
-      header: "COST/ALLOWED MEMBERS",
-      field: "cost",
+      header: "PACKAGES",
+      field: "packages",
     },
   ];
-  const tableData = [
-    {
-      tour_date: "29 / 11 / 23",
-      location: "Goa",
-      website: (
-        <div>
-          <div>we2call.com</div>
-          <div>spark999.com</div>
-          <div>spark777.com</div>
-          <div>spark247.com</div>
-        </div>
-      ),
-      tour: "Casio",
-      cost: (
+  const tableData = mappingArray.map((item) => {
+    return {
+      tour_date: item.schedule_from,
+      location: item.country,
+      website: item.website.map((item) => {
+        return item;
+      }),
+      tour_title: item.tour_title,
+      packages: (
         <div>
           <div className="d-flex justify-content-center ms-2">
             <div className="input-custum text-center d-flex align-items-center">
@@ -60,49 +128,44 @@ function ToursAmount() {
               Max Amount
             </div>
             <div className="input-custum text-center d-flex align-items-center">
-              Adults
-            </div>
-            <div className="input-custum text-center d-flex align-items-center">
-              Child
+              Allowed Persons
             </div>
           </div>
-          <div className="d-flex align-items-center">
-            <div>1.</div>
-            <input className="input-custum text-center" type="number"></input>
-            <input className="input-custum text-center" type="number"></input>
-            <input className="input-custum text-center" type="number"></input>
-            <input className="input-custum text-center" type="number"></input>
-          </div>
-          <div className="d-flex align-items-center">
-            <div>2.</div>
-            <input className="input-custum text-center" type="number"></input>
-            <input className="input-custum text-center" type="number"></input>
-            <input className="input-custum text-center" type="number"></input>
-            <input className="input-custum text-center" type="number"></input>
-          </div>
-          <div className="d-flex align-items-center">
-            <div>3.</div>
-            <input className="input-custum text-center" type="number"></input>
-            <input className="input-custum text-center" type="number"></input>
-            <input className="input-custum text-center" type="number"></input>
-            <input className="input-custum text-center" type="number"></input>
-          </div>
-          <div className="d-flex align-items-center">
-            <div>4.</div>
-            <input className="input-custum text-center" type="number"></input>
-            <input className="input-custum text-center" type="number"></input>
-            <input className="input-custum text-center" type="number"></input>
-            <input className="input-custum text-center" type="number"></input>
-          </div>
-          <div className="d-flex align-items-center">
-            <div>5.</div>
-            <input className="input-custum text-center" type="number"></input>
-            <input className="input-custum text-center" type="number"></input>
-            <input className="input-custum text-center" type="number"></input>
-            <input className="input-custum text-center" type="number"></input>
-          </div>
+          {packagesType.map((pkgtype, index) => {
+            return (
+              <div className="d-flex align-items-center"
+                    key={index}
+              >
+                <div>{pkgtype}</div>
+                <input
+                  className="input-custum text-center"
+                  type="number"
+                  name="minamount"
+                  defaultValue={item?.packages[pkgtype]?.minamount || ""}
+                  onChange={(e) => packOnchangeHandle(item.tour_id,pkgtype, "minamount", e.target.value)}
+                ></input>
+                <input
+                  className="input-custum text-center"
+                  type="number"
+                  name="maxamount"
+                  defaultValue={item?.packages[pkgtype]?.maxamount || ""}
+                  onChange={(e) => packOnchangeHandle(item.tour_id,pkgtype, "maxamount", e.target.value)}
+                ></input>
+                <input
+                  className="input-custum text-center"
+                  type="number"
+                  name="allowedpersons"
+                  defaultValue={item?.packages[pkgtype]?.allowedpersons  || ""}
+                  onChange={(e) => packOnchangeHandle(item.tour_id,pkgtype, "allowedpersons", e.target.value)}
+                ></input>
+              </div>
+            );
+          })}
           <div className="d-flex align-items-center ms-2">
-            <button className="input-custum text-center select-button">
+            <button
+              className="input-custum text-center select-button"
+              onClick={() => submitTourPackages(item)}
+            >
               SUBMIT
             </button>
             <button className="input-custum text-center select-button" disabled>
@@ -111,82 +174,8 @@ function ToursAmount() {
           </div>
         </div>
       ),
-    },
-    {
-      tour_date: "29 / 11 / 23",
-      location: "Goa",
-      website: (
-        <div>
-          <div>we2call.com</div>
-          <div>spark999.com</div>
-          <div>spark777.com</div>
-          <div>spark247.com</div>
-        </div>
-      ),
-      tour: "Casio",
-      cost: (
-        <div>
-          <div className="d-flex justify-content-center ms-2">
-            <div className="input-custum text-center d-flex align-items-center">
-              Min Amount
-            </div>
-            <div className="input-custum text-center d-flex align-items-center">
-              Min Amount
-            </div>
-            <div className="input-custum text-center d-flex align-items-center">
-              Min Amount
-            </div>
-            <div className="input-custum text-center d-flex align-items-center">
-              Min Amount
-            </div>
-          </div>
-          <div className="d-flex align-items-center">
-            <div>1.</div>
-            <input className="input-custum text-center" type="number"></input>
-            <input className="input-custum text-center" type="number"></input>
-            <input className="input-custum text-center" type="number"></input>
-            <input className="input-custum text-center" type="number"></input>
-          </div>
-          <div className="d-flex align-items-center">
-            <div>2.</div>
-            <input className="input-custum text-center" type="number"></input>
-            <input className="input-custum text-center" type="number"></input>
-            <input className="input-custum text-center" type="number"></input>
-            <input className="input-custum text-center" type="number"></input>
-          </div>
-          <div className="d-flex align-items-center">
-            <div>3.</div>
-            <input className="input-custum text-center" type="number"></input>
-            <input className="input-custum text-center" type="number"></input>
-            <input className="input-custum text-center" type="number"></input>
-            <input className="input-custum text-center" type="number"></input>
-          </div>
-          <div className="d-flex align-items-center">
-            <div>4.</div>
-            <input className="input-custum text-center" type="number"></input>
-            <input className="input-custum text-center" type="number"></input>
-            <input className="input-custum text-center" type="number"></input>
-            <input className="input-custum text-center" type="number"></input>
-          </div>
-          <div className="d-flex align-items-center">
-            <div>5.</div>
-            <input className="input-custum text-center" type="number"></input>
-            <input className="input-custum text-center" type="number"></input>
-            <input className="input-custum text-center" type="number"></input>
-            <input className="input-custum text-center" type="number"></input>
-          </div>
-          <div className="d-flex align-items-center ms-2">
-            <button className="input-custum text-center select-button">
-              SUBMIT
-            </button>
-            <button className="input-custum text-center select-button" disabled>
-              EDIT
-            </button>
-          </div>
-        </div>
-      ),
-    },
-  ];
+    };
+  });
   return (
     <div className="add-tours p-3 mt-3">
       <div className="row">
@@ -200,7 +189,7 @@ function ToursAmount() {
                     ? "active-schedule-head"
                     : "header-schedule"
                 }  p-2 me-2`}
-                onClick={() => handleScheduleHead(index)}
+                onClick={() => handleScheduleHead(item, index)}
               >
                 {item}
               </div>
@@ -211,6 +200,11 @@ function ToursAmount() {
       <div className="scroll-div mt-2">
         <Table columns={tableHeading} data={tableData} />
       </div>
+      <MatchSubmitPopup
+        header={headerMessage}
+        state={showReturnPopup}
+        setState={setShowReturnPopup}
+      />
     </div>
   );
 }

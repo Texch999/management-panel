@@ -8,6 +8,7 @@ import {
   UPDATE_PAYMENT_GATEWAY,
   GET_ALL_WEBSITES,
   GET_ALL_PAYMENTS,
+  GET_COUNTRY_AND_CURRENCY,
 } from "../../config/endpoints";
 import { call } from "../../config/axios";
 
@@ -25,7 +26,7 @@ function AddCountryPopups(props) {
   } = props;
 
   const [acceptClick, setAcceptClick] = useState(false);
-
+  const [allCountries, setAllCountries] = useState([]);
   const [countryName, setCountryName] = useState("");
   const [currencyName, setCurrencyName] = useState("");
   const [paymentGateway, setPaymentGateway] = useState("Select");
@@ -64,10 +65,11 @@ function AddCountryPopups(props) {
       setActive(selectedPayment.active || "Select");
     }
   }, [selectedCountry, selectedPayment]);
+
   const [websiteNames, setwebsiteNames] = useState([]);
   const getwebsiteNames = async () => {
     const payload = {
-      register_id: "reg-20230710182031623",
+      register_id: "company",
     };
     await call(GET_ALL_WEBSITES, payload)
       .then((res) => {
@@ -77,13 +79,27 @@ function AddCountryPopups(props) {
       .catch((err) => console.log(err));
   };
 
+  const getAllCountries = async () => {
+    const payload = {
+      register_id: "company",
+    };
+    await call(GET_COUNTRY_AND_CURRENCY, payload)
+      .then((res) => {
+        setAllCountries(res?.data?.data);
+      })
+
+      .catch((err) => console.log(err));
+  };
+
   useEffect(() => {
     getwebsiteNames();
+    getAllCountries();
   }, []);
+
   const [allPayments, setAllPayments] = useState([]);
   const getPaymentWay = async () => {
     const payload = {
-      register_id: "reg-20230710182031623",
+      register_id: "comapany",
     };
     await call(GET_ALL_PAYMENTS, payload)
       .then((res) => {
@@ -105,7 +121,7 @@ function AddCountryPopups(props) {
           : ADD_COUNTRY_AND_CURRENCY;
 
         const requestData = {
-          register_id: "reg-20230909114353315",
+          register_id: "company",
           country_name: countryName,
           currency_name: currencyName,
           payment_gateway: paymentGateway,
@@ -142,7 +158,7 @@ function AddCountryPopups(props) {
           : ADD_PAYMENT_GATEWAY;
 
         const paymentData = {
-          register_id: "reg-20230710182031623",
+          register_id: "company",
           payment_details: paymentDetails,
           country_name: countryName,
           currency_name: currencyName,
@@ -200,14 +216,20 @@ function AddCountryPopups(props) {
           <Row>
             <Col>
               <div className="small-font my-1">Country Name *</div>
-              <input
-                id="country_name"
-                type="text"
-                placeholder="Enter"
-                className="w-100 custom-select small-font login-inputs input-btn-bg px-2 py-3 all-none rounded all-none"
+              <select
                 value={countryName}
+                name="country_name"
                 onChange={(e) => setCountryName(e.target.value)}
-              ></input>
+                className="w-100 custom-select small-font login-inputs input-btn-bg px-2 py-2 all-none rounded all-none"
+              >
+                <option value="select">select</option>
+                <option value="All">All</option>
+                {allCountries.map((obj) => (
+                  <option value={obj.country_name} selected>
+                    {obj.country_name}
+                  </option>
+                ))}
+              </select>
             </Col>
             <Col>
               <div className="small-font my-1">Currency Name *</div>
@@ -230,6 +252,9 @@ function AddCountryPopups(props) {
               >
                 <option value="Select">Select</option>
                 <option value="All">All</option>
+                <option value="Phonepay">Phonepay</option>
+                <option value="Gpay">Gpay</option>
+                <option value="Paytm">Paytm</option>
                 {allPayments.map((obj) => (
                   <option value={obj.pg_upi} selected>
                     {obj.pg_upi}

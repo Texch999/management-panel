@@ -36,8 +36,8 @@ function ToursManagement() {
             } medium-font tours-box  p-2  rounded-top text-center`}
             onClick={() => handleToursHead("amount")}
           >
-            Amount
-          </div>
+            Tour Packages
+          </div>  
         </div>
         <div className="col-2">
           <div

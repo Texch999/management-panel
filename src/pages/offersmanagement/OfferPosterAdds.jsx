@@ -47,7 +47,7 @@ function OfferPosterAdds() {
     } else {
       setError("");
       await call(ADD_OFFERS, {
-        register_id: "reg-20230710182031623",
+        register_id: "company",
         website_name: allOffers.website_name,
         user: allOffers.user,
         country_name: allOffers.country_name,
@@ -113,11 +113,10 @@ function OfferPosterAdds() {
   const [websiteNames, setwebsiteNames] = useState([]);
   const getwebsiteNames = async () => {
     const payload = {
-      register_id: "reg-20230710182031623",
+      register_id: "company",
     };
     await call(GET_ALL_WEBSITES, payload)
       .then((res) => {
-        console.log("response=====>", res);
         setwebsiteNames(res?.data?.data);
       })
       .catch((err) => console.log(err));
@@ -127,8 +126,6 @@ function OfferPosterAdds() {
     getwebsiteNames();
   }, []);
 
-  console.log("websiteNames", websiteNames);
-
   const [allUsers, setgetallUsers] = useState([]);
   const getallUsers = async () => {
     const payload = {
@@ -136,7 +133,6 @@ function OfferPosterAdds() {
     };
     await call(GET_ALL_USERS, payload)
       .then((res) => {
-        console.log("response=====>", res);
         setgetallUsers(res?.data?.data);
       })
       .catch((err) => console.log(err));
@@ -144,12 +140,11 @@ function OfferPosterAdds() {
   useEffect(() => {
     getallUsers();
   }, []);
-  console.log("allUsers", allUsers);
 
   const [allCountries, setallCountries] = useState([]);
   const getallCountries = async () => {
     const payload = {
-      register_id: "reg-20230909114353315",
+      register_id: "company",
     };
     await call(GET_COUNTRY_AND_CURRENCY, payload)
       .then((res) => {
@@ -161,8 +156,7 @@ function OfferPosterAdds() {
   useEffect(() => {
     getallCountries();
   }, []);
-  console.log("allCountries", allCountries);
-  console.log(allOffers, ".........allOffers");
+
   return (
     <div className="p-4">
       <Container fluid className="my-2">

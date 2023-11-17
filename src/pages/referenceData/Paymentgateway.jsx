@@ -57,7 +57,7 @@ function Paymentgateway() {
 
   const getPaymentWay = async () => {
     const payload = {
-      register_id: "reg-20230710182031623",
+      register_id: "company",
     };
     await call(GET_ALL_PAYMENTS, payload)
       .then((res) => {

@@ -1,19 +1,37 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { HiPhotograph } from "react-icons/hi";
+import { call } from "../../config/axios";
+import { GET_TOURS } from "../../config/endpoints"
 
 function Schedule() {
   const [activeHeadIndex, setActiveHeadIndex] = useState(0);
+  const [tours, setTours] = useState([]);
+  const [tourname, setTourname] = useState("All Tours")
+  const getTours = async()=>{
+    const payload = {}
+    await call(GET_TOURS, payload)
+            .then((res)=>setTours(res?.data?.data))
+  }
+
+  useEffect(()=>{
+    getTours();
+  },[])
+  
   const scheduleButtons = [
-    "Tours",
-    "Cricket Tours",
-    "Sports Tours",
-    "Casino Tours",
-    "Entertainment Tours",
+    "All Tours",
+    "1.Take Part in Tour",
+    "2.Cricket Tour",
+    "3.Sports Tour",
+    "4.Casino Tour",
+    "5.Entertainment Tour",
   ];
-  const handleScheduleHead = (index) => {
+  const handleScheduleHead = (item, index) => {
     setActiveHeadIndex(index);
+    setTourname(item)
   };
-  const scheduleContentList = [{}, {}, {}, {}, {}];
+  
+  const filteredTours = tours.filter((item)=>item.tour_name===tourname)
+  const mappingArray = tourname=="All Tours"? tours : filteredTours
   return (
     <div className="add-tours p-3 mt-3">
       <div className="row">
@@ -27,7 +45,7 @@ function Schedule() {
                     ? "active-schedule-head"
                     : "header-schedule"
                 }  p-2 me-2`}
-                onClick={() => handleScheduleHead(index)}
+                onClick={() => handleScheduleHead(item,index)}
               >
                 {item}
               </div>
@@ -36,38 +54,40 @@ function Schedule() {
         </div>
       </div>
       <div className="sub-head medium-font mt-3">Tours</div>
-      {scheduleContentList.map((item, index) => {
+      {mappingArray && mappingArray.length > 0 && mappingArray.map((item, index) => {
         return (
           <div className="mb-3">
             <div className="row">
               <div className="col-2"></div>
-              <div className="font-grey col-2 mt-1">Open Date & Time</div>
+              <div className="font-grey col-2 mt-1"></div>
             </div>
             <div className="row font-grey medium-font gx-2">
               <div className="col-2">
+                <div className="font-grey col-2 mt-1">Poster_img</div>
                 <div className=" tt-content-box p-2 ">
                   IMG4567959.jpg
                   <HiPhotograph className="ms-1 ions-clr" />
                 </div>
               </div>
               <div className="col">
-                <div className="tt-content-box p-2">31-08-2023 10:57:00 AM</div>
+                <div className="font-grey col-2 mt-1">Schedule_From</div>
+                <div className="tt-content-box p-2">{item.schedule_from}</div>
               </div>
               <div className="col">
-                <div className="tt-content-box p-2">
-                  Take a Part in Our Tour
-                </div>
+                <div className="font-grey col-2 mt-1">Tour_Title</div>
+                <div className="tt-content-box p-2">{item.tour_title}</div>
               </div>
               <div className="col-3">
-                <div className="tt-content-box p-2">
-                  Play and get a chance to join
-                </div>
+                <div className="font-grey col-2 mt-1">Quotation</div>
+                <div className="tt-content-box p-2">{item.quotations}</div>
               </div>
               <div className="col-1 ">
-                <div className="tt-content-box p-2">India</div>
+                <div className="font-grey col-2 mt-1">Location</div>
+                <div className="tt-content-box p-2">{item.country}</div>
               </div>
               <div className="col-1 ">
-                <div className="tt-content-box p-2">Texch.com</div>
+                <div className="font-grey col-2 mt-1">Website</div>
+                <div className="tt-content-box p-2">{item.website}</div>
               </div>
             </div>
             <div className="row justify-content-between mt-2">

@@ -19,126 +19,23 @@ function Addwebsites() {
     );
     setFilteredWebsites(filteredSearchText);
   };
-  // const ADDWEBSITE_DETAILS = [
-  //   {
-  //     websitename: "www.we2call.com ",
-  //     is: "India-Hyderabad",
-  //     used: "India-Delhi",
-  //     three: "India-Bengalore",
-  //     user: "Srinivas",
-  //     full: "Ashoke",
-  //     name: "Gopikrishna",
-  //     role1: "Director",
-  //     role2: "Director",
-  //     role3: "Director",
-  //   },
-  //   {
-  //     websitename: "www.we2call.com ",
-  //     is: "India-Hyderabad",
-  //     used: "India-Delhi",
-  //     three: "India-Bengalore",
-  //     user: "Srinivas",
-  //     full: "Ashoke",
-  //     name: "Gopikrishna",
-  //     role1: "SA",
-  //     role2: "SA",
-  //     role3: "SA",
-  //   },
-  //   {
-  //     websitename: "www.we2call.com ",
-  //     is: "India-Hyderabad",
-  //     used: "India-Delhi",
-  //     three: "India-Bengalore",
-  //     user: "Srinivas",
-  //     full: "Ashoke",
-  //     name: "Gopikrishna",
-  //     role1: "Director",
-  //     role2: "Director",
-  //     role3: "Director",
-  //   },
-  //   {
-  //     websitename: "www.we2call.com ",
-  //     is: "India-Hyderabad",
-  //     used: "India-Delhi",
-  //     three: "India-Bengalore",
-  //     user: "Srinivas",
-  //     full: "Ashoke",
-  //     name: "Gopikrishna",
-  //     role1: "Director",
-  //     role2: "Director",
-  //     role3: "Director",
-  //   },
-  //   {
-  //     websitename: "www.we2call.com ",
-  //     is: "India-Hyderabad",
-  //     used: "India-Delhi",
-  //     three: "India-Bengalore",
-  //     user: "Srinivas",
-  //     full: "Ashoke",
-  //     name: "Gopikrishna",
-  //     role1: "Director",
-  //     role2: "Director",
-  //     role3: "Director",
-  //   },
-  // ];
-
   const cols = [
     {
       header: (
         <div className="d-flex justify-content-center align-items-center">
           <div className="marginright-10">WEBSITE NAME</div>
-          {/* <div>
-            <div>
-              <MdKeyboardArrowUp className="fs-6" />
-            </div>
-            <MdKeyboardArrowDown className="fs-6 margintop-10" />
-          </div> */}
         </div>
       ),
       field: "websitename",
     },
-    {
-      header: (
-        <div className="d-flex justify-content-center align-items-center">
-          <div className="marginright-10">IS USED</div>
-          {/* <div>
-            <div>
-              <MdKeyboardArrowUp className="fs-6" />
-            </div>
-            <MdKeyboardArrowDown className="fs-6 margintop-10" />
-          </div> */}
-        </div>
-      ),
-      field: "isAndusedAndthree",
-    },
-    {
-      header: (
-        <div className="d-flex justify-content-center align-items-center">
-          <div className="marginright-10">USER NAME</div>
-          {/* <div>
-            <div>
-              <MdKeyboardArrowUp className="fs-6" />
-            </div>
-            <MdKeyboardArrowDown className="fs-6 margintop-10" />
-          </div> */}
-        </div>
-      ),
-      field: "userAndfullAndname",
-    },
-    {
-      header: (
-        <div className="d-flex justify-content-center align-items-center ">
-          <div className="marginright-10">ROLE</div>
-          {/* <div>
-            <div>
-              <MdKeyboardArrowUp className="fs-6" />
-            </div>
-            <MdKeyboardArrowDown className="fs-6 margintop-10" />
-          </div> */}
-        </div>
-      ),
-      field: "role1Androle2Androle3",
-    },
+    // {
+    //   header: (
+    //     <div className="d-flex justify-content-center align-items-center">
+    //       <div className="marginright-10">IS USED</div>
+    //     </div>
+    //   ),
+    //   field: "isAndusedAndthree",
+    // },
   ];
   const getAllWebsites = async () => {
     const payload = {
@@ -156,31 +53,6 @@ function Addwebsites() {
     getAllWebsites();
   }, [status]);
 
-  // const modifiedAddwebsiteDetails = allWebsites.map((item) => ({
-  //   ...item,
-  //   websitename: <span>{item?.web_url}</span>,
-  //   isAndusedAndthree: (
-  //     <div>
-  //       {item?.is_used} <br /> <span>{item?.used}</span> <br />
-  //       {item?.three}
-  //       {""}
-  //     </div>
-  //   ),
-  //   userAndfullAndname: (
-  //     <div>
-  //       {item?.user_name} <br /> <span>{item?.full}</span> <br />
-  //       {item?.name}
-  //     </div>
-  //   ),
-  //   role1Androle2Androle3: (
-  //     <div className="role-color">
-  //       {item?.account_role} <br /> <span>{item?.role2}</span> <br />
-  //       {item?.role3}
-  //       {""}
-  //     </div>
-  //   ),
-  // }));
-
   const modifiedAddwebsiteDetails = searchText.length
     ? filteredWebsites
         .filter((item) =>
@@ -189,26 +61,26 @@ function Addwebsites() {
         .map((item) => {
           return {
             websitename: <span>{item?.web_url}</span>,
-            isAndusedAndthree: (
-              <div>
-                {item?.is_used} <br /> <span>{item?.used}</span> <br />
-                {item?.three}
-                {""}
-              </div>
-            ),
-            userAndfullAndname: (
-              <div>
-                {item?.user_name} <br /> <span>{item?.full}</span> <br />
-                {item?.name}
-              </div>
-            ),
-            role1Androle2Androle3: (
-              <div className="role-color">
-                {item?.account_role} <br /> <span>{item?.role2}</span> <br />
-                {item?.role3}
-                {""}
-              </div>
-            ),
+            // isAndusedAndthree: (
+            //   <div>
+            //     {item?.is_used} <br /> <span>{item?.used}</span> <br />
+            //     {item?.three}
+            //     {""}
+            //   </div>
+            // ),
+            // userAndfullAndname: (
+            //   <div>
+            //     {item?.user_name} <br /> <span>{item?.full}</span> <br />
+            //     {item?.name}
+            //   </div>
+            // ),
+            // role1Androle2Androle3: (
+            //   <div className="role-color">
+            //     {item?.account_role} <br /> <span>{item?.role2}</span> <br />
+            //     {item?.role3}
+            //     {""}
+            //   </div>
+            // ),
           };
         })
     : allWebsites.map((item) => {
