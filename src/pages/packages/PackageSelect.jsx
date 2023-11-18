@@ -94,10 +94,18 @@ function PackageSelect() {
       <div className="col-3">
         <div>
           <div className="medium-font font-grey">Edited Package</div>
-          <select className="w-100 select-bg p-3 rounded medium-font">
-            <option>Select</option>
-            <option>Silver</option>
-            <option>Standard</option>
+          <select
+            name="package_name"
+            className="w-100 select-bg p-3 rounded medium-font"
+            // onChange={(e) => handleFilter(e)}
+            // name="package_name"
+          >
+            <option value="all">All</option>
+            <option value="1">Standard</option>
+            <option value="2">Silver</option>
+            <option value="3">Gold</option>
+            <option value="4">Diamond</option>
+            <option value="5">Vip</option>
           </select>
         </div>
       </div>

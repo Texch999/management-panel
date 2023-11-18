@@ -1,5 +1,4 @@
 import PackagesSportsButtons from "./PackagesSportsButtons";
-
 function MyStatement() {
   return (
     <div className="p-4 w-100">

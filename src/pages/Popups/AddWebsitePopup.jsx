@@ -25,7 +25,7 @@ function AddWebsitePopup(props) {
       if (res.data.error) {
         console.error("API Error:", res.data.message);
       } else {
-        setShowAddWebPopup(false);
+        setShowAddWebPopup(true);
         setStatus((prev) => !prev);
         setFormData({
           web_url: "",

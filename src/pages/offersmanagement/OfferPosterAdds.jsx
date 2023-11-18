@@ -152,7 +152,7 @@ function OfferPosterAdds() {
         setallCountries(res?.data?.data);
       })
       .catch((err) => console.log(err));
-  };
+  };  
   useEffect(() => {
     getallCountries();
   }, []);
