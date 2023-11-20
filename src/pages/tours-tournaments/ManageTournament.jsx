@@ -12,8 +12,6 @@ import { BOOKNOW_FOR_INTERESTED } from "../../config/endpoints";
 function ManageTournament() {
   const [activeManageIndex, setActiveManageIndex] = useState(0);
   const [interestedMembers, setInterestedMembers] = useState([]);
-  const [selectButton, setSelectButton] = useState(false);
-  const [deselectButton, setDeselectButton] = useState(true)
   const [status, setStatus] = useState(false);
   const [addingTourDetails, setAddingTourDetails] = useState("")
   const [selectedFilter, setSelectedFilter] = useState({
@@ -49,10 +47,9 @@ function ManageTournament() {
   }, [status]);
 
   const handleSelectButton = async (interested_id) => {
-    setSelectButton(true);
     const payload = {
       interested_id,
-      select: selectButton,
+      select: true,
     };
     await call(UPDATE_INTERESTED, payload)
       .then((res) => {
@@ -61,10 +58,9 @@ function ManageTournament() {
       .catch((error) => console.log(error));
   };
   const handleDeSelectButton = async (interested_id) => {
-    setDeselectButton(false);
     const payload = {
       interested_id,
-      select: deselectButton,
+      select: false,
     };
     await call(UPDATE_INTERESTED, payload)
       .then((res) => {
@@ -223,7 +219,7 @@ function ManageTournament() {
                   <button
                     className="select-button"
                     name="select"
-                    value={selectButton}
+                    value={item.selected}
                     onClick={() => handleSelectButton(item.interested_id)}
                   >
                     Select
@@ -290,7 +286,7 @@ function ManageTournament() {
                   <button
                     className="select-button btn-color"
                     name="deselect"
-                    value={deselectButton}
+                    value={item.selected}
                     onClick={() => handleDeSelectButton(item.interested_id)}
                   >
                     De-select
