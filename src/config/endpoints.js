@@ -32,10 +32,11 @@ const GET_ADMIN_USER_INFO = "/admin/get_admin_accounts_user_info";
 const GENERATE_SIGNED_URL = "/admin/profile_signed_url";
 const GET_MATCHES_DATA = "/offline-management/get_matches_data";
 const CREATE_OFFLINE_MATCHES = "/offline-management/match_creation";
-const PACKAGES_CREATION="/packages/package_creation_upgrade_discount";
+// const PACKAGES_CREATION="/packages/package_creation_upgrade_discount";
 const GET_REQUEST_PACKAGES ="/packages/get_package_histroy_bypackage_requestid";
 const GET_ADMIN_PACKAGE_REQUEST = "/packages/get_all_admin_package_request";
 const GET_REASON_REJECTIONS = "/settings/getall_security_questions";
+ const PACKAGES_CREATION = "/packages/package_creation_upgrade_discount";
 
 
 const ADD_REASON_REJECTIONS = "/settings/add_reason_rejection";

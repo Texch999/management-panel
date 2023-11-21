@@ -1,203 +1,121 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import MatchSubmitPopup from "../../matchpopups/MatchSubmitPopup";
 import { Col, Container, Modal, Row } from "react-bootstrap";
 import {
-  ADD_COUNTRY_AND_CURRENCY,
-  UPDATE_COUNTRY_CURRENCY,
+  // ADD_COUNTRY_AND_CURRENCY,
+  // UPDATE_COUNTRY_CURRENCY,
   ADD_PAYMENT_GATEWAY,
   UPDATE_PAYMENT_GATEWAY,
   GET_ALL_WEBSITES,
-  GET_ALL_PAYMENTS,
-  GET_COUNTRY_AND_CURRENCY,
+  GENERATE_SIGNED_URL,
+  // GET_ALL_PAYMENTS,
+  // GET_COUNTRY_AND_CURRENCY,
 } from "../../config/endpoints";
 import { call } from "../../config/axios";
 
 function AddCountryPopups(props) {
+  const ImageBaseUrl = "https://we2-call-images.s3.us-east-2.amazonaws.com";
   const {
-    componentType,
     addCountryOpen,
     setAddCountryOpen,
     Heading,
     setStatus,
-    selectedCountry,
     setData,
     selectedPayment,
-    getData,
+    // getData,
+    inputData,
+    setInputData,
+    updateGatway,
   } = props;
+  console.log("Props======>", props);
 
   const [acceptClick, setAcceptClick] = useState(false);
-  const [allCountries, setAllCountries] = useState([]);
-  const [countryName, setCountryName] = useState("");
-  const [currencyName, setCurrencyName] = useState("");
-  const [paymentGateway, setPaymentGateway] = useState("Select");
-  const [paymentDetails, setPaymentDetails] = useState("");
-  const [website, setWebsite] = useState("Select");
-  const [active, setActive] = useState("Select");
+  const [profileImage, setProfileImage] = useState("");
+  const [paymentId, setPaymentId] = useState("");
+  const [singedUrl, setSignedUrl] = useState("");
+  // const [paymentGateway, setPaymentGateway] = useState("Select");
+  const [uploadImage, setuploadImage] = useState([]);
+  const [processing, setProcessing] = useState(false);
+
+  // console.log("paymentGateway====>", paymentGateway);
 
   const handleAddCountryOpenClose = () => {
     setAddCountryOpen(false);
     setData(null);
-
-    setCountryName("");
-    setCurrencyName("");
-    setPaymentGateway("Select");
-    setPaymentDetails("");
-    setWebsite("Select");
-    setActive("Select");
   };
 
-  useEffect(() => {
-    if (selectedCountry) {
-      setCountryName(selectedCountry.country_name || "");
-      setCurrencyName(selectedCountry.currency_name || "");
-      setPaymentGateway(selectedCountry.payment_gateway || "Select");
-      setPaymentDetails(selectedCountry.payment_details || "");
-      setWebsite(selectedCountry.website || "Select");
-      setActive(selectedCountry.active || "Select");
-    }
+  const uploadfileInputRef = useRef(null);
+  const handleUploadFileSelect = (e) => {
+    const file = e.target.files[0];
+    // setInputData({...inputData,qr_code:})
+    setProfileImage(file);
+    generateSignedUrl();
+  };
 
-    if (selectedPayment) {
-      setCountryName(selectedPayment.country_name || "");
-      setCurrencyName(selectedPayment.currency_name || "");
-      setPaymentGateway(selectedPayment.pg_upi || "Select");
-      setPaymentDetails(selectedPayment.payment_details || "");
-      setWebsite(selectedPayment.website || "Select");
-      setActive(selectedPayment.active || "Select");
-    }
-  }, [selectedCountry, selectedPayment]);
+  const onInputChange = (e) => {
+    setInputData({ ...inputData, [e.target.name]: e.target.value });
+  };
 
-  const [websiteNames, setwebsiteNames] = useState([]);
-  const getwebsiteNames = async () => {
+  const handleCreateOrUpdatePaymentGateway = async () => {
+    setProcessing(true);
     const payload = {
       register_id: "company",
+      uploadImage: `${ImageBaseUrl}/${"payment-images"}/${paymentId}.png`,
+      ...inputData,
     };
-    await call(GET_ALL_WEBSITES, payload)
-      .then((res) => {
-        console.log("response=====>", res);
-        setwebsiteNames(res?.data?.data);
-      })
-      .catch((err) => console.log(err));
-  };
 
-  const getAllCountries = async () => {
-    const payload = {
-      register_id: "company",
-    };
-    await call(GET_COUNTRY_AND_CURRENCY, payload)
-      .then((res) => {
-        setAllCountries(res?.data?.data);
-      })
-
-      .catch((err) => console.log(err));
-  };
-
-  useEffect(() => {
-    getwebsiteNames();
-    getAllCountries();
-  }, []);
-
-  const [allPayments, setAllPayments] = useState([]);
-  const getPaymentWay = async () => {
-    const payload = {
-      register_id: "comapany",
-    };
-    await call(GET_ALL_PAYMENTS, payload)
-      .then((res) => {
-        console.log("API Response:", res);
-        setAllPayments(res?.data?.data);
-      })
-      .catch((err) => console.log(err));
-  };
-
-  useEffect(() => {
-    getPaymentWay();
-  }, []);
-
-  const handleCreateOrUpdateCountryCurrency = async () => {
     try {
-      if (componentType === "CURRENCY") {
-        const countryCurrencyUrl = selectedCountry
-          ? UPDATE_COUNTRY_CURRENCY
-          : ADD_COUNTRY_AND_CURRENCY;
+      if (profileImage) {
+        singedUrl &&
+          profileImage &&
+          (await fetch(singedUrl, {
+            method: "PUT",
+            body: profileImage,
+            headers: {
+              "Content-Type": "image/jpeg",
+              "cache-control": "public, max-age=0",
+            },
+          })
+            .then((res) => {})
+            .catch((err) => {
+              console.log("err: ", err);
+            }));
+      } else {
+        const url =
+          updateGatway === true ? UPDATE_PAYMENT_GATEWAY : ADD_PAYMENT_GATEWAY;
 
-        const requestData = {
-          register_id: "company",
-          country_name: countryName,
-          currency_name: currencyName,
-          payment_gateway: paymentGateway,
-          payment_details: paymentDetails,
-          website: website,
-          active: active,
-        };
-
-        if (selectedCountry) {
-          requestData.payment_id = selectedCountry.payment_id;
-          requestData.p_id = selectedCountry.p_id;
-        }
-
-        const res = await call(countryCurrencyUrl, requestData);
-        console.log("res____", res);
-        getData();
-        setAcceptClick(true);
+        const res = await call(url, payload);
+        setProcessing(true);
         setAddCountryOpen(false);
-        handleAddCountryOpenClose();
-        setStatus((prev) => !prev);
-        setCountryName("");
-        setCurrencyName("");
-        setPaymentGateway("Select");
-        setPaymentDetails("");
-        setWebsite("Select");
-        setActive("Select");
-        // }
+        setInputData({});
+
+        console.log("res====>", res);
       }
-
-      // Logic to call ADD_PAYMENT_GATEWAY or UPDATE_PAYMENT_GATEWAY based on selectedPayment
-      if (componentType === "PAYMENT") {
-        const paymentUrl = selectedPayment
-          ? UPDATE_PAYMENT_GATEWAY
-          : ADD_PAYMENT_GATEWAY;
-
-        const paymentData = {
-          register_id: "company",
-          payment_details: paymentDetails,
-          country_name: countryName,
-          currency_name: currencyName,
-          pg_upi: paymentGateway,
-          website: website,
-          active: active,
-        };
-
-        if (selectedPayment) {
-          paymentData.pg_id = selectedPayment.pg_id;
-          paymentData.p_id = selectedPayment.p_id;
-        }
-
-        const paymentRes = await call(paymentUrl, paymentData);
-
-        getData();
-        setAcceptClick(true);
-        handleAddCountryOpenClose();
-        setAddCountryOpen(false);
-        setStatus((prev) => !prev);
-        setCountryName("");
-        setCurrencyName("");
-        setPaymentGateway("Select");
-        setPaymentDetails("");
-        setWebsite("Select");
-        setActive("Select");
-        // }
-      }
-
-      // Check if neither selectedCountry nor selectedPayment is defined
-      if (!selectedCountry && !selectedPayment) {
-        setData(null);
-        setData(null);
-      }
-    } catch (err) {
-      console.error("API Error:", err);
+    } catch (error) {
+      console.log(error);
     }
   };
+  const generateSignedUrl = async () => {
+    setuploadImage(true);
+    const posetNewId = new Date().getTime();
+    await call(GENERATE_SIGNED_URL, {
+      register_id: `${posetNewId}`,
+      event_type: "user_profile_image",
+      folder_name: "payment-images",
+    })
+      .then(async (res) => {
+        setuploadImage(false);
+        let url = res?.data?.data?.result?.signed_url;
+        setSignedUrl(url);
+        setPaymentId(posetNewId);
+      })
+      .catch((err) => {
+        setuploadImage(false);
+        console.log("generating signed url error", err);
+      });
+  };
 
+  console.log("Input Data=====>", inputData);
   return (
     <div className="modal fade bd-example-modal-lg container mt-5">
       <Modal
@@ -216,20 +134,14 @@ function AddCountryPopups(props) {
           <Row>
             <Col>
               <div className="small-font my-1">Country Name *</div>
-              <select
-                value={countryName}
+              <input
+                type="text"
+                placeholder="Enter"
                 name="country_name"
-                onChange={(e) => setCountryName(e.target.value)}
-                className="w-100 custom-select small-font login-inputs input-btn-bg px-2 py-2 all-none rounded all-none"
-              >
-                <option value="select">select</option>
-                <option value="All">All</option>
-                {allCountries.map((obj) => (
-                  <option value={obj.country_name} selected>
-                    {obj.country_name}
-                  </option>
-                ))}
-              </select>
+                className="w-100 custom-select small-font login-inputs input-btn-bg px-2 py-3 all-none rounded all-none"
+                value={inputData.country_name || ""}
+                onChange={(e) => onInputChange(e)}
+              ></input>
             </Col>
             <Col>
               <div className="small-font my-1">Currency Name *</div>
@@ -238,45 +150,61 @@ function AddCountryPopups(props) {
                 placeholder="Enter"
                 name="currency_name"
                 className="w-100 custom-select small-font login-inputs input-btn-bg px-2 py-3 all-none rounded all-none"
-                value={currencyName}
-                onChange={(e) => setCurrencyName(e.target.value)}
+                value={inputData.currency_name || ""}
+                onChange={(e) => onInputChange(e)}
               ></input>
             </Col>
             <Col>
               <div className="small-font my-1">Payment Gateway *</div>
               <select
                 name="pg_upi"
-                value={paymentGateway}
-                onChange={(e) => setPaymentGateway(e.target.value)}
+                // value={paymentGateway}
+                onChange={(e) => onInputChange(e)}
                 className="w-100 custom-select small-font input-btn-bg px-2 py-3 all-none rounded all-none"
               >
-                <option value="Select">Select</option>
-                <option value="All">All</option>
-                <option value="Phonepay">Phonepay</option>
-                <option value="Gpay">Gpay</option>
-                <option value="Paytm">Paytm</option>
-                {allPayments.map((obj) => (
+                <option>
+                  {inputData.pg_upi ? inputData.pg_upi : "Select"}
+                </option>
+                <option value="phonepe">Phonepay</option>
+                <option value="gpay">Gpay</option>
+                <option value="paytm">Paytm</option>
+                <option value="neft">RTGS</option>
+                <option value="qr_code">QR Code</option>
+                {/* {allPayments.map((obj) => (
                   <option value={obj.pg_upi} selected>
                     {obj.pg_upi}
                   </option>
-                ))}
+                ))} */}
               </select>
             </Col>
           </Row>
-          <Row className="mt-2">
-            <Col className="col-8">
-              <div className="small-font my-1">Payment Details *</div>
-              <textarea
-                name="payment_details"
-                type="text"
-                id="payment_details"
-                placeholder="Type Here....."
-                value={paymentDetails}
-                onChange={(e) => setPaymentDetails(e.target.value)}
-                className="w-100 custom-select small-font login-inputs input-btn-bg rounded h9vh"
-              ></textarea>
-            </Col>
-            <Col className="col-4">
+          {(inputData.pg_upi === "phonepe" ||
+            inputData.pg_upi === "gpay" ||
+            inputData.pg_upi === "paytm") && (
+            <Row className="mt-2">
+              <Col className="col-4">
+                <div className="small-font my-1">Mobile Number*</div>
+                <input
+                  type="text"
+                  placeholder="Enter Mobile Number"
+                  name="mobile_number"
+                  className="w-100 custom-select small-font login-inputs input-btn-bg px-2 py-3 all-none rounded all-none"
+                  value={inputData.mobile_number || ""}
+                  onChange={(e) => onInputChange(e)}
+                ></input>
+              </Col>
+              <Col className="col-4">
+                <div className="small-font my-1">Upi ID*</div>
+                <input
+                  type="text"
+                  placeholder="Enter UPI Name"
+                  name="pg_name"
+                  className="w-100 custom-select small-font login-inputs input-btn-bg px-2 py-3 all-none rounded all-none"
+                  value={inputData.pg_name || ""}
+                  onChange={(e) => onInputChange(e)}
+                ></input>
+              </Col>
+              {/* <Col className="col-4">
               <div className="small-font my-1">In Active *</div>
               <select
                 name="active"
@@ -288,8 +216,75 @@ function AddCountryPopups(props) {
                 <option>Yes</option>
                 <option>No</option>
               </select>
-            </Col>
-          </Row>
+            </Col> */}
+            </Row>
+          )}
+          {inputData.pg_upi === "neft" && (
+            <Row className="mt-2">
+              <Col className="col-4">
+                <div className="small-font my-1">Account Holder Name</div>
+                <input
+                  type="text"
+                  placeholder="Enter Accoun Holder Number"
+                  name="account_holder_name"
+                  className="w-100 custom-select small-font login-inputs input-btn-bg px-2 py-3 all-none rounded all-none"
+                  value={inputData.account_holder_name || ""}
+                  onChange={onInputChange}
+                ></input>
+              </Col>
+              <Col className="col-4">
+                <div className="small-font my-1">Bank Name</div>
+                <input
+                  type="text"
+                  placeholder="Enter Upi Id"
+                  name="bank_name"
+                  className="w-100 custom-select small-font login-inputs input-btn-bg px-2 py-3 all-none rounded all-none"
+                  value={inputData.bank_name || ""}
+                  onChange={(e) => onInputChange(e)}
+                ></input>
+              </Col>
+              <Col className="col-4">
+                <div className="small-font my-1">Account Number*</div>
+                <input
+                  type="text"
+                  placeholder="Enter Mobile Number"
+                  name="mobile_number"
+                  className="w-100 custom-select small-font login-inputs input-btn-bg px-2 py-3 all-none rounded all-none"
+                  value={inputData.mobile_number || ""}
+                  onChange={(e) => onInputChange(e)}
+                ></input>
+              </Col>
+              <Col className="col-4">
+                <div className="small-font my-1">IFSC Code*</div>
+                <input
+                  type="text"
+                  placeholder="Enter IFSC Code"
+                  name="ifsc_code"
+                  className="w-100 custom-select small-font login-inputs input-btn-bg px-2 py-3 all-none rounded all-none"
+                  value={inputData.ifsc_code || ""}
+                  onChange={(e) => onInputChange(e)}
+                ></input>
+              </Col>
+            </Row>
+          )}
+          {inputData.pg_upi === "qr_code" && (
+            <Row>
+              <Col className="col-4">
+                <div className="small-font my-1">Qr Code*</div>
+                <input
+                  type="file"
+                  placeholder="Upload Qr Code"
+                  name="uploadCode"
+                  ref={uploadfileInputRef}
+                  onChange={handleUploadFileSelect}
+                  // name="upi_id"
+                  className="w-100 custom-select small-font login-inputs input-btn-bg px-2 py-3 all-none rounded all-none"
+                  // value={currencyName}
+                  // onChange={(e) => setCurrencyName(e.target.value)}
+                ></input>
+              </Col>
+            </Row>
+          )}
 
           {/* <Container fluid className="my-2">
             <Row>
@@ -317,11 +312,11 @@ function AddCountryPopups(props) {
               <button
                 type="submit"
                 className="add-button  small-font rounded px-4 py-3 my-3 w-50 all-none"
-                onClick={handleCreateOrUpdateCountryCurrency}
+                onClick={handleCreateOrUpdatePaymentGateway}
               >
-                {selectedCountry
-                  ? "Update"
-                  : selectedPayment
+                {processing === true
+                  ? "Processing...."
+                  : updateGatway === true
                   ? "Update"
                   : "Create"}
               </button>

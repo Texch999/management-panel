@@ -8,7 +8,7 @@ import { call } from "../../config/axios";
 function PackageButtons(props) {
   const { selectedPackage, packageInputs, setPackageInputs } = props;
   const [activePackageButtons, setActivePackageButtons] = useState(0);
-  const [websiteNames, setwebsiteNames] = useState([]);
+  // const [websiteNames, setwebsiteNames] = useState([]);
 
   const handlePackageOpen = (index) => {
     setActivePackageButtons(index);

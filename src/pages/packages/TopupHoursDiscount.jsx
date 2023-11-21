@@ -17,7 +17,7 @@ function TopupHoursDiscount(props) {
 
   console.log("PackageInputs===>", packageInputs);
 
-  const handleSubmitPackageCreation = async (item, index) => {
+  const handleSubmitPackageCreation = async (item,packageName, index) => {
     setActiveIndex(index);
     if (
       !(
@@ -35,33 +35,33 @@ function TopupHoursDiscount(props) {
     ) {
       return setErr("Please enter required fields");
     }
-    const string1 = inputData[item?.userTextKey] || "";
-    const string2 = inputData[item?.meetingTextKey] || "";
-    const string3 = inputData[item?.numberOfMeetingsKey] || "";
-    const string4 = inputData[item?.audioCallsKey] || "";
+    
     const payload = {
-      string1: string1,
-      string2: string2,
-      string3: string3,
-      string4: string4,
       created_date: "12:30:20 PM",
       created_time: "5/11/2023",
-      expiry_time: "",
-      website_name: packageInputs?.website_name,
-      country_name: packageInputs?.country_name,
-      package_type: {
-        monthly: {
-          pkg_hours: inputData[item?.monthlyHoursKey],
-          price: inputData[item?.monthlyPriceKey],
-          discount: inputData[item?.monthlydiscountPriceKey],
-        },
-        yearly: {
-          pkg_hours: inputData[item?.yearlyHoursKey],
-          price: inputData[item?.yearlyPriceKey],
-          discount: inputData[item?.yearlydiscountPriceKey],
-        },
+      expiry_time: "5/11/2023",
+      is_autherised: "true",
+      monthly_package: {
+        montly_package_cost: inputData[item?.monthlyPriceKey],
+        montly_package_hours: inputData[item?.monthlyHoursKey],
+        montly_package_discount: inputData[item?.monthlydiscountPriceKey],
       },
+      yearly_package: {
+        yearly_package_cost: inputData[item?.yearlyPriceKey],
+        yearly_package_hours: inputData[item?.yearlyHoursKey],
+        yearly_package_discount: inputData[item?.yearlydiscountPriceKey],
+      },
+      package_limits: {
+        members: inputData[item?.membersKey],
+        join_call_with_users: inputData[item?.userTextKey],
+        personal_meetings: inputData[item?.meetingTextKey],
+        meetings: inputData[item?.numberOfMeetingsKey],
+        audio_calls: inputData[item?.audioCallsKey],
+      },
+      package_name: packageName,
       status: "active",
+      website: packageInputs?.website_name || 0,
+      country_name: packageInputs?.country_name || 0,
     };
     console.log("payload====>", payload);
     setErr("");
@@ -319,7 +319,11 @@ function TopupHoursDiscount(props) {
                 type="button"
                 disabled={isProcessing}
                 onClick={() =>
-                  handleSubmitPackageCreation(item?.payloadObject, index)
+                  handleSubmitPackageCreation(
+                    item?.payloadObject,
+                    item?.packagename,
+                    index
+                  )
                 }
               >
                 Submit
