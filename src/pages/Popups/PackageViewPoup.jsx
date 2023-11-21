@@ -115,13 +115,13 @@ function PackageViewPoup(props) {
               </div>
               <div className="d-flex flex-row justify-content-between small-font  all-none  align-items-center justify-content-between my-1 ">
                 <div className="font-grey">From</div>
-                {requestedPackages?.user_name}-
-                {requestedPackages?.requested_account_role}
+                {localStorage.getItem("user_name")}-
+                {localStorage.getItem("account_role")}
               </div>
               <div className="d-flex flex-row justify-content-between small-font  all-none  align-items-center justify-content-between my-1 ">
                 <div className="font-grey">To</div>
-                {localStorage.getItem("user_name")}-
-                {localStorage.getItem("account_role")}
+                {requestedPackages?.user_name}-
+                {requestedPackages?.requested_account_role}
                 {/* <div>Jayanta-Admin</div> */}
               </div>
               <div className="d-flex flex-row justify-content-between small-font  all-none  align-items-center justify-content-between my-1 ">

@@ -153,8 +153,8 @@ function AddReasonPopup(props) {
                 <select className="w-100 small-font login-inputs input-btn-bg px-2 py-3 all-none rounded">
                   Select
                   <option value="Select">Select</option>
-                  <option value="1">Yes</option>
-                  <option value="0">No</option>
+                  <option value="1">Active</option>
+                  <option value="0">Inactive</option>
                 </select>
               </Col>
             </Row>
