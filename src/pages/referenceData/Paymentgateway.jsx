@@ -12,6 +12,8 @@ function Paymentgateway() {
   const [searchText, setSearchText] = useState("");
   const [status, setStatus] = useState(false);
   const [selectedPayment, setSelectedPayment] = useState();
+  const [inputData, setInputData] = useState({});
+  const [updateGatway, setUpdateGatway] = useState(false);
 
   const cols = [
     {
@@ -45,6 +47,7 @@ function Paymentgateway() {
   const [addCountryOpen, setAddCountryOpen] = useState(false);
   const handleAddCountryPopup = () => {
     setAddCountryOpen(true);
+    setInputData({});
   };
 
   const searchContent = (value) => {
@@ -108,13 +111,16 @@ function Paymentgateway() {
             <MdOutlineEdit
               className="eye-icon-size"
               onClick={() => {
-                setSelectedPayment(item);
+                // setSelectedPayment(item);
+                setUpdateGatway(true);
                 handleAddCountryPopup();
+                setInputData(item);
               }}
             />
           ),
         };
       });
+
   return (
     <div className="p-4 w-100">
       <div className="d-flex align-items-center justify-content-between">
@@ -171,7 +177,10 @@ function Paymentgateway() {
         selectedPayment={selectedPayment}
         setData={setSelectedPayment}
         getData={getPaymentWay}
-        componentType="PAYMENT"
+        inputData={inputData}
+        setInputData={setInputData}
+        updateGatway={updateGatway}
+        // componentType="PAYMENT"
       />
     </div>
   );

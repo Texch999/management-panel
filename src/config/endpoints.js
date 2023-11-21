@@ -35,10 +35,11 @@ const CREATE_OFFLINE_MATCHES = "/offline-management/match_creation";
 const PACKAGES_CREATION = "/packages/package_creation_upgrade_discount";
 const GET_REQUEST_PACKAGES =
   "/packages/get_package_histroy_bypackage_requestid";
-const GET_ADMIN_PACKAGE_REQUEST = "/packages/get_all_admin_package_request";
-const GET_REASON_REJECTIONS = "/settings/getall_security_questions";
 const PACKAGE_APPROVE_REJECT = "/packages/package_approve_reject";
 const BULK_PACKAGE_APPROVE_REJECT = "/packages/bulk_package_approve_reject";
+// const PACKAGES_CREATION="/packages/package_creation_upgrade_discount";
+const GET_ADMIN_PACKAGE_REQUEST = "/packages/get_all_admin_package_request";
+const GET_REASON_REJECTIONS = "/settings/getall_security_questions";
 const ADD_REASON_REJECTIONS = "/settings/add_reason_rejection";
 
 const ADD_TOURS = "/tours/add_tours";

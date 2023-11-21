@@ -8,8 +8,6 @@ function Packages() {
   const [selectedPackage, setSelectedPackage] = useState("all");
   const [packageInputs, setPackageInputs] = useState({});
 
-  console.log(selectedPackage, ".........selectedPackage");
-
   return (
     <div className="p-4 w-98">
       <PackageDetails />

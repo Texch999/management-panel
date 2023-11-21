@@ -1,22 +1,22 @@
 import { useState } from "react";
 import { PACKAGES_CREATION } from "../../config/endpoints";
 import { call } from "../../config/axios";
+import { Images } from "./../../images/index";
 import MatchSubmitPopup from "../../matchpopups/MatchSubmitPopup";
 
 function BulkPackageDiscount(props) {
   const { selectedPackage, packageInputs } = props;
   const [isProcessing, setIsProcessing] = useState(false);
+
   const [err, setErr] = useState();
   const [inputData, setInputData] = useState({});
   const [successfulPopUp, setSuccessfulPopUp] = useState(false);
   const [activeIndex, setActiveIndex] = useState();
   const handleInputChange = (e) => {
     setInputData({ ...inputData, [e.target.name]: e.target.value });
-  };
+  }
 
-  console.log("packageInputs====>", packageInputs);
-
-  const handleSubmitPackageCreation = async (item, index) => {
+  const handleSubmitPackageCreation = async (item,packageName, index) => {
     setActiveIndex(index);
     if (
       !(
@@ -34,28 +34,35 @@ function BulkPackageDiscount(props) {
       return setErr("Please enter required fields");
     }
     console.log("item=====>", item);
+    
     const payload = {
       created_date: "12:30:20 PM",
       created_time: "5/11/2023",
-      expiry_time: "",
-      members: inputData[item?.membersKey] || "",
-      website_name: packageInputs?.website_name,
-      country_name: packageInputs?.country_name,
-      package_type: {
-        monthly: {
-          monthly_pack: inputData[item?.monthlybulkPackagesKey],
-          pkg_hours: inputData[item?.monthlyHoursKey],
-          price: inputData[item?.monthlyPriceKey],
-          discount: inputData[item?.monthlydiscountPriceKey],
-        },
-        yearly: {
-          yearly_pack: inputData[item?.yearlybulkPackagesKey],
-          pkg_hours: inputData[item?.yearlyHoursKey],
-          price: inputData[item?.yearlyPriceKey],
-          discount: inputData[item?.yearlydiscountPriceKey],
-        },
+      expiry_time: "5/11/2023",
+      is_autherised: "true",
+      monthly_package: {
+        monthly_pack: inputData[item?.monthlybulkPackagesKey],
+        montly_package_cost: inputData[item?.monthlyPriceKey],
+        montly_package_hours: inputData[item?.monthlyHoursKey],
+        montly_package_discount: inputData[item?.monthlydiscountPriceKey],
       },
+      yearly_package: {
+        yearly_pack: inputData[item?.yearlybulkPackagesKey],
+        yearly_package_cost: inputData[item?.yearlyPriceKey],
+        yearly_package_hours: inputData[item?.yearlyHoursKey],
+        yearly_package_discount: inputData[item?.yearlydiscountPriceKey],
+      },
+      package_limits: {
+        members: inputData[item?.membersKey],
+        join_call_with_users: inputData[item?.userTextKey],
+        personal_meetings: inputData[item?.meetingTextKey],
+        meetings: inputData[item?.numberOfMeetingsKey],
+        audio_calls: inputData[item?.audioCallsKey],
+      },
+      package_name: packageName,
       status: "active",
+      website: packageInputs?.website_name || 0,
+      country_name: packageInputs?.country_name || 0,
     };
     console.log("payload====>", payload);
     setErr("");
@@ -83,6 +90,11 @@ function BulkPackageDiscount(props) {
     {
       packagename: "Standard",
       packageId: "1",
+      packageLogo: Images.StandardSmallImg,
+      userText: "Join call with 10 users",
+      meetingstext: "Use 5 personal meetings",
+      numberOfMeetings: "Monthly 10 meetings",
+      audioCalls: "Audio calls only",
       members: 10,
       payloadObject: {
         membersKey: "standard_members",
@@ -99,6 +111,11 @@ function BulkPackageDiscount(props) {
     {
       packagename: "Silver",
       packageId: "2",
+      packageLogo: Images.SilverSmallImg,
+      userText: "Join call with 10 users",
+      meetingstext: "Use 5 personal meetings",
+      numberOfMeetings: "Monthly 10 meetings",
+      audioCalls: "Audio calls only",
       members: 15,
       payloadObject: {
         membersKey: "silver_members",
@@ -115,6 +132,11 @@ function BulkPackageDiscount(props) {
     {
       packagename: "Gold",
       packageId: "3",
+      packageLogo: Images.GoldSmallImg,
+      userText: "Join call with 10 users",
+      meetingstext: "Use 5 personal meetings",
+      numberOfMeetings: "Monthly 10 meetings",
+      audioCalls: "Audio calls only",
       members: 20,
       payloadObject: {
         membersKey: "gold_members",
@@ -131,6 +153,11 @@ function BulkPackageDiscount(props) {
     {
       packagename: "Diamond",
       packageId: "4",
+      packageLogo: Images.GoldSmallImg,
+      userText: "Join call with 10 users",
+      meetingstext: "Use 5 personal meetings",
+      numberOfMeetings: "Monthly 10 meetings",
+      audioCalls: "Audio calls only",
       members: 20,
       payloadObject: {
         membersKey: "diamond_members",
@@ -145,8 +172,13 @@ function BulkPackageDiscount(props) {
       },
     },
     {
-      packagename: "Vip",
+      packagename: "VIP",
       packageId: "5",
+      packageLogo: Images.GoldSmallImg,
+      userText: "Join call with 10 users",
+      meetingstext: "Use 5 personal meetings",
+      numberOfMeetings: "Monthly 10 meetings",
+      audioCalls: "Audio calls only",
       members: 20,
       payloadObject: {
         monthlybulkPackagesKey: "vip_monthly_bulk_packages",
@@ -180,6 +212,36 @@ function BulkPackageDiscount(props) {
                   <div className="medium-font package-heading-bg p-2 rounded mt-1 role-color">
                     {item.packagename}
                   </div>
+                  <input
+                    className="medium-font package-btn-bg p-2 rounded mt-1 font-grey"
+                    placeholder={item.userText}
+                    name={item?.payloadObject?.userTextKey}
+                    value={inputData[item?.payloadObject?.userTextKey] || ""}
+                    onChange={(e) => handleInputChange(e)}
+                  />
+                  <input
+                    className="medium-font package-btn-bg p-2 rounded mt-1 font-grey"
+                    placeholder={item.meetingstext}
+                    name={item?.payloadObject?.meetingTextKey}
+                    value={inputData[item?.payloadObject?.meetingTextKey] || ""}
+                    onChange={(e) => handleInputChange(e)}
+                  />
+                  <input
+                    className="medium-font package-btn-bg p-2 rounded mt-1 font-grey"
+                    placeholder={item.numberOfMeetings}
+                    name={item?.payloadObject?.numberOfMeetingsKey}
+                    value={
+                      inputData[item?.payloadObject?.numberOfMeetingsKey] || ""
+                    }
+                    onChange={(e) => handleInputChange(e)}
+                  />
+                  <input
+                    className="medium-font package-btn-bg p-2 rounded mt-1 font-grey"
+                    placeholder={item.audioCalls}
+                    name={item?.payloadObject?.audioCallsKey}
+                    value={inputData[item?.payloadObject?.audioCallsKey] || ""}
+                    onChange={(e) => handleInputChange(e)}
+                  />
                 </div>
               </div>
               <div className="col">
@@ -300,7 +362,11 @@ function BulkPackageDiscount(props) {
             <div className="w-10 d-flex align-items-center justify-content-center blue-btn font-white px-2 py-2 rounded">
               <div
                 onClick={() =>
-                  handleSubmitPackageCreation(item?.payloadObject, index)
+                  handleSubmitPackageCreation(
+                    item?.payloadObject,
+                    item?.packagename,
+                    index
+                  )
                 }
               >
                 Submit
