@@ -184,7 +184,7 @@ function Adddirector() {
             icon: <MdOutlineEdit className="eye-icon-size" />,
           };
         })
-    : getAllDirectors.map((item) => {
+    : getAllDirectors?.map((item) => {
         return {
           role: (
             <div className="role-color">
