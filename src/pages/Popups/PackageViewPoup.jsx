@@ -1,5 +1,5 @@
 import { Col, Container, Modal, Row } from "react-bootstrap";
-import { Button, Table, Dropdown } from "react-bootstrap";
+import { Dropdown } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import React, { useEffect, useState } from "react";
 import { PiArrowsOutLight } from "react-icons/pi";
@@ -10,8 +10,12 @@ import {
 } from "../../config/endpoints";
 import { call } from "../../config/axios";
 function PackageViewPoup(props) {
-  const { showPackageUpgrade, setShowPackageUpgrade, requestedPackages } =
-    props;
+  const {
+    showPackageUpgrade,
+    setShowPackageUpgrade,
+    requestedPackages,
+    isProcessing,
+  } = props;
 
   const [saleTicket, setSaleTicket] = useState([]);
   const [rejectionDropDown, setRejectionDropDown] = useState([]);
@@ -26,7 +30,7 @@ function PackageViewPoup(props) {
 
   const getAllsaleTickets = async () => {
     const payload = {
-      register_id: "reg-20230920132711772",
+      register_id: "company",
     };
     await call(GET_ADMIN_PACKAGE_REQUEST, payload)
       .then((res) => {
@@ -60,49 +64,16 @@ function PackageViewPoup(props) {
     getAllRejections();
   }, []);
 
+  const tableData = requestedPackages?.requested_packages?.map((obj) => {
+    return {
+      packages: obj?.package_name,
+      purchase: obj?.no_of_packages,
+      price: obj?.package_cost,
+      returnpkg: obj?.return_packages || 0,
+      returnhrs: obj?.return_hrs || 0,
+    };
+  });
 
-  const selectReasons = [
-    { header: "Insufficient Balance" },
-    { header: "Payment Not Verified" },
-    { header: "Wrong Payment Slip" },
-  ];
-  const tableData = [
-    {
-      package: "Standard",
-      purchase: "2",
-      price: "4000",
-      returnpkg: "2",
-      retrunhrs: "400",
-    },
-    {
-      package: "Silver",
-      purchase: "5",
-      price: "10000",
-      returnpkg: "2",
-      retrunhrs: "1000",
-    },
-    {
-      package: "Gold",
-      purchase: "10",
-      price: "15000",
-      returnpkg: "4",
-      retrunhrs: "1500",
-    },
-    {
-      package: "Diamond",
-      purchase: "20",
-      price: "20000",
-      returnpkg: "8",
-      retrunhrs: "2000",
-    },
-    {
-      package: "VIP",
-      purchase: "25",
-      price: "20000",
-      returnpkg: "10",
-      retrunhrs: "2000",
-    },
-  ];
   return (
     <div className="modal fade bd-example-modal-lg container mt-5">
       <Modal
@@ -144,21 +115,25 @@ function PackageViewPoup(props) {
               </div>
               <div className="d-flex flex-row justify-content-between small-font  all-none  align-items-center justify-content-between my-1 ">
                 <div className="font-grey">From</div>
-                <div>Srinivas-Sub Admin</div>
+                {requestedPackages?.user_name}-
+                {requestedPackages?.requested_account_role}
               </div>
               <div className="d-flex flex-row justify-content-between small-font  all-none  align-items-center justify-content-between my-1 ">
                 <div className="font-grey">To</div>
-                <div>Jayanta-Admin</div>
+                {localStorage.getItem("user_name")}-
+                {localStorage.getItem("account_role")}
+                {/* <div>Jayanta-Admin</div> */}
               </div>
               <div className="d-flex flex-row justify-content-between small-font  all-none  align-items-center justify-content-between my-1 ">
                 <div className="font-grey">Time</div>
+                {/* <div className="font-grey">{moment(requestedPackages?.created_date).format("DD-MM-yyyy")}{" "}
+              {requestedPackages?.created_time}</div> */}
                 <div>
                   {requestedPackages?.created_date}{" "}
                   {requestedPackages.created_time}
                 </div>
               </div>
             </div>
-
             <div className="w-100 my-1 relative-position">
               <img
                 className="w-100 h9vh rounded"
@@ -194,13 +169,13 @@ function PackageViewPoup(props) {
                           </tr>
                         </thead>
                         <tbody>
-                          {tableData.map((item, index) => (
+                          {tableData?.map((item, index) => (
                             <tr key={index} className="text-center">
-                              <td>{item.package}</td>
+                              <td>{item.packages}</td>
                               <td>{item.purchase}</td>
                               <td>{item.price}</td>
                               <td>{item.returnpkg}</td>
-                              <td>{item.retrunhrs}</td>
+                              <td>{item.returnhrs}</td>
                             </tr>
                           ))}
                         </tbody>
@@ -212,29 +187,29 @@ function PackageViewPoup(props) {
                             <div className="d-flex flex-row justify-content-between">
                               <span>Total Purchase</span>
                               <span>62 = 150000</span>
-                            </div>
+                            </div>{" "}
                             <div className="d-flex flex-row justify-content-between">
                               <span>Return Pkg</span>
                               <span>26 = 30000</span>
-                            </div>
+                            </div>{" "}
                             <div className="d-flex flex-row justify-content-between">
                               <span>Return Hrs</span>
                               <span>26 = 30000</span>
                             </div>
-                          </div>
+                          </div>{" "}
                           <div className="d-flex flex-column w-50 mx-2 my-1">
                             <div className="d-flex flex-row justify-content-between">
                               <span>Discount</span>
                               <span>5% = 7500</span>
-                            </div>
+                            </div>{" "}
                             <div className="d-flex flex-row justify-content-between">
                               <span>Special Offer</span>
                               <span>5% = 7500</span>
-                            </div>
+                            </div>{" "}
                             <div className="d-flex flex-row justify-content-between">
                               <span>Paid Amount</span>
                               <span>105000</span>
-                            </div>
+                            </div>{" "}
                           </div>
                         </div>
                       </Dropdown.Item>
@@ -245,73 +220,7 @@ function PackageViewPoup(props) {
                   <Dropdown
                     size="lg"
                     className="user-dropdown-toggle custom-button-drop small-font mt-2"
-                  >
-                    {/* <Dropdown.Toggle className="w-100">
-                      <div className="d-flex align-itens-center justify-content-between p-1">
-                        <div className="font-grey">Special Offer</div>
-                        <span style={{ float: "right" }} className="clr-yellow">
-                          View
-                        </span>
-                      </div>
-                    </Dropdown.Toggle> */}
-                    <Dropdown.Menu className="custom-menu-item px-1">
-                      <table className="w-100 match-position-table small-font clr-white">
-                        <thead>
-                          <tr className="text-center">
-                            <td>Package</td>
-                            <td>Purchase</td>
-                            <td>Price</td>
-                            <td>Return Pkg</td>
-                            <td>Return Hrs</td>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          {tableData.map((item, index) => (
-                            <tr key={index} className="text-center">
-                              <td>{item.package}</td>
-                              <td>{item.purchase}</td>
-                              <td>{item.price}</td>
-                              <td>{item.returnpkg}</td>
-                              <td>{item.retrunhrs}</td>
-                            </tr>
-                          ))}
-                        </tbody>
-                        <tfoot className="small-font justify-content-between w-100"></tfoot>
-                      </table>
-                      <Dropdown.Item className="rounded my-2 d-flex flex-row ps-0 pe-0">
-                        <div className="d-flex flex-row w-100 justify-content-between small-font">
-                          <div className="d-flex flex-column w-50 mx-2 my-1">
-                            <div className="d-flex flex-row justify-content-between">
-                              <span>Total Purchase</span>
-                              <span>62 = 150000</span>
-                            </div>
-                            <div className="d-flex flex-row justify-content-between">
-                              <span>Return Pkg</span>
-                              <span>26 = 30000</span>
-                            </div>
-                            <div className="d-flex flex-row justify-content-between">
-                              <span>Return Hrs</span>
-                              <span>26 = 30000</span>
-                            </div>
-                          </div>
-                          <div className="d-flex flex-column w-50 mx-2 my-1">
-                            <div className="d-flex flex-row justify-content-between">
-                              <span>Discount</span>
-                              <span>5% = 7500</span>
-                            </div>
-                            <div className="d-flex flex-row justify-content-between">
-                              <span>Special Offer</span>
-                              <span>5% = 7500</span>
-                            </div>
-                            <div className="d-flex flex-row justify-content-between">
-                              <span>Paid Amount</span>
-                              <span>105000</span>
-                            </div>
-                          </div>
-                        </div>
-                      </Dropdown.Item>
-                    </Dropdown.Menu>
-                  </Dropdown>
+                  ></Dropdown>
                 </Col>
               </Row>
             </Container>
@@ -321,31 +230,13 @@ function PackageViewPoup(props) {
                   <Dropdown
                     size="lg"
                     className="user-dropdown-toggle custom-button-drop small-font mt-2"
-                  >
-                    {/* <Dropdown.Toggle className="w-100">
-                      <div className="d-flex align-itens-center justify-content-between p-1">
-                        <div className="font-grey">Sports Chips</div>
-                        <span style={{ float: "right" }} className="clr-yellow">
-                          View
-                        </span>
-                      </div>
-                    </Dropdown.Toggle> */}
-                  </Dropdown>
+                  ></Dropdown>
                 </Col>
                 <Col className="pe-0">
                   <Dropdown
                     size="lg"
                     className="user-dropdown-toggle custom-button-drop small-font mt-2"
-                  >
-                    {/* <Dropdown.Toggle className="w-100">
-                      <div className="d-flex align-itens-center justify-content-between p-1">
-                        <div className="font-grey">Casino Chips</div>
-                        <span style={{ float: "right" }} className="clr-yellow">
-                          View
-                        </span>
-                      </div>
-                    </Dropdown.Toggle> */}
-                  </Dropdown>
+                  ></Dropdown>
                 </Col>
               </Row>
             </Container>
@@ -358,36 +249,63 @@ function PackageViewPoup(props) {
                 className="w-100 custom-select small-font input-btn-bg px-2 py-2 all-none rounded all-none my-2"
               >
                 <option value="">Select</option>
-                {/* <option>No Money</option>
-                <option>Money Borrowed</option>
-                <option>Insufficient Balance</option>
-                <option>www.brahama.com</option> */}
+
                 {rejectionDropDown.map((obj) => (
                   <option value={obj.reason}>{obj.reason}</option>
                 ))}
               </select>
             </div>
             <hr />
-              <div className="d-flex justify-content-between medium-font mt-2 mb-2">
-                <div>Total</div>
-                <div>{requestedPackages?.summary?.total_packages_cost}</div>
+            <input
+              type="text"
+              placeholder="Specify Others"
+              className="upgrade-popup-box-container custom-box-shadow w-100 font-12 flex-space-between mt-10"
+            ></input>{" "}
+            {requestedPackages.status === "pending" ? (
+              <div className="d-flex justify-content-between mt-3 w-100">
+                <button
+                  type="submit"
+                  className="add-button  small-font rounded px-4 py-2 mx-2 w-50 all-none"
+                  onClick={() =>
+                    handleAcceptClickPopupOpen(
+                      requestedPackages?.transaction_id,
+                      requestedPackages.type,
+                      "Approved"
+                    )
+                  }
+                  disabled={isProcessing}
+                >
+                  {" "}
+                  {isProcessing ? "Processing..." : "Accept"}{" "}
+                </button>
+                <button
+                  type="submit"
+                  className="deactive-button  small-font rounded px-4 py-2 mx-2 w-50 all-none"
+                  onClick={() =>
+                    handleAdminTicketPopupClose(
+                      requestedPackages?.transaction_id,
+                      requestedPackages.type
+                    )
+                  }
+                  disabled={isProcessing}
+                >
+                  {isProcessing ? "Processing..." : "Reject"}
+                </button>
               </div>
-            <div className="d-flex justify-content-between mt-3 w-100">
-              <button
-                type="submit"
-                className="add-button  small-font rounded px-4 py-2 mx-2 w-50 all-none"
-                onClick={() => handleAcceptClickPopupOpen()}
-              >
-                Approved
-              </button>
-              <button
-                type="submit"
-                className="deactive-button  small-font rounded px-4 py-2 mx-2 w-50 all-none"
-                onClick={() => handleAdminTicketPopupClose()}
-              >
-                Rejected
-              </button>
-            </div>
+            ) : (
+              <div className="font-size-14 fw-600 mt-10 ml-10">
+                you have already{" "}
+                <span
+                  className={
+                    requestedPackages.status === "Approved"
+                      ? "green-clr"
+                      : "red-clr"
+                  }
+                >
+                  {requestedPackages.status}
+                </span>
+              </div>
+            )}
           </div>
         </Modal.Header>
       </Modal>

@@ -84,7 +84,6 @@ function Offersmanagement() {
 
   const modifiedOffersmanagementDetails = OFFERSMANAGEMENT_DETAILS.map(
     (item) => ({
-      ...item,
       title: (
         <div className="role-color">
           <span className="role-color">{item?.title}</span>{" "}

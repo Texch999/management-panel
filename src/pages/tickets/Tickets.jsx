@@ -2,100 +2,17 @@ import { useEffect, useState } from "react";
 import Table from "../table/Table";
 import { AiOutlineEye } from "react-icons/ai";
 import PackageViewPoup from "../Popups/PackageViewPoup";
-import { GET_REQUEST_PACKAGES } from "../../config/endpoints";
+import { GET_ADMIN_PACKAGE_REQUEST } from "../../config/endpoints";
 import { call } from "../../config/axios";
 
 function Tickets() {
   const [activeIndex, setActiveIndex] = useState(0);
   const [requestedPackages, setRequestedPackages] = useState([]);
   const [popupData, setPopupData] = useState([]);
+
   const handleActiveIndex = (index) => {
     setActiveIndex(index);
   };
-  const TICKET_DETAILS = [
-    {
-      date: "01/08/2023 ",
-      time: "11:46:00 AM",
-      name: "Srinivas",
-      role: "Director",
-      trxid: "trx-id-2023062707",
-      number: "4602133078",
-      package: "Upgrade Package",
-      chips: "10000",
-      discount: "5",
-      pkgamnt: "- 20,000 (Monthly)",
-      amount: "200000000",
-      status: "Rejected",
-      icon: (
-        <AiOutlineEye
-          className="eye-icon-size"
-          // onClick={() => handlePackageUpgrade()}
-        />
-      ),
-    },
-  ];
-  const TICKET_DETAILS1 = [
-    {
-      date: "01/08/2023 ",
-      time: "11:46:00 AM",
-      name: "Srinivas",
-      role: "Director",
-      trxid: "trx-id-2023062707",
-      number: "4602133078",
-      package: "Purchase Package",
-      chips: "10000",
-      discount: "5",
-      pkgamnt: "- 20,000 (Monthly)",
-      amount: "200000000",
-      status: "Rejected",
-      icon: (
-        <AiOutlineEye
-          className="eye-icon-size"
-          // onClick={() => handlePackageUpgrade()}
-        />
-      ),
-    },
-  ];
-  const TICKET_DETAILS2 = [
-    {
-      date: "01/08/2023 ",
-      time: "11:46:00 AM",
-      name: "Srinivas",
-      role: "Director",
-      trxid: "trx-id-2023062707",
-      number: "4602133078",
-      package: "Casino/Sports Package",
-      chips: "10000",
-      discount: "5",
-      pkgamnt: "- 20,000 (Monthly)",
-      amount: "200000000",
-      status: "Rejected",
-      icon: <AiOutlineEye className="eye-icon-size" />,
-    },
-  ];
-  const TICKET_DETAILS3 = [
-    {
-      date: "01/08/2023 ",
-      time: "11:46:00 AM",
-      name: "Srinivas",
-      role: "Director",
-      trxid: "trx-id-2023062707",
-      number: "4602133078",
-      package: "Payment Package",
-      chips: "10000",
-      discount: "5",
-      pkgamnt: "- 20,000 (Monthly)",
-      amount: "200000000",
-      status: "Rejected",
-      icon: (
-        <AiOutlineEye
-          className="eye-icon-size"
-          // onClick={() => handlePackageUpgrade()}
-        />
-      ),
-    },
-  ];
-
   const cols = [
     {
       header: "DATE & TIME",
@@ -136,131 +53,131 @@ function Tickets() {
     },
   ];
 
-  const cols1 = [
-    {
-      header: "DATE & TIME",
-      field: "dateAndTime",
-    },
-    {
-      header: "Name & ROLE",
-      field: "nameAndRole",
-    },
-    {
-      header: "TRX ID",
-      field: "trxid",
-    },
-    {
-      header: "PACKAGE TRX",
-      field: "package",
-    },
-    {
-      header: "CHIPS",
-      field: "chips",
-    },
-    {
-      header: "DISCOUNT",
-      field: "discount",
-    },
-    {
-      header: "PAY AMOUNT",
-      field: "pkgamnt",
-    },
-    {
-      header: "VIEW",
-      field: "icon",
-    },
-    {
-      header: "STATUS",
-      field: "status",
-      clr: true,
-    },
-  ];
+  // const cols1 = [
+  //   {
+  //     header: "DATE & TIME",
+  //     field: "dateAndTime",
+  //   },
+  //   {
+  //     header: "Name & ROLE",
+  //     field: "nameAndRole",
+  //   },
+  //   {
+  //     header: "TRX ID",
+  //     field: "trxid",
+  //   },
+  //   {
+  //     header: "PACKAGE TRX",
+  //     field: "package",
+  //   },
+  //   {
+  //     header: "CHIPS",
+  //     field: "chips",
+  //   },
+  //   {
+  //     header: "DISCOUNT",
+  //     field: "discount",
+  //   },
+  //   {
+  //     header: "PAY AMOUNT",
+  //     field: "pkgamnt",
+  //   },
+  //   {
+  //     header: "VIEW",
+  //     field: "icon",
+  //   },
+  //   {
+  //     header: "STATUS",
+  //     field: "status",
+  //     clr: true,
+  //   },
+  // ];
 
-  const cols2 = [
-    {
-      header: "DATE & TIME",
-      field: "dateAndTime",
-    },
-    {
-      header: "Name & ROLE",
-      field: "nameAndRole",
-    },
-    {
-      header: "TRX ID",
-      field: "trxid",
-    },
-    {
-      header: "PACKAGE TRX",
-      field: "package",
-    },
-    {
-      header: "CHIPS",
-      field: "chips",
-    },
-    {
-      header: "DISCOUNT",
-      field: "discount",
-    },
-    {
-      header: "PAY AMOUNT",
-      field: "pkgamnt",
-    },
-    {
-      header: "VIEW",
-      field: "icon",
-    },
-    {
-      header: "STATUS",
-      field: "status",
-      clr: true,
-    },
-  ];
-  const cols3 = [
-    {
-      header: "DATE & TIME",
-      field: "dateAndTime",
-    },
-    {
-      header: "Name & ROLE",
-      field: "nameAndRole",
-    },
-    {
-      header: "TRX ID",
-      field: "trxid",
-    },
-    {
-      header: "PACKAGE TRX",
-      field: "package",
-    },
-    {
-      header: "CHIPS",
-      field: "chips",
-    },
-    {
-      header: "DISCOUNT",
-      field: "discount",
-    },
-    {
-      header: "PAY AMOUNT",
-      field: "pkgamnt",
-    },
-    {
-      header: "VIEW",
-      field: "icon",
-    },
-    {
-      header: "STATUS",
-      field: "status",
-      clr: true,
-    },
-  ];
+  // const cols2 = [
+  //   {
+  //     header: "DATE & TIME",
+  //     field: "dateAndTime",
+  //   },
+  //   {
+  //     header: "Name & ROLE",
+  //     field: "nameAndRole",
+  //   },
+  //   {
+  //     header: "TRX ID",
+  //     field: "trxid",
+  //   },
+  //   {
+  //     header: "PACKAGE TRX",
+  //     field: "package",
+  //   },
+  //   {
+  //     header: "CHIPS",
+  //     field: "chips",
+  //   },
+  //   {
+  //     header: "DISCOUNT",
+  //     field: "discount",
+  //   },
+  //   {
+  //     header: "PAY AMOUNT",
+  //     field: "pkgamnt",
+  //   },
+  //   {
+  //     header: "VIEW",
+  //     field: "icon",
+  //   },
+  //   {
+  //     header: "STATUS",
+  //     field: "status",
+  //     clr: true,
+  //   },
+  // ];
+
+  // const cols3 = [
+  //   {
+  //     header: "DATE & TIME",
+  //     field: "dateAndTime",
+  //   },
+  //   {
+  //     header: "Name & ROLE",
+  //     field: "nameAndRole",
+  //   },
+  //   {
+  //     header: "TRX ID",
+  //     field: "trxid",
+  //   },
+  //   {
+  //     header: "PACKAGE TRX",
+  //     field: "package",
+  //   },
+  //   {
+  //     header: "CHIPS",
+  //     field: "chips",
+  //   },
+  //   {
+  //     header: "DISCOUNT",
+  //     field: "discount",
+  //   },
+  //   {
+  //     header: "PAY AMOUNT",
+  //     field: "pkgamnt",
+  //   },
+  //   {
+  //     header: "VIEW",
+  //     field: "icon",
+  //   },
+  //   {
+  //     header: "STATUS",
+  //     field: "status",
+  //     clr: true,
+  //   },
+  // ];
 
   const getRequestedPackages = async () => {
     const payload = {
-      register_id: "reg-20230827110322593",
-      creator_id: "reg-20230827105503332",
+      register_id: "company",
     };
-    await call(GET_REQUEST_PACKAGES, payload)
+    await call(GET_ADMIN_PACKAGE_REQUEST, payload)
       .then((res) => {
         setRequestedPackages(res?.data?.data);
       })
@@ -289,12 +206,7 @@ function Tickets() {
   const modifiedTicketDetails =
     requestedPackages?.length > 0 &&
     requestedPackages?.map((item) => ({
-      ...item,
-      nameAndRole: (
-        <div>
-          {item?.name} <br /> <span className="role-color">{item?.role}</span>{" "}
-        </div>
-      ),
+      nameAndRole: "company",
       dateAndTime: (
         <div>
           {item?.created_date} <br /> <span>{item?.created_time}</span>{" "}
@@ -303,77 +215,84 @@ function Tickets() {
       trxid: item?.transaction_id,
       package: item?.summary.final_package_cost,
       pkgamnt: item?.summary.total_packages_cost,
+      status:
+        item?.status === "approve" ? (
+          <div className="rounded p-1 approved-btn">Completed</div>
+        ) : item?.status === "Reject" ? (
+          <div className="rounded p-1 rejected-btn">Reject</div>
+        ) : (
+          <div className="rounded p-1 px-2 pending-btn">Pending</div>
+        ),
       icon: (
         <AiOutlineEye
           className="eye-icon-size"
           onClick={() => handlePackageUpgrade(item)}
         />
-      ),
+      )
     }));
 
-  const modifiedTicketDetails1 =
-    requestedPackages?.length > 0 &&
-    requestedPackages.map((item) => ({
-      ...item,
-      nameAndRole: (
-        <div>
-          {item?.name} <br /> <span className="role-color">{item?.role}</span>{" "}
-        </div>
-      ),
-      dateAndTime: (
-        <div>
-          {item?.created_date} <br /> <span>{item?.created_time}</span>{" "}
-        </div>
-      ),
-      trxid: item?.transaction_id,
-      package: item?.summary.final_package_cost,
-      pkgamnt: item?.summary.total_packages_cost,
-      icon: (
-        <AiOutlineEye
-          className="eye-icon-size"
-          onClick={() => handlePackageUpgrade(item)}
-        />
-      ),
-    }));
+  // const modifiedTicketDetails1 =
+  //   requestedPackages?.length > 0 &&
+  //   requestedPackages.map((item) => ({
+  //     ...item,
+  //     nameAndRole: (
+  //       <div>
+  //         {item?.name} <br /> <span className="role-color">{item?.role}</span>{" "}
+  //       </div>
+  //     ),
+  //     dateAndTime: (
+  //       <div>
+  //         {item?.created_date} <br /> <span>{item?.created_time}</span>{" "}
+  //       </div>
+  //     ),
+  //     trxid: item?.transaction_id,
+  //     package: item?.summary.final_package_cost,
+  //     pkgamnt: item?.summary.total_packages_cost,
+  //     icon: (
+  //       <AiOutlineEye
+  //         className="eye-icon-size"
+  //         onClick={() => handlePackageUpgrade(item)}
+  //       />
+  //     ),
+  //   }));
 
-  const modifiedTicketDetails2 = TICKET_DETAILS2.map((item) => ({
-    ...item,
-    nameAndRole: (
-      <div>
-        {item?.name} <br /> <span className="role-color">{item?.role}</span>{" "}
-      </div>
-    ),
-    dateAndTime: (
-      <div>
-        {item?.date} <br /> <span>{item?.time}</span>{" "}
-      </div>
-    ),
-  }));
+  // const modifiedTicketDetails2 = TICKET_DETAILS.map((item) => ({
+  //   nameAndRole: (
+  //     <div>
+  //       {item?.name} <br /> <span className="role-color">{item?.role}</span>{" "}
+  //     </div>
+  //   ),
+  //   dateAndTime: (
+  //     <div>
+  //       {item?.date} <br /> <span>{item?.time}</span>{" "}
+  //     </div>
+  //   ),
+  // }));
 
-  const modifiedTicketDetails3 =
-    requestedPackages?.length > 0 &&
-    requestedPackages.map((item) => ({
-      ...item,
-      nameAndRole: (
-        <div>
-          {item?.name} <br /> <span className="role-color">{item?.role}</span>{" "}
-        </div>
-      ),
-      dateAndTime: (
-        <div>
-          {item?.created_date} <br /> <span>{item?.created_time}</span>{" "}
-        </div>
-      ),
-      trxid: item?.transaction_id,
-      package: item?.summary.final_package_cost,
-      pkgamnt: item?.summary.total_packages_cost,
-      icon: (
-        <AiOutlineEye
-          className="eye-icon-size"
-          onClick={() => handlePackageUpgrade(item)}
-        />
-      ),
-    }));
+  // const modifiedTicketDetails3 =
+  //   requestedPackages?.length > 0 &&
+  //   requestedPackages.map((item) => ({
+  //     ...item,
+  //     nameAndRole: (
+  //       <div>
+  //         {item?.name} <br /> <span className="role-color">{item?.role}</span>{" "}
+  //       </div>
+  //     ),
+  //     dateAndTime: (
+  //       <div>
+  //         {item?.created_date} <br /> <span>{item?.created_time}</span>{" "}
+  //       </div>
+  //     ),
+  //     trxid: item?.transaction_id,
+  //     package: item?.summary.final_package_cost,
+  //     pkgamnt: item?.summary.total_packages_cost,
+  //     icon: (
+  //       <AiOutlineEye
+  //         className="eye-icon-size"
+  //         onClick={() => handlePackageUpgrade(item)}
+  //       />
+  //     ),
+  //   }));
 
   const [showPackageUpgrade, setShowPackageUpgrade] = useState(false);
   const handlePackageUpgrade = (item) => {
@@ -399,18 +318,18 @@ function Tickets() {
             </div>
           ))}
         </div>
-        {activeIndex === 0 && (
+        {/* {activeIndex === 0 && (
+          <Table columns={cols} data={modifiedTicketDetails} />
+        )} */}
+        {activeIndex === 1 && (
           <Table columns={cols} data={modifiedTicketDetails} />
         )}
-        {activeIndex === 1 && (
-          <Table columns={cols1} data={modifiedTicketDetails1} />
-        )}
-        {activeIndex === 2 && (
+        {/* {activeIndex === 2 && (
           <Table columns={cols2} data={modifiedTicketDetails2} />
         )}
         {activeIndex === 3 && (
           <Table columns={cols3} data={modifiedTicketDetails3} />
-        )}
+        )} */}
       </div>
       <PackageViewPoup
         requestedPackages={popupData}

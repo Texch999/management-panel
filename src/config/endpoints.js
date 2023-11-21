@@ -32,19 +32,21 @@ const GET_ADMIN_USER_INFO = "/admin/get_admin_accounts_user_info";
 const GENERATE_SIGNED_URL = "/admin/profile_signed_url";
 const GET_MATCHES_DATA = "/offline-management/get_matches_data";
 const CREATE_OFFLINE_MATCHES = "/offline-management/match_creation";
-const PACKAGES_CREATION="/packages/package_creation_upgrade_discount";
-const GET_REQUEST_PACKAGES ="/packages/get_package_histroy_bypackage_requestid";
+const PACKAGES_CREATION = "/packages/package_creation_upgrade_discount";
+const GET_REQUEST_PACKAGES =
+  "/packages/get_package_histroy_bypackage_requestid";
 const GET_ADMIN_PACKAGE_REQUEST = "/packages/get_all_admin_package_request";
 const GET_REASON_REJECTIONS = "/settings/getall_security_questions";
-
-
+const PACKAGE_APPROVE_REJECT = "/packages/package_approve_reject";
+const BULK_PACKAGE_APPROVE_REJECT = "/packages/bulk_package_approve_reject";
 const ADD_REASON_REJECTIONS = "/settings/add_reason_rejection";
+
 const ADD_TOURS = "/tours/add_tours";
 const GET_TOURS = "/tours/get_tours";
 const UPDATE_TOURS = "/tours/update_tours";
 const GET_INTERESTED = "/tours/get_interested";
 const UPDATE_INTERESTED = "/tours/update_interested";
-const BOOKNOW_FOR_INTERESTED = "/tours/booknow_for_interested"
+const BOOKNOW_FOR_INTERESTED = "/tours/booknow_for_interested";
 
 // methods
 const DELETE = "DELETE";
@@ -54,13 +56,13 @@ const PUT = "PUT";
 
 exports.BOOKNOW_FOR_INTERESTED = {
   url: BOOKNOW_FOR_INTERESTED,
-  method: POST
-}
+  method: POST,
+};
 
 exports.UPDATE_INTERESTED = {
   url: UPDATE_INTERESTED,
-  method: POST
-}
+  method: POST,
+};
 
 exports.GET_INTERESTED = {
   url: GET_INTERESTED,
@@ -337,22 +339,19 @@ exports.GENERATE_SIGNED_URL = {
 
 exports.PACKAGES_CREATION = {
   url: PACKAGES_CREATION,
-  method: POST
+  method: POST,
 };
 exports.GET_REQUEST_PACKAGES = {
   url: GET_REQUEST_PACKAGES,
-  method: POST
-}
+  method: POST,
+};
 
 exports.GET_ADMIN_PACKAGE_REQUEST = {
   url: GET_ADMIN_PACKAGE_REQUEST,
-  method: POST
-}
+  method: POST,
+};
 
 exports.GET_REASON_REJECTIONS = {
   url: GET_REASON_REJECTIONS,
-  method: POST
-}
-
-
-
+  method: POST,
+};
