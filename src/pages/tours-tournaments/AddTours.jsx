@@ -12,7 +12,7 @@ import { GET_ALL_WEBSITES } from "../../config/endpoints";
 
 function AddTours() {
   const toursType = [
-    "1.Take Part in Tour",
+    "1.Take Part in Our Tour",
     "2.Cricket Tour",
     "3.Sports Tour",
     "4.Casino Tour",

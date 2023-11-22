@@ -19,7 +19,7 @@ function Schedule() {
   
   const scheduleButtons = [
     "All Tours",
-    "1.Take Part in Tour",
+    "1.Take Part in Our Tour",
     "2.Cricket Tour",
     "3.Sports Tour",
     "4.Casino Tour",
