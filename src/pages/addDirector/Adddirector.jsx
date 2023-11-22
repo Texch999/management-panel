@@ -8,7 +8,7 @@ import { TbUserEdit } from "react-icons/tb";
 import { LuFileClock } from "react-icons/lu";
 import { TbFileText } from "react-icons/tb";
 import AddDirectorsPopup from "../Popups/AddDirectorsPopup";
-import { GET_ADMIN_USER_INFO } from "../../config/endpoints";
+import { GET_ALL_USERS} from "../../config/endpoints";
 import { call } from "../../config/axios";
 
 function Adddirector() {
@@ -137,9 +137,9 @@ function Adddirector() {
   ];
   const getDirectors = async () => {
     const payload = {
-      creator_id: "company",
+      register_id: "company",
     };
-    await call(GET_ADMIN_USER_INFO, payload)
+    await call(GET_ALL_USERS, payload)
       .then((res) => {
         setAllDirectors(res?.data?.data);
       })
@@ -166,15 +166,15 @@ function Adddirector() {
             username: item?.user_name,
             inused: item?.country_name,
             website1Andwebsite2Andwebsite3: item?.website_name,
-            status: "Active",
-            // status:
-            //   item?.is_active === "active" ? (
-            //     <div className="font-green custom-active-button px-2">
-            //       Active
-            //     </div>
-            //   ) : (
-            //     <div className="custom-deactive-button px-2">InActive</div>
-            //   ),
+            // status: "Active",
+            status:
+              item?.is_active === "active" ? (
+                <div className="font-green custom-active-button px-2">
+                  Active
+                </div>
+              ) : (
+                <div className="custom-deactive-button px-2">InActive</div>
+              ),
             icon: <MdOutlineEdit className="eye-icon-size" />,
           };
         })

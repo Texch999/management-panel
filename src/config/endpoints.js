@@ -28,7 +28,6 @@ const GET_ALL_NOTIFICATIONS = "/management/get_all_notifications";
 const ADD_POSTERS_AND_ADS = "/management/add_new_posters";
 const GET_ALL_POSTERS = "/management/get_all_posters";
 const GET_ALL_USERS = "/offline-management/get_user_list";
-const GET_ADMIN_USER_INFO = "/admin/get_admin_accounts_user_info";
 const GENERATE_SIGNED_URL = "/admin/profile_signed_url";
 const GET_MATCHES_DATA = "/offline-management/get_matches_data";
 const CREATE_OFFLINE_MATCHES = "/offline-management/match_creation";
@@ -311,10 +310,6 @@ exports.GET_ALL_PACKAGES = {
 
 exports.GET_ALL_USERS = {
   url: GET_ALL_USERS,
-  method: POST,
-};
-exports.GET_ADMIN_USER_INFO = {
-  url: GET_ADMIN_USER_INFO,
   method: POST,
 };
 

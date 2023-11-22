@@ -24,10 +24,10 @@ function PackageViewPoup(props) {
     setShowPackageUpgrade(false);
   };
   const [acceptClick, setAcceptClick] = useState(false);
-  const handleAcceptClickPopupOpen = () => {
-    setAcceptClick(true);
-    setShowPackageUpgrade(false);
-  };
+  // const handleAcceptClickPopupOpen = () => {
+  //   setAcceptClick(true);
+  //   setShowPackageUpgrade(false);
+  // };
 
   const getAllsaleTickets = async () => {
     const payload = {

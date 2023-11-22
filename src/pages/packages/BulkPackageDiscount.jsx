@@ -402,6 +402,7 @@ function BulkPackageDiscount(props) {
       <MatchSubmitPopup
         header={"Bulk Package Created Successfully"}
         state={successfulPopUp}
+        isProcessing={isProcessing}
         setState={setSuccessfulPopUp}
       />
     </div>

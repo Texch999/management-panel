@@ -8,7 +8,6 @@ import {
   GET_ALL_WEBSITES,
   GET_COUNTRY_AND_CURRENCY,
   GET_ALL_PAYMENTS,
-  //GET_ADMIN_USER_INFO,
 } from "../../config/endpoints";
 import { call } from "../../config/axios";
 function AddDirectorsPopup(props) {
@@ -95,14 +94,11 @@ function AddDirectorsPopup(props) {
         requestData.creator_password = selectedDirector.creator_password;
         requestData.management = selectedDirector.management;
       }
-      // console.log("url====> errwerwerwe", url, requestData);
-      const res = await call(url, requestData)
-      .then((res) => {
+      await call(url, requestData).then((res) => {
         {
           if (res.status === 200) {
             setAddDirectorPopup(false);
             setShowAddDirectorPopup(true);
-            
           }
         }
         if (res.data.error) {
@@ -153,10 +149,6 @@ function AddDirectorsPopup(props) {
     };
     await call(GET_COUNTRY_AND_CURRENCY, payload)
       .then((res) => {
-        // if (res.status === 200) {
-        //   setAddDirectorPopup("Successfully Completed");
-        //   setShowAddDirectorPopup(true);
-        // }
         setallCountries(res?.data?.data);
       })
       .catch((err) => {
@@ -175,10 +167,6 @@ function AddDirectorsPopup(props) {
     };
     await call(GET_ALL_PAYMENTS, payload)
       .then((res) => {
-        // if (res.status === 200) {
-        //   setAddDirectorPopup("Successfully Completed");
-        //   setShowAddDirectorPopup(true);
-        // }
         setAllPayments(res?.data?.data);
       })
       .catch((err) => {
