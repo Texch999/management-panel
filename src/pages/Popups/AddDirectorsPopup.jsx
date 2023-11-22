@@ -7,6 +7,7 @@ import {
   UPDATE_PROFILE,
   GET_ALL_WEBSITES,
   GET_COUNTRY_AND_CURRENCY,
+  GET_ALL_PAYMENTS,
   //GET_ADMIN_USER_INFO,
 } from "../../config/endpoints";
 import { call } from "../../config/axios";
@@ -30,6 +31,8 @@ function AddDirectorsPopup(props) {
   const [phonenumber, setPhoneNumber] = useState("");
   const [website, setWebsite] = useState("");
   const [timezone, setTimeZone] = useState("");
+  const [paymentGateway,setPaymentGateway] =useState("")
+  
 
   const handleAddDirectorClose = () => {
     setShowAddDirectorPopup(false);
@@ -39,6 +42,7 @@ function AddDirectorsPopup(props) {
     setCountryName("");
     setTimeZone("");
     setRole("");
+    setPaymentGateway("");
   };
   const [passwordType, setPasswordType] = useState("password");
   const [passwordInput, setPasswordInput] = useState("");
@@ -59,6 +63,7 @@ function AddDirectorsPopup(props) {
       setLastName(selectedDirector.last_name || "");
       setPhoneNumber(selectedDirector.mobile_no || "");
       setWebsite(selectedDirector.website || "");
+      setPaymentGateway(selectedDirector.pg_upi || "");
       setTimeZone(selectedDirector.timezone || "");
       setRole(selectedDirector.account_role || "");
       setCountryName(selectedDirector.country_name || "");
@@ -82,6 +87,7 @@ function AddDirectorsPopup(props) {
         account_role: role,
         country_name: countryName,
         password: passwordInput,
+        pg_upi:paymentGateway
       };
 
       if (selectedDirector) {
@@ -107,6 +113,7 @@ function AddDirectorsPopup(props) {
         setRole("");
         setCountryName("");
         setPasswordInput("");
+        setPaymentGateway("")
       }
     } catch (err) {
       console.error("API Error:", err);
@@ -148,6 +155,24 @@ function AddDirectorsPopup(props) {
   useEffect(() => {
     getallCountries();
   }, []);
+  const [allPayments, setAllPayments] = useState([]);
+  const getPaymentWay = async () => {
+    const payload = {
+      register_id: "company",
+    };
+    await call(GET_ALL_PAYMENTS, payload)
+      .then((res) => {
+        console.log("API Response:", res);
+        setAllPayments(res?.data?.data);
+      })
+      .catch((err) => console.log(err));
+  };
+
+  useEffect(() => {
+    getPaymentWay();
+  }, []);
+
+  console.log("allPayments",allPayments)
 
   return (
     <div className="modal fade bd-example-modal-lg container mt-5">
@@ -210,12 +235,12 @@ function AddDirectorsPopup(props) {
                     {role === "director" ? (
                       <>
                         <option value="select">select</option>
-                        <option value="All">
+                        {/* <option value="All">
                           ALL
                           <input type="checkbox" />
                           RRR
-                        </option>
-                        {websiteNames?.map((obj) => (
+                        </option> */}
+                        {websiteNames.map((obj) => (
                           <option value={obj.web_url}>
                             <input type="checkbox" /> {obj.web_url}
                           </option>
@@ -239,9 +264,9 @@ function AddDirectorsPopup(props) {
                 <div className="d-flex flex-column">
                   <div className="small-font mb-1">Payment Gateway *</div>
                   <select
-                    value={website}
-                    name="pg_name"
-                    onChange={(e) => setWebsite(e.target.value)}
+                    value={paymentGateway}  
+                    name="pg_upi"
+                    onChange={(e) => setPaymentGateway(e.target.value)}
                     className="w-100 custom-select small-font input-btn-bg px-2 py-2 all-none rounded all-none"
                   >
                     {/* <option value=""selected>select</option>
@@ -254,9 +279,11 @@ function AddDirectorsPopup(props) {
                     ) : (
                       <>
                         <option value="">Select</option>
-                        <option value="select">BBB</option>
-                        <option value="select">BBB</option>
-                        <option value="select">BBB</option>
+                        {allPayments.map((obj) => (
+                          <option value={obj.pg_upi}>
+                            {obj.pg_upi}
+                          </option>
+                        ))}
                       </>
                     )}
                   </select>

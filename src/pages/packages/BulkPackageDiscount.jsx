@@ -14,9 +14,9 @@ function BulkPackageDiscount(props) {
   const [activeIndex, setActiveIndex] = useState();
   const handleInputChange = (e) => {
     setInputData({ ...inputData, [e.target.name]: e.target.value });
-  }
+  };
 
-  const handleSubmitPackageCreation = async (item,packageName, index) => {
+  const handleSubmitPackageCreation = async (item, packageName, index) => {
     setActiveIndex(index);
     if (
       !(
@@ -34,7 +34,7 @@ function BulkPackageDiscount(props) {
       return setErr("Please enter required fields");
     }
     console.log("item=====>", item);
-    
+
     const payload = {
       created_date: "12:30:20 PM",
       created_time: "5/11/2023",
@@ -97,6 +97,10 @@ function BulkPackageDiscount(props) {
       audioCalls: "Audio calls only",
       members: 10,
       payloadObject: {
+        userTextKey: "standard_user_text",
+        meetingTextKey: "standard_meeting_text",
+        numberOfMeetingsKey: "standard_num_of_meetings",
+        audioCallsKey: "standard_audio_calls",
         membersKey: "standard_members",
         monthlybulkPackagesKey: "standard_monthly_bulk_packages",
         yearlybulkPackagesKey: "standard_yearly_bulk_packages",
@@ -118,6 +122,10 @@ function BulkPackageDiscount(props) {
       audioCalls: "Audio calls only",
       members: 15,
       payloadObject: {
+        userTextKey: "silver_user_text",
+        meetingTextKey: "silver_meeting_text",
+        numberOfMeetingsKey: "silver_num_of_meetings",
+        audioCallsKey: "silver_audio_calls",
         membersKey: "silver_members",
         monthlybulkPackagesKey: "silver_monthly_bulk_packages",
         yearlybulkPackagesKey: "silver_yearly_bulk_packages",
@@ -139,6 +147,10 @@ function BulkPackageDiscount(props) {
       audioCalls: "Audio calls only",
       members: 20,
       payloadObject: {
+        userTextKey: "gold_user_text",
+        meetingTextKey: "gold_meeting_text",
+        numberOfMeetingsKey: "gold_num_of_meetings",
+        audioCallsKey: "gold_audio_calls",
         membersKey: "gold_members",
         monthlybulkPackagesKey: "gold_monthly_bulk_packages",
         yearlybulkPackagesKey: "gold_yearly_bulk_packages",
@@ -160,6 +172,10 @@ function BulkPackageDiscount(props) {
       audioCalls: "Audio calls only",
       members: 20,
       payloadObject: {
+        userTextKey: "diamond_user_text",
+        meetingTextKey: "diamond_meeting_text",
+        numberOfMeetingsKey: "diamond_num_of_meetings",
+        audioCallsKey: "diamond_audio_calls",
         membersKey: "diamond_members",
         monthlybulkPackagesKey: "diamond_monthly_bulk_packages",
         yearlybulkPackagesKey: "diamond_yearly_bulk_packages",
@@ -181,6 +197,10 @@ function BulkPackageDiscount(props) {
       audioCalls: "Audio calls only",
       members: 20,
       payloadObject: {
+        userTextKey: "vip_user_text",
+        meetingTextKey: "vip_meeting_text",
+        numberOfMeetingsKey: "vip_num_of_meetings",
+        audioCallsKey: "vip_audio_calls",
         monthlybulkPackagesKey: "vip_monthly_bulk_packages",
         yearlybulkPackagesKey: "vip_yearly_bulk_packages",
         membersKey: "vip_members",
