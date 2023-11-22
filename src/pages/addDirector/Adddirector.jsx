@@ -115,12 +115,6 @@ function Adddirector() {
       header: (
         <div className="d-flex justify-content-center align-items-center">
           <div className="marginright-10">STATUS</div>
-          {/* <div>
-            <div>
-              <MdKeyboardArrowUp className="fs-6" />
-            </div>
-            <MdKeyboardArrowDown className="fs-6 margintop-10" />
-          </div> */}
         </div>
       ),
       field: "status",
@@ -184,7 +178,7 @@ function Adddirector() {
             icon: <MdOutlineEdit className="eye-icon-size" />,
           };
         })
-    : getAllDirectors.map((item) => {
+    : getAllDirectors?.map((item) => {
         return {
           role: (
             <div className="role-color">

@@ -188,7 +188,7 @@ function AddDirectorsPopup(props) {
                 >
                   <option value="select">select</option>
                   <option value="All">All</option>
-                  {allCountries.map((obj) => (
+                  {allCountries?.map((obj) => (
                     <option value={obj.country_name} selected>
                       {obj.country_name}
                     </option>
@@ -215,7 +215,7 @@ function AddDirectorsPopup(props) {
                           <input type="checkbox" />
                           RRR
                         </option>
-                        {websiteNames.map((obj) => (
+                        {websiteNames?.map((obj) => (
                           <option value={obj.web_url}>
                             <input type="checkbox" /> {obj.web_url}
                           </option>
@@ -224,7 +224,7 @@ function AddDirectorsPopup(props) {
                     ) : (
                       <>
                         <option value="select">select</option>
-                        {websiteNames.map((obj) => (
+                        {websiteNames?.map((obj) => (
                           <option value={obj.web_url} selected>
                             {obj.web_url}
                           </option>

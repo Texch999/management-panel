@@ -146,7 +146,10 @@ function Creatematch() {
     },
   ];
 
-  const [getMatches, setgetMatches] = useState([]);
+  //const [getMatches, setgetMatches] = useState([]);
+  const [liveMatches, setLiveMatches] = useState([]);
+  const [upcomingMatches, setUpcommingMatches] =useState([]);
+  const [todayMatches, setTodayMatches]= useState([]);
   const getAllMatches = async () => {
     const payload = {
       register_id: "company",
@@ -154,10 +157,16 @@ function Creatematch() {
     };
     await call(GET_MATCHES_DATA, payload)
       .then((res) => {
-        setgetMatches(res?.data?.data);
+        // setgetMatches(res?.data?.data);
+        setLiveMatches(res?.data?.data?.liveMatches)
+        setUpcommingMatches(res?.data?.data?.upCommingMatches)
+        setTodayMatches(res?.data?.data?.todaysMatches)
       })
       .catch((err) => console.log(err));
   };
+
+   const allMatches =[...liveMatches,...upcomingMatches,todayMatches]
+
   useEffect(() => {
     getAllMatches();
   }, []);
@@ -177,7 +186,7 @@ function Creatematch() {
     getwebsiteNames();
   }, []);
 
-  const modifiedCreatematchDetails = getMatches?.liveMatches?.map((item) => ({
+  const modifiedCreatematchDetails = allMatches?.map((item) => ({
     team: (
       <div className="role-color">
         <span className="role-color">{item?.match_name}</span>{" "}

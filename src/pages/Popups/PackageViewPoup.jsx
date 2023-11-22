@@ -250,7 +250,7 @@ function PackageViewPoup(props) {
               >
                 <option value="">Select</option>
 
-                {rejectionDropDown.map((obj) => (
+                {rejectionDropDown?.map((obj) => (
                   <option value={obj.reason}>{obj.reason}</option>
                 ))}
               </select>
@@ -284,7 +284,8 @@ function PackageViewPoup(props) {
                   onClick={() =>
                     handleAdminTicketPopupClose(
                       requestedPackages?.transaction_id,
-                      requestedPackages.type
+                      requestedPackages.type,
+                      "Reject"
                     )
                   }
                   disabled={isProcessing}
