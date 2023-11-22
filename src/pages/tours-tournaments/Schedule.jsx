@@ -31,7 +31,7 @@ function Schedule() {
   };
   
   const filteredTours = tours?.filter((item)=>item.tour_name===tourname)
-  const mappingArray = tourname=="All Tours"? tours : filteredTours
+  const mappingArray = tourname === "All Tours"? tours : filteredTours
   return (
     <div className="add-tours p-3 mt-3">
       <div className="row">

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { AiOutlineClockCircle } from "react-icons/ai";
-import { BiSolidArrowFromBottom } from "react-icons/bi";
-import { BsChevronDown } from "react-icons/bs";
+// import { AiOutlineClockCircle } from "react-icons/ai";
+// import { BiSolidArrowFromBottom } from "react-icons/bi";
+// import { BsChevronDown } from "react-icons/bs";
 import { FaCalendarDays } from "react-icons/fa6";
 import { HiMiniArrowUpCircle } from "react-icons/hi2";
 import ReturnedPaymentPopup from "../Popups/ReturnedPaymentPopup";
@@ -49,7 +49,7 @@ function AddTours() {
     await call(ADD_TOURS, payload)
       .then((res) => {
         console.log(res);
-        if (res.status == 200) {
+        if (res.status === 200) {
           setShowReturnPopup(true);
           setHeaderMessage("Tour Added Successfully");
         }
@@ -105,7 +105,7 @@ function AddTours() {
             onChange={(e) => setCountry(e.target.value)}
           >
             <option selected>select country</option>
-          {/* <option value="All">All</option>
+            {/* <option value="All">All</option>
           {allCountries.map((obj) => (
             <option value={obj.country_name} selected>
               {obj.country_name}

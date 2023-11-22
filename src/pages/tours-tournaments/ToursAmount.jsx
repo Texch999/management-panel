@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { HiPhotograph } from "react-icons/hi";
+// import { HiPhotograph } from "react-icons/hi";
 import Table from "../table/Table";
 import { GET_TOURS } from "../../config/endpoints";
 import { UPDATE_TOURS } from "../../config/endpoints";
@@ -23,7 +23,7 @@ function ToursAmount() {
             // .then((res)=>(res.data,'.....res'))
             .then((res)=>{
               // console.log(res,'......res')
-              if(res.status==200){
+              if(res.status === 200){
                 setShowReturnPopup(true);
                 setHeaderMessage("Tour Updated Successfully")
               }

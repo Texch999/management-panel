@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Button, Col, Container, Modal, Row } from "react-bootstrap";
+import { Col, Container, Modal, Row } from "react-bootstrap";
 import "./styles.css";
 import MatchSubmitPopup from "../../matchpopups/MatchSubmitPopup";
 import {
