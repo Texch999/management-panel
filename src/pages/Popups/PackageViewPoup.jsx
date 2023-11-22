@@ -13,8 +13,9 @@ function PackageViewPoup(props) {
   const {
     showPackageUpgrade,
     setShowPackageUpgrade,
-    requestedPackages,
+    transactionData = {},
     isProcessing,
+    handleSuccessfullPopup,
   } = props;
 
   const [saleTicket, setSaleTicket] = useState([]);
@@ -64,7 +65,7 @@ function PackageViewPoup(props) {
     getAllRejections();
   }, []);
 
-  const tableData = requestedPackages?.requested_packages?.map((obj) => {
+  const tableData = transactionData?.requested_packages?.map((obj) => {
     return {
       packages: obj?.package_name,
       purchase: obj?.no_of_packages,
@@ -73,6 +74,46 @@ function PackageViewPoup(props) {
       returnhrs: obj?.return_hrs || 0,
     };
   });
+  const returnPackages = transactionData?.summary?.return_package_list?.map(
+    (obj) => {
+      return {
+        packages: obj?.package_name,
+        purchase: obj?.no_of_packages,
+        price: obj?.no_of_packages * obj.cost,
+        returnpkg: 0,
+        returnhrs: obj?.return_hrs || 0,
+      };
+    }
+  );
+
+  const totalNoPackages = transactionData?.requested_packages?.reduce(
+    (acc, obj) => acc + (obj?.no_of_packages || 0),
+    0
+  );
+  const totalNoPackagesCost = transactionData?.requested_packages?.reduce(
+    (acc, obj) => acc + (obj?.package_cost || 0),
+    0
+  );
+  const totalNoReturnPackages =
+    transactionData?.summary?.return_package_list?.reduce(
+      (acc, obj) => acc + (obj?.selected_no_of_packages || 0),
+      0
+    );
+  const totalNoReturnPackagesCost =
+    transactionData?.summary?.return_package_list?.reduce(
+      (acc, obj) => acc + (obj?.cost * obj?.selected_no_of_packages || 0),
+      0
+    );
+  const totalPackagesDiscount = transactionData?.requested_packages?.reduce(
+    (acc, obj) =>
+      acc + obj.discount / transactionData?.requested_packages?.length,
+    0
+  );
+  const afterPackDiscountTotalCost =
+    totalNoPackagesCost - (totalNoPackagesCost * totalPackagesDiscount) / 100;
+  const userDiscountCost =
+    totalNoPackagesCost -
+    (totalNoPackagesCost * transactionData?.summary?.user_discount) / 100;
 
   return (
     <div className="modal fade bd-example-modal-lg container mt-5">
@@ -98,16 +139,16 @@ function PackageViewPoup(props) {
             </div>
             <div className="d-flex flex-row w-100 custom-select small-font input-btn-bg rounded align-items-center justify-content-between my-2 px-2 py-2">
               <div className="font-grey">Trx ID</div>
-              <div>{requestedPackages?.transaction_id}</div>
+              <div>{transactionData?.transaction_id}</div>
             </div>
             <div className="d-flex flex-row w-100 custom-select small-font input-btn-bg rounded align-items-center justify-content-between my-2 px-2 py-2">
               <div className="font-grey">Reference ID</div>
-              <div>{requestedPackages?.package_requester_id}</div>
+              <div>{transactionData?.package_requester_id}</div>
             </div>
             <div className="d-flex flex-column px-2 input-btn-bg rounded">
               <div className="d-flex flex-row justify-content-between small-font  all-none  align-items-center justify-content-between my-1 ">
                 <div className="font-grey">Amount</div>
-                <div>{requestedPackages?.summary?.final_package_cost}</div>
+                <div>{transactionData?.summary?.final_package_cost}</div>
               </div>
               <div className="d-flex flex-row justify-content-between small-font  all-none  align-items-center justify-content-between my-1 ">
                 <div className="font-grey">Payment Method</div>
@@ -120,8 +161,8 @@ function PackageViewPoup(props) {
               </div>
               <div className="d-flex flex-row justify-content-between small-font  all-none  align-items-center justify-content-between my-1 ">
                 <div className="font-grey">To</div>
-                {requestedPackages?.user_name}-
-                {requestedPackages?.requested_account_role}
+                {transactionData?.user_name}-
+                {transactionData?.requested_account_role}
                 {/* <div>Jayanta-Admin</div> */}
               </div>
               <div className="d-flex flex-row justify-content-between small-font  all-none  align-items-center justify-content-between my-1 ">
@@ -129,8 +170,8 @@ function PackageViewPoup(props) {
                 {/* <div className="font-grey">{moment(requestedPackages?.created_date).format("DD-MM-yyyy")}{" "}
               {requestedPackages?.created_time}</div> */}
                 <div>
-                  {requestedPackages?.created_date}{" "}
-                  {requestedPackages.created_time}
+                  {transactionData?.created_date}{" "}
+                  {transactionData?.created_time}
                 </div>
               </div>
             </div>
@@ -178,6 +219,15 @@ function PackageViewPoup(props) {
                               <td>{item.returnhrs}</td>
                             </tr>
                           ))}
+                          {returnPackages?.map((item, index) => (
+                            <tr key={index} className="text-center">
+                              <td>{item.packages}</td>
+                              <td>{item.purchase}</td>
+                              <td>{item.price}</td>
+                              <td>{item.returnpkg}</td>
+                              <td>{item.returnhrs}</td>
+                            </tr>
+                          ))}
                         </tbody>
                         <tfoot className="small-font justify-content-between w-100"></tfoot>
                       </table>
@@ -186,11 +236,16 @@ function PackageViewPoup(props) {
                           <div className="d-flex flex-column w-50 mx-2 my-1">
                             <div className="d-flex flex-row justify-content-between">
                               <span>Total Purchase</span>
-                              <span>62 = 150000</span>
+                              <span>
+                                {totalNoPackages}= {totalNoPackagesCost}
+                              </span>
                             </div>{" "}
                             <div className="d-flex flex-row justify-content-between">
                               <span>Return Pkg</span>
-                              <span>26 = 30000</span>
+                              <span>
+                                {totalNoReturnPackages} ={" "}
+                                {totalNoReturnPackagesCost}
+                              </span>
                             </div>{" "}
                             <div className="d-flex flex-row justify-content-between">
                               <span>Return Hrs</span>
@@ -200,15 +255,23 @@ function PackageViewPoup(props) {
                           <div className="d-flex flex-column w-50 mx-2 my-1">
                             <div className="d-flex flex-row justify-content-between">
                               <span>Discount</span>
-                              <span>5% = 7500</span>
+                              <span>
+                                {totalPackagesDiscount}% ={" "}
+                                {afterPackDiscountTotalCost}
+                              </span>
                             </div>{" "}
                             <div className="d-flex flex-row justify-content-between">
                               <span>Special Offer</span>
-                              <span>5% = 7500</span>
+                              <span>
+                                {transactionData?.summary?.user_discount}% ={" "}
+                                {userDiscountCost}
+                              </span>
                             </div>{" "}
                             <div className="d-flex flex-row justify-content-between">
                               <span>Paid Amount</span>
-                              <span>105000</span>
+                              <span>
+                                {transactionData?.summary?.final_package_cost}
+                              </span>
                             </div>{" "}
                           </div>
                         </div>
@@ -261,15 +324,15 @@ function PackageViewPoup(props) {
               placeholder="Specify Others"
               className="upgrade-popup-box-container custom-box-shadow w-100 font-12 flex-space-between mt-10"
             ></input>{" "}
-            {requestedPackages.status === "pending" ? (
+            {transactionData?.status === "pending" ? (
               <div className="d-flex justify-content-between mt-3 w-100">
                 <button
                   type="submit"
                   className="add-button  small-font rounded px-4 py-2 mx-2 w-50 all-none"
                   onClick={() =>
-                    handleAcceptClickPopupOpen(
-                      requestedPackages?.transaction_id,
-                      requestedPackages.type,
+                    handleSuccessfullPopup(
+                      transactionData?.transaction_id,
+                      transactionData.type,
                       "Approved"
                     )
                   }
@@ -282,9 +345,9 @@ function PackageViewPoup(props) {
                   type="submit"
                   className="deactive-button  small-font rounded px-4 py-2 mx-2 w-50 all-none"
                   onClick={() =>
-                    handleAdminTicketPopupClose(
-                      requestedPackages?.transaction_id,
-                      requestedPackages.type,
+                    handleSuccessfullPopup(
+                      transactionData?.transaction_id,
+                      transactionData.type,
                       "Reject"
                     )
                   }
@@ -298,12 +361,12 @@ function PackageViewPoup(props) {
                 you have already{" "}
                 <span
                   className={
-                    requestedPackages.status === "Approved"
+                    transactionData.status === "Approved"
                       ? "green-clr"
                       : "red-clr"
                   }
                 >
-                  {requestedPackages.status}
+                  {transactionData.status}
                 </span>
               </div>
             )}

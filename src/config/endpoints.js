@@ -356,3 +356,13 @@ exports.GET_REASON_REJECTIONS = {
   url: GET_REASON_REJECTIONS,
   method: POST,
 };
+
+exports.BULK_PACKAGE_APPROVE_REJECT = {
+  url: BULK_PACKAGE_APPROVE_REJECT,
+  method: POST
+}
+
+exports.PACKAGE_APPROVE_REJECT = {
+  url: PACKAGE_APPROVE_REJECT,
+  method: POST
+}

@@ -20,7 +20,6 @@ function AddDirectorsPopup(props) {
     firstSelect,
     selectedDirector,
     setStatus,
-    //setSelectedDirector,
   } = props;
 
   const [userId, setUserId] = useState("");
@@ -31,8 +30,7 @@ function AddDirectorsPopup(props) {
   const [phonenumber, setPhoneNumber] = useState("");
   const [website, setWebsite] = useState("");
   const [timezone, setTimeZone] = useState("");
-  const [paymentGateway,setPaymentGateway] =useState("")
-  
+  const [paymentGateway, setPaymentGateway] = useState("");
 
   const handleAddDirectorClose = () => {
     setShowAddDirectorPopup(false);
@@ -73,6 +71,7 @@ function AddDirectorsPopup(props) {
   const handleCreateOrUpdateDirector = async (status) => {
     try {
       const url = selectedDirector ? UPDATE_PROFILE : ACCOUNT_REGISTERATION;
+      setAddDirectorPopup(true);
       const requestData = {
         creator_id: "company",
         creator_role: "company",
@@ -87,7 +86,7 @@ function AddDirectorsPopup(props) {
         account_role: role,
         country_name: countryName,
         password: passwordInput,
-        pg_upi:paymentGateway
+        pg_upi: paymentGateway,
       };
 
       if (selectedDirector) {
@@ -96,32 +95,39 @@ function AddDirectorsPopup(props) {
         requestData.creator_password = selectedDirector.creator_password;
         requestData.management = selectedDirector.management;
       }
-      console.log("url====> errwerwerwe", url, requestData);
-
-      const res = await call(url, requestData);
-
-      if (res.data.error) {
-        console.error("API Error:", res.data.message);
-      } else {
-        setAddDirectorPopup(false);
-        handleAddDirectorPopup();
-        setStatus((prev) => !prev);
-        setFirstName("");
-        setLastName("");
-        setWebsite("");
-        setTimeZone("");
-        setRole("");
-        setCountryName("");
-        setPasswordInput("");
-        setPaymentGateway("")
-      }
+      // console.log("url====> errwerwerwe", url, requestData);
+      const res = await call(url, requestData)
+      .then((res) => {
+        {
+          if (res.status === 200) {
+            setAddDirectorPopup(false);
+            setShowAddDirectorPopup(true);
+            
+          }
+        }
+        if (res.data.error) {
+          console.error("API Error:", res.data.message);
+        } else {
+          setAddDirectorPopup(false);
+          handleAddDirectorPopup();
+          setStatus((prev) => !prev);
+          setFirstName("");
+          setLastName("");
+          setWebsite("");
+          setTimeZone("");
+          setRole("");
+          setCountryName("");
+          setPasswordInput("");
+          setPaymentGateway("");
+        }
+      });
     } catch (err) {
       console.error("API Error:", err);
     }
   };
   const [addDirectorsPopup, setAddDirectorPopup] = useState(false);
   const handleAddDirectorPopup = () => {
-    setAddDirectorPopup(true);
+    // setAddDirectorPopup(true);
     setShowAddDirectorPopup(false);
   };
 
@@ -147,14 +153,21 @@ function AddDirectorsPopup(props) {
     };
     await call(GET_COUNTRY_AND_CURRENCY, payload)
       .then((res) => {
-        console.log("res", res);
+        // if (res.status === 200) {
+        //   setAddDirectorPopup("Successfully Completed");
+        //   setShowAddDirectorPopup(true);
+        // }
         setallCountries(res?.data?.data);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        setShowAddDirectorPopup(true);
+        setAddDirectorPopup(err);
+      });
   };
   useEffect(() => {
     getallCountries();
   }, []);
+
   const [allPayments, setAllPayments] = useState([]);
   const getPaymentWay = async () => {
     const payload = {
@@ -162,17 +175,21 @@ function AddDirectorsPopup(props) {
     };
     await call(GET_ALL_PAYMENTS, payload)
       .then((res) => {
-        console.log("API Response:", res);
+        // if (res.status === 200) {
+        //   setAddDirectorPopup("Successfully Completed");
+        //   setShowAddDirectorPopup(true);
+        // }
         setAllPayments(res?.data?.data);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        setShowAddDirectorPopup(true);
+        setAddDirectorPopup(err);
+      });
   };
 
   useEffect(() => {
     getPaymentWay();
   }, []);
-
-  console.log("allPayments",allPayments)
 
   return (
     <div className="modal fade bd-example-modal-lg container mt-5">
@@ -264,7 +281,7 @@ function AddDirectorsPopup(props) {
                 <div className="d-flex flex-column">
                   <div className="small-font mb-1">Payment Gateway *</div>
                   <select
-                    value={paymentGateway}  
+                    value={paymentGateway}
                     name="pg_upi"
                     onChange={(e) => setPaymentGateway(e.target.value)}
                     className="w-100 custom-select small-font input-btn-bg px-2 py-2 all-none rounded all-none"
@@ -280,9 +297,7 @@ function AddDirectorsPopup(props) {
                       <>
                         <option value="">Select</option>
                         {allPayments.map((obj) => (
-                          <option value={obj.pg_upi}>
-                            {obj.pg_upi}
-                          </option>
+                          <option value={obj.pg_upi}>{obj.pg_upi}</option>
                         ))}
                       </>
                     )}
@@ -427,7 +442,7 @@ function AddDirectorsPopup(props) {
         </Modal.Body>
       </Modal>
       <MatchSubmitPopup
-        header={"Successfully Completed"}
+        header={"created Successfully"}
         state={addDirectorsPopup}
         setState={setAddDirectorPopup}
       />

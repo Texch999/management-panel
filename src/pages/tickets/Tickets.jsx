@@ -2,13 +2,19 @@ import { useEffect, useState } from "react";
 import Table from "../table/Table";
 import { AiOutlineEye } from "react-icons/ai";
 import PackageViewPoup from "../Popups/PackageViewPoup";
-import { GET_ADMIN_PACKAGE_REQUEST } from "../../config/endpoints";
+import {
+  GET_ADMIN_PACKAGE_REQUEST,
+  PACKAGE_APPROVE_REJECT,
+  BULK_PACKAGE_APPROVE_REJECT,
+} from "../../config/endpoints";
 import { call } from "../../config/axios";
 
 function Tickets() {
   const [activeIndex, setActiveIndex] = useState(0);
   const [requestedPackages, setRequestedPackages] = useState([]);
   const [popupData, setPopupData] = useState([]);
+  const [transactionData, setTransactionData] = useState({});
+  const [isProcessing, setIsProcessing] = useState(false);
 
   const handleActiveIndex = (index) => {
     setActiveIndex(index);
@@ -169,6 +175,31 @@ function Tickets() {
     },
   ];
 
+  const handleSuccessfullPopup = async (
+    transaction_id,
+    type,
+    status,
+    reason
+  ) => {
+    const url = type ? PACKAGE_APPROVE_REJECT : BULK_PACKAGE_APPROVE_REJECT;
+    setIsProcessing(true);
+    await call(url, {
+      register_id: "company",
+      transaction_id,
+      status,
+      reason,
+    })
+      .then((res) => {
+        if (res.status === 200) {
+          setIsProcessing(false);
+        }
+      })
+      .catch((err) => {
+        setIsProcessing(false);
+        console.log(err);
+      });
+  };
+
   const getRequestedPackages = async () => {
     const payload = {
       register_id: "company",
@@ -319,6 +350,7 @@ function Tickets() {
   const [showPackageUpgrade, setShowPackageUpgrade] = useState(false);
   const handlePackageUpgrade = (item) => {
     setPopupData(item);
+    setTransactionData(item);
     setShowPackageUpgrade(true);
   };
   return (
@@ -356,6 +388,9 @@ function Tickets() {
       <PackageViewPoup
         requestedPackages={popupData}
         showPackageUpgrade={showPackageUpgrade}
+        transactionData={transactionData}
+        isProcessing={isProcessing}
+        handleSuccessfullPopup={handleSuccessfullPopup}
         setShowPackageUpgrade={setShowPackageUpgrade}
       />
     </div>
