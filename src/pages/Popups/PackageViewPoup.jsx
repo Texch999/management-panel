@@ -9,6 +9,7 @@ import {
   GET_REASON_REJECTIONS,
 } from "../../config/endpoints";
 import { call } from "../../config/axios";
+import ShowImagePopup from "./ShowImagePopup";
 function PackageViewPoup(props) {
   const {
     showPackageUpgrade,
@@ -17,7 +18,10 @@ function PackageViewPoup(props) {
     isProcessing,
     handleSuccessfullPopup,
   } = props;
-
+  const [showScreenshotImg, setShowScreenshotImg] = useState(false);
+  const handleShowImg = () => {
+    setShowScreenshotImg(true);
+  };
   const [saleTicket, setSaleTicket] = useState([]);
   const [rejectionDropDown, setRejectionDropDown] = useState([]);
   const handleAdminTicketPopupClose = () => {
@@ -181,7 +185,10 @@ function PackageViewPoup(props) {
                 src={process.env.PUBLIC_URL + "./assets/dog_imge.jpg"}
                 alt=""
               />
-              <PiArrowsOutLight className="zoom-icon" />
+              <PiArrowsOutLight
+                className="zoom-icon"
+                onClick={() => handleShowImg()}
+              />
             </div>
             <Container fluid className="my-1 w-100">
               <Row>
@@ -373,6 +380,10 @@ function PackageViewPoup(props) {
           </div>
         </Modal.Header>
       </Modal>
+      <ShowImagePopup
+        showScreenshotImg={showScreenshotImg}
+        setShowScreenshotImg={setShowScreenshotImg}
+      />
       <MatchSubmitPopup
         header={"Ticket Upgraded Successfully"}
         state={acceptClick}
