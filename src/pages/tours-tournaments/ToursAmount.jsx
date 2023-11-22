@@ -67,7 +67,7 @@ function ToursAmount() {
 
   const scheduleButtons = [
     "All Tours",
-    "1.Take Part in Tour",
+    "1.Take Part in Our Tour",
     "2.Cricket Tour",
     "3.Sports Tour",
     "4.Casino Tour",
@@ -114,9 +114,7 @@ function ToursAmount() {
     return {
       tour_date: item.schedule_from,
       location: item.country,
-      website: item.website.map((item) => {
-        return item;
-      }),
+      website: item.website,
       tour_title: item.tour_title,
       packages: (
         <div>
