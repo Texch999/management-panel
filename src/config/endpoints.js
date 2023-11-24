@@ -32,6 +32,7 @@ const GENERATE_SIGNED_URL = "/admin/profile_signed_url";
 const GET_MATCHES_DATA = "/offline-management/get_matches_data";
 const CREATE_OFFLINE_MATCHES = "/offline-management/match_creation";
 const PACKAGES_CREATION = "/packages/package_creation_upgrade_discount";
+const GET_USER_MESSAGES = "/chat/get_user_messages";
 const GET_REQUEST_PACKAGES =
   "/packages/get_package_histroy_bypackage_requestid";
 const PACKAGE_APPROVE_REJECT = "/packages/package_approve_reject";
@@ -354,10 +355,15 @@ exports.GET_REASON_REJECTIONS = {
 
 exports.BULK_PACKAGE_APPROVE_REJECT = {
   url: BULK_PACKAGE_APPROVE_REJECT,
-  method: POST
-}
+  method: POST,
+};
 
 exports.PACKAGE_APPROVE_REJECT = {
   url: PACKAGE_APPROVE_REJECT,
-  method: POST
-}
+  method: POST,
+};
+
+exports.GET_USER_MESSAGES = {
+  url: GET_USER_MESSAGES,
+  method: POST,
+};

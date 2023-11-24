@@ -10,7 +10,7 @@ import { LuUsers } from "react-icons/lu";
 import { BiSolidMessageSquareDetail } from "react-icons/bi";
 import { RiCheckDoubleLine } from "react-icons/ri";
 import { Images } from "../../images";
-import { GET_USER_MESSAGES } from "../../config/endpoints";
+import { GET_USER_MESSAGE } from "../../config/endpoints";
 import { call } from "../../config/axios";
 import { open, send } from "../utils/WebSocket";
 
