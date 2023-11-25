@@ -6,6 +6,8 @@ import DraftTable from "./DraftTable";
 import { useNavigate } from "react-router-dom";
 
 function Offersmanagement() {
+  const [searchOffer, setSearchOffer] = useState("");
+
   const OFFERSMANAGEMENT_DETAILS = [
     {
       title:
@@ -91,6 +93,7 @@ function Offersmanagement() {
       ),
     })
   );
+
   const [activeIndex, setActiveIndex] = useState(0);
 
   const navigate = useNavigate();
@@ -100,6 +103,7 @@ function Offersmanagement() {
   const handleHeader = (item) => {
     setActiveIndex(item);
   };
+
   return (
     <div className="p-4 w-100">
       <h6 className="h6 font-grey">Offers</h6>
@@ -130,6 +134,8 @@ function Offersmanagement() {
                   type="search"
                   placeholder="Search"
                   aria-label="Search"
+                  value={searchOffer}
+                  onChange={(e) => setSearchOffer(e.target.value)}
                 />
               </form>
             </div>
@@ -152,16 +158,22 @@ function Offersmanagement() {
           <PublishedTabledata
             columns={cols}
             data={modifiedOffersmanagementDetails}
+            searchOffer={searchOffer}
           />
         )}
         {activeIndex === 1 && (
           <ScheduledData
             columns={cols}
             data={modifiedOffersmanagementDetails}
+            searchOffer={searchOffer}
           />
         )}
         {activeIndex === 2 && (
-          <DraftTable columns={cols} data={modifiedOffersmanagementDetails} />
+          <DraftTable
+            searchOffer={searchOffer}
+            columns={cols}
+            data={modifiedOffersmanagementDetails}
+          />
         )}
       </div>
     </div>

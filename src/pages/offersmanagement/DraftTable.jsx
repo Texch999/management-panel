@@ -5,7 +5,8 @@ import { useEffect, useState } from "react";
 import { GET_ALL_OFFERS } from "../../config/endpoints";
 import { call } from "../../config/axios";
 
-function DraftTable() {
+function DraftTable(props) {
+  const { searchOffer } = props;
   const [Offersmanagement, setOffermanagement] = useState([]);
   const cols = [
     {
@@ -51,7 +52,11 @@ function DraftTable() {
     getAllOffers();
   }, []);
   const currentDate = new Date().toISOString().split("T")[0];
-  const filterData = Offersmanagement.filter((res) => res.status === false);
+  const filterData = Offersmanagement.filter(
+    (res) =>
+      res.status === false &&
+      res?.title?.toLowerCase().includes(searchOffer.toLowerCase())
+  );
   const modifiedOffersmanagementDetails = filterData.map((item) => ({
     ...item,
     title: (

@@ -30,6 +30,7 @@ function AddDirectorsPopup(props) {
   const [website, setWebsite] = useState("");
   const [timezone, setTimeZone] = useState("");
   const [paymentGateway, setPaymentGateway] = useState("");
+  const [packageDiscount,setPackageDiscount]=useState("")
 
   const handleAddDirectorClose = () => {
     setShowAddDirectorPopup(false);
@@ -40,6 +41,7 @@ function AddDirectorsPopup(props) {
     setTimeZone("");
     setRole("");
     setPaymentGateway("");
+    setPackageDiscount("");
   };
   const [passwordType, setPasswordType] = useState("password");
   const [passwordInput, setPasswordInput] = useState("");
@@ -65,6 +67,7 @@ function AddDirectorsPopup(props) {
       setRole(selectedDirector.account_role || "");
       setCountryName(selectedDirector.country_name || "");
       setPasswordInput(selectedDirector.password || "");
+      setPackageDiscount(selectedDirector.package_discount||"")
     }
   }, [selectedDirector]);
   const handleCreateOrUpdateDirector = async (status) => {
@@ -86,6 +89,7 @@ function AddDirectorsPopup(props) {
         country_name: countryName,
         password: passwordInput,
         pg_upi: paymentGateway,
+        package_discount:packageDiscount
       };
 
       if (selectedDirector) {
@@ -397,22 +401,15 @@ function AddDirectorsPopup(props) {
                   ></input>
                 </Col>
                 <Col className="pe-0">
-                  <div className="small-font my-1">{firstSelect}</div>
-                  {/* <select
-                    value={timezone}
-                    name="time_zone"
-                    onChange={(e) => setTimeZone(e.target.value)}
+                <div className="small-font my-1">Package Discount*</div>
+                  <input
+                    type="text"
+                    placeholder="Enter"
+                    name="package_discount"
                     className="w-100 custom-select small-font login-inputs input-btn-bg px-2 py-2 all-none rounded all-none"
-                  > */}
-                  {/* <option selected>Select</option>
-                    <option> UTC+5:30 (India)</option>
-                    <option> UTC+5:30 (India)</option>
-                    <option> UTC+5:30 (India)</option>
-                    <option> UTC+5:30 (India)</option>
-                    <option> UTC+5:30 (India)</option>
-                    <option> UTC+5:30 (India)</option>
-                    <option> UTC+5:30 (India)</option> */}
-                  {/* </select> */}
+                    value={packageDiscount}
+                    onChange={(e) => setPackageDiscount(e.target.value)}
+                  ></input>
                 </Col>
               </Row>
             </Container>
