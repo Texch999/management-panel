@@ -99,7 +99,7 @@ img {
   opacity: 0.2;
 }
 .inbox_chat {
-  height: 250px;
+  max-height: 210px;
   overflow-y: scroll;
 }
 .inbox_chat::-webkit-scrollbar {
@@ -197,14 +197,14 @@ img {
   top: 11px;
   width: 33px;
 }
-.messaging {
+/* .messaging {
   padding: 0 0 50px 0;
-}
+} */
 .h-20px {
   height: 20px !important;
 }
 .msg_history {
-  height: 69vh;
+  height: 78vh;
   overflow-y: auto;
 }
 .msg_history::-webkit-scrollbar {

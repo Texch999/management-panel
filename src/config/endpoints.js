@@ -17,7 +17,7 @@ const ADD_POLICY = "/management/add_policy";
 const UPDATE_COUNTRY_CURRENCY = "/management/update_countryand_currency";
 const UPDATE_POLICY = "/management/update_policy";
 const GET_ALL_PACKAGES = "/packages/get_packages";
-const GET_USER_LIST = "offline-management/get_user_list";
+// const GET_USER_LIST = "offline-management/get_user_list";
 const ACCOUNT_REGISTERATION = "/account_register";
 const UPDATE_PROFILE = "/admin/admin_profile_update_info";
 const GET_BROADCASTING_EVENT = "/management/get_broadcast_event";
@@ -215,10 +215,10 @@ exports.UPDATE_PROFILE = {
   method: POST,
 };
 
-exports.GET_USER_LIST = {
-  url: GET_USER_LIST,
-  method: POST,
-};
+// exports.GET_USER_LIST = {
+//   url: GET_USER_LIST,
+//   method: POST,
+// };
 exports.ADD_NOTIFICATIONS_TEXT_MESSAGES = {
   url: ADD_NOTIFICATIONS_TEXT_MESSAGES,
   method: POST,
