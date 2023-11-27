@@ -21,7 +21,7 @@ function Adddirector() {
   const searchContent = (value) => {
     setSearchText(value);
     const filteredSearchText = getAllDirectors.filter((res) =>
-      res?.creator_role?.toLowerCase().includes(searchText.toLowerCase())
+      res?.account_role?.toLowerCase().includes(searchText.toLowerCase())
     );
     setFilteredDirectors(filteredSearchText);
   };
@@ -154,7 +154,7 @@ function Adddirector() {
   const modifiedAdddirectorDetails = searchText.length
     ? filteredDirectors
         .filter((item) =>
-          item?.creator_role.toLowerCase().includes(searchText.toLowerCase())
+          item?.account_role.toLowerCase().includes(searchText.toLowerCase())
         )
         .map((item) => {
           return {
