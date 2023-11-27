@@ -177,7 +177,7 @@ function Rejectionreason() {
       <AddReasonPopup
         rejectPopupOpen={rejectPopupOpen}
         SetRejectpopupOpen={SetRejectpopupOpen}
-        Heading={`${selectedQuestion ? "Update Reason" : " Reason"} `}
+        Heading={`${selectedQuestion ? "Update Reason" : "Add Reason"} `}
         firstSelect="Reason"
         firstTextarea="Description"
         setStatus={setStatus}

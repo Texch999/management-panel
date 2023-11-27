@@ -78,6 +78,7 @@ function AddDirectorsPopup(props) {
         creator_id: "company",
         creator_role: "company",
         creator_password: "company",
+        register_id :"company",
         management: "true",
         user_name: userId,
         first_name: firstName,
@@ -93,10 +94,12 @@ function AddDirectorsPopup(props) {
       };
 
       if (selectedDirector) {
-        requestData.creator_id = selectedDirector.creator_id;
-        requestData.creator_role = selectedDirector.creator_role;
-        requestData.creator_password = selectedDirector.creator_password;
-        requestData.management = selectedDirector.management;
+         requestData.register_id = selectedDirector.register_id;
+        requestData.account_role = selectedDirector.account_role;
+        // requestData.creator_id = selectedDirector.creator_id;
+        // requestData.creator_role = selectedDirector.creator_role;
+        // requestData.creator_password = selectedDirector.creator_password;
+        // requestData.management = selectedDirector.management;
       }
       await call(url, requestData).then((res) => {
         {
@@ -233,7 +236,7 @@ function AddDirectorsPopup(props) {
             <Row className="mt-2">
               <Col>
                 {" "}
-                <div className="d-flex flex-column">
+                <div className="d-flex flex-column">  
                   <div className="small-font mb-1">{firstTextBox}</div>
                   <select
                     value={website}
@@ -249,7 +252,7 @@ function AddDirectorsPopup(props) {
                           <input type="checkbox" />
                           RRR
                         </option> */}
-                        {websiteNames.map((obj) => (
+                        {websiteNames?.map((obj) => (
                           <option value={obj.web_url}>
                             <input type="checkbox" /> {obj.web_url}
                           </option>
