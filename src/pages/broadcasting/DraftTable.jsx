@@ -9,7 +9,8 @@ import {
   GET_ALL_POSTERS,
 } from "../../config/endpoints";
 
-function DraftTable() {
+function DraftTable(props) {
+  const { searchOffer } = props
   const [getBroadcasting, setGetBroadcasting] = useState([]);
   const cols = [
     {
@@ -109,7 +110,7 @@ function DraftTable() {
   const currentDate = new Date().toISOString().split("T")[0];
   // console.log("---------->", currentDate);
   const draftData = [...getBroadcasting, ...notifications, ...getPoster].filter(
-    (res) => res.status === false
+    (res) => res.status === false &&res?.event_name?.toLowerCase().includes(searchOffer.toLowerCase())
   );
   const modifiedOffersmanagementDetails = draftData.map((item) => ({
     ...item,

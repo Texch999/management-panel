@@ -13,6 +13,7 @@ import Scheduled from "./Scheduled";
 import DraftTable from "./DraftTable";
 
 function Broadcasting() {
+  const [searchOffer, setSearchOffer] = useState("");
   const cols = [
     {
       header: "TITLE",
@@ -94,7 +95,7 @@ function Broadcasting() {
             ...obj,
             event_name: "poster notification",
             status: obj.status,
-             // obj.status === true ? (
+            // obj.status === true ? (
             //   <div className="font-green custom-active-button px-2">
             //     Active
             //   </div>
@@ -126,12 +127,13 @@ function Broadcasting() {
     ...getBroadcasting,
     ...notifications,
     ...getPoster,
-  ].filter((item) => item.status === true && item.publish_date <= currentDate);
-  const modifiedBroadcastingDetails = [
-    ...getBroadcasting,
-    ...notifications,
-    ...getPoster,
-  ].map((item) => {
+  ].filter(
+    (item) =>
+      item.status === true &&
+      item.publish_date <= currentDate &&
+      item?.event_name?.toLowerCase().includes(searchOffer.toLowerCase())
+  );
+  const modifiedBroadcastingDetails =publishedData.map((item) => {
     return {
       ...item,
       title: (
@@ -197,6 +199,8 @@ function Broadcasting() {
                   type="search"
                   placeholder="Search"
                   aria-label="Search"
+                  value={searchOffer}
+                  onChange={(e) => setSearchOffer(e.target.value)}
                 />
               </form>
             </div>
@@ -217,10 +221,15 @@ function Broadcasting() {
           <Table columns={cols} data={modifiedBroadcastingDetails} />
         )}
         {activeIndex === 1 && (
-          <Scheduled columns={cols} data={modifiedBroadcastingDetails} />
+          <Scheduled
+            columns={cols}
+            data={modifiedBroadcastingDetails}
+            searchOffer={searchOffer}
+          />
         )}
         {activeIndex === 2 && (
-          <DraftTable columns={cols} data={modifiedBroadcastingDetails} />
+          <DraftTable columns={cols} data={modifiedBroadcastingDetails} 
+          searchOffer={searchOffer}/>
         )}
       </div>
     </div>

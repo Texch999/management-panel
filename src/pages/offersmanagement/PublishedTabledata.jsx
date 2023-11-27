@@ -5,7 +5,9 @@ import { useEffect, useState } from "react";
 import { GET_ALL_OFFERS } from "../../config/endpoints";
 import { call } from "../../config/axios";
 
-function PublishedTabledata() {
+function PublishedTabledata(props) {
+  const { searchOffer } = props;
+  console.log("searchoffer====>", searchOffer);
   const [Offersmanagement, setOffermanagement] = useState([]);
   const cols = [
     {
@@ -51,29 +53,34 @@ function PublishedTabledata() {
   useEffect(() => {
     getAllOffers();
   }, []);
-  const currentDate = new Date().toISOString().split('T')[0];
-  console.log('---------->',currentDate);
-  //const publishDate = new Date(res.publish_date);
-  const filterStatus = Offersmanagement.filter((res) => res.status === true && res.publish_date <= currentDate);
-  console.log('----------->filterdata',filterStatus)
-  const modifiedOffersmanagementDetails = filterStatus.map((item) => ({
-    ...item,
-    title: (
-      <div className="role-color">
-        <span className="role-color">{item?.title}</span>{" "}
-      </div>
-    ),
-    publishdate: item?.publish_date,
-    publishwebsite: item?.website_name,
-    type: item?.country_name,
-    status:
-      item?.status === true ? (
-        <div className="font-green custom-active-button px-2">Active</div>
-      ) : (
-        <div className="custom-deactive-button px-2">InActive</div>
+  const currentDate = new Date().toISOString().split("T")[0];
+  console.log("---------->", currentDate);
+  const filterStatus = Offersmanagement.filter((res) =>
+    res.status === true &&
+    res.publish_date <= currentDate &&
+    res?.title?.toLowerCase().includes(searchOffer.toLowerCase())
+  );
+  console.log("----------->filterdata", filterStatus);
+  const modifiedOffersmanagementDetails =
+    filterStatus?.length > 0 &&
+    filterStatus?.map((item) => ({
+      ...item,
+      title: (
+        <div className="role-color">
+          <span className="role-color">{item?.title}</span>{" "}
+        </div>
       ),
-    icon: <AiOutlineEdit className="eye-icon-size" />,
-  }));
+      publishdate: item?.publish_date,
+      publishwebsite: item?.website_name,
+      type: item?.country_name,
+      status:
+        item?.status === true ? (
+          <div className="font-green custom-active-button px-2">Active</div>
+        ) : (
+          <div className="custom-deactive-button px-2">InActive</div>
+        ),
+      icon: <AiOutlineEdit className="eye-icon-size" />,
+    }));
 
   return (
     <div className="p-4 w-100">
