@@ -129,7 +129,6 @@ function AddTours() {
                   <div className="upload-poster-div d-felx align-items-center justify-content-between p-2">
                     <input
                       id="files"
-                      // type="file"
                       className="file-input"
                       placeholder="Select file"
                       styles="visibility:hidden;"
