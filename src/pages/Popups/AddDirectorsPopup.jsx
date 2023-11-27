@@ -69,7 +69,7 @@ function AddDirectorsPopup(props) {
       setPasswordInput(selectedDirector.password || "");
       setPackageDiscount(selectedDirector.package_discount||"")
     }
-  }, [selectedDirector]);
+  },[selectedDirector]);
   const handleCreateOrUpdateDirector = async (status) => {
     try {
       const url = selectedDirector ? UPDATE_PROFILE : ACCOUNT_REGISTERATION;
