@@ -7,15 +7,44 @@ import { BiSolidCamera } from "react-icons/bi";
 import { ImAttachment } from "react-icons/im";
 import { MdMicNone } from "react-icons/md";
 import { LuUsers } from "react-icons/lu";
+import moment from "moment";
 import { BiSolidMessageSquareDetail } from "react-icons/bi";
 import { RiCheckDoubleLine } from "react-icons/ri";
 import { Images } from "../../images";
-import { GET_USER_MESSAGE } from "../../config/endpoints";
+import { GET_ALL_USERS } from "../../config/endpoints";
+import { GET_USER_MESSAGES } from "../../config/endpoints";
 import { call } from "../../config/axios";
 import { open, send } from "../utils/WebSocket";
 
 function Chats() {
-  let register_id = localStorage?.getItem("register_id");
+  const [clientsData, setClientsData] = useState([]);
+  const getAllUserData = async () => {
+    await call(GET_ALL_USERS, {
+      register_id: "company",
+    })
+      .then((res) => {
+        console.log("res====>", res);
+        setClientsData(res?.data?.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  useEffect(() => {
+    getAllUserData();
+  }, []);
+  console.log("clientsData", clientsData);
+
+  const chatsDetails = clientsData?.map((item) => ({
+    image: Images.RohitImage,
+    name: item?.user_name,
+    message: "What a Knock That Was !!! Virat Kohli !!",
+    time: item?.ts,
+    icon: "",
+  }));
+
+  let register_id = "reg-20230920132711772";
   let creator_id = localStorage?.getItem("creator_id");
   const [supportData, setSupportData] = useState([]);
 
@@ -63,7 +92,6 @@ function Chats() {
   ]);
   const date = new Date().toLocaleDateString();
   const [userInput, setUserInput] = useState("");
-  // const inputFile = useRef(null);
 
   const videoRef = useRef(null);
 
@@ -110,17 +138,13 @@ function Chats() {
   }, []);
 
   const inputHandler = async () => {
-    // addMessage(userInput, 1);
     setUserInput("");
     await send(userInput);
-    // await getAllUserMessages();
   };
 
   const addMessage = (message, msg_c = 0) => {
-    // console.log("new message : ", message);
     let temp = { message, ts: new Date().getTime(), msg_c };
     setSupportData((prev) => [...prev, temp]);
-    // console.log(supportData)
   };
 
   const handleInputChange = (e) => {
@@ -134,17 +158,15 @@ function Chats() {
   };
 
   const getAllUserMessages = async () => {
-    await call("", {
+    await call(GET_USER_MESSAGES, {
       register_id,
       creator_id,
     })
       .then((res) => {
         console.log(res.data.data);
         setSupportData(res?.data?.data);
-        // scroll();
       })
       .catch((err) => {
-        // setLoading(false);
         console.log(err);
       });
   };
@@ -155,9 +177,6 @@ function Chats() {
       return;
     }
     const msg = JSON.parse(event.data);
-    // if (msg.from_user_id === register_id) {
-    //   return;
-    // }
     addMessage(msg.message);
   };
   const scroll = () => {
@@ -196,7 +215,6 @@ function Chats() {
   };
   return (
     <div class="container">
-      <h3 class=" text-center">Messaging</h3>
       <div class="messaging">
         <div class="inbox_msg">
           <div class="inbox_people">
@@ -252,7 +270,6 @@ function Chats() {
                     <img
                       className="rounded-circle"
                       src={Images.raina_image}
-                      // src="https://bootdey.com/img/Content/avatar/avatar2.png"
                       alt="sunil"
                     />{" "}
                   </div>
@@ -276,7 +293,6 @@ function Chats() {
                     <img
                       className="rounded-circle"
                       src={Images.rohit_image}
-                      // src="https://bootdey.com/img/Content/avatar/avatar3.png"
                       alt="sunil"
                     />{" "}
                   </div>
@@ -295,177 +311,34 @@ function Chats() {
             </div>
             <div className="inbox-chat-contacts">
               <div class="chat_list">
-                <div class="chat_people d-flex justify-content-between align-items-center">
-                  <div class="chat_img">
-                    <img
-                      className="rounded-circle"
-                      src={Images.rohit_image}
-                      // src="https://bootdey.com/img/Content/avatar/avatar2.png"
-                      alt="sunil"
-                    />{" "}
-                  </div>
-                  <div class="chat_ib">
-                    <h5>
-                      Sunil Rajput <span class="chat_date">Dec 25</span>
-                    </h5>
-                    <p>Available </p>
-                  </div>
-                </div>
-              </div>
-              <div class="chat_list">
-                <div class="chat_people d-flex justify-content-between align-items-center">
-                  <div class="chat_img">
-                    {" "}
-                    <img
-                      className="rounded-circle"
-                      src={Images.raina_image}
-                      // src="https://bootdey.com/img/Content/avatar/avatar3.png"
-                      alt="sunil"
-                    />{" "}
-                  </div>
-                  <div class="chat_ib">
-                    <h5>
-                      Sunil Rajput <span class="chat_date">Dec 25</span>
-                    </h5>
-                    <p>Available </p>
-                  </div>
-                </div>
-              </div>{" "}
-              <div class="chat_list">
-                <div class="chat_people d-flex justify-content-between align-items-center">
-                  <div class="chat_img">
-                    <img
-                      className="rounded-circle"
-                      src={Images.dhawan_image}
-                      // src="https://bootdey.com/img/Content/avatar/avatar2.png"
-                      alt="sunil"
-                    />{" "}
-                  </div>
-                  <div class="chat_ib">
-                    <h5>
-                      Sunil Rajput <span class="chat_date">Dec 25</span>
-                    </h5>
-                    <p>Available </p>
-                  </div>
-                </div>
-              </div>
-              <div class="chat_list">
-                <div class="chat_people d-flex justify-content-between align-items-center">
-                  <div class="chat_img">
-                    {" "}
-                    <img
-                      className="rounded-circle"
-                      src={Images.dhawan_image}
-                      // src="https://bootdey.com/img/Content/avatar/avatar3.png"
-                      alt="sunil"
-                    />{" "}
-                  </div>
-                  <div class="chat_ib">
-                    <h5>
-                      Sunil Rajput <span class="chat_date">Dec 25</span>
-                    </h5>
-                    <p>Available </p>
-                  </div>
-                </div>
-              </div>
-              <div class="chat_list">
-                <div class="chat_people d-flex justify-content-between align-items-center">
-                  <div class="chat_img">
-                    <img
-                      className="rounded-circle"
-                      src={Images.raina_image}
-                      // src="https://bootdey.com/img/Content/avatar/avatar2.png"
-                      alt="sunil"
-                    />{" "}
-                  </div>
-                  <div class="chat_ib">
-                    <h5>
-                      Sunil Rajput <span class="chat_date">Dec 25</span>
-                    </h5>
-                    <p>Available </p>
-                  </div>
-                </div>
-              </div>
-              <div class="chat_list">
-                <div class="chat_people d-flex justify-content-between align-items-center">
-                  <div class="chat_img">
-                    {" "}
-                    <img
-                      className="rounded-circle"
-                      src={Images.raina_image}
-                      // src="https://bootdey.com/img/Content/avatar/avatar3.png"
-                      alt="sunil"
-                    />{" "}
-                  </div>
-                  <div class="chat_ib">
-                    <h5>
-                      Sunil Rajput <span class="chat_date">Dec 25</span>
-                    </h5>
-                    <p>Available </p>
-                  </div>
-                </div>
-              </div>{" "}
-              <div class="chat_list">
-                <div class="chat_people d-flex justify-content-between align-items-center">
-                  <div class="chat_img">
-                    <img
-                      className="rounded-circle"
-                      src={Images.dhawan_image}
-                      // src="https://bootdey.com/img/Content/avatar/avatar2.png"
-                      alt="sunil"
-                    />{" "}
-                  </div>
-                  <div class="chat_ib">
-                    <h5>
-                      Sunil Rajput <span class="chat_date">Dec 25</span>
-                    </h5>
-                    <p>Available </p>
-                  </div>
-                </div>
-              </div>
-              <div class="chat_list">
-                <div class="chat_people d-flex justify-content-between align-items-center">
-                  <div class="chat_img">
-                    {" "}
-                    <img
-                      className="rounded-circle"
-                      src={Images.sachin_image}
-                      // src="https://bootdey.com/img/Content/avatar/avatar3.png"
-                      alt="sunil"
-                    />{" "}
-                  </div>
-                  <div class="chat_ib">
-                    <h5>
-                      Sunil Rajput <span class="chat_date">Dec 25</span>
-                    </h5>
-                    <p>Available </p>
-                  </div>
+                <div class="chat_people d-flex justify-content-between align-items-center flex-column">
+                  {chatsDetails?.map((items, index) => (
+                    <div key={index}>
+                      <div class="chat_list">
+                        <div class="chat_people d-flex justify-content-between align-items-center">
+                          <div class="chat_img">
+                            <img
+                              className="rounded-circle"
+                              src={Images.dhawan_image}
+                              alt="sunil"
+                            />{" "}
+                          </div>
+                          <div class="chat_ib">
+                            <h5>
+                              {items?.name}{" "}
+                              <span class="chat_date">{items?.time}</span>
+                            </h5>
+                            <p>{items?.message} </p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
                 </div>
               </div>
             </div>
           </div>
           <div class="mesgs">
-            <div class="headind_srch d-flex flex-column h-8vh mb-2">
-              <div class="recent_heading d-flex flex-start my-2 align-items-center justify-content-between w-100">
-                <div className="d-flex flex-row justify-content-between align-items-center">
-                  <div>
-                    <img
-                      className="rounded-circle h-30px mx-2"
-                      src={Images.dhoni_image}
-                      alt="sunil"
-                    />{" "}
-                  </div>
-                  <div className="large-font clr-white mx-2">
-                    Mahendra Singh Dhoni
-                  </div>
-                </div>
-                <div className="d-flex flex-row align-items-center justify-content-between">
-                  <IoCall className="upload-icon clr-grey mx-2" />
-                  <HiVideoCamera className="upload-icon clr-grey mx-2" />
-                </div>
-              </div>
-            </div>
-
             <div class="msg_history px-4 py-3">
               <div class="incoming_msg">
                 <div class="incoming_msg_img">
@@ -483,7 +356,66 @@ function Chats() {
                   </div>
                 </div>
               </div>
-              <div class="outgoing_msg">
+              {/* {supportData?.map((item, index) => {
+                let sender = item.to_user_id === register_id ? true : false;
+                return (
+                  <div key={index}>
+                    <div class="outgoing_msg">
+                      <div class="sent_msg">
+                        <p>
+                          Test which is a new approach to have all solutions
+                        </p>
+                        <div className="d-flex justify-content-between align-items-center">
+                          <span class="time_date"> 11:01 AM | June 9</span>{" "}
+                          <RiCheckDoubleLine
+                            style={{ fontSize: "20px", color: "#70dc37" }}
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })} */}
+              {supportData?.length > 0 ? (
+                supportData.map((item, index) => {
+                  let sender = item?.to_user_id === register_id ? true : false;
+                  return (
+                    <div key={index}>
+                      {sender ? (
+                        ""
+                      ) : (
+                        <div className="date-text mt-10">
+                          {moment(item.ts).format("hh:mm a")}
+                        </div>
+                      )}
+                      <div
+                        className={`mt-5 ${
+                          sender ? "chat-box-outgoing" : "chat-box-incoming"
+                        }`}
+                      >
+                        <div
+                          key={index}
+                          className={`mt-5 message ${
+                            sender ? "outgoing-message" : "incoming-message"
+                          }`}
+                        >
+                          {item?.message}
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })
+              ) : (
+                <div>
+                  <div className="flex-jc-c flex-column">
+                    className="no-chat-image" src={Images.NoChatImage}
+                    <div className="chat-meetings-heading mt-20 ">
+                      You have not received any message yet!!!
+                    </div>
+                  </div>
+                </div>
+              )}
+              {/* <div class="outgoing_msg">
                 <div class="sent_msg">
                   <p>Test which is a new approach to have all solutions</p>
                   <div className="d-flex justify-content-between align-items-center">
@@ -493,64 +425,7 @@ function Chats() {
                     />
                   </div>
                 </div>
-              </div>
-              <div className="d-flex justify-content-center my-4">
-                <div className="small-font input-btn-bg px-2 py-2 clr-grey rounded ">
-                  Yesterday
-                </div>
-              </div>
-              <div class="incoming_msg">
-                <div class="incoming_msg_img">
-                  {" "}
-                  <img
-                    className="rounded-circle"
-                    src={Images.kohli_image}
-                    alt="sunil"
-                  />{" "}
-                </div>
-                <div class="received_msg">
-                  <div class="received_withd_msg">
-                    <p>Test, which is a new approach to have</p>
-                    <span class="time_date"> 11:01 AM | Yesterday</span>
-                  </div>
-                </div>
-              </div>
-              <div className="d-flex justify-content-center">
-                <div className="small-font input-btn-bg px-2 py-2 clr-grey rounded">
-                  today
-                </div>
-              </div>
-              <div class="outgoing_msg">
-                <div class="sent_msg">
-                  <p>Apollo University, Delhi, India Test</p>
-                  <div className="d-flex justify-content-between align-items-center">
-                    <span class="time_date"> 11:01 AM | June 9</span>{" "}
-                    <RiCheckDoubleLine
-                      style={{ fontSize: "20px", color: "#70dc37" }}
-                    />
-                  </div>{" "}
-                </div>
-              </div>
-              <div class="incoming_msg">
-                <div class="incoming_msg_img">
-                  {" "}
-                  <img
-                    className="rounded-circle"
-                    src={Images.dhoni_image}
-                    alt="sunil"
-                  />{" "}
-                </div>
-                <div class="received_msg">
-                  <div class="received_withd_msg">
-                    <p>
-                      We work directly with our designers and suppliers, and
-                      sell direct to you, which means quality, exclusive
-                      products, at a price anyone can afford.
-                    </p>
-                    <span class="time_date"> 11:01 AM | Today</span>
-                  </div>
-                </div>
-              </div>
+              </div> */}
             </div>
             <div className="d-flex flex-row justify-content-around align-items-center px-4 py-2 chat-container-box">
               <div class="type_msg w-75 mx-2 rounded">
@@ -558,7 +433,11 @@ function Chats() {
                   <input
                     type="text"
                     class="write_msg px-4"
+                    value={userInput}
                     placeholder="Type a message"
+                    onChange={(e) => {
+                      handleInputChange(e);
+                    }}
                   />
                   <button class="msg_send_btn me-3" type="button">
                     <i class="fa fa-paper-plane-o" aria-hidden="true"></i>
@@ -574,16 +453,21 @@ function Chats() {
                     type="file"
                     id="camera-button"
                     style={{ display: "none" }}
+                    onChange={(e) => handleChange(e)}
                   />
                 </div>
-                <div className="bg-clr-chat px-2 py-2 rounded mx-2">
+                <div
+                  className="bg-clr-chat px-2 py-2 rounded mx-2"
+                  onClick={handleUploadButtonClick}
+                >
                   <label htmlFor="upload-button">
                     <ImAttachment className="upload-icon" />
                   </label>
                   <input
                     type="file"
-                    id="upload-button"
+                    id={uploadfileInputRef}
                     style={{ display: "none" }}
+                    onChange={handleUploadFileSelect}
                   />
                 </div>
                 <div className="bg-clr-chat px-2 py-2 rounded mx-2">
@@ -592,12 +476,6 @@ function Chats() {
               </div>
             </div>
           </div>
-        </div>
-      </div>
-      <div className="d-flex flex-row justify-content-end">
-        <div className="chat-blow-button d-flex justify-content-between align-items-center">
-          <BiSolidMessageSquareDetail style={{ fontSize: "30px" }} />
-          <span className="clr-corn-flower ms-1">Chat With Us</span>
         </div>
       </div>
     </div>
