@@ -30,7 +30,7 @@ function AddDirectorsPopup(props) {
   const [website, setWebsite] = useState("");
   const [timezone, setTimeZone] = useState("");
   const [paymentGateway, setPaymentGateway] = useState("");
-  const [packageDiscount,setPackageDiscount]=useState("")
+  const [packageDiscount, setPackageDiscount] = useState("");
 
   const handleAddDirectorClose = () => {
     setShowAddDirectorPopup(false);
@@ -67,9 +67,9 @@ function AddDirectorsPopup(props) {
       setRole(selectedDirector.account_role || "");
       setCountryName(selectedDirector.country_name || "");
       setPasswordInput(selectedDirector.password || "");
-      setPackageDiscount(selectedDirector.package_discount||"")
+      setPackageDiscount(selectedDirector.package_discount || "");
     }
-  },[selectedDirector]);
+  }, [selectedDirector]);
   const handleCreateOrUpdateDirector = async (status) => {
     try {
       const url = selectedDirector ? UPDATE_PROFILE : ACCOUNT_REGISTERATION;
@@ -78,7 +78,7 @@ function AddDirectorsPopup(props) {
         creator_id: "company",
         creator_role: "company",
         creator_password: "company",
-        register_id :"company",
+        register_id: "company",
         management: "true",
         user_name: userId,
         first_name: firstName,
@@ -90,13 +90,12 @@ function AddDirectorsPopup(props) {
         country_name: countryName,
         password: passwordInput,
         pg_upi: paymentGateway,
-        package_discount:packageDiscount
+        package_discount: packageDiscount,
       };
 
       if (selectedDirector) {
-         requestData.register_id = selectedDirector.register_id;
+        requestData.register_id = selectedDirector.register_id;
         requestData.account_role = selectedDirector.account_role;
-        // requestData.creator_id = selectedDirector.creator_id;
         // requestData.creator_role = selectedDirector.creator_role;
         // requestData.creator_password = selectedDirector.creator_password;
         // requestData.management = selectedDirector.management;
@@ -236,7 +235,7 @@ function AddDirectorsPopup(props) {
             <Row className="mt-2">
               <Col>
                 {" "}
-                <div className="d-flex flex-column">  
+                <div className="d-flex flex-column">
                   <div className="small-font mb-1">{firstTextBox}</div>
                   <select
                     value={website}
@@ -246,25 +245,23 @@ function AddDirectorsPopup(props) {
                   >
                     {role === "director" ? (
                       <>
-                        <option value="select">select</option>
+                        <option value="">select</option>
                         {/* <option value="All">
                           ALL
                           <input type="checkbox" />
                           RRR
                         </option> */}
-                        {websiteNames?.map((obj) => (
+                        {/* {websiteNames.map((obj) => (
                           <option value={obj.web_url}>
                             <input type="checkbox" /> {obj.web_url}
                           </option>
-                        ))}
+                        ))} */}
                       </>
                     ) : (
                       <>
-                        <option value="select">select</option>
+                        <option value="">select</option>
                         {websiteNames?.map((obj) => (
-                          <option value={obj.web_url} selected>
-                            {obj.web_url}
-                          </option>
+                          <option value={obj.web_url}>{obj.web_url}</option>
                         ))}
                       </>
                     )}
@@ -404,7 +401,7 @@ function AddDirectorsPopup(props) {
                   ></input>
                 </Col>
                 <Col className="pe-0">
-                <div className="small-font my-1">Package Discount*</div>
+                  <div className="small-font my-1">Package Discount*</div>
                   <input
                     type="text"
                     placeholder="Enter"

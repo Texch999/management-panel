@@ -311,7 +311,7 @@ function Chats() {
             </div>
             <div className="inbox-chat-contacts">
               <div class="chat_list">
-                <div class="chat_people d-flex justify-content-between align-items-center flex-column">
+                <div class="chat_people d-flex justify-content-between align-items-center">
                   {chatsDetails?.map((items, index) => (
                     <div key={index}>
                       <div class="chat_list">
