@@ -12,11 +12,13 @@ import { BiSolidMessageSquareDetail } from "react-icons/bi";
 import { RiCheckDoubleLine } from "react-icons/ri";
 import { Images } from "../../images";
 import { GET_ALL_USERS } from "../../config/endpoints";
+import { GENERATE_SIGNED_URL } from "../../config/endpoints";
 import { GET_USER_MESSAGES } from "../../config/endpoints";
 import { call } from "../../config/axios";
 import { open, send } from "../utils/WebSocket";
 
 function Chats() {
+  const ImageBaseUrl = "https://we2-call-images.s3.us-east-2.amazonaws.com";
   const [clientsData, setClientsData] = useState([]);
   const getAllUserData = async () => {
     await call(GET_ALL_USERS, {
@@ -34,7 +36,7 @@ function Chats() {
   useEffect(() => {
     getAllUserData();
   }, []);
-  console.log("clientsData", clientsData);
+  // console.log("clientsData", clientsData);
 
   const chatsDetails = clientsData?.map((item) => ({
     image: Images.RohitImage,
@@ -47,6 +49,10 @@ function Chats() {
   let register_id = "reg-20230920132711772";
   let creator_id = localStorage?.getItem("creator_id");
   const [supportData, setSupportData] = useState([]);
+  const [uploadImage, setuploadImage] = useState([]);
+  const [singedUrl, setSignedUrl] = useState("");
+  const [Id, setId] = useState("");
+  const [profileImage, setProfileImage] = useState("");
 
   const [messages, setMessages] = useState([
     {
@@ -96,19 +102,18 @@ function Chats() {
   const videoRef = useRef(null);
 
   const [file, setFile] = useState([]);
-  const inputFile = useRef(null);
+  // const inputFile = useRef(null);
 
   const handleChange = (e) => {
-    setFile([...file, e.target.files[0]]);
+    setFile([file, e.target.files[0]]);
   };
-
   const handleUserInput = () => {
     if (userInput.trim() !== "") {
       setMessages((prevMessages) => [
         ...prevMessages,
         {
           content: reply,
-          sender: "computer",
+          sender: "reg-20230920132711772",
           img: Images.ViratImage02,
         },
       ]);
@@ -161,10 +166,25 @@ function Chats() {
     await call(GET_USER_MESSAGES, {
       register_id,
       creator_id,
+      upload_image: `${ImageBaseUrl}/${"chat-images"}/${Id}.png`,
     })
-      .then((res) => {
-        console.log(res.data.data);
+      .then(async (res) => {
+        // console.log(res.data.data);
         setSupportData(res?.data?.data);
+        singedUrl &&
+          profileImage &&
+          (await fetch(singedUrl, {
+            method: "PUT",
+            body: profileImage,
+            headers: {
+              "Content-Type": "image/jpeg",
+              "cache-control": "public, max-age=0",
+            },
+          })
+            .then((res) => {})
+            .catch((err) => {
+              console.log("err: ", err);
+            }));
       })
       .catch((err) => {
         console.log(err);
@@ -208,8 +228,34 @@ function Chats() {
   const uploadfileInputRef = useRef(null);
   const handleUploadFileSelect = (e) => {
     const file = e.target.files[0];
-    console.log("selected file", file);
+    setProfileImage(file);
+    generateSignedUrl();
   };
+
+  const generateSignedUrl = async () => {
+    setuploadImage(true);
+    const NewId = new Date().getTime();
+    await call(GENERATE_SIGNED_URL, {
+      register_id: `${NewId}`,
+      event_type: "user_profile_image",
+      folder_name: "chat-images",
+    })
+      .then(async (res) => {
+        setuploadImage(false);
+        let url = res?.data?.data?.result?.signed_url;
+        setSignedUrl(url);
+        setId(NewId);
+      })
+      .catch((err) => {
+        setuploadImage(false);
+        console.log("generating signed url error", err);
+      });
+  };
+
+  useEffect(() => {
+    setSupportData();
+  }, []);
+
   const handleUploadButtonClick = () => {
     uploadfileInputRef.current.click();
   };
@@ -266,14 +312,14 @@ function Chats() {
               </div>
               <div class="chat_list">
                 <div class="chat_people d-flex justify-content-between align-items-center">
-                  <div class="chat_img">
+                  {/* <div class="chat_img">
                     <img
                       className="rounded-circle"
                       src={Images.raina_image}
                       alt="sunil"
                     />{" "}
-                  </div>
-                  <div class="chat_ib">
+                  </div> */}
+                  {/* <div class="chat_ib">
                     <h5>
                       Sunil Rajput <span class="chat_date">Dec 25</span>
                     </h5>
@@ -283,10 +329,10 @@ function Chats() {
                         2
                       </div>
                     </div>
-                  </div>
+                  </div> */}
                 </div>
               </div>
-              <div class="chat_list">
+              {/* <div class="chat_list">
                 <div class="chat_people d-flex justify-content-between align-items-center">
                   <div class="chat_img">
                     {" "}
@@ -303,7 +349,7 @@ function Chats() {
                     <p>I will purchase it for sure............ </p>
                   </div>
                 </div>
-              </div>
+              </div> */}
             </div>
             <div class="headind_srch d-flex flex-row align-items-center mb-2">
               <LuUsers className="upload-icon mx-2" />
@@ -311,7 +357,7 @@ function Chats() {
             </div>
             <div className="inbox-chat-contacts">
               <div class="chat_list">
-                <div class="chat_people d-flex justify-content-between align-items-center flex-column">
+                <div class="chat_people d-flex justify-content-between  flex-column">
                   {chatsDetails?.map((items, index) => (
                     <div key={index}>
                       <div class="chat_list">
@@ -340,7 +386,7 @@ function Chats() {
           </div>
           <div class="mesgs">
             <div class="msg_history px-4 py-3">
-              <div class="incoming_msg">
+              {/* <div class="incoming_msg">
                 <div class="incoming_msg_img">
                   {" "}
                   <img
@@ -355,77 +401,34 @@ function Chats() {
                     <span class="time_date"> 11:01 AM | June 9</span>
                   </div>
                 </div>
-              </div>
-              {/* {supportData?.map((item, index) => {
-                let sender = item.to_user_id === register_id ? true : false;
+              </div> */}
+              {supportData?.map((item, index) => {
+                let sender = item.from_user_id === register_id ? true : false;
                 return (
                   <div key={index}>
+                    {!sender && (
+                      <div className="date-text mt-10">
+                        {moment(item.ts).format("hh:mm a")}
+                      </div>
+                    )}
                     <div class="outgoing_msg">
-                      <div class="sent_msg">
-                        <p>
-                          Test which is a new approach to have all solutions
-                        </p>
+                      <div key={index} class="sent_msg">
+                        <p>{item?.message}</p>
                         <div className="d-flex justify-content-between align-items-center">
-                          <span class="time_date"> 11:01 AM | June 9</span>{" "}
-                          <RiCheckDoubleLine
-                            style={{ fontSize: "20px", color: "#70dc37" }}
-                          />
+                          <span class="time_date">
+                            {moment(item.ts).format("hh:mm a")}
+                          </span>{" "}
+                          {sender && (
+                            <RiCheckDoubleLine
+                              style={{ fontSize: "20px", color: "#70dc37" }}
+                            />
+                          )}
                         </div>
                       </div>
                     </div>
                   </div>
                 );
-              })} */}
-              {supportData?.length > 0 ? (
-                supportData.map((item, index) => {
-                  let sender = item?.to_user_id === register_id ? true : false;
-                  return (
-                    <div key={index}>
-                      {sender ? (
-                        ""
-                      ) : (
-                        <div className="date-text mt-10">
-                          {moment(item.ts).format("hh:mm a")}
-                        </div>
-                      )}
-                      <div
-                        className={`mt-5 ${
-                          sender ? "chat-box-outgoing" : "chat-box-incoming"
-                        }`}
-                      >
-                        <div
-                          key={index}
-                          className={`mt-5 message ${
-                            sender ? "outgoing-message" : "incoming-message"
-                          }`}
-                        >
-                          {item?.message}
-                        </div>
-                      </div>
-                    </div>
-                  );
-                })
-              ) : (
-                <div>
-                  <div className="flex-jc-c flex-column">
-                    className="no-chat-image" src={Images.NoChatImage}
-                    <div className="chat-meetings-heading mt-20 ">
-                      You have not received any message yet!!!
-                    </div>
-                  </div>
-                </div>
-              )}
-              {/* <div class="outgoing_msg">
-                <div class="sent_msg">
-                  <p>Test which is a new approach to have all solutions</p>
-                  <div className="d-flex justify-content-between align-items-center">
-                    <span class="time_date"> 11:01 AM | June 9</span>{" "}
-                    <RiCheckDoubleLine
-                      style={{ fontSize: "20px", color: "#70dc37" }}
-                    />
-                  </div>
-                </div>
-              </div> */}
+              })}
             </div>
             <div className="d-flex flex-row justify-content-around align-items-center px-4 py-2 chat-container-box">
               <div class="type_msg w-75 mx-2 rounded">
@@ -438,8 +441,12 @@ function Chats() {
                     onChange={(e) => {
                       handleInputChange(e);
                     }}
+                    onKeyDown={(e) => userInput && hanldeKeyDown(e)}
                   />
-                  <button class="msg_send_btn me-3" type="button">
+                  <button
+                    class="msg_send_btn me-3"
+                    onClick={() => inputHandler()}
+                  >
                     <i class="fa fa-paper-plane-o" aria-hidden="true"></i>
                   </button>
                 </div>
@@ -451,23 +458,23 @@ function Chats() {
                   </label>
                   <input
                     type="file"
-                    id="camera-button"
+                    // id="camera-button"
                     style={{ display: "none" }}
                     onChange={(e) => handleChange(e)}
                   />
                 </div>
-                <div
-                  className="bg-clr-chat px-2 py-2 rounded mx-2"
-                  onClick={handleUploadButtonClick}
-                >
-                  <label htmlFor="upload-button">
+                <div className="bg-clr-chat px-2 py-2 rounded mx-2">
+                  {/* onClick={handleUploadButtonClick}
+                disabled={uploadImage} */}
+                  <label htmlFor="attachment">
                     <ImAttachment className="upload-icon" />
                   </label>
                   <input
                     type="file"
-                    id={uploadfileInputRef}
+                    ref={uploadfileInputRef}
+                    id="attachment"
                     style={{ display: "none" }}
-                    onChange={handleUploadFileSelect}
+                    onChange={(e) => handleUploadFileSelect(e)}
                   />
                 </div>
                 <div className="bg-clr-chat px-2 py-2 rounded mx-2">
