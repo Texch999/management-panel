@@ -251,7 +251,6 @@ function Chats() {
         console.log("generating signed url error", err);
       });
   };
-
   useEffect(() => {
     setSupportData();
   }, []);
