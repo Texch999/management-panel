@@ -20,6 +20,15 @@ import { open, send } from "../utils/WebSocket";
 function Chats() {
   const ImageBaseUrl = "https://we2-call-images.s3.us-east-2.amazonaws.com";
   const [clientsData, setClientsData] = useState([]);
+  const [filteredClients, setFilteredClients] = useState([]);
+  const [searchText, setSearchText] = useState("");
+  const [supportData, setSupportData] = useState([]);
+  const [selectedChat, setSelectedChat] = useState(null);
+
+  const handleUserClick = (index) => {
+    setSelectedChat(index);
+  };
+  console.log("selectedChat", selectedChat);
   const getAllUserData = async () => {
     await call(GET_ALL_USERS, {
       register_id: "company",
@@ -38,17 +47,42 @@ function Chats() {
   }, []);
   // console.log("clientsData", clientsData);
 
-  const chatsDetails = clientsData?.map((item) => ({
-    image: Images.RohitImage,
-    name: item?.user_name,
-    message: "What a Knock That Was !!! Virat Kohli !!",
-    time: item?.ts,
-    icon: "",
-  }));
+  const search = (value) => {
+    setSearchText(value);
+    const filteredSearch = clientsData?.filter((res) =>
+      res?.user_name?.includes(searchText)
+    );
+    setFilteredClients(filteredSearch);
+  };
+  // const chatsDetails =
+  // // searchText.length?.filteredClients?.filter((item) =>
+  // //   item?.user_name?.includes(searchText)
+  // // );
+  // clientsData?.map((item) => ({
+  //   image: Images.RohitImage,
+  //   name: item?.user_name,
+  //   message: "What a Knock That Was !!! Virat Kohli !!",
+  //   time: item?.ts,
+  //   icon: "",
+  // }));
+  // Assuming clientsData contains information about clients
+
+  const chatsDetails = clientsData?.map((client) => {
+    const clientSupportData = supportData?.filter(
+      (item) => item.from_user_id === client.register_id
+    );
+    return {
+      name: client.user_name,
+      messages: clientSupportData?.map((item) => ({
+        message: item.message,
+        time: item.ts,
+        senderId: item.from_user_id,
+      })),
+    };
+  });
 
   let register_id = "reg-20230920132711772";
   let creator_id = localStorage?.getItem("creator_id");
-  const [supportData, setSupportData] = useState([]);
   const [uploadImage, setuploadImage] = useState([]);
   const [singedUrl, setSignedUrl] = useState("");
   const [Id, setId] = useState("");
@@ -96,39 +130,37 @@ function Chats() {
       img: Images.ViratImage02,
     },
   ]);
+
   const date = new Date().toLocaleDateString();
   const [userInput, setUserInput] = useState("");
 
   const videoRef = useRef(null);
-
   const [file, setFile] = useState([]);
-  // const inputFile = useRef(null);
-
   const handleChange = (e) => {
     setFile([file, e.target.files[0]]);
   };
-  const handleUserInput = () => {
-    if (userInput.trim() !== "") {
-      setMessages((prevMessages) => [
-        ...prevMessages,
-        {
-          content: reply,
-          sender: "reg-20230920132711772",
-          img: Images.ViratImage02,
-        },
-      ]);
-      const reply = generateReply(userInput);
-      setMessages((prevMessages) => [
-        ...prevMessages,
+  // const handleUserInput = () => {
+  //   if (userInput.trim() !== "") {
+  //     setMessages((prevMessages) => [
+  //       ...prevMessages,
+  //       {
+  //         content: reply,
+  //         sender: "reg-20230920132711772",
+  //         img: Images.ViratImage02,
+  //       },
+  //     ]);
+  //     const reply = generateReply(userInput);
+  //     setMessages((prevMessages) => [
+  //       ...prevMessages,
 
-        { content: userInput, sender: "user", img: Images.DhoniImage02 },
-      ]);
-      setUserInput("");
-    }
-  };
-  const generateReply = (message) => {
-    return message;
-  };
+  //       { content: userInput, sender: "user", img: Images.DhoniImage02 },
+  //     ]);
+  //     setUserInput("");
+  //   }
+  // };
+  // const generateReply = (message) => {
+  //   return message;
+  // };
   const [currentTime, setCurrentTime] = useState(
     new Date().toLocaleTimeString()
   );
@@ -169,7 +201,7 @@ function Chats() {
       upload_image: `${ImageBaseUrl}/${"chat-images"}/${Id}.png`,
     })
       .then(async (res) => {
-        // console.log(res.data.data);
+        console.log(res.data.data);
         setSupportData(res?.data?.data);
         singedUrl &&
           profileImage &&
@@ -273,6 +305,7 @@ function Chats() {
                     type="text"
                     class="search-bar px-4 py-2 rounded"
                     placeholder="Search"
+                    // onChange={(e) => search(e.target.value)}
                   />
                   <span class="input-group-addon">
                     <button type="button">
@@ -297,7 +330,6 @@ function Chats() {
                     <img
                       className="rounded-circle"
                       src={Images.sachin_image}
-                      // src="https://bootdey.com/img/Content/avatar/avatar1.png"
                       alt="sunil"
                     />{" "}
                   </div>
@@ -331,7 +363,7 @@ function Chats() {
                   </div> */}
                 </div>
               </div>
-              {/* <div class="chat_list">
+              <div class="chat_list">
                 <div class="chat_people d-flex justify-content-between align-items-center">
                   <div class="chat_img">
                     {" "}
@@ -348,7 +380,7 @@ function Chats() {
                     <p>I will purchase it for sure............ </p>
                   </div>
                 </div>
-              </div> */}
+              </div>
             </div>
             <div class="headind_srch d-flex flex-row align-items-center mb-2">
               <LuUsers className="upload-icon mx-2" />
@@ -358,6 +390,37 @@ function Chats() {
               <div class="chat_list">
                 <div class="chat_people d-flex justify-content-between  flex-column">
                   {chatsDetails?.map((items, index) => (
+                    <div key={index} onClick={() => handleUserClick(index)}>
+                      <div class="chat_list">
+                        <div class="chat_people d-flex justify-content-between align-items-center">
+                          <div class="chat_img">
+                            <img
+                              className="rounded-circle"
+                              src={Images.dhawan_image}
+                              alt="sunil"
+                            />{" "}
+                          </div>
+                          <div class="chat_ib">
+                            <h5>
+                              {items?.name}{" "}
+                              {selectedChat === index &&
+                                items?.messages?.map((msg, Index) => (
+                                  <div key={Index}>
+                                    <p>{msg.message}</p>
+                                    <span>
+                                      {moment(msg?.time).format("hh:mm a")}
+                                    </span>
+                                  </div>
+                                ))}
+                              <span class="chat_date">{items?.time}</span>
+                            </h5>
+                            <p>{items?.messages} </p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                  {/* {chatsDetails?.map((items, index) => (
                     <div key={index}>
                       <div class="chat_list">
                         <div class="chat_people d-flex justify-content-between align-items-center">
@@ -373,19 +436,19 @@ function Chats() {
                               {items?.name}{" "}
                               <span class="chat_date">{items?.time}</span>
                             </h5>
-                            <p>{items?.message} </p>
+                            <p>{items?.messages} </p>
                           </div>
                         </div>
                       </div>
                     </div>
-                  ))}
+                  ))} */}
                 </div>
               </div>
             </div>
           </div>
           <div class="mesgs">
             <div class="msg_history px-4 py-3">
-              {/* <div class="incoming_msg">
+              <div class="incoming_msg">
                 <div class="incoming_msg_img">
                   {" "}
                   <img
@@ -400,12 +463,12 @@ function Chats() {
                     <span class="time_date"> 11:01 AM | June 9</span>
                   </div>
                 </div>
-              </div> */}
+              </div>
               {supportData?.map((item, index) => {
-                let sender = item.from_user_id === register_id ? true : false;
+                let senderId = item.from_user_id === register_id ? true : false;
                 return (
                   <div key={index}>
-                    {!sender && (
+                    {!senderId && (
                       <div className="date-text mt-10">
                         {moment(item.ts).format("hh:mm a")}
                       </div>
@@ -417,7 +480,7 @@ function Chats() {
                           <span class="time_date">
                             {moment(item.ts).format("hh:mm a")}
                           </span>{" "}
-                          {sender && (
+                          {senderId && (
                             <RiCheckDoubleLine
                               style={{ fontSize: "20px", color: "#70dc37" }}
                             />
