@@ -8,10 +8,8 @@ export const open = (events = {}) => {
   events = events;
   return new Promise((resolve) => {
     ws = new Sockette(
-      `wss://on2l783adb.execute-api.us-east-2.amazonaws.com/production?userid=${localStorage?.getItem(
-        "register_id"
-      )}`,
-      {
+      `wss://on2l783adb.execute-api.us-east-2.amazonaws.com/production?userid=reg-20231111083458442`,
+      { // localStorage.getItem('') -> login user id
         timeout: 5e3,
         maxAttempts: 1,
         onopen: (e) => {
@@ -33,7 +31,8 @@ export const open = (events = {}) => {
   });
 };
 //Send Message
-export const send = async (message) => {
+export const send = async (message, toUser) => {
+  console.log("testing...")
   if (!isConnecttionOpen) {
     await open(events);
   }
@@ -41,8 +40,8 @@ export const send = async (message) => {
     JSON.stringify({
       action: "onmessage",
       message,
-      from_user: localStorage?.getItem('register_id'),
-      to_user: localStorage?.getItem("creator_id"),
+      from_user: "reg-20231111083458442", // localStorage.getItem('') -> login user id
+      to_user: toUser, // TESTA-ADMIN
     })
   );
 };

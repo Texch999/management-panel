@@ -24,14 +24,17 @@ function Chats() {
   const [searchText, setSearchText] = useState("");
   const [supportData, setSupportData] = useState([]);
   const [selectedChat, setSelectedChat] = useState(null);
+  const [selectedUser, setSelectedUser] = useState("")
 
-  const handleUserClick = (index) => {
+
+  const handleUserClick = async (registerId, index) => {
+    setSelectedUser(registerId)
+    await getAllUserMessages(registerId)
     setSelectedChat(index);
   };
-  console.log("selectedChat", selectedChat);
   const getAllUserData = async () => {
     await call(GET_ALL_USERS, {
-      register_id: "company",
+      register_id: "reg-20231111083458442",
     })
       .then((res) => {
         console.log("res====>", res);
@@ -47,13 +50,13 @@ function Chats() {
   }, []);
   // console.log("clientsData", clientsData);
 
-  const search = (value) => {
-    setSearchText(value);
-    const filteredSearch = clientsData?.filter((res) =>
-      res?.user_name?.includes(searchText)
-    );
-    setFilteredClients(filteredSearch);
-  };
+  // const search = (value) => {
+  //   setSearchText(value);
+  //   const filteredSearch = clientsData && clientsData?.length > 0 && clientsData?.filter((res) =>
+  //     res?.user_name?.includes(searchText)
+  //   );
+  //   setFilteredClients(filteredSearch);
+  // };
   // const chatsDetails =
   // // searchText.length?.filteredClients?.filter((item) =>
   // //   item?.user_name?.includes(searchText)
@@ -67,19 +70,19 @@ function Chats() {
   // }));
   // Assuming clientsData contains information about clients
 
-  const chatsDetails = clientsData?.map((client) => {
-    const clientSupportData = supportData?.filter(
-      (item) => item.from_user_id === client.register_id
-    );
-    return {
-      name: client.user_name,
-      messages: clientSupportData?.map((item) => ({
-        message: item.message,
-        time: item.ts,
-        senderId: item.from_user_id,
-      })),
-    };
-  });
+  // const chatsDetails = clientsData?.map((client) => {
+  //   const clientSupportData = supportData && supportData?.length> 0 && supportData?.filter(
+  //     (item) => item.from_user_id === client.register_id
+  //   );
+  //   return {
+  //     name: client.user_name,
+  //     messages: clientSupportData && clientSupportData?.length > 0 && clientSupportData?.map((item) => ({
+  //       message: item.message,
+  //       time: item.ts,
+  //       senderId: item.from_user_id,
+  //     })),
+  //   };
+  // });
 
   let register_id = "reg-20230920132711772";
   let creator_id = localStorage?.getItem("creator_id");
@@ -176,7 +179,7 @@ function Chats() {
 
   const inputHandler = async () => {
     setUserInput("");
-    await send(userInput);
+    await send(userInput, selectedUser);
   };
 
   const addMessage = (message, msg_c = 0) => {
@@ -194,29 +197,29 @@ function Chats() {
     }
   };
 
-  const getAllUserMessages = async () => {
+  const getAllUserMessages = async (registerId) => {
     await call(GET_USER_MESSAGES, {
-      register_id,
-      creator_id,
+      from_user_id: registerId, //reg-20231121132839869 // dynamic user id
+      to_user_id: "reg-20231111083458442", // localStorage.getItem('') -> Login user id
       upload_image: `${ImageBaseUrl}/${"chat-images"}/${Id}.png`,
     })
       .then(async (res) => {
-        console.log(res.data.data);
+        console.log("support data", res.data.data);
         setSupportData(res?.data?.data);
-        singedUrl &&
-          profileImage &&
-          (await fetch(singedUrl, {
-            method: "PUT",
-            body: profileImage,
-            headers: {
-              "Content-Type": "image/jpeg",
-              "cache-control": "public, max-age=0",
-            },
-          })
-            .then((res) => {})
-            .catch((err) => {
-              console.log("err: ", err);
-            }));
+        // singedUrl &&
+        //   profileImage &&
+        //   (await fetch(singedUrl, {
+        //     method: "PUT",
+        //     body: profileImage,
+        //     headers: {
+        //       "Content-Type": "image/jpeg",
+        //       "cache-control": "public, max-age=0",
+        //     },
+        //   })
+        //     .then((res) => {})
+        //     .catch((err) => {
+        //       console.log("err: ", err);
+        //     }));
       })
       .catch((err) => {
         console.log(err);
@@ -238,9 +241,9 @@ function Chats() {
     }
   };
   useEffect(() => {
-    getAllUserMessages();
     open({ onmessage: onMessageRecieve });
   }, []);
+
   const [webcamVisible, setWebcamVisible] = useState(false);
   const webcamRef = useRef(null);
   const toggleWebCam = () => {
@@ -389,8 +392,8 @@ function Chats() {
             <div className="inbox-chat-contacts">
               <div class="chat_list">
                 <div class="chat_people d-flex justify-content-between  flex-column">
-                  {chatsDetails?.map((items, index) => (
-                    <div key={index} onClick={() => handleUserClick(index)}>
+                  {clientsData && clientsData?.length > 0  && clientsData?.map((user, index) => (
+                    <div key={index} onClick={() => handleUserClick(user?.register_id, index)}>
                       <div class="chat_list">
                         <div class="chat_people d-flex justify-content-between align-items-center">
                           <div class="chat_img">
@@ -402,8 +405,8 @@ function Chats() {
                           </div>
                           <div class="chat_ib">
                             <h5>
-                              {items?.name}{" "}
-                              {selectedChat === index &&
+                              {user?.first_name}{" "}{user?.last_name}
+                              {/* {selectedChat === index &&
                                 items?.messages?.map((msg, Index) => (
                                   <div key={Index}>
                                     <p>{msg.message}</p>
@@ -411,10 +414,10 @@ function Chats() {
                                       {moment(msg?.time).format("hh:mm a")}
                                     </span>
                                   </div>
-                                ))}
-                              <span class="chat_date">{items?.time}</span>
+                                ))} */}
+                              <span class="chat_date">{user?.time}</span>
                             </h5>
-                            <p>{items?.messages} </p>
+                            <p>{user?.messages} </p>
                           </div>
                         </div>
                       </div>
@@ -464,7 +467,7 @@ function Chats() {
                   </div>
                 </div>
               </div>
-              {supportData?.map((item, index) => {
+              {supportData && supportData?.length > 0 && supportData?.map((item, index) => {
                 let senderId = item.from_user_id === register_id ? true : false;
                 return (
                   <div key={index}>
