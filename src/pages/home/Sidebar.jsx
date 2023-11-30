@@ -54,11 +54,11 @@ function Sidebar() {
       path: "/matchCreation",
       reactIcon: <LuCopyPlus />,
     },
-    {
-      title: "Banking",
-      path: "/banking",
-      reactIcon: <BsBank2 />,
-    },
+    // {
+    //   title: "Banking",
+    //   path: "/banking",
+    //   reactIcon: <BsBank2 />,
+    // },
     {
       title: "Tours Banking",
       path: "/toursbanking",

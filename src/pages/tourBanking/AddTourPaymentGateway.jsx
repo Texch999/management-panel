@@ -15,19 +15,16 @@ function AddCountryPopups(props) {
 
   const addingPaymentgateway = async()=>{
     const payload = {
-        countryName: inputData.countryName,
-        currencyName: inputData.currencyName,
-        paymentGateway: inputData.paymentGateway,
-        tourName: inputData.tour,
-        website: inputData.website,
-        status: inputData.status,
-        creator: "company"
+        creator: "company",
+        ...inputData
     }
     await call(ADD_TOUR_PAYMENT_GATEWAY, payload)
             .then((res)=>{
                 if(res?.data?.statuscode==200){
                     setAcceptClick(true);
                     setAddCountryOpen(false);
+                }else{
+                    setAddCountryOpen(false)
                 }
             })
             .catch((error)=>console.log(error))
@@ -103,7 +100,7 @@ function AddCountryPopups(props) {
             <Col className="ps-0 pe-0">
                 <div className="small-font my-1">Select Tour *</div>
                 <select className="w-100 custom-select small-font input-btn-bg px-2 py-3 all-none rounded all-none"
-                        name="tour"
+                        name="tourName"
                         onChange={(e)=>handleOnchange(e)}
                 >
                   <option selected>Select</option>
@@ -139,6 +136,98 @@ function AddCountryPopups(props) {
                 </select>
               </Col>
             </Row>
+          </Container>
+          <Container>
+            {(inputData.paymentGateway === "phonepay" ||
+                inputData.paymentGateway === "googlepay" ||
+                inputData.paymentGateway === "paytm" ||
+                inputData.paymentGateway === "bhimupi") && (
+                <Row>
+                <Col className="pe-0 ps-0">
+                    <div className="small-font my-1">Mobile Number*</div>
+                    <input
+                    type="text"
+                    placeholder="Enter Mobile Number"
+                    name="mobileNumber"
+                    className="w-100 custom-select small-font login-inputs input-btn-bg px-2 py-3 all-none rounded all-none"
+                    value={inputData.mobileNumber || ""}
+                    onChange={(e) => handleOnchange(e)}
+                    ></input>
+                </Col>
+                <Col className="pe-0">
+                    <div className="small-font my-1">Upi ID*</div>
+                    <input
+                    type="text"
+                    placeholder="Enter UPI ID"
+                    name="upiId"
+                    className="w-100 custom-select small-font login-inputs input-btn-bg px-2 py-3 all-none rounded all-none"
+                    value={inputData.upiId || ""}
+                    onChange={(e) => handleOnchange(e)}
+                    ></input>
+                </Col>
+                <Col className="pe-0">
+                    <div className="small-font my-1">Upi Name*</div>
+                    <input
+                    type="text"
+                    placeholder="Enter Upi Name"
+                    name="upiName"
+                    className="w-100 custom-select small-font login-inputs input-btn-bg px-2 py-3 all-none rounded all-none"
+                    value={inputData.upiName || ""}
+                    onChange={(e) => handleOnchange(e)}
+                    ></input>
+                </Col>
+            </Row>
+            )}
+          </Container>
+          <Container>
+          {inputData.paymentGateway === "neft" && (
+            <Row>
+              <Col className="pe-0 ps-0">
+                <div className="small-font my-1">Account Holder Name</div>
+                <input
+                  type="text"
+                  placeholder="Enter Accoun Holder Number"
+                  name="accountHolderName"
+                  className="w-100 custom-select small-font login-inputs input-btn-bg px-2 py-3 all-none rounded all-none"
+                  value={inputData.accountHolderName || ""}
+                  onChange={(e)=>handleOnchange(e)}
+                ></input>
+              </Col>
+              <Col className="pe-0">
+                <div className="small-font my-1">Bank Name</div>
+                <input
+                  type="text"
+                  placeholder="Enter Upi Id"
+                  name="bankName"
+                  className="w-100 custom-select small-font login-inputs input-btn-bg px-2 py-3 all-none rounded all-none"
+                  value={inputData.bankName || ""}
+                  onChange={(e) => handleOnchange(e)}
+                ></input>
+              </Col>
+              <Col className="pe-0">
+                <div className="small-font my-1">Account Number*</div>
+                <input
+                  type="text"
+                  placeholder="Enter Mobile Number"
+                  name="accountNumber"
+                  className="w-100 custom-select small-font login-inputs input-btn-bg px-2 py-3 all-none rounded all-none"
+                  value={inputData.accountNumber || ""}
+                  onChange={(e) => handleOnchange(e)}
+                ></input>
+              </Col>
+              <Col className="pe-0">
+                <div className="small-font my-1">IFSC Code*</div>
+                <input
+                  type="text"
+                  placeholder="Enter IFSC Code"
+                  name="ifscCode"
+                  className="w-100 custom-select small-font login-inputs input-btn-bg px-2 py-3 all-none rounded all-none"
+                  value={inputData.ifscCode || ""}
+                  onChange={(e) => handleOnchange(e)}
+                ></input>
+              </Col>
+            </Row>
+          )}
           </Container>
           <Container>
             <Row>
