@@ -195,8 +195,9 @@ function TextMessage() {
                         <option value="" selected>
                           Select....
                         </option>
-                        <option value="user">user</option>
-                        <option value="Admin">Admin</option>
+                        <option value="mobile">Mobile</option>
+                        <option value="web">Web</option>
+                        <option value="web-pushnotification">Web-PushNotification</option>
                       </>
                     ) : (
                       <>

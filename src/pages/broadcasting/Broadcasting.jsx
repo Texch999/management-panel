@@ -63,6 +63,7 @@ function Broadcasting() {
   const getNotifications = async () => {
     const payload = {
       register_id: "company",
+      notification_type: "web-pushnotification",
     };
     await call(GET_ALL_NOTIFICATIONS, payload)
       .then((res) => {
@@ -133,7 +134,7 @@ function Broadcasting() {
       item.publish_date <= currentDate &&
       item?.event_name?.toLowerCase().includes(searchOffer.toLowerCase())
   );
-  const modifiedBroadcastingDetails =publishedData.map((item) => {
+  const modifiedBroadcastingDetails = publishedData.map((item) => {
     return {
       ...item,
       title: (
@@ -228,8 +229,11 @@ function Broadcasting() {
           />
         )}
         {activeIndex === 2 && (
-          <DraftTable columns={cols} data={modifiedBroadcastingDetails} 
-          searchOffer={searchOffer}/>
+          <DraftTable
+            columns={cols}
+            data={modifiedBroadcastingDetails}
+            searchOffer={searchOffer}
+          />
         )}
       </div>
     </div>
