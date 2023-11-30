@@ -60,6 +60,11 @@ function Sidebar() {
       reactIcon: <BsBank2 />,
     },
     {
+      title: "Tours Banking",
+      path: "/toursbanking",
+      reactIcon: <BsBank2 />,
+    },
+    {
       title: "Tickets",
       path: "/tickets",
       reactIcon: <ImTicket />,
