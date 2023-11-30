@@ -24,12 +24,11 @@ function Chats() {
   const [searchText, setSearchText] = useState("");
   const [supportData, setSupportData] = useState([]);
   const [selectedChat, setSelectedChat] = useState(null);
-  const [selectedUser, setSelectedUser] = useState("")
-
+  const [selectedUser, setSelectedUser] = useState("");
 
   const handleUserClick = async (registerId, index) => {
-    setSelectedUser(registerId)
-    await getAllUserMessages(registerId)
+    setSelectedUser(registerId);
+    await getAllUserMessages(registerId);
     setSelectedChat(index);
   };
   const getAllUserData = async () => {
@@ -294,25 +293,25 @@ function Chats() {
     uploadfileInputRef.current.click();
   };
   return (
-    <div class="container">
-      <div class="messaging">
-        <div class="inbox_msg">
-          <div class="inbox_people">
-            <div class="headind_srch d-flex flex-column mb-2">
-              <div class="recent_heading d-flex flex-start my-2">
+    <div className="container">
+      <div className="messaging">
+        <div className="inbox_msg">
+          <div className="inbox_people">
+            <div className="headind_srch d-flex flex-column mb-2">
+              <div className="recent_heading d-flex flex-start my-2">
                 <h4>Support</h4>
               </div>
-              <div class="srch_bar d-flex justify-content-center w-100">
-                <div class="stylish-input-group w-80">
+              <div className="srch_bar d-flex justify-content-center w-100">
+                <div className="stylish-input-group w-80">
                   <input
                     type="text"
-                    class="search-bar px-4 py-2 rounded"
+                    className="search-bar px-4 py-2 rounded"
                     placeholder="Search"
                     // onChange={(e) => search(e.target.value)}
                   />
-                  <span class="input-group-addon">
+                  <span className="input-group-addon">
                     <button type="button">
-                      <i class="fa fa-search" aria-hidden="true"></i>{" "}
+                      <i className="fa fa-search" aria-hidden="true"></i>{" "}
                     </button>
                   </span>
                 </div>
@@ -325,37 +324,37 @@ function Chats() {
               </div>
             </div>
 
-            <div class="inbox_chat">
-              <div class="chat_list active_chat">
-                <div class="chat_people d-flex justify-content-between align-items-center">
-                  <div class="chat_img">
+            <div className="inbox_chat">
+              <div className="chat_list active_chat">
+                <div className="chat_people d-flex justify-content-between align-items-center">
+                  <div className="chat_img">
                     {" "}
                     <img
-                      className="rounded-circle"
+                      className="rounded-circle chat-contact-image"
                       src={Images.sachin_image}
                       alt="sunil"
                     />{" "}
                   </div>
-                  <div class="chat_ib">
+                  <div className="chat_ib font-10">
                     <h5>
-                      Sunil Rajput <span class="chat_date">Dec 25</span>
+                      Sunil Rajput <span className="chat_date">Dec 25</span>
                     </h5>
                     <p>I will purchase it for sure............ </p>
                   </div>
                 </div>
               </div>
-              <div class="chat_list">
-                <div class="chat_people d-flex justify-content-between align-items-center">
-                  {/* <div class="chat_img">
+              <div className="chat_list">
+                <div className="chat_people d-flex justify-content-between align-items-center">
+                  {/* <div className="chat_img">
                     <img
-                      className="rounded-circle"
+                      className="rounded-circle chat-contact-image"
                       src={Images.raina_image}
                       alt="sunil"
                     />{" "}
                   </div> */}
-                  {/* <div class="chat_ib">
+                  {/* <div className="chat_ib">
                     <h5>
-                      Sunil Rajput <span class="chat_date">Dec 25</span>
+                      Sunil Rajput <span className="chat_date">Dec 25</span>
                     </h5>
                     <div className="d-flex align-items-center justify-content-between w-100">
                       <p className="clr-green">Typing............ </p>
@@ -366,47 +365,56 @@ function Chats() {
                   </div> */}
                 </div>
               </div>
-              <div class="chat_list">
-                <div class="chat_people d-flex justify-content-between align-items-center">
-                  <div class="chat_img">
+              <div className="chat_list">
+                <div className="chat_people d-flex justify-content-between align-items-center">
+                  <div className="chat_img">
                     {" "}
                     <img
-                      className="rounded-circle"
+                      className="rounded-circle chat-contact-image"
                       src={Images.rohit_image}
                       alt="sunil"
                     />{" "}
                   </div>
-                  <div class="chat_ib">
+                  <div className="chat_ib">
                     <h5>
-                      Sunil Rajput <span class="chat_date">Dec 25</span>
+                      Sunil Rajput <span className="chat_date">Dec 25</span>
                     </h5>
                     <p>I will purchase it for sure............ </p>
                   </div>
                 </div>
               </div>
             </div>
-            <div class="headind_srch d-flex flex-row align-items-center mb-2">
-              <LuUsers className="upload-icon mx-2" />
-              <span className="clr-cornflower large-font mx-2">Contacts</span>
+            <div className="headind_srch d-flex flex-row align-items-center mb-2">
+              <LuUsers className="upload-icon mx-2 font-12" />
+              <span className="clr-cornflower large-font mx-2 font-12">
+                Contacts
+              </span>
             </div>
             <div className="inbox-chat-contacts">
-              <div class="chat_list">
-                <div class="chat_people d-flex justify-content-between  flex-column">
-                  {clientsData && clientsData?.length > 0  && clientsData?.map((user, index) => (
-                    <div key={index} onClick={() => handleUserClick(user?.register_id, index)}>
-                      <div class="chat_list">
-                        <div class="chat_people d-flex justify-content-between align-items-center">
-                          <div class="chat_img">
-                            <img
-                              className="rounded-circle"
-                              src={Images.dhawan_image}
-                              alt="sunil"
-                            />{" "}
-                          </div>
-                          <div class="chat_ib">
-                            <h5>
-                              {user?.first_name}{" "}{user?.last_name}
-                              {/* {selectedChat === index &&
+              <div className="chat_list">
+                <div className="chat_people d-flex justify-content-between  flex-column">
+                  {clientsData &&
+                    clientsData?.length > 0 &&
+                    clientsData?.map((user, index) => (
+                      <div
+                        key={index}
+                        onClick={() =>
+                          handleUserClick(user?.register_id, index)
+                        }
+                      >
+                        <div className="chat_list">
+                          <div className="chat_people d-flex justify-content-between align-items-center">
+                            <div className="chat_img">
+                              <img
+                                className="rounded-circle chat-contact-image"
+                                src={Images.dhawan_image}
+                                alt="sunil"
+                              />{" "}
+                            </div>
+                            <div className="chat_ib">
+                              <h5>
+                                {user?.first_name} {user?.last_name}
+                                {/* {selectedChat === index &&
                                 items?.messages?.map((msg, Index) => (
                                   <div key={Index}>
                                     <p>{msg.message}</p>
@@ -415,29 +423,29 @@ function Chats() {
                                     </span>
                                   </div>
                                 ))} */}
-                              <span class="chat_date">{user?.time}</span>
-                            </h5>
-                            <p>{user?.messages} </p>
+                                <span className="chat_date">{user?.time}</span>
+                              </h5>
+                              <p>{user?.messages} </p>
+                            </div>
                           </div>
                         </div>
                       </div>
-                    </div>
-                  ))}
+                    ))}
                   {/* {chatsDetails?.map((items, index) => (
                     <div key={index}>
-                      <div class="chat_list">
-                        <div class="chat_people d-flex justify-content-between align-items-center">
-                          <div class="chat_img">
+                      <div className="chat_list">
+                        <div className="chat_people d-flex justify-content-between align-items-center">
+                          <div className="chat_img">
                             <img
-                              className="rounded-circle"
+                              className="rounded-circle chat-contact-image"
                               src={Images.dhawan_image}
                               alt="sunil"
                             />{" "}
                           </div>
-                          <div class="chat_ib">
+                          <div className="chat_ib">
                             <h5>
                               {items?.name}{" "}
-                              <span class="chat_date">{items?.time}</span>
+                              <span className="chat_date">{items?.time}</span>
                             </h5>
                             <p>{items?.messages} </p>
                           </div>
@@ -449,58 +457,61 @@ function Chats() {
               </div>
             </div>
           </div>
-          <div class="mesgs">
-            <div class="msg_history px-4 py-3">
-              <div class="incoming_msg">
-                <div class="incoming_msg_img">
+          <div className="mesgs">
+            <div className="msg_history px-4 py-3">
+              <div className="incoming_msg">
+                <div className="incoming_msg_img">
                   {" "}
                   <img
-                    className="rounded-circle"
+                    className="rounded-circle chat-contact-image"
                     src={Images.dhoni_image}
                     alt="sunil"
                   />{" "}
                 </div>
-                <div class="received_msg">
-                  <div class="received_withd_msg">
+                <div className="received_msg">
+                  <div className="received_withd_msg">
                     <p>Test which is a new approach to have all solutions</p>
-                    <span class="time_date"> 11:01 AM | June 9</span>
+                    <span className="time_date"> 11:01 AM | June 9</span>
                   </div>
                 </div>
               </div>
-              {supportData && supportData?.length > 0 && supportData?.map((item, index) => {
-                let senderId = item.from_user_id === register_id ? true : false;
-                return (
-                  <div key={index}>
-                    {!senderId && (
-                      <div className="date-text mt-10">
-                        {moment(item.ts).format("hh:mm a")}
-                      </div>
-                    )}
-                    <div class="outgoing_msg">
-                      <div key={index} class="sent_msg">
-                        <p>{item?.message}</p>
-                        <div className="d-flex justify-content-between align-items-center">
-                          <span class="time_date">
-                            {moment(item.ts).format("hh:mm a")}
-                          </span>{" "}
-                          {senderId && (
-                            <RiCheckDoubleLine
-                              style={{ fontSize: "20px", color: "#70dc37" }}
-                            />
-                          )}
+              {supportData &&
+                supportData?.length > 0 &&
+                supportData?.map((item, index) => {
+                  let senderId =
+                    item.from_user_id === register_id ? true : false;
+                  return (
+                    <div key={index}>
+                      {!senderId && (
+                        <div className="date-text mt-10">
+                          {moment(item.ts).format("hh:mm a")}
+                        </div>
+                      )}
+                      <div className="outgoing_msg">
+                        <div key={index} className="sent_msg">
+                          <p>{item?.message}</p>
+                          <div className="d-flex justify-content-between align-items-center">
+                            <span className="time_date">
+                              {moment(item.ts).format("hh:mm a")}
+                            </span>{" "}
+                            {senderId && (
+                              <RiCheckDoubleLine
+                                style={{ fontSize: "20px", color: "#70dc37" }}
+                              />
+                            )}
+                          </div>
                         </div>
                       </div>
                     </div>
-                  </div>
-                );
-              })}
+                  );
+                })}
             </div>
-            <div className="d-flex flex-row justify-content-around align-items-center px-4 py-2 chat-container-box">
-              <div class="type_msg w-75 mx-2 rounded">
-                <div class="input_msg_write">
+            <div className="d-flex flex-row justify-content-around align-items-center chat-container-box">
+              <div className="type_msg w-75 mx-2 rounded">
+                <div className="input_msg_write">
                   <input
                     type="text"
-                    class="write_msg px-4"
+                    className="write_msg px-4 font-white none-outline rounded"
                     value={userInput}
                     placeholder="Type a message"
                     onChange={(e) => {
@@ -509,15 +520,15 @@ function Chats() {
                     onKeyDown={(e) => userInput && hanldeKeyDown(e)}
                   />
                   <button
-                    class="msg_send_btn me-3"
+                    className="msg_send_btn me-3"
                     onClick={() => inputHandler()}
                   >
-                    <i class="fa fa-paper-plane-o" aria-hidden="true"></i>
+                    <i className="fa fa-paper-plane-o" aria-hidden="true"></i>
                   </button>
                 </div>
               </div>
               <div className="d-flex w-25 flex-row justify-content-around align-items-center">
-                <div className="bg-clr-chat px-2 py-2 rounded mx-2">
+                <div className="bg-clr-chat px-2 py-1 rounded mx-2">
                   <label htmlFor="camera-button">
                     <BiSolidCamera className="upload-icon" />
                   </label>
@@ -528,7 +539,7 @@ function Chats() {
                     onChange={(e) => handleChange(e)}
                   />
                 </div>
-                <div className="bg-clr-chat px-2 py-2 rounded mx-2">
+                <div className="bg-clr-chat px-2 py-1 rounded mx-2">
                   {/* onClick={handleUploadButtonClick}
                 disabled={uploadImage} */}
                   <label htmlFor="attachment">
@@ -542,7 +553,7 @@ function Chats() {
                     onChange={(e) => handleUploadFileSelect(e)}
                   />
                 </div>
-                <div className="bg-clr-chat px-2 py-2 rounded mx-2">
+                <div className="bg-clr-chat px-2 py-1 rounded mx-2">
                   <MdMicNone className="upload-icon" />
                 </div>
               </div>
