@@ -4,6 +4,15 @@
   border-radius: 5px;
   width: fit-content;
   height: fit-content;
+  border: none;
+  outline: none;
+}
+.btn-color {
+  background: #fa2424 !important;
+  color: whitesmoke;
+}
+.btn-color2 {
+  background: #a6a6fa !important;
 }
 .active-head {
   color: #696cff !important;
@@ -22,6 +31,22 @@
 .upload-poster-div {
   background: #3a3c58;
   border-radius: 10px;
+  display: flex;
+}
+.text-input-poster {
+  height: 4vh;
+  background: none;
+  border: none;
+  outline: none;
+  color: #fff;
+  width: 100%;
+}
+.button-position {
+  position: relative;
+  left: 93%;
+}
+.h-100px {
+  height: 100px;
 }
 .file-input {
   background: none;
@@ -77,6 +102,31 @@
   border-radius: 5px;
 }
 .download-div {
-  border: 1px solid grey;
+  /* border: 1px solid grey; */
   border-radius: 5px;
+  width: 100%;
+  text-align: right;
+  /* display: flex; */
+  /* justify-content: flex-end; */
+}
+.download-container {
+  border-radius: 5px;
+  border: 1px solid grey;
+  width: fit-content;
+  position: relative;
+  right: -75%;
+}
+.scroll-div {
+  height: 60vh;
+  overflow-y: scroll;
+}
+.input-custum {
+  background: #3a3c58;
+  border-radius: 5px;
+  width: 70px;
+  outline: none;
+  border: none;
+  color: #ffffff;
+  height: 30px;
+  margin: 5px;
 }

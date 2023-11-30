@@ -1,8 +1,13 @@
-import React from "react";
-import Table from "../table/Table";
+import React, { useState } from "react";
 import { AiOutlineEye } from "react-icons/ai";
+import PublishedTabledata from "./PublishedTabledata";
+import ScheduledData from "./ScheduledData";
+import DraftTable from "./DraftTable";
+import { useNavigate } from "react-router-dom";
 
 function Offersmanagement() {
+  const [searchOffer, setSearchOffer] = useState("");
+
   const OFFERSMANAGEMENT_DETAILS = [
     {
       title:
@@ -81,7 +86,6 @@ function Offersmanagement() {
 
   const modifiedOffersmanagementDetails = OFFERSMANAGEMENT_DETAILS.map(
     (item) => ({
-      ...item,
       title: (
         <div className="role-color">
           <span className="role-color">{item?.title}</span>{" "}
@@ -89,6 +93,17 @@ function Offersmanagement() {
       ),
     })
   );
+
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  const navigate = useNavigate();
+
+  const headersList = ["Published", "Sheduled", "Draft"];
+
+  const handleHeader = (item) => {
+    setActiveIndex(item);
+  };
+
   return (
     <div className="p-4 w-100">
       <h6 className="h6 font-grey">Offers</h6>
@@ -96,19 +111,19 @@ function Offersmanagement() {
         <div className="d-flex align-items-center justify-content-between">
           <div className=" d-flex justify-content-between">
             <div className="row justify-content-md-center mx-1 p-1">
-              <div className="active text-white col-md-auto medium-font justify-content-between p-2 px-4 m-1">
-                Published
-              </div>
-            </div>
-            <div className="row justify-content-md-center mx-1 p-1">
-              <div className="table-header-box col-md-auto medium-font justify-content-between p-2 px-4 m-1">
-                Sheduled
-              </div>
-            </div>
-            <div className="row justify-content-md-center mx-1 p-1">
-              <div className="table-header-box col-md-auto medium-font justify-content-between p-2 px-4 m-1">
-                Draft
-              </div>
+              {headersList.map((item, index) => {
+                return (
+                  <div
+                    key={index}
+                    className={`${
+                      activeIndex === index ? "active" : "table-header-box"
+                    } text-white col-md-auto medium-font justify-content-between p-2 px-4 m-1`}
+                    onClick={() => handleHeader(index)}
+                  >
+                    {item}
+                  </div>
+                );
+              })}
             </div>
           </div>
           <div className=" d-flex justify-content-between align-items-center">
@@ -119,11 +134,18 @@ function Offersmanagement() {
                   type="search"
                   placeholder="Search"
                   aria-label="Search"
+                  value={searchOffer}
+                  onChange={(e) => setSearchOffer(e.target.value)}
                 />
               </form>
             </div>
             <div className="row justify-content-md-center m-1 p-1">
-              <div className="active text-white col-md-auto medium-font justify-content-between px-2 p-2 m-1">
+              <div
+                className="active text-white col-md-auto medium-font justify-content-between px-2 p-2 m-1"
+                onClick={() => {
+                  navigate("/create-new-offer-management");
+                }}
+              >
                 +Add New
               </div>
             </div>
@@ -132,8 +154,27 @@ function Offersmanagement() {
         <div className=" medium-font font-weight-bold px-2 p-2 pt-0 mt-0 th-color">
           All Notifications
         </div>
-
-        <Table columns={cols} data={modifiedOffersmanagementDetails} />
+        {activeIndex === 0 && (
+          <PublishedTabledata
+            columns={cols}
+            data={modifiedOffersmanagementDetails}
+            searchOffer={searchOffer}
+          />
+        )}
+        {activeIndex === 1 && (
+          <ScheduledData
+            columns={cols}
+            data={modifiedOffersmanagementDetails}
+            searchOffer={searchOffer}
+          />
+        )}
+        {activeIndex === 2 && (
+          <DraftTable
+            searchOffer={searchOffer}
+            columns={cols}
+            data={modifiedOffersmanagementDetails}
+          />
+        )}
       </div>
     </div>
   );

@@ -1,52 +1,24 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Table from "../table/Table";
 import { MdOutlineEdit } from "react-icons/md";
 import AddCountryPopups from "../Popups/AddCountryPopups";
+import { GET_COUNTRY_AND_CURRENCY } from "../../config/endpoints";
+import { call } from "../../config/axios";
 
 function Countrycurrency() {
-  const COUNTRYCURRENCY_DETAILS = [
-    {
-      countryname: "India ",
-      currency: "INR ₹",
-      availableaccounts: "Bank Details, Wallet, QR Code",
-      showwebsites: "www.texch.com www.we2call.com www.ravanna.com",
-      status: "Active",
-      icon: <MdOutlineEdit className="eye-icon-size" />,
-    },
-    {
-      countryname: "USA ",
-      currency: "USD $",
-      availableaccounts: "Bank Details, Wallet, QR Code",
-      showwebsites: "www.texch.com www.we2call.com www.ravanna.com",
-      status: "In-active",
-      icon: <MdOutlineEdit className="eye-icon-size" />,
-    },
-    {
-      countryname: "India ",
-      currency: "INR ₹",
-      availableaccounts: "Bank Details, Wallet, QR Code",
-      showwebsites: "www.texch.com www.we2call.com www.ravanna.com",
-      status: "In-active",
-      icon: <MdOutlineEdit className="eye-icon-size" />,
-    },
-    {
-      countryname: "Gemany ",
-      currency: "EUR €",
-      availableaccounts: "Bank Details, Wallet, QR Code",
-      showwebsites: "www.texch.com www.we2call.com www.ravanna.com",
-      status: "In-active",
-      icon: <MdOutlineEdit className="eye-icon-size" />,
-    },
-    {
-      countryname: "India ",
-      currency: "INR ₹",
-      availableaccounts: "Bank Details, Wallet, QR Code",
-      showwebsites: "www.texch.com www.we2call.com www.ravanna.com",
-      status: "Active",
-      icon: <MdOutlineEdit className="eye-icon-size" />,
-    },
-  ];
+  const [getallCountries, setAllCountries] = useState([]);
+  const [filteredCountries, setFilteredCountries] = useState([]);
+  const [selectedCountry, setSelectedCountry] = useState(null);
+  const [searchText, setSearchText] = useState("");
+  const [status, setStatus] = useState(false);
 
+  const searchContent = (value) => {
+    setSearchText(value);
+    const filteredSearchText = getallCountries.filter((res) =>
+      res?.country_name.toLowerCase().includes(searchText.toLowerCase())
+    );
+    setFilteredCountries(filteredSearchText);
+  };
   const cols = [
     {
       header: "COUNTRY NAME",
@@ -73,19 +45,69 @@ function Countrycurrency() {
     {
       header: "Action",
       field: "icon",
+      render: () => <p>Test</p>,
     },
   ];
+  const getAllCountries = async () => {
+    const payload = {
+      register_id: "company",
+    };
+    await call(GET_COUNTRY_AND_CURRENCY, payload)
+      .then((res) => {
+        setAllCountries(res?.data?.data);
+      })
 
-  const modifiedCountrycurrencyDetails = COUNTRYCURRENCY_DETAILS.map(
-    (item) => ({
-      ...item,
-      countryname: (
-        <div className="role-color">
-          <span className="role-color">{item?.countryname}</span>{" "}
-        </div>
-      ),
-    })
-  );
+      .catch((err) => console.log(err));
+  };
+  useEffect(() => {
+    getAllCountries();
+  }, [status]);
+
+  const modifiedCountrycurrencyDetails = searchText.length
+    ? filteredCountries
+        .filter((item) =>
+          item?.country_name.toLowerCase().includes(searchText.toLowerCase())
+        )
+        .map((item) => {
+          return {
+            countryname: <div className="role-color">{item?.country_name}</div>,
+            currency: item?.currency_name,
+            availableaccounts: item?.payment_details,
+            showwebsites: item?.website,
+            status:
+              item?.active === "Yes" ? (
+                <div className="font-green custom-active-button px-2">
+                  Active
+                </div>
+              ) : (
+                <div className="custom-deactive-button px-2">InActive</div>
+              ),
+            icon: <MdOutlineEdit className="eye-icon-size" />,
+          };
+        })
+    : getallCountries.map((item) => {
+        return {
+          countryname: <div className="role-color">{item?.country_name}</div>,
+          currency: item?.currency_name,
+          availableaccounts: item?.payment_details,
+          showwebsites: item?.website,
+          status:
+            item?.active === "Yes" ? (
+              <div className="font-green custom-active-button px-2">Active</div>
+            ) : (
+              <div className="custom-deactive-button px-2">InActive</div>
+            ),
+          icon: (
+            <MdOutlineEdit
+              className="eye-icon-size"
+              onClick={() => {
+                setSelectedCountry(item);
+                handleAddCountryPopup();
+              }}
+            />
+          ),
+        };
+      });
   const [addCountryOpen, setAddCountryOpen] = useState(false);
   const handleAddCountryPopup = () => {
     setAddCountryOpen(true);
@@ -106,6 +128,8 @@ function Countrycurrency() {
                   type="search"
                   placeholder="Search"
                   aria-label="Search"
+                  value={searchText}
+                  onChange={(e) => searchContent(e.target.value)}
                 />
               </form>
             </div>
@@ -124,7 +148,17 @@ function Countrycurrency() {
       </div>
       <AddCountryPopups
         addCountryOpen={addCountryOpen}
+        Heading={`${
+          selectedCountry ? "Update" : "Add"
+        }  Country, Currency, and Payment Gateways`}
+        // Heading={`${selectedCountry ? "Update Country, Currency, and Payment Gateways" : "Add Country, Currency, and Payment Gateways"} `}
         setAddCountryOpen={setAddCountryOpen}
+        setStatus={setStatus}
+        selectedCountry={selectedCountry}
+        setData={setSelectedCountry}
+        getData={getAllCountries}
+        componentType="CURRENCY"
+        // setSelectedCountry={setSelectedCountry}
       />
     </div>
   );

@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Table from "../table/Table";
+import { MdOutlineEdit } from "react-icons/md";
 import Totalaccount from "../home/Totalaccount";
 import { MdKeyboardArrowUp, MdKeyboardArrowDown } from "react-icons/md";
 import { AiOutlineSetting } from "react-icons/ai";
@@ -7,121 +8,35 @@ import { TbUserEdit } from "react-icons/tb";
 import { LuFileClock } from "react-icons/lu";
 import { TbFileText } from "react-icons/tb";
 import AddDirectorsPopup from "../Popups/AddDirectorsPopup";
+import { GET_ALL_USERS} from "../../config/endpoints";
+import { call } from "../../config/axios";
+
 function Adddirector() {
-  const ADDDIRECTOR_DETAILS = [
-    {
-      role: "Director",
-      username: "Srinivas",
-      inused: "India--Hyderabad",
-      website1: "www.we2call.com",
-      website2: "www.we2call.com",
-      website3: " www.we2call.com",
-      billing: "Cash-INR",
-      profitloss: <div className="fa-fileinvo-doll-icon">500K</div>,
-      status: "Active",
-      icon: (
-        <div className="d-flex align-items-center justify-content-evenly">
-          {" "}
-          <TbFileText className="eye-icon-size" />
-          <LuFileClock className="eye-icon-size" />
-          <AiOutlineSetting className="eye-icon-size" />
-          <TbUserEdit className="eye-icon-size" />
-        </div>
-      ),
-    },
-    {
-      role: "Director",
-      username: "Srinivas",
-      inused: "India--Hyderabad",
-      website1: "www.we2call.com",
-      website2: "www.we2call.com",
-      website3: " www.we2call.com",
-      billing: "Cash-INR",
-      profitloss: <div className="red-text">2K</div>,
-      status: "In-active",
-      icon: (
-        <div className="d-flex align-items-center justify-content-evenly">
-          {" "}
-          <TbFileText className="eye-icon-size" />
-          <LuFileClock className="eye-icon-size" />
-          <AiOutlineSetting className="eye-icon-size" />
-          <TbUserEdit className="eye-icon-size" />
-        </div>
-      ),
-    },
-    {
-      role: "SA",
-      username: "Srinivas",
-      inused: "India--Hyderabad",
-      website1: "www.we2call.com",
-      website2: "www.we2call.com",
-      website3: " www.we2call.com",
-      billing: "Cash-INR",
-      profitloss: <div className="fa-fileinvo-doll-icon">500K</div>,
-      status: "Active",
-      icon: (
-        <div className="d-flex align-items-center justify-content-evenly">
-          {" "}
-          <TbFileText className="eye-icon-size" />
-          <LuFileClock className="eye-icon-size" />
-          <AiOutlineSetting className="eye-icon-size" />
-          <TbUserEdit className="eye-icon-size" />
-        </div>
-      ),
-    },
-    {
-      role: "Director",
-      username: "Srinivas",
-      inused: "India--Hyderabad",
-      website1: "www.we2call.com",
-      website2: "www.we2call.com",
-      website3: " www.we2call.com",
-      billing: "Cash-INR",
-      profitloss: <div className="fa-fileinvo-doll-icon">500K</div>,
-      status: "Active",
-      icon: (
-        <div className="d-flex align-items-center justify-content-evenly">
-          {" "}
-          <TbFileText className="eye-icon-size" />
-          <LuFileClock className="eye-icon-size" />
-          <AiOutlineSetting className="eye-icon-size" />
-          <TbUserEdit className="eye-icon-size" />
-        </div>
-      ),
-    },
-    {
-      role: "Director",
-      username: "Srinivas",
-      inused: "India--Hyderabad",
-      website1: "www.we2call.com",
-      website2: "www.we2call.com",
-      website3: " www.we2call.com",
-      billing: "Cash-INR",
-      profitloss: <div className="red-text">20K</div>,
-      status: "In-active",
-      icon: (
-        <div className="d-flex align-items-center justify-content-evenly">
-          {" "}
-          <TbFileText className="eye-icon-size" />
-          <LuFileClock className="eye-icon-size" />
-          <AiOutlineSetting className="eye-icon-size" />
-          <TbUserEdit className="eye-icon-size" />
-        </div>
-      ),
-    },
-  ];
+  const [getAllDirectors, setAllDirectors] = useState([]);
+  const [selectedDirector, setSelectedDirector] = useState(null);
+  const [filteredDirectors, setFilteredDirectors] = useState([]);
+  const [searchText, setSearchText] = useState("");
+  const [status, setStatus] = useState(false);
+
+  const searchContent = (value) => {
+    setSearchText(value);
+    const filteredSearchText = getAllDirectors.filter((res) =>
+      res?.account_role?.toLowerCase().includes(searchText.toLowerCase())
+    );
+    setFilteredDirectors(filteredSearchText);
+  };
 
   const cols = [
     {
       header: (
         <div className="d-flex justify-content-center align-items-center ">
           <div className="marginright-10">ROLE</div>
-          <div>
+          {/* <div>
             <div>
               <MdKeyboardArrowUp className="fs-6" />
             </div>
             <MdKeyboardArrowDown className="fs-6 margintop-10" />
-          </div>
+          </div> */}
         </div>
       ),
       field: "role",
@@ -130,12 +45,12 @@ function Adddirector() {
       header: (
         <div className="d-flex justify-content-center align-items-center">
           <div className="marginright-10">USER NAME</div>
-          <div>
+          {/* <div>
             <div>
               <MdKeyboardArrowUp className="fs-6" />
             </div>
             <MdKeyboardArrowDown className="fs-6 margintop-10" />
-          </div>
+          </div> */}
         </div>
       ),
       field: "username",
@@ -144,12 +59,12 @@ function Adddirector() {
       header: (
         <div className="d-flex justify-content-center align-items-center">
           <div className="marginright-10">In USED</div>
-          <div>
+          {/* <div>
             <div>
               <MdKeyboardArrowUp className="fs-6" />
             </div>
             <MdKeyboardArrowDown className="fs-6 margintop-10" />
-          </div>
+          </div> */}
         </div>
       ),
       field: "inused",
@@ -158,12 +73,12 @@ function Adddirector() {
       header: (
         <div className="d-flex justify-content-center align-items-center">
           <div className="marginright-10">WEBSITE</div>
-          <div>
+          {/* <div>
             <div>
               <MdKeyboardArrowUp className="fs-6" />
             </div>
             <MdKeyboardArrowDown className="fs-6 margintop-10" />
-          </div>
+          </div> */}
         </div>
       ),
       field: "website1Andwebsite2Andwebsite3",
@@ -172,12 +87,12 @@ function Adddirector() {
       header: (
         <div className="d-flex justify-content-center align-items-center">
           <div className="marginright-10">BILLING</div>
-          <div>
+          {/* <div>
             <div>
               <MdKeyboardArrowUp className="fs-6" />
             </div>
             <MdKeyboardArrowDown className="fs-6 margintop-10" />
-          </div>
+          </div> */}
         </div>
       ),
       field: "billing",
@@ -186,12 +101,12 @@ function Adddirector() {
       header: (
         <div className="d-flex justify-content-center align-items-center">
           <div className="marginright-10">PROFIT/LOSS</div>
-          <div>
+          {/* <div>
             <div>
               <MdKeyboardArrowUp className="fs-6" />
             </div>
             <MdKeyboardArrowDown className="fs-6 margintop-10" />
-          </div>
+          </div> */}
         </div>
       ),
       field: "profitloss",
@@ -200,12 +115,6 @@ function Adddirector() {
       header: (
         <div className="d-flex justify-content-center align-items-center">
           <div className="marginright-10">STATUS</div>
-          <div>
-            <div>
-              <MdKeyboardArrowUp className="fs-6" />
-            </div>
-            <MdKeyboardArrowDown className="fs-6 margintop-10" />
-          </div>
         </div>
       ),
       field: "status",
@@ -215,33 +124,85 @@ function Adddirector() {
       header: (
         <div className="d-flex justify-content-center align-items-center">
           <div className="marginright-10">ACTION</div>
-          <div>
+          {/* <div>
             <div>
               <MdKeyboardArrowUp className="fs-6" />
             </div>
             <MdKeyboardArrowDown className="fs-6 margintop-10" />
-          </div>
+          </div> */}
         </div>
       ),
       field: "icon",
     },
   ];
+  const getDirectors = async () => {
+    const payload = {
+      register_id: "company",
+    };
+    await call(GET_ALL_USERS, payload)
+      .then((res) => {
+        setAllDirectors(res?.data?.data);
+      })
 
-  const modifiedAdddirectorDetails = ADDDIRECTOR_DETAILS.map((item) => ({
-    ...item,
-    role: (
-      <div className="role-color">
-        <span className="role-color">{item?.role}</span>{" "}
-      </div>
-    ),
-    website1Andwebsite2Andwebsite3: (
-      <div>
-        {item?.website1} <br /> <span>{item?.website2}</span> <br />
-        {item?.website3}
-        {""}
-      </div>
-    ),
-  }));
+      .catch((err) => console.log(err));
+  };
+  useEffect(() => {
+    getDirectors();
+  }, [status]);
+  console.log("getAllDirectors=====>", getAllDirectors);
+
+  const modifiedAdddirectorDetails = searchText.length
+    ? filteredDirectors
+        .filter((item) =>
+          item?.account_role.toLowerCase().includes(searchText.toLowerCase())
+        )
+        .map((item) => {
+          return {
+            role: (
+              <div className="role-color">
+                <span className="role-color">{item?.account_role}</span>{" "}
+              </div>
+            ),
+            username: item?.user_name,
+            inused: item?.country_name,
+            website1Andwebsite2Andwebsite3: item?.website_name,
+            // status: "Active",
+            status:
+              item?.is_active === "active" ? (
+                <div className="font-green custom-active-button px-2">
+                  Active
+                </div>
+              ) : (
+                <div className="custom-deactive-button px-2">InActive</div>
+              ),
+            icon: <MdOutlineEdit className="eye-icon-size" />,
+          };
+        })
+    : getAllDirectors?.map((item) => {
+        return {
+          role: (
+            <div className="role-color">
+              <span className="role-color">{item?.account_role}</span>{" "}
+            </div>
+          ),
+          username: item?.user_name,
+          inused: item?.country_name,
+          website1Andwebsite2Andwebsite3: item?.website_name,
+          //status: "Active",
+          status: (
+            <div className="font-green custom-active-button px-2">Active</div>
+          ),
+          icon: (
+            <MdOutlineEdit
+              className="eye-icon-size"
+              onClick={() => {
+                setSelectedDirector(item);
+                handleAddDirectorPopup();
+              }}
+            />
+          ),
+        };
+      });
   const [showAddDirectorPopup, setShowAddDirectorPopup] = useState(false);
   const handleAddDirectorPopup = () => {
     setShowAddDirectorPopup(true);
@@ -265,6 +226,8 @@ function Adddirector() {
                   type="search"
                   placeholder="Search"
                   aria-label="Search"
+                  value={searchText}
+                  onChange={(e) => searchContent(e.target.value)}
                 />
               </form>
             </div>
@@ -284,9 +247,13 @@ function Adddirector() {
       <AddDirectorsPopup
         showAddDirectorPopup={showAddDirectorPopup}
         setShowAddDirectorPopup={setShowAddDirectorPopup}
-        heading="Add Director & SA"
+        selectedDirector={selectedDirector}
+        // heading="Add Director & SA"
+        heading={`${selectedDirector ? "Update" : "Add"}  Director & SA`}
         firstTextBox="Select Website *"
         firstSelect="Time Zone"
+        setStatus={setStatus}
+        setSelectedDirector={setSelectedDirector}
       />
     </div>
   );

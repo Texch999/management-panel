@@ -1,10 +1,39 @@
-import React from "react";
+import React, { useState } from "react";
 import { Modal } from "react-bootstrap";
 import "./styles.css";
+import { ADD_WEBSITE } from "../../config/endpoints";
+import { call } from "../../config/axios";
 function AddWebsitePopup(props) {
-  const { showAddWebPopup, setShowAddWebPopup } = props;
+  const { showAddWebPopup, setShowAddWebPopup, setStatus } = props;
+  const [formData, setFormData] = useState({
+    register_id: "company",
+    web_url: "",
+  });
   const handleAddWebPopupClose = () => {
     setShowAddWebPopup(false);
+  };
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+  };
+  const handleCreateWebsite = async () => {
+    try {
+      const res = await call(ADD_WEBSITE, formData);
+      if (res.data.error) {
+        console.error("API Error:", res.data.message);
+      } else {
+        setShowAddWebPopup(true);
+        setStatus((prev) => !prev);
+        setFormData({
+          web_url: "",
+        });
+      }
+    } catch (err) {
+      console.error("API Error:", err);
+    }
   };
   return (
     <div className="modal fade bd-example-modal-lg container mt-5">
@@ -27,13 +56,21 @@ function AddWebsitePopup(props) {
               <div>
                 <input
                   type="text"
+                  name="web_url"
                   className="w-100 input-btn-bg px-2 py-2 all-none rounded"
                   placeholder="Enter Website URL "
+                  value={formData.web_url}
+                  onChange={handleInputChange}
                 />
               </div>
             </div>
             <div className="d-flex justify-content-center w-100 my-4">
-              <button className="add-button rounded px-2 py-2 w-50 medium-font">Add</button>
+              <button
+                className="add-button rounded px-2 py-2 w-50 medium-font"
+                onClick={() => handleCreateWebsite()}
+              >
+                Add
+              </button>
             </div>
           </div>
         </Modal.Body>
