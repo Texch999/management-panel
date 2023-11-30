@@ -3,8 +3,10 @@ import { Modal } from "react-bootstrap";
 import "./styles.css";
 import { ADD_WEBSITE } from "../../config/endpoints";
 import { call } from "../../config/axios";
+import MatchSubmitPopup from "../../matchpopups/MatchSubmitPopup";
 function AddWebsitePopup(props) {
   const { showAddWebPopup, setShowAddWebPopup, setStatus } = props;
+  const [acceptClick, setAcceptClick] = useState(false);
   const [formData, setFormData] = useState({
     register_id: "company",
     web_url: "",
@@ -21,11 +23,12 @@ function AddWebsitePopup(props) {
   };
   const handleCreateWebsite = async () => {
     try {
-      const res = await call(ADD_WEBSITE, formData);
+      const res = await call(ADD_WEBSITE,formData);
       if (res.data.error) {
         console.error("API Error:", res.data.message);
       } else {
-        setShowAddWebPopup(true);
+        setAcceptClick(true);
+        setShowAddWebPopup(false);
         setStatus((prev) => !prev);
         setFormData({
           web_url: "",
@@ -75,6 +78,12 @@ function AddWebsitePopup(props) {
           </div>
         </Modal.Body>
       </Modal>
+      <MatchSubmitPopup
+        header={"Website Added Successfully"}
+        state={acceptClick}
+        setState={setAcceptClick}
+        setStatus={setStatus}
+      />
     </div>
   );
 }

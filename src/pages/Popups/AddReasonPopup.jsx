@@ -15,9 +15,6 @@ function AddReasonPopup(props) {
     selectedQuestion,
     setSelectedQuestion,
   } = props;
-
-  console.log("securityQuestion=====>", selectedQuestion);
-
   const [acceptClick, setAcceptClick] = useState(false);
   const [formData, setFormData] = useState({
     p_id: "REJECT-REASON",
@@ -83,7 +80,7 @@ function AddReasonPopup(props) {
       }
 
       const res = await call(url, requestData);
-
+       
       if (res.data.error) {
         console.error("API Error:", res.data.message);
       } else {
