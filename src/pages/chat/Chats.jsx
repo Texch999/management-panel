@@ -183,7 +183,7 @@ function Chats() {
 
   const addMessage = (message, msg_c = 0) => {
     let temp = { message, ts: new Date().getTime(), msg_c };
-    setSupportData((prev) => [...prev, temp]);
+    // setSupportData((prev) => [...prev, temp]);
   };
 
   const handleInputChange = (e) => {
@@ -343,28 +343,7 @@ function Chats() {
                   </div>
                 </div>
               </div>
-              <div className="chat_list">
-                <div className="chat_people d-flex justify-content-between align-items-center">
-                  {/* <div className="chat_img">
-                    <img
-                      className="rounded-circle chat-contact-image"
-                      src={Images.raina_image}
-                      alt="sunil"
-                    />{" "}
-                  </div> */}
-                  {/* <div className="chat_ib">
-                    <h5>
-                      Sunil Rajput <span className="chat_date">Dec 25</span>
-                    </h5>
-                    <div className="d-flex align-items-center justify-content-between w-100">
-                      <p className="clr-green">Typing............ </p>
-                      <div className="rounded-circle clr-red-bg clr-white text-center px-1 small-font">
-                        2
-                      </div>
-                    </div>
-                  </div> */}
-                </div>
-              </div>
+
               <div className="chat_list">
                 <div className="chat_people d-flex justify-content-between align-items-center">
                   <div className="chat_img">
@@ -458,8 +437,8 @@ function Chats() {
             </div>
           </div>
           <div className="mesgs">
-            <div className="msg_history px-4 py-3">
-              <div className="incoming_msg">
+            <div className="msg_history px-2 py-2">
+              <div className="incoming_msg mt-4">
                 <div className="incoming_msg_img">
                   {" "}
                   <img
