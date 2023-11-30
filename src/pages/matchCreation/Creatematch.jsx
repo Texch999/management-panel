@@ -64,14 +64,14 @@ function Creatematch() {
   };
 
   const top_cricket_countries = [
-   {
-    headName: "Team1",
-    name: "team1"
-   },
-   {
-    headName: "Team2",
-    name:"team2"
-   }
+    {
+      headName: "Team1",
+      name: "team1",
+    },
+    {
+      headName: "Team2",
+      name: "team2",
+    },
   ];
 
   const sportsDropdowns = [
@@ -79,7 +79,7 @@ function Creatematch() {
       headName: "Sports Name",
       keyValue: "sports_name",
       options: <option value="cricket">Cricket</option>,
-    }
+    },
   ];
 
   const matchType = [
@@ -148,8 +148,8 @@ function Creatematch() {
 
   //const [getMatches, setgetMatches] = useState([]);
   const [liveMatches, setLiveMatches] = useState([]);
-  const [upcomingMatches, setUpcommingMatches] =useState([]);
-  const [todayMatches, setTodayMatches]= useState([]);
+  const [upcomingMatches, setUpcommingMatches] = useState([]);
+  const [todayMatches, setTodayMatches] = useState([]);
   const getAllMatches = async () => {
     const payload = {
       register_id: "company",
@@ -158,14 +158,14 @@ function Creatematch() {
     await call(GET_MATCHES_DATA, payload)
       .then((res) => {
         // setgetMatches(res?.data?.data);
-        setLiveMatches(res?.data?.data?.liveMatches)
-        setUpcommingMatches(res?.data?.data?.upCommingMatches)
-        setTodayMatches(res?.data?.data?.todaysMatches)
+        setLiveMatches(res?.data?.data?.liveMatches);
+        setUpcommingMatches(res?.data?.data?.upCommingMatches);
+        setTodayMatches(res?.data?.data?.todaysMatches);
       })
       .catch((err) => console.log(err));
   };
 
-   const allMatches =[...liveMatches,...upcomingMatches,todayMatches]
+  const allMatches = [...liveMatches, ...upcomingMatches, ...todayMatches];
 
   useEffect(() => {
     getAllMatches();
@@ -238,19 +238,19 @@ function Creatematch() {
           })}
           {top_cricket_countries.map((item, index) => {
             return (
-            <div key={index} className="col">
-              <div className="th-color small-font">{item.headName}</div>
-              <div className="sport-management-input d-flex justify-content-between p-1 th-color small-font">
-              <input
-                className="w-90 th-color small-font p-1"
-                onChange={(e) => handelChange(e)}
-                placeholder="Enter Team"
-                name={item?.name}
-                value={createMatch?.[item?.name] || ""}
-              ></input>
-            </div>
-            </div>
-            )
+              <div key={index} className="col">
+                <div className="th-color small-font">{item.headName}</div>
+                <div className="sport-management-input d-flex justify-content-between p-1 th-color small-font">
+                  <input
+                    className="w-90 th-color small-font p-1"
+                    onChange={(e) => handelChange(e)}
+                    placeholder="Enter Team"
+                    name={item?.name}
+                    value={createMatch?.[item?.name] || ""}
+                  ></input>
+                </div>
+              </div>
+            );
           })}
           <div className="col">
             <div className="th-color small-font">Match place</div>

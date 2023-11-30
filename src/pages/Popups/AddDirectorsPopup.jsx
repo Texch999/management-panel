@@ -73,7 +73,6 @@ function AddDirectorsPopup(props) {
   const handleCreateOrUpdateDirector = async (status) => {
     try {
       const url = selectedDirector ? UPDATE_PROFILE : ACCOUNT_REGISTERATION;
-      setAddDirectorPopup(true);
       const requestData = {
         creator_id: "company",
         creator_role: "company",
@@ -99,15 +98,19 @@ function AddDirectorsPopup(props) {
         requestData.management = selectedDirector.management;
       }
       await call(url, requestData).then((res) => {
-        {
-          if (res.status === 200) {
-            setAddDirectorPopup(false);
-            setShowAddDirectorPopup(true);
+        console.log("-------->",res.data)
+          if (res.data.status === 201) {
+            setAddDirectorPopup(true);
+            setTimeout(() => {
+              setAddDirectorPopup(false);
+              setShowAddDirectorPopup(false);
+            }, 2000);
           }
-        }
+       
         if (res.data.error) {
           console.error("API Error:", res.data.message);
-        } else {
+        } 
+        else {
           setAddDirectorPopup(false);
           handleAddDirectorPopup();
           setStatus((prev) => !prev);
@@ -157,7 +160,6 @@ function AddDirectorsPopup(props) {
       })
       .catch((err) => {
         setShowAddDirectorPopup(true);
-        setAddDirectorPopup(err);
       });
   };
   useEffect(() => {
@@ -174,8 +176,7 @@ function AddDirectorsPopup(props) {
         setAllPayments(res?.data?.data);
       })
       .catch((err) => {
-        setShowAddDirectorPopup(true);
-        setAddDirectorPopup(err);
+        setShowAddDirectorPopup(true)
       });
   };
 

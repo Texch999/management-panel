@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Col, Container, Row } from "react-bootstrap";
-//import DatePicker from "react-datepicker";
 import { FaRegCalendarAlt } from "react-icons/fa";
 import "react-datepicker/dist/react-datepicker.css";
 import { MdUpload } from "react-icons/md";
@@ -289,7 +288,7 @@ function OfferPosterAdds() {
                       type="file"
                       ref={uploadfileInputRef}
                       style={{ display: "none" }}
-                      onChange={handleUploadFileSelect}
+                      onChange={(e) => handleUploadFileSelect(e)}
                       className="login-inputs"
                     ></input>
                     <MdUpload className="upload-icon" />
