@@ -23,14 +23,13 @@ function Chats() {
   const [filteredClients, setFilteredClients] = useState([]);
   const [searchText, setSearchText] = useState("");
   const [supportData, setSupportData] = useState([]);
-  const [selectedChat, setSelectedChat] = useState(null);
-  const [selectedUser, setSelectedUser] = useState("")
+  // const [selectedChat, setSelectedChat] = useState(null);
+  const [selectedUser, setSelectedUser] = useState("");
 
-
-  const handleUserClick = async (registerId, index) => {
-    setSelectedUser(registerId)
-    await getAllUserMessages(registerId)
-    setSelectedChat(index);
+  const handleUserClick = async (registerId) => {
+    setSelectedUser(registerId);
+    await getAllUserMessages(registerId);
+    // setSelectedChat(index);
   };
   const getAllUserData = async () => {
     await call(GET_ALL_USERS, {
@@ -50,39 +49,13 @@ function Chats() {
   }, []);
   // console.log("clientsData", clientsData);
 
-  // const search = (value) => {
-  //   setSearchText(value);
-  //   const filteredSearch = clientsData && clientsData?.length > 0 && clientsData?.filter((res) =>
-  //     res?.user_name?.includes(searchText)
-  //   );
-  //   setFilteredClients(filteredSearch);
-  // };
-  // const chatsDetails =
-  // // searchText.length?.filteredClients?.filter((item) =>
-  // //   item?.user_name?.includes(searchText)
-  // // );
-  // clientsData?.map((item) => ({
-  //   image: Images.RohitImage,
-  //   name: item?.user_name,
-  //   message: "What a Knock That Was !!! Virat Kohli !!",
-  //   time: item?.ts,
-  //   icon: "",
-  // }));
-  // Assuming clientsData contains information about clients
-
-  // const chatsDetails = clientsData?.map((client) => {
-  //   const clientSupportData = supportData && supportData?.length> 0 && supportData?.filter(
-  //     (item) => item.from_user_id === client.register_id
-  //   );
-  //   return {
-  //     name: client.user_name,
-  //     messages: clientSupportData && clientSupportData?.length > 0 && clientSupportData?.map((item) => ({
-  //       message: item.message,
-  //       time: item.ts,
-  //       senderId: item.from_user_id,
-  //     })),
-  //   };
-  // });
+  const chatsDetails = clientsData?.map((item) => ({
+    image: Images.RohitImage,
+    name: item?.user_name,
+    message: "What a Knock That Was !!! Virat Kohli !!",
+    time: item?.ts,
+    icon: "",
+  }));
 
   let register_id = "reg-20230920132711772";
   let creator_id = localStorage?.getItem("creator_id");
@@ -259,7 +232,6 @@ function Chats() {
     const selectedFile = event.target.files[0];
     console.log(selectedFile);
   };
-  const [selectedDate, setSelectedDate] = useState(null);
   const uploadfileInputRef = useRef(null);
   const handleUploadFileSelect = (e) => {
     const file = e.target.files[0];
@@ -346,14 +318,14 @@ function Chats() {
               </div>
               <div class="chat_list">
                 <div class="chat_people d-flex justify-content-between align-items-center">
-                  {/* <div class="chat_img">
+                  <div class="chat_img">
                     <img
                       className="rounded-circle"
                       src={Images.raina_image}
                       alt="sunil"
                     />{" "}
-                  </div> */}
-                  {/* <div class="chat_ib">
+                  </div>
+                  <div class="chat_ib">
                     <h5>
                       Sunil Rajput <span class="chat_date">Dec 25</span>
                     </h5>
@@ -363,7 +335,7 @@ function Chats() {
                         2
                       </div>
                     </div>
-                  </div> */}
+                  </div>
                 </div>
               </div>
               <div class="chat_list">
@@ -392,21 +364,26 @@ function Chats() {
             <div className="inbox-chat-contacts">
               <div class="chat_list">
                 <div class="chat_people d-flex justify-content-between  flex-column">
-                  {clientsData && clientsData?.length > 0  && clientsData?.map((user, index) => (
-                    <div key={index} onClick={() => handleUserClick(user?.register_id, index)}>
-                      <div class="chat_list">
-                        <div class="chat_people d-flex justify-content-between align-items-center">
-                          <div class="chat_img">
-                            <img
-                              className="rounded-circle"
-                              src={Images.dhawan_image}
-                              alt="sunil"
-                            />{" "}
-                          </div>
-                          <div class="chat_ib">
-                            <h5>
-                              {user?.first_name}{" "}{user?.last_name}
-                              {/* {selectedChat === index &&
+                  {clientsData &&
+                    clientsData?.length > 0 &&
+                    clientsData?.map((user, index) => (
+                      <div
+                        key={index}
+                        onClick={() => handleUserClick(user?.register_id)}
+                      >
+                        <div class="chat_list">
+                          <div class="chat_people d-flex justify-content-between align-items-center">
+                            <div class="chat_img">
+                              <img
+                                className="rounded-circle"
+                                src={Images.dhawan_image}
+                                alt="sunil"
+                              />{" "}
+                            </div>
+                            <div class="chat_ib">
+                              <h5>
+                                {user?.first_name} {user?.last_name}
+                                {/* {selectedChat === index &&
                                 items?.messages?.map((msg, Index) => (
                                   <div key={Index}>
                                     <p>{msg.message}</p>
@@ -415,14 +392,14 @@ function Chats() {
                                     </span>
                                   </div>
                                 ))} */}
-                              <span class="chat_date">{user?.time}</span>
-                            </h5>
-                            <p>{user?.messages} </p>
+                                <span class="chat_date">{user?.time}</span>
+                              </h5>
+                              <p>{user?.messages} </p>
+                            </div>
                           </div>
                         </div>
                       </div>
-                    </div>
-                  ))}
+                    ))}
                   {/* {chatsDetails?.map((items, index) => (
                     <div key={index}>
                       <div class="chat_list">
@@ -467,33 +444,42 @@ function Chats() {
                   </div>
                 </div>
               </div>
-              {supportData && supportData?.length > 0 && supportData?.map((item, index) => {
-                let senderId = item.from_user_id === register_id ? true : false;
-                return (
-                  <div key={index}>
-                    {!senderId && (
-                      <div className="date-text mt-10">
-                        {moment(item.ts).format("hh:mm a")}
-                      </div>
-                    )}
-                    <div class="outgoing_msg">
-                      <div key={index} class="sent_msg">
-                        <p>{item?.message}</p>
-                        <div className="d-flex justify-content-between align-items-center">
-                          <span class="time_date">
-                            {moment(item.ts).format("hh:mm a")}
-                          </span>{" "}
-                          {senderId && (
-                            <RiCheckDoubleLine
-                              style={{ fontSize: "20px", color: "#70dc37" }}
-                            />
-                          )}
+              {supportData &&
+                supportData?.length > 0 &&
+                supportData?.map((item, index) => {
+                  let senderId =
+                    item.from_user_id === register_id ? true : false;
+                  return (
+                    <div key={index}>
+                      {!senderId && (
+                        <div className="date-text mt-10">
+                          {moment(item.ts).format("hh:mm a")}
+                        </div>
+                      )}
+                      <div
+                        className={`${
+                          item.from_user_id === register_id
+                            ? "incoming_msg"
+                            : "outgoing_msg"
+                        }`}
+                      >
+                        <div key={index} class="sent_msg">
+                          <p>{item?.message}</p>
+                          <div className="d-flex justify-content-between align-items-center">
+                            <span class="time_date">
+                              {moment(item.ts).format("hh:mm a")}
+                            </span>{" "}
+                            {senderId && (
+                              <RiCheckDoubleLine
+                                style={{ fontSize: "20px", color: "#70dc37" }}
+                              />
+                            )}
+                          </div>
                         </div>
                       </div>
                     </div>
-                  </div>
-                );
-              })}
+                  );
+                })}
             </div>
             <div className="d-flex flex-row justify-content-around align-items-center px-4 py-2 chat-container-box">
               <div class="type_msg w-75 mx-2 rounded">

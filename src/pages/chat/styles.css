@@ -171,6 +171,10 @@ img {
   float: right;
   max-width: 50%;
 }
+.receive_msg {
+  float: left;
+  max-width: 50%;
+}
 .input_msg_write input {
   background: #33344c;
   border: none;

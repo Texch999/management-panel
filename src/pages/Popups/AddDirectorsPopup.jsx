@@ -30,7 +30,9 @@ function AddDirectorsPopup(props) {
   const [website, setWebsite] = useState("");
   const [timezone, setTimeZone] = useState("");
   const [paymentGateway, setPaymentGateway] = useState("");
-  const [packageDiscount,setPackageDiscount]=useState("")
+  const [packageDiscount, setPackageDiscount] = useState("");
+  const [share, setShare] = useState("");
+  const [ulshare, setUlshare] = useState("");
 
   const handleAddDirectorClose = () => {
     setShowAddDirectorPopup(false);
@@ -42,6 +44,8 @@ function AddDirectorsPopup(props) {
     setRole("");
     setPaymentGateway("");
     setPackageDiscount("");
+    setUlshare("");
+    setShare("");
   };
   const [passwordType, setPasswordType] = useState("password");
   const [passwordInput, setPasswordInput] = useState("");
@@ -67,9 +71,11 @@ function AddDirectorsPopup(props) {
       setRole(selectedDirector.account_role || "");
       setCountryName(selectedDirector.country_name || "");
       setPasswordInput(selectedDirector.password || "");
-      setPackageDiscount(selectedDirector.package_discount||"")
+      setPackageDiscount(selectedDirector.package_discount || "");
+      setUlshare(selectedDirector.ul_share || "");
+      setShare(selectedDirector.share || "");
     }
-  },[selectedDirector]);
+  }, [selectedDirector]);
   const handleCreateOrUpdateDirector = async (status) => {
     try {
       const url = selectedDirector ? UPDATE_PROFILE : ACCOUNT_REGISTERATION;
@@ -88,7 +94,9 @@ function AddDirectorsPopup(props) {
         country_name: countryName,
         password: passwordInput,
         pg_upi: paymentGateway,
-        package_discount:packageDiscount
+        share: share,
+        ulshare: ulshare,
+        package_discount: packageDiscount,
       };
 
       if (selectedDirector) {
@@ -98,19 +106,18 @@ function AddDirectorsPopup(props) {
         requestData.management = selectedDirector.management;
       }
       await call(url, requestData).then((res) => {
-        console.log("-------->",res.data)
-          if (res.data.status === 201) {
-            setAddDirectorPopup(true);
-            setTimeout(() => {
-              setAddDirectorPopup(false);
-              setShowAddDirectorPopup(false);
-            }, 2000);
-          }
-       
+        console.log("-------->", res.data);
+        if (res.data.status === 201) {
+          setAddDirectorPopup(true);
+          setTimeout(() => {
+            setAddDirectorPopup(false);
+            setShowAddDirectorPopup(false);
+          }, 2000);
+        }
+
         if (res.data.error) {
           console.error("API Error:", res.data.message);
-        } 
-        else {
+        } else {
           setAddDirectorPopup(false);
           handleAddDirectorPopup();
           setStatus((prev) => !prev);
@@ -176,7 +183,7 @@ function AddDirectorsPopup(props) {
         setAllPayments(res?.data?.data);
       })
       .catch((err) => {
-        setShowAddDirectorPopup(true)
+        setShowAddDirectorPopup(true);
       });
   };
 
@@ -402,7 +409,7 @@ function AddDirectorsPopup(props) {
                   ></input>
                 </Col>
                 <Col className="pe-0">
-                <div className="small-font my-1">Package Discount*</div>
+                  <div className="small-font my-1">Package Discount*</div>
                   <input
                     type="text"
                     placeholder="Enter"
@@ -410,6 +417,30 @@ function AddDirectorsPopup(props) {
                     className="w-100 custom-select small-font login-inputs input-btn-bg px-2 py-2 all-none rounded all-none"
                     value={packageDiscount}
                     onChange={(e) => setPackageDiscount(e.target.value)}
+                  ></input>
+                </Col>
+              </Row>
+              <Row>
+                <Col className="pe-0 ps-0">
+                  <div className="small-font my-1">UL Share</div>
+                  <input
+                    type="text"
+                    placeholder="Enter"
+                    name="ul_share"
+                    className="w-100 custom-select small-font login-inputs input-btn-bg px-2 py-2 all-none rounded all-none"
+                    value={ulshare}
+                    onChange={(e) => setUlshare(e.target.value)}
+                  ></input>
+                </Col>
+                <Col className="pe-0">
+                  <div className="small-font my-1">share</div>
+                  <input
+                    type="text"
+                    placeholder="Enter"
+                    name="share"
+                    className="w-100 custom-select small-font login-inputs input-btn-bg px-2 py-2 all-none rounded all-none"
+                    value={share}
+                    onChange={(e) => setShare(e.target.value)}
                   ></input>
                 </Col>
               </Row>
