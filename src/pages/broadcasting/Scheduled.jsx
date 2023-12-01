@@ -11,8 +11,8 @@ import {
 import { call } from "../../config/axios";
 
 function Scheduled(props) {
-  const {searchOffer} = props
-  
+  const { searchOffer } = props;
+
   const cols = [
     {
       header: "TITLE",
@@ -116,7 +116,11 @@ function Scheduled(props) {
     ...getBroadcasting,
     ...notifications,
     ...getPoster,
-  ].filter((res) => res.publish_date > currentDate &&res?.event_name?.toLowerCase().includes(searchOffer.toLowerCase()));
+  ]?.filter(
+    (res) =>
+      res.publish_date > currentDate &&
+      res?.event_name?.toLowerCase().includes(searchOffer.toLowerCase())
+  );
 
   const modifiedBroadcastingDetails = scheduledData.map((item) => ({
     ...item,
