@@ -1,53 +1,66 @@
-import React, { useState } from "react";
-import Table from "../table/Table";
+import React, { useEffect, useState } from "react";
+import TourTable from "../tourBanking/TourTable";
 import { MdOutlineEdit } from "react-icons/md";
 import AddTourPaymentGateway from "../tourBanking/AddTourPaymentGateway";
+import { call } from "../../config/axios";
+import { GET_TOUR_PAYMENT_GATEWAY } from "../../config/endpoints";
 
 function Paymentgateway() {
-    const [addCountryOpen, setAddCountryOpen] = useState(false)
+  const [addCountryOpen, setAddCountryOpen] = useState(false);
+  const [paymentGateway, setPaymentGateway] = useState([]);
+  const [inputData, setInputData] = useState([]);
+  const [isUpdate, setisUpdate] = useState(false);
+  const [renderingStatus, setRenderingStatus] = useState([])
+  
+  const rendering = (inputData) => {
+    setRenderingStatus(inputData);
+  };
+  console.log(renderingStatus,'.......rendering')
+  const getPaymentGateway = async () => {
+    const payload = {};
+    await call(GET_TOUR_PAYMENT_GATEWAY, payload)
+      .then((res) => setPaymentGateway(res?.data?.data))
+      .catch((error) => console.log(error));
+  };
 
-  const PAYMENTGATEWAY_DETAILS = [
-    {
-      gatewayname: "Google Pay",
-      lastupdate: "18/08/2023",
-      country: "India ",
-      currency: "INR ₹",
-      status: "Active",
-      icon: <MdOutlineEdit className="eye-icon-size" />,
-    },
-    {
-      gatewayname: "Paytm",
-      lastupdate: "18/08/2023",
-      country: "India ",
-      currency: "INR ₹",
-      status: "Active",
-      icon: <MdOutlineEdit className="eye-icon-size" />,
-    },
-    {
-      gatewayname: "QR Code",
-      lastupdate: "18/08/2023",
-      country: "India ",
-      currency: "INR ₹",
-      status: "Active",
-      icon: <MdOutlineEdit className="eye-icon-size" />,
-    },
-    {
-      gatewayname: "Phone Pay",
-      lastupdate: "18/08/2023",
-      country: "India ",
-      currency: "INR ₹",
-      status: "Active",
-      icon: <MdOutlineEdit className="eye-icon-size" />,
-    },
-    {
-      gatewayname: "Google Pay",
-      lastupdate: "18/08/2023",
-      country: "India ",
-      currency: "INR ₹",
-      status: "Active",
-      icon: <MdOutlineEdit className="eye-icon-size" />,
-    },
-  ];
+  useEffect(() => {
+    getPaymentGateway();
+  }, [renderingStatus]);
+
+  const PAYMENTGATEWAY_DETAILS =
+    paymentGateway && paymentGateway.length > 0
+      ? paymentGateway.map((item) => {
+          return {
+            gatewayname: (
+              <div style={{ color: "#ffba26" }}>{item.paymentGateway}</div>
+            ),
+            lastupdate: item.createdDate,
+            country: item.country,
+            currency: item.currency,
+            status: (
+              <div
+                className={
+                  item.status === "active"
+                    ? "custom-active-button"
+                    : "custom-deactive-button"
+                }
+              >
+                {item.status}
+              </div>
+            ),
+            icon: (
+              <MdOutlineEdit
+                className="eye-icon-size"
+                onClick={() => {
+                  setInputData(item);
+                  setAddCountryOpen(true);
+                  setisUpdate(true);
+                }}
+              />
+            ),
+          };
+        })
+      : [];
 
   const cols = [
     {
@@ -55,7 +68,7 @@ function Paymentgateway() {
       field: "gatewayname",
     },
     {
-      header: "LASTUP DATE",
+      header: "LAST UPDATE",
       field: "lastupdate",
     },
     {
@@ -78,12 +91,20 @@ function Paymentgateway() {
     },
   ];
 
+  const handleAddNewPopup = () => {
+    setInputData([]);
+    setAddCountryOpen(true);
+    setisUpdate(false)
+  };
+  const dropDownCountries = [...new Set(paymentGateway.map((item)=>{
+    return item.country}
+    ))]
+//   console.log(dropDownCountries,'.......drop')
+
   return (
     <div className="p-4 w-100">
       <div className="d-flex align-items-center justify-content-between">
-        <h6 className="h6 font-grey px-2 p-2 m-1">
-          Tours Payment Gateway
-        </h6>
+        <h6 className="h6 font-grey px-2 p-2 m-1">Tours Payment Gateway</h6>
         <div className=" d-flex justify-content-end align-items-center">
           <div className="containaer-fluid w-30 m-2 d-flex align-items-center ">
             <form className="d-flex align-items-center" role="search">
@@ -96,8 +117,9 @@ function Paymentgateway() {
             </form>
           </div>
           <div className="row d-flex justify-content-between m-2 align-items-center">
-            <div className="active text-white medium-font align-items-center p-2 px-4"
-                 onClick={()=>(setAddCountryOpen(true))}
+            <div
+              className="active text-white medium-font align-items-center p-2 px-4"
+              onClick={() => handleAddNewPopup()}
             >
               +Add New
             </div>
@@ -114,18 +136,25 @@ function Paymentgateway() {
             <select
               className="form-select-option w-100 rounded p-2 px-3 m-1 mx-2 small-font"
               aria-label="Default select example"
+              name="dropdown"
+            //   onChange={(e)=>setDropdownClicked(e.target.value)}
             >
-              <option selected>India</option>
-              <option value="1">USA</option>
-              <option value="2">Garmany</option>
-              <option value="3">UK</option>
+              {/* <option selected>India</option> */}
+              {dropDownCountries.map((item)=>(<option value={item}>{item}</option>))}
             </select>
           </div>
         </div>
 
-        <Table columns={cols} data={PAYMENTGATEWAY_DETAILS} />
+        <TourTable columns={cols} data={PAYMENTGATEWAY_DETAILS} />
       </div>
-      <AddTourPaymentGateway addCountryOpen={addCountryOpen} setAddCountryOpen={setAddCountryOpen}/>
+      <AddTourPaymentGateway
+        addCountryOpen={addCountryOpen}
+        setAddCountryOpen={setAddCountryOpen}
+        rendering={rendering}
+        inputData={inputData}
+        isUpdate={isUpdate}
+        setInputData={setInputData}
+      />
     </div>
   );
 }
