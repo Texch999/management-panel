@@ -95,7 +95,7 @@ function AddDirectorsPopup(props) {
         country_name: countryName,
         password: passwordInput,
         pg_upi: paymentGateway,
-        share: share,
+        share: 100 - +ulshare,
         ulshare: ulshare,
         package_discount: packageDiscount,
       };
@@ -439,7 +439,7 @@ function AddDirectorsPopup(props) {
                     placeholder="Enter"
                     name="share"
                     className="w-100 custom-select small-font login-inputs input-btn-bg px-2 py-2 all-none rounded all-none"
-                    value={share}
+                    value={100- + ulshare ||100}
                     onChange={(e) => setShare(e.target.value)}
                   ></input>
                 </Col>

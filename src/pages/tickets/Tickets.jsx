@@ -24,10 +24,10 @@ function Tickets() {
       header: "DATE & TIME",
       field: "dateAndTime",
     },
-    {
-      header: "Name & ROLE",
-      field: "nameAndRole",
-    },
+    // {
+    //   header: "Name & ROLE",
+    //   field: "nameAndRole",
+    // },
     {
       header: "TRX ID",
       field: "trxid",
@@ -60,10 +60,10 @@ function Tickets() {
       header: "DATE & TIME",
       field: "dateAndTime",
     },
-    {
-      header: "Name & ROLE",
-      field: "nameAndRole",
-    },
+    // {
+    //   header: "Name & ROLE",
+    //   field: "nameAndRole",
+    // },
     {
       header: "TRX ID",
       field: "trxid",
@@ -100,10 +100,10 @@ function Tickets() {
       header: "DATE & TIME",
       field: "dateAndTime",
     },
-    {
-      header: "Name & ROLE",
-      field: "nameAndRole",
-    },
+    // {
+    //   header: "Name & ROLE",
+    //   field: "nameAndRole",
+    // },
     {
       header: "TRX ID",
       field: "trxid",
@@ -140,10 +140,10 @@ function Tickets() {
       header: "DATE & TIME",
       field: "dateAndTime",
     },
-    {
-      header: "Name & ROLE",
-      field: "nameAndRole",
-    },
+    // {
+    //   header: "Name & ROLE",
+    //   field: "nameAndRole",
+    // },
     {
       header: "TRX ID",
       field: "trxid",

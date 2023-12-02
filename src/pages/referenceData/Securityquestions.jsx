@@ -33,7 +33,7 @@ function Securityquestions() {
   ];
   const getAllSecurityQuestions = async () => {
     const payload = {
-      p_id: "SECURITY_QUESTIONS",
+      p_id: "SECURITY_QUESTIONS"
     };
     await call(GET_SETTINGS_DATA, payload)
       .then((res) => {

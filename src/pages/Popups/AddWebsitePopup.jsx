@@ -13,6 +13,7 @@ function AddWebsitePopup(props) {
   });
   const handleAddWebPopupClose = () => {
     setShowAddWebPopup(false);
+   
   };
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -35,6 +36,7 @@ function AddWebsitePopup(props) {
         console.error("API Error:", res.data.message);
       } else {
         setAcceptClick(true);
+        handleAddWebPopupClose()
         setShowAddWebPopup(false);
         setStatus((prev) => !prev);
         setFormData({
