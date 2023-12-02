@@ -11,11 +11,13 @@ function Paymentgateway() {
   const [inputData, setInputData] = useState([]);
   const [isUpdate, setisUpdate] = useState(false);
   const [renderingStatus, setRenderingStatus] = useState([])
+  const [clickedCountry, setClickedCountry] = useState("All")
+  console.log(clickedCountry,'......drop')
   
   const rendering = (inputData) => {
     setRenderingStatus(inputData);
   };
-  console.log(renderingStatus,'.......rendering')
+  // console.log(renderingStatus,'.......rendering')
   const getPaymentGateway = async () => {
     const payload = {};
     await call(GET_TOUR_PAYMENT_GATEWAY, payload)
@@ -27,9 +29,14 @@ function Paymentgateway() {
     getPaymentGateway();
   }, [renderingStatus]);
 
+  const countryFilteredGateways = paymentGateway && paymentGateway.length>0 && paymentGateway.filter((item)=>{
+    return item.country === clickedCountry
+  })
+  const finalGateways = clickedCountry === 'All' ? paymentGateway : countryFilteredGateways
+
   const PAYMENTGATEWAY_DETAILS =
-    paymentGateway && paymentGateway.length > 0
-      ? paymentGateway.map((item) => {
+    finalGateways && finalGateways.length > 0
+      ? finalGateways.map((item) => {
           return {
             gatewayname: (
               <div style={{ color: "#ffba26" }}>{item.paymentGateway}</div>
@@ -106,7 +113,7 @@ function Paymentgateway() {
       <div className="d-flex align-items-center justify-content-between">
         <h6 className="h6 font-grey px-2 p-2 m-1">Tours Payment Gateway</h6>
         <div className=" d-flex justify-content-end align-items-center">
-          <div className="containaer-fluid w-30 m-2 d-flex align-items-center ">
+          {/* <div className="containaer-fluid w-30 m-2 d-flex align-items-center ">
             <form className="d-flex align-items-center" role="search">
               <input
                 className="search-width p-2 text-white w-100 sidebar-bg borderr rounded medium-font"
@@ -115,7 +122,7 @@ function Paymentgateway() {
                 aria-label="Search"
               />
             </form>
-          </div>
+          </div> */}
           <div className="row d-flex justify-content-between m-2 align-items-center">
             <div
               className="active text-white medium-font align-items-center p-2 px-4"
@@ -136,10 +143,11 @@ function Paymentgateway() {
             <select
               className="form-select-option w-100 rounded p-2 px-3 m-1 mx-2 small-font"
               aria-label="Default select example"
-              name="dropdown"
-            //   onChange={(e)=>setDropdownClicked(e.target.value)}
+              name="clickedCountry"
+              // value={clickedCountry || "All"}
+              onChange={(e)=>setClickedCountry(e.target.value)}
             >
-              {/* <option selected>India</option> */}
+              <option value={'All'} selected>All Countries</option>
               {dropDownCountries.map((item)=>(<option value={item}>{item}</option>))}
             </select>
           </div>
