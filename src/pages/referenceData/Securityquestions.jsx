@@ -1,9 +1,9 @@
 import React from "react";
 import Table from "../table/Table";
 // import { MdOutlineEdit } from "react-icons/md";
-import AddReasonPopup from "../Popups/AddReasonPopup";
+import AddSecurityPopup from "../Popups/AddSecurityPopup";
 import { useEffect, useState } from "react";
-import { GET_ALL_SECURITY_QUESTIONS } from "../../config/endpoints";
+import { GET_SETTINGS_DATA } from "../../config/endpoints";
 import { call } from "../../config/axios";
 import { MdOutlineEdit } from "react-icons/md";
 
@@ -45,7 +45,7 @@ function Securityquestions() {
     const payload = {
       p_id: "SECURITY_QUESTIONS",
     };
-    await call(GET_ALL_SECURITY_QUESTIONS, payload)
+    await call(GET_SETTINGS_DATA, payload)
       .then((res) => {
         const responseArray = res?.data?.data;
         setAllQuestions(
@@ -56,6 +56,7 @@ function Securityquestions() {
       })
       .catch((err) => console.log(err));
   };
+  console.log("allQuestions",allQuestions);
   useEffect(() => {
     getAllSecurityQuestions();
   }, [status]);
@@ -166,7 +167,7 @@ function Securityquestions() {
       <div className="w-100">
         <Table columns={cols} data={modifiedSecurityquestionsDetails} />
       </div>
-      <AddReasonPopup
+      <AddSecurityPopup
         rejectPopupOpen={rejectPopupOpen}
         SetRejectpopupOpen={SetRejectpopupOpen}
         Heading={`${
