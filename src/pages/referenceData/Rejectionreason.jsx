@@ -3,7 +3,7 @@ import Table from "../table/Table";
 import { MdOutlineEdit } from "react-icons/md";
 import AddReasonPopup from "../Popups/AddReasonPopup";
 import { useEffect, useState } from "react";
-import { GET_ALL_SECURITY_QUESTIONS } from "../../config/endpoints";
+import { GET_SETTINGS_DATA } from "../../config/endpoints";
 import { call } from "../../config/axios";
 
 function Rejectionreason() {
@@ -48,7 +48,7 @@ function Rejectionreason() {
     const payload = {
       p_id: "REJECT-REASON",
     };
-    await call(GET_ALL_SECURITY_QUESTIONS, payload)
+    await call(GET_SETTINGS_DATA, payload)
       .then((res) => {
         const responseArray = res?.data?.data;
         console.log("responseArray====>", responseArray);
@@ -74,7 +74,7 @@ function Rejectionreason() {
         .filter((item) =>
           item?.reason?.toLowerCase().includes(searchText.toLowerCase())
         )
-        .map((item) => {
+        .map((item)=>{
           if (item.reason !== "") {
             return {
               reason: <div className="role-color">{item?.reason}</div>,

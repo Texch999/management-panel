@@ -1,5 +1,4 @@
 // agent endpoints
-const GET_ALL_SECURITY_QUESTIONS = "/settings/getall_security_questions";
 const ADD_SECURITY_QUESTIONS = "/settings/add_security_questions";
 const ADD_OFFERS = "/management/add_offers";
 const GET_ALL_OFFERS = "/offers/getall_offers";
@@ -39,7 +38,7 @@ const PACKAGE_APPROVE_REJECT = "/packages/package_approve_reject";
 const BULK_PACKAGE_APPROVE_REJECT = "/packages/bulk_package_approve_reject";
 // const PACKAGES_CREATION="/packages/package_creation_upgrade_discount";
 const GET_ADMIN_PACKAGE_REQUEST = "/packages/get_all_admin_package_request";
-const GET_REASON_REJECTIONS = "/settings/getall_security_questions";
+const GET_SETTINGS_DATA = "/settings/getall_security_questions";
 const ADD_REASON_REJECTIONS = "/settings/add_reason_rejection";
 
 const ADD_TOURS = "/tours/add_tours";
@@ -94,11 +93,6 @@ exports.GET_TOURS = {
 
 exports.ADD_TOURS = {
   url: ADD_TOURS,
-  method: POST,
-};
-
-exports.GET_ALL_SECURITY_QUESTIONS = {
-  url: GET_ALL_SECURITY_QUESTIONS,
   method: POST,
 };
 
@@ -360,8 +354,8 @@ exports.GET_ADMIN_PACKAGE_REQUEST = {
   method: POST,
 };
 
-exports.GET_REASON_REJECTIONS = {
-  url: GET_REASON_REJECTIONS,
+exports.GET_SETTINGS_DATA = {
+  url: GET_SETTINGS_DATA,
   method: POST,
 };
 
