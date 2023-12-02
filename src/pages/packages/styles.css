@@ -18,7 +18,7 @@
   color: #cbcbe2;
 }
 .font-white {
-  color: #ffffff;
+  color: #ffffff !important;
 }
 .font-orange {
   color: #ffb400;
@@ -66,4 +66,19 @@
   outline: none;
   border: none;
   width: 100%;
+}
+.font-10 {
+  font-size: 10px !important;
+}
+.font-12 {
+  font-size: 12px !important;
+}
+.font-14 {
+  font-size: 14px !important;
+}
+.font-16 {
+  font-size: 16px !important;
+}
+.font-20 {
+  font-size: 20px !important;
 }

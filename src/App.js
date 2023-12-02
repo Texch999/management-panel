@@ -31,6 +31,7 @@ import NotificationTextMsg from "./pages/broadcasting/NotificationTextMsg";
 import CreateNewOffers from "./pages/offersmanagement/CreateNewOffers";
 import Chats from "./pages/chat/Chats";
 import AddNewOffer from "./pages/offersmanagement/AddNewOffer";
+import ToursBanking from "./pages/tourBanking/ToursBanking";
 function App() {
   return (
     <BrowserRouter>
@@ -100,6 +101,7 @@ function App() {
               />
 
               <Route path="/support-chat" element={<Chats />} />
+              <Route path="/toursbanking" element={<ToursBanking />}/>
             </Routes>
           </div>
         </div>

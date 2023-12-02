@@ -43,7 +43,7 @@ function Securityquestions() {
   ];
   const getAllSecurityQuestions = async () => {
     const payload = {
-      p_id: "REJECT-REASON",
+      p_id: "SECURITY_QUESTIONS",
     };
     await call(GET_ALL_SECURITY_QUESTIONS, payload)
       .then((res) => {

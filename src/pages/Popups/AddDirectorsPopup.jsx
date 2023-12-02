@@ -31,6 +31,8 @@ function AddDirectorsPopup(props) {
   const [timezone, setTimeZone] = useState("");
   const [paymentGateway, setPaymentGateway] = useState("");
   const [packageDiscount, setPackageDiscount] = useState("");
+  const [share, setShare] = useState("");
+  const [ulshare, setUlshare] = useState("");
 
   const handleAddDirectorClose = () => {
     setShowAddDirectorPopup(false);
@@ -42,6 +44,8 @@ function AddDirectorsPopup(props) {
     setRole("");
     setPaymentGateway("");
     setPackageDiscount("");
+    setUlshare("");
+    setShare("");
   };
   const [passwordType, setPasswordType] = useState("password");
   const [passwordInput, setPasswordInput] = useState("");
@@ -68,12 +72,13 @@ function AddDirectorsPopup(props) {
       setCountryName(selectedDirector.country_name || "");
       setPasswordInput(selectedDirector.password || "");
       setPackageDiscount(selectedDirector.package_discount || "");
+      setUlshare(selectedDirector.ul_share || "");
+      setShare(selectedDirector.share || "");
     }
   }, [selectedDirector]);
   const handleCreateOrUpdateDirector = async (status) => {
     try {
       const url = selectedDirector ? UPDATE_PROFILE : ACCOUNT_REGISTERATION;
-      setAddDirectorPopup(true);
       const requestData = {
         creator_id: "company",
         creator_role: "company",
@@ -90,6 +95,8 @@ function AddDirectorsPopup(props) {
         country_name: countryName,
         password: passwordInput,
         pg_upi: paymentGateway,
+        share: share,
+        ulshare: ulshare,
         package_discount: packageDiscount,
       };
 
@@ -101,12 +108,15 @@ function AddDirectorsPopup(props) {
         // requestData.management = selectedDirector.management;
       }
       await call(url, requestData).then((res) => {
-        {
-          if (res.status === 200) {
+        console.log("-------->", res.data);
+        if (res.data.status === 201) {
+          setAddDirectorPopup(true);
+          setTimeout(() => {
             setAddDirectorPopup(false);
-            setShowAddDirectorPopup(true);
-          }
+            setShowAddDirectorPopup(false);
+          }, 2000);
         }
+
         if (res.data.error) {
           console.error("API Error:", res.data.message);
         } else {
@@ -159,7 +169,6 @@ function AddDirectorsPopup(props) {
       })
       .catch((err) => {
         setShowAddDirectorPopup(true);
-        setAddDirectorPopup(err);
       });
   };
   useEffect(() => {
@@ -177,7 +186,6 @@ function AddDirectorsPopup(props) {
       })
       .catch((err) => {
         setShowAddDirectorPopup(true);
-        setAddDirectorPopup(err);
       });
   };
 
@@ -409,6 +417,30 @@ function AddDirectorsPopup(props) {
                     className="w-100 custom-select small-font login-inputs input-btn-bg px-2 py-2 all-none rounded all-none"
                     value={packageDiscount}
                     onChange={(e) => setPackageDiscount(e.target.value)}
+                  ></input>
+                </Col>
+              </Row>
+              <Row>
+                <Col className="pe-0 ps-0">
+                  <div className="small-font my-1">UL Share</div>
+                  <input
+                    type="text"
+                    placeholder="Enter"
+                    name="ul_share"
+                    className="w-100 custom-select small-font login-inputs input-btn-bg px-2 py-2 all-none rounded all-none"
+                    value={ulshare}
+                    onChange={(e) => setUlshare(e.target.value)}
+                  ></input>
+                </Col>
+                <Col className="pe-0">
+                  <div className="small-font my-1">share</div>
+                  <input
+                    type="text"
+                    placeholder="Enter"
+                    name="share"
+                    className="w-100 custom-select small-font login-inputs input-btn-bg px-2 py-2 all-none rounded all-none"
+                    value={share}
+                    onChange={(e) => setShare(e.target.value)}
                   ></input>
                 </Col>
               </Row>
