@@ -247,10 +247,10 @@ function AddCountryPopups(props) {
                 <div className="small-font my-1">Account Number*</div>
                 <input
                   type="text"
-                  placeholder="Enter Mobile Number"
-                  name="mobile_number"
+                  placeholder="Enter Account Number"
+                  name="account_number"
                   className="w-100 custom-select small-font login-inputs input-btn-bg px-2 py-3 all-none rounded all-none"
-                  value={inputData.mobile_number || ""}
+                  value={inputData.account_number || ""}
                   onChange={(e) => onInputChange(e)}
                 ></input>
               </Col>
