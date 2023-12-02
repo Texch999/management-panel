@@ -43,7 +43,7 @@ function Securityquestions() {
   ];
   const getAllSecurityQuestions = async () => {
     const payload = {
-      p_id: "SECURITY_QUESTIONS",
+      p_id: "SECURITY_QUESTIONS"
     };
     await call(GET_SETTINGS_DATA, payload)
       .then((res) => {
@@ -72,6 +72,7 @@ function Securityquestions() {
           item?.question?.toLowerCase().includes(searchText.toLowerCase())
         )
         .map((item) => {
+          if (item?.question !== "") {
           return {
             questions: <div className="role-color">{item?.question}</div>,
             status:
@@ -84,6 +85,7 @@ function Securityquestions() {
               ),
             icon: <MdOutlineEdit className="eye-icon-size" />,
           };
+        }
         })
     : allQuestions
         .filter((item) =>
@@ -95,13 +97,13 @@ function Securityquestions() {
           return {
             questions: <div className="role-color">{item?.question}</div>,
             status:
-              item?.is_active === 1 ? (
-                <div className="font-green custom-active-button px-2">
-                  Active
-                </div>
-              ) : (
-                <div className="custom-deactive-button px-2">InActive</div>
-              ),
+            item?.is_active === 1 ? (
+              <div className="font-green custom-active-button px-2">
+                Active
+              </div>
+            ) : (
+              <div className="custom-deactive-button px-2">InActive</div>
+            ),
             icon: (
               <MdOutlineEdit
                 className="eye-icon-size"
