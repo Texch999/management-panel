@@ -24,6 +24,13 @@ function AddWebsitePopup(props) {
   const handleCreateWebsite = async () => {
     try {
       const res = await call(ADD_WEBSITE,formData);
+      if (res.data.status === 200) {
+        setAcceptClick(true);
+        setTimeout(() => {
+          setAcceptClick(false);
+          setShowAddWebPopup(false);
+        }, 2000);
+      }
       if (res.data.error) {
         console.error("API Error:", res.data.message);
       } else {
