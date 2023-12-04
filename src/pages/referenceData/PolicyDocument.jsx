@@ -17,7 +17,7 @@ function PolicyDocument() {
   };
   const searchContent = (value) => {
     setSearchText(value);
-    const filteredSearchText = allPolicyDocuments.filter((res) =>
+    const filteredSearchText = allPolicyDocuments?.filter((res) =>
       res?.country_name.toLowerCase().includes(searchText.toLowerCase())
     );
     setFilteredQuestions(filteredSearchText);
@@ -25,6 +25,7 @@ function PolicyDocument() {
   const getallPolicyDocuments = async () => {
     const payload = {
       register_id: "company",
+      website_name: "www.we2call.com"
     };
     await call(GET_ALL_POLICY_DOCUMENTS, payload)
       .then((res) => {
@@ -77,7 +78,7 @@ function PolicyDocument() {
             icon: <MdOutlineEdit className="eye-icon-size" />,
           };
         })
-    : allPolicyDocuments.map((item) => {
+    : allPolicyDocuments?.map((item) => {
         return {
           countryname: <div className="role-color">{item?.country_name}</div>,
           showwebsites: item?.website_name,
@@ -137,6 +138,7 @@ function PolicyDocument() {
       <AddPolicyPopup
         addPolicyOpen={addPolicyOpen}
         setAddPolicyOpen={setAddPolicyOpen}
+        Heading={`${selectedPolicy ? "Update Policy":"Add Policy"}`}
         setStatus={setStatus}
         selectedPolicy={selectedPolicy}
         setSelectedPolicy={setSelectedPolicy}

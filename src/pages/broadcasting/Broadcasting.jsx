@@ -14,6 +14,8 @@ import DraftTable from "./DraftTable";
 
 function Broadcasting() {
   const [searchOffer, setSearchOffer] = useState("");
+  const [selectedBroadcast, setSelectedBroadcast] = useState();
+  const [showBroadcastOpen, setShowBroadcastOpen] = useState(false);
   const cols = [
     {
       header: "TITLE",
@@ -36,6 +38,10 @@ function Broadcasting() {
       field: "type",
     },
     {
+      header: "DESCRIPTION",
+      field: "description",
+    },
+    {
       header: "STATUS",
       field: "status",
     },
@@ -51,7 +57,6 @@ function Broadcasting() {
     };
     await call(GET_BROADCAST_EVENTS, payload)
       .then((res) => {
-        console.log("response====>", res);
         setGetBroadcasting(res?.data?.data);
       })
 
@@ -67,7 +72,6 @@ function Broadcasting() {
     };
     await call(GET_ALL_NOTIFICATIONS, payload)
       .then((res) => {
-        // console.log("response=====>", res);
         const arr = res?.data?.data?.map((obj) => {
           return {
             ...obj,
@@ -90,7 +94,6 @@ function Broadcasting() {
     };
     await call(GET_ALL_POSTERS, payload)
       .then((res) => {
-        console.log("response=====>", res);
         const arr = res?.data?.data?.map((obj) => {
           return {
             ...obj,
@@ -134,7 +137,7 @@ function Broadcasting() {
       item.publish_date <= currentDate &&
       item?.event_name?.toLowerCase().includes(searchOffer.toLowerCase())
   );
-  const modifiedBroadcastingDetails = publishedData.map((item) => {
+  const modifiedBroadcastingDetails = publishedData?.map((item) => {
     return {
       ...item,
       title: (
@@ -158,9 +161,23 @@ function Broadcasting() {
         ) : (
           <div className="custom-deactive-button px-2">InActive</div>
         ),
-      icon: <AiOutlineEdit className="eye-icon-size" />,
+      icon: (
+        <AiOutlineEdit
+          className="eye-icon-size"
+          onClick={() => {
+            console.log("testetestste");
+            setSelectedBroadcast(item);
+            handleBroadcastOpen();
+          }}
+        />
+      ),
     };
   });
+  console.log("selectedBroadcast",selectedBroadcast)
+
+  const handleBroadcastOpen = () => {
+    setShowBroadcastOpen(true);
+  };
 
   const navigate = useNavigate();
 
@@ -223,8 +240,8 @@ function Broadcasting() {
         )}
         {activeIndex === 1 && (
           <Scheduled
-            columns={cols}
-            data={modifiedBroadcastingDetails}
+            // columns={cols}
+            // data={modifiedBroadcastingDetails}
             searchOffer={searchOffer}
           />
         )}

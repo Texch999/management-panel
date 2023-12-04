@@ -33,6 +33,7 @@ function AddDirectorsPopup(props) {
   const [packageDiscount, setPackageDiscount] = useState("");
   const [share, setShare] = useState("");
   const [ulshare, setUlshare] = useState("");
+  const [showEye,setShowEye] =useState(false)
 
   const handleAddDirectorClose = () => {
     setShowAddDirectorPopup(false);

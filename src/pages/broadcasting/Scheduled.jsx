@@ -122,7 +122,7 @@ function Scheduled(props) {
       res?.event_name?.toLowerCase().includes(searchOffer.toLowerCase())
   );
 
-  const modifiedBroadcastingDetails = scheduledData.map((item) => ({
+  const modifiedBroadcastingDetails = scheduledData?.map((item) => ({
     ...item,
     title: (
       <div className="role-color">
