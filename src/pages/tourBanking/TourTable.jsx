@@ -1,6 +1,12 @@
 import { useNavigate } from "react-router-dom";
-function Table(props) {
+import AddTourPaymentGateway from "../tourBanking/AddTourPaymentGateway"
+import { useState } from "react";
+import {call} from "../../config/axios";
+import { GET_TOUR_PAYMENT_GATEWAY } from "../../config/endpoints";
+
+function TourTable(props) {
   const { data, columns } = props;
+  
   const getColor = (clr) => {
     switch (clr) {
       case "Shedule":
@@ -21,13 +27,7 @@ function Table(props) {
         return "w-fit-content p-1 px-2";
     }
   };
-  const navigate = useNavigate();
-  const handleClickTable = (item) => {
-    {
-      item === "role" && navigate("/usertransaction");
-    }
-  };
-  // console.log(data, columns, "..........table");
+  
   return (
     <div className="sidebar-bg w-100 home-border-radius">
       <table className="tickets-table table table-borderless">
@@ -55,7 +55,6 @@ function Table(props) {
                           className={
                             column?.clr ? getColor(item[column.field]) : ""
                           }
-                          onClick={() => handleClickTable(column.field)}
                         >
                           <td>{item[column.field]}</td>
                         </div>
@@ -66,30 +65,9 @@ function Table(props) {
               </tr>
             ))}
         </tbody>
-        
-        {/* <tfoot>
-          <tr>
-            <th
-              colSpan={1}
-              className=" pegina-btn-clr small-font font-weight-light"
-            >
-              showing entries from 1-50
-            </th>
-            <th colSpan={1}></th>
-            <th colSpan={1}></th>
-            <th colSpan={5} className="small-font">
-              <button className="pegina-btn-clr px-1 m-1">Previous</button>
-              <button className="pegina-btn-clr px-1 m-1">1</button>
-              <button className="pegina-btn-clr px-1 m-1">2</button>
-              <button className="pegina-btn-clr px-1 m-1">3</button>
-              <button className="pegina-btn-clr px-1 m-1">4</button>
-              <button className="pegina-btn-clr px-1 m-1">Next</button>
-            </th>
-          </tr>
-        </tfoot> */}
       </table>
     </div>
   );
 }
 
-export default Table;
+export default TourTable;
