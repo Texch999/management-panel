@@ -6,6 +6,7 @@ import Table from "../table/Table";
 import { AiOutlineEdit } from "react-icons/ai";
 import { MdDateRange } from "react-icons/md";
 import { BiTimeFive } from "react-icons/bi";
+import moment from "moment";
 import { MdOutlineEdit } from "react-icons/md";
 import { GET_MATCHES_DATA, GET_ALL_WEBSITES } from "../../config/endpoints";
 import { CREATE_OFFLINE_MATCHES } from "../../config/endpoints";
@@ -194,7 +195,7 @@ function Creatematch() {
     ),
     dateAndTime: (
       <div>
-        {item?.date} <br /> <span>{item?.time}</span>{" "}
+        {item?.date}<br /> <span>{item?.time}</span>{" "}
       </div>
     ),
     seriesname: item?.series_name,

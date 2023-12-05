@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { Modal, Container, Row, Col, Button } from "react-bootstrap";
-import { ADD_REASON_REJECTIONS, UPDATE_SETTINGS } from "../../config/endpoints";
+import {
+  ADD_SECURITY_QUESTIONS,
+  UPDATE_SETTINGS,
+} from "../../config/endpoints";
 import { call } from "../../config/axios";
 import MatchSubmitPopup from "../../matchpopups/MatchSubmitPopup";
 
-function AddReasonPopup(props) {
+function AddSecurityPopup(props) {
   const {
     rejectPopupOpen,
     SetRejectpopupOpen,
@@ -17,10 +20,9 @@ function AddReasonPopup(props) {
   } = props;
   const [acceptClick, setAcceptClick] = useState(false);
   const [formData, setFormData] = useState({
-    p_id: "REJECT-REASON",
+    p_id: "SECURITY_QUESTIONS",
     register_id: "company",
     question: "",
-    reason: "",
     active: "Select",
     description: "",
   });
@@ -28,18 +30,18 @@ function AddReasonPopup(props) {
   useEffect(() => {
     if (selectedQuestion) {
       setFormData({
-        p_id: "REJECT-REASON",
+        p_id: "SECURITY_QUESTIONS",
         register_id: "company",
-        reason: selectedQuestion.reason || "",
+        question: selectedQuestion.question || "",
         active: selectedQuestion.is_active || "Select",
         description: selectedQuestion.description || "",
       });
     } else {
       // Clear the form when creating a new question
       setFormData({
-        p_id: "REJECT-REASON",
+        p_id: "SECURITY_QUESTIONS",
         register_id: "company",
-        reason: "",
+        question: "",
         active: "Select",
         description: "",
       });
@@ -59,13 +61,13 @@ function AddReasonPopup(props) {
     });
   };
 
-  const handleCreateOrUpdateReasons = async () => {
+  const handleCreateOrUpdateQuestions = async () => {
     try {
-      const url = selectedQuestion ? UPDATE_SETTINGS : ADD_REASON_REJECTIONS;
+      const url = selectedQuestion ? UPDATE_SETTINGS : ADD_SECURITY_QUESTIONS;
       const requestData = {
-        p_id: "REJECT-REASON",
+        p_id: "SECURITY_QUESTIONS",
         register_id: "company",
-        reason: formData.reason,
+        question: formData.question,
         active: formData.active,
         description: formData.description,
       };
@@ -86,7 +88,7 @@ function AddReasonPopup(props) {
         SetRejectpopupOpen(false);
         setStatus((prev) => !prev);
         setFormData({
-          reason: "",
+          question: "",
           active: "Select",
           description: "",
         });
@@ -117,14 +119,15 @@ function AddReasonPopup(props) {
                 <div className="small-font my-1">{firstSelect} *</div>
                 <input
                   type="text"
-                  name="reason"
-                  placeholder="Enter Reason here"
+                  name="question"
+                  placeholder="Enter Question here"
                   className="w-100 small-font login-inputs input-btn-bg px-2 py-3 all-none rounded"
-                  value={formData.reason}
+                  value={formData.question}
                   onChange={handleInputChange}
                   required
                 />
               </Col>
+
               <Col className="pe-0">
                 <div className="small-font my-1">In-Active *</div>
                 <select className="w-100 small-font login-inputs input-btn-bg px-2 py-3 all-none rounded">
@@ -158,7 +161,7 @@ function AddReasonPopup(props) {
                   type="submit"
                   variant="primary"
                   className="add-button small-font rounded px-4 py-3 mx-2 my-3 w-50 all-none"
-                  onClick={handleCreateOrUpdateReasons}
+                  onClick={handleCreateOrUpdateQuestions}
                 >
                   {selectedQuestion ? "Update" : "Create"}
                 </button>
@@ -177,4 +180,4 @@ function AddReasonPopup(props) {
   );
 }
 
-export default AddReasonPopup;
+export default AddSecurityPopup;

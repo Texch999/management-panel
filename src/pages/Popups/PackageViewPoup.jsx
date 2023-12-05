@@ -6,7 +6,7 @@ import { PiArrowsOutLight } from "react-icons/pi";
 import MatchSubmitPopup from "../../matchpopups/MatchSubmitPopup";
 import {
   GET_ADMIN_PACKAGE_REQUEST,
-  GET_REASON_REJECTIONS,
+  GET_SETTINGS_DATA,
 } from "../../config/endpoints";
 import { call } from "../../config/axios";
 import ShowImagePopup from "./ShowImagePopup";
@@ -59,7 +59,7 @@ function PackageViewPoup(props) {
     const payload = {
       p_id: "REJECT-REASON",
     };
-    await call(GET_REASON_REJECTIONS, payload)
+    await call(GET_SETTINGS_DATA, payload)
       .then((res) => {
         setRejectionDropDown(res?.data?.data);
       })

@@ -70,6 +70,8 @@ function Paymentgateway() {
       .catch((err) => console.log(err));
   };
 
+  console.log("allPayments===>",allPayments)
+
   useEffect(() => {
     getPaymentWay();
   }, [status]);
