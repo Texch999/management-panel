@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 function ConformBookingTable(props) {
   const { data, columns } = props;
+  // console.log(data, columns,'.......data columns')
   //const [selectedDate, setSelectedDate] = useState(null);
   const uploadfileInputRef = useRef(null);
   const handleUploadFileSelect = (e) => {
@@ -22,7 +23,7 @@ function ConformBookingTable(props) {
       case "Rejected":
         return "reject-button w-fit-content p-1 px-2";
       case "Pending":
-        return "pending-button w-fit-content p-1 px-2";
+        return "pending-button custom-active-button w-fit-content p-1 px-2";
       case "Select":
         return "select-button w-fit-content p-1 px-2";
       default:
@@ -59,7 +60,7 @@ function ConformBookingTable(props) {
                     <div className="d-flex justify-content-center align-items-center">
                       <div
                         className={
-                          column?.clr ? getColor(item[column.field]) : ""
+                          column && column.clr ? getColor(item[column.field]) : ""
                         }
                         onClick={() => handleClickTable(column.field)}
                       >
@@ -70,7 +71,7 @@ function ConformBookingTable(props) {
                 );
               })}
             </tr>
-            <tr>
+            {/* <tr>
               <td className="p-2 download-div" colspan="10">
                 <div className="download-container p-1">
                   Upload Your Documents
@@ -80,7 +81,7 @@ function ConformBookingTable(props) {
                   />
                 </div>
               </td>
-            </tr>
+            </tr> */}
           </tbody>
         ))}
       </table>

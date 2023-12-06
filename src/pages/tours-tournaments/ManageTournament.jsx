@@ -8,12 +8,14 @@ import { call } from "../../config/axios";
 import { GET_INTERESTED } from "../../config/endpoints";
 import { UPDATE_INTERESTED } from "../../config/endpoints";
 import { BOOKNOW_FOR_INTERESTED } from "../../config/endpoints";
+import { GET_TOUR_PAYMENT_DOCUMENTS } from "../../config/endpoints";
 
 function ManageTournament() {
   const [activeManageIndex, setActiveManageIndex] = useState(0);
   const [interestedMembers, setInterestedMembers] = useState([]);
   const [status, setStatus] = useState(false);
   const [addingTourDetails, setAddingTourDetails] = useState("")
+  const [guestDocs, setGuestDocs] = useState([])
   const [selectedFilter, setSelectedFilter] = useState({
     tour_name: "All",
     website: "All",
@@ -41,9 +43,17 @@ function ManageTournament() {
             .then((res)=>console.log(res))
             .catch((error)=>console.log(error))
   }
+  const gettingguestsdocs = async() => {
+    const payload = {}
+    await call(GET_TOUR_PAYMENT_DOCUMENTS, payload)
+            .then((res)=>setGuestDocs(res?.data?.data?.Items))
+            .then((error)=>console.log(error))
+  }
+  console.log(guestDocs,'.....guestdocs')
 
   useEffect(() => {
     gettingInterestedMembers();
+    gettingguestsdocs();
   }, [status]);
 
   const handleSelectButton = async (interested_id) => {
@@ -306,288 +316,104 @@ function ManageTournament() {
       field: "website",
     },
     {
-      header: "DATE & TIME",
-      field: "dateTime",
+      header: "DATE",
+      field: "date",
     },
     {
       header: "NAME & ROLE",
       field: "nameRole",
     },
     {
-      header: "GUEST NAME",
+      header: "GUESTS DETAILS",
       field: "guestName",
     },
     {
-      header: "GENDER",
-      field: "gender",
-    },
-    {
-      header: "TOUR PACK",
+      header: "PACKS SELECTED",
       field: "tourPack",
     },
     {
       header: "TOTAL AMOUNT",
-      field: "tatalAmount",
+      field: "totalAmount",
     },
     {
       header: "PAID AMOUNT",
       field: "paidAmount",
     },
     {
+      header: "PAID TO",
+      field: "paidTo"
+    },
+    {
+      header: "PAYMENT IDPROOF",
+      field: "paymentIdproof",
+    },
+    {
+      header: "CONFIRMATION STATUS",
       field: "clr",
     },
+    // {
+    //   field: "clr",
+    // },
   ];
 
-  const tableDocData = [
-    {
-      sl: 1,
-      website: "we2call.com",
-      dateTime: (
+  const tableDocData = 
+  guestDocs && guestDocs.length>0 ? guestDocs.map((item, index)=>{
+    return{
+      sl: index+1,
+      website: item.website,
+      date: (
         <div>
-          31/08/2023
-          <br />
-          14:51:20 PM
+         {item.date}
         </div>
       ),
       nameRole: (
         <div>
-          Srinivas
+          {item.name}
           <br />
-          Super Admin
-          <br />
-          Hyderabad
+          {item.account_role}
         </div>
       ),
       guestName: (
         <div>
-          10 <BsArrowDown />
+          <button type="button"
+                  className="btn btn-outline-secondary btn-sm"
+          >
+            Clickhere
+          </button> 
         </div>
       ),
-      gender: "Male",
-      tourPack: "jej",
-      tatalAmount: "31/08/2023",
-      paidAmount: (
+      tourPack: item.packages_selected && item.packages_selected.length > 0 ? (
+        item.packages_selected.map((packageItem) => (
+          Object.keys(packageItem).map((key)=>(
+            <div key={key}>{key}:{packageItem[key]}</div>
+          ))
+        ))
+      ):null,
+      totalAmount: item.total_amount,
+      paidAmount: item.paid_amount,
+      paidTo: item.payment_details.paymentmode==='neft'?(
         <div>
-          10000
+          {item.payment_details.name}
           <br />
-          <div className="p-2 download-div">
-            id Proof
-            <MdInsertPhoto className="ms-1 ions-clr" />
-            <BsArrowDown className="ms-1 ions-clr" />
-          </div>
-        </div>
-      ),
-      clr: (
-        <div>
-          Confirm
-          <div className="p-2 download-div">
-            Payment
-            <MdInsertPhoto className="ms-1 ions-clr" />
-            <BsArrowDown className="ms-1 ions-clr" />
-          </div>
-        </div>
-      ),
-    },
-    {
-      sl: 2,
-      website: "we2call.com",
-      dateTime: (
-        <div>
-          31/08/2023
+          {item.payment_details.accountNo}
           <br />
-          14:51:20 PM
-        </div>
-      ),
-      nameRole: (
-        <div>
-          Srinivas
+          {item.payment_details.bank}
           <br />
-          Super Admin
+          {item.payment_details.ifscCode}
+        </div>
+      ):(
+        <div>
+          {item.payment_details.name}
           <br />
-          Hyderabad
-        </div>
-      ),
-      guestName: (
-        <div>
-          10 <BsArrowDown />
-        </div>
-      ),
-      gender: "Male",
-      tourPack: "jej",
-      tatalAmount: "31/08/2023",
-      paidAmount: (
-        <div>
-          10000
+          {item.payment_details.mobileNumber}
           <br />
-          <div className="p-2 download-div">
-            id Proof
-            <MdInsertPhoto className="ms-1 ions-clr" />
-            <BsArrowDown className="ms-1 ions-clr" />
-          </div>
+          {item.payment_details.upiId}
         </div>
       ),
-      clr: (
-        <div>
-          Confirm
-          <div className="p-2 download-div">
-            Payment
-            <MdInsertPhoto className="ms-1 ions-clr" />
-            <BsArrowDown className="ms-1 ions-clr" />
-          </div>
-        </div>
-      ),
-    },
-    ,
-    {
-      sl: 3,
-      website: "we2call.com",
-      dateTime: (
-        <div>
-          31/08/2023
-          <br />
-          14:51:20 PM
-        </div>
-      ),
-      nameRole: (
-        <div>
-          Srinivas
-          <br />
-          Super Admin
-          <br />
-          Hyderabad
-        </div>
-      ),
-      guestName: (
-        <div>
-          10 <BsArrowDown />
-        </div>
-      ),
-      gender: "Male",
-      tourPack: "jej",
-      tatalAmount: "31/08/2023",
-      paidAmount: (
-        <div>
-          10000
-          <br />
-          <div className="p-2 download-div">
-            id Proof
-            <MdInsertPhoto className="ms-1 ions-clr" />
-            <BsArrowDown className="ms-1 ions-clr" />
-          </div>
-        </div>
-      ),
-      clr: (
-        <div>
-          Confirm
-          <div className="p-2 download-div">
-            Payment
-            <MdInsertPhoto className="ms-1 ions-clr" />
-            <BsArrowDown className="ms-1 ions-clr" />
-          </div>
-        </div>
-      ),
-    },
-    ,
-    {
-      sl: 4,
-      website: "we2call.com",
-      dateTime: (
-        <div>
-          31/08/2023
-          <br />
-          14:51:20 PM
-        </div>
-      ),
-      nameRole: (
-        <div>
-          Srinivas
-          <br />
-          Super Admin
-          <br />
-          Hyderabad
-        </div>
-      ),
-      guestName: (
-        <div>
-          10 <BsArrowDown />
-        </div>
-      ),
-      gender: "Male",
-      tourPack: "jej",
-      tatalAmount: "31/08/2023",
-      paidAmount: (
-        <div>
-          10000
-          <br />
-          <div className="p-2 download-div">
-            id Proof
-            <MdInsertPhoto className="ms-1 ions-clr" />
-            <BsArrowDown className="ms-1 ions-clr" />
-          </div>
-        </div>
-      ),
-      clr: (
-        <div>
-          Confirm
-          <div className="p-2 download-div">
-            Payment
-            <MdInsertPhoto className="ms-1 ions-clr" />
-            <BsArrowDown className="ms-1 ions-clr" />
-          </div>
-        </div>
-      ),
-    },
-    ,
-    {
-      sl: 5,
-      website: "we2call.com",
-      dateTime: (
-        <div>
-          31/08/2023
-          <br />
-          14:51:20 PM
-        </div>
-      ),
-      nameRole: (
-        <div>
-          Srinivas
-          <br />
-          Super Admin
-          <br />
-          Hyderabad
-        </div>
-      ),
-      guestName: (
-        <div>
-          10 <BsArrowDown />
-        </div>
-      ),
-      gender: "Male",
-      tourPack: "jej",
-      tatalAmount: "31/08/2023",
-      paidAmount: (
-        <div>
-          10000
-          <br />
-          <div className="p-2 download-div">
-            id Proof
-            <MdInsertPhoto className="ms-1 ions-clr" />
-            <BsArrowDown className="ms-1 ions-clr" />
-          </div>
-        </div>
-      ),
-      clr: (
-        <div>
-          Confirm
-          <div className="p-2 download-div">
-            Payment
-            <MdInsertPhoto className="ms-1 ions-clr" />
-            <BsArrowDown className="ms-1 ions-clr" />
-          </div>
-        </div>
-      ),
-    },
-  ];
+      paymentIdproof: <button type="button" className="btn btn-outline-secondary btn-sm">View</button>,
+      clr: item.confirm_payment_status
+    }
+  }) : [];
 
   const ConfirmBookingHeading = [
     {
@@ -599,32 +425,40 @@ function ManageTournament() {
       field: "website",
     },
     {
-      header: "DATE & TIME",
-      field: "dateTime",
+      header: "DATE",
+      field: "date",
     },
     {
       header: "NAME & ROLE",
       field: "nameRole",
     },
     {
-      header: "GUEST NAME",
+      header: "GUESTS DETAILS",
       field: "guestName",
     },
     {
-      header: "GENDER",
-      field: "gender",
+      header: "TOUR AMENITIES",
+      field: "tourAmenities",
     },
     {
-      header: "TOUR PACK",
+      header: "PACKS SELECTED",
       field: "tourPack",
     },
     {
       header: "TOTAL AMOUNT",
-      field: "tatalAmount",
+      field: "totalAmount",
     },
     {
       header: "PAID AMOUNT",
       field: "paidAmount",
+    },
+    {
+      header: "PAYMENT IDPROOF",
+      field: "paymentIdproof",
+    },
+    {
+      header: "CONFIRMATION STATUS",
+      field: "confirmationStatus",
     },
     {
       field: "clr",
@@ -635,11 +469,9 @@ function ManageTournament() {
     {
       sl: 1,
       website: "we2call.com",
-      dateTime: (
+      date: (
         <div>
           31/08/2023
-          <br />
-          14:51:20 PM
         </div>
       ),
       nameRole: (
@@ -647,144 +479,60 @@ function ManageTournament() {
           Srinivas
           <br />
           Super Admin
-          <br />
-          Hyderabad
         </div>
       ),
       guestName: (
         <div>
-          10 <BsArrowDown />
+          <button type="button" className="btn btn-outline-secondary btn-sm">Clickhere</button>
         </div>
       ),
-      gender: "Male",
-      tourPack: "jej",
-      tatalAmount: "31/08/2023",
-      paidAmount: "10000",
-      clr: "Confirm",
+      tourPack: (<div>
+        Regularpack(1)
+        <br />
+        Premiumpack(4)
+      </div>),
+      tourAmenities: (<div>
+          travel bookings<MdInsertPhoto className="ms-1 ions-clr" />
+          <br />
+          hotel bookings<MdInsertPhoto className="ms-1 ions-clr" />
+          <br />
+          tour guidance<MdInsertPhoto className="ms-1 ions-clr" />
+        </div>),
+      totalAmount: "10,00,000",
+      paidAmount: "8,00,000",
+      paymentIdproof: <button type="button" className="btn btn-outline-secondary btn-sm">View</button>,
+      confirmationStatus: "approved"
     },
-    {
-      sl: 2,
-      website: "we2call.com",
-      dateTime: (
-        <div>
-          31/08/2023
-          <br />
-          14:51:20 PM
-        </div>
-      ),
-      nameRole: (
-        <div>
-          Srinivas
-          <br />
-          Super Admin
-          <br />
-          Hyderabad
-        </div>
-      ),
-      guestName: (
-        <div>
-          10 <BsArrowDown />
-        </div>
-      ),
-      gender: "Male",
-      tourPack: "jej",
-      tatalAmount: "31/08/2023",
-      paidAmount: "10000",
-      clr: "Confirm",
-    },
-    ,
-    {
-      sl: 3,
-      website: "we2call.com",
-      dateTime: (
-        <div>
-          31/08/2023
-          <br />
-          14:51:20 PM
-        </div>
-      ),
-      nameRole: (
-        <div>
-          Srinivas
-          <br />
-          Super Admin
-          <br />
-          Hyderabad
-        </div>
-      ),
-      guestName: (
-        <div>
-          10 <BsArrowDown />
-        </div>
-      ),
-      gender: "Male",
-      tourPack: "jej",
-      tatalAmount: "31/08/2023",
-      paidAmount: "10000",
-      clr: "Confirm",
-    },
-    ,
-    {
-      sl: 4,
-      website: "we2call.com",
-      dateTime: (
-        <div>
-          31/08/2023
-          <br />
-          14:51:20 PM
-        </div>
-      ),
-      nameRole: (
-        <div>
-          Srinivas
-          <br />
-          Super Admin
-          <br />
-          Hyderabad
-        </div>
-      ),
-      guestName: (
-        <div>
-          10 <BsArrowDown />
-        </div>
-      ),
-      gender: "Male",
-      tourPack: "jej",
-      tatalAmount: "31/08/2023",
-      paidAmount: "10000",
-      clr: "Confirm",
-    },
-    ,
-    {
-      sl: 5,
-      website: "we2call.com",
-      dateTime: (
-        <div>
-          31/08/2023
-          <br />
-          14:51:20 PM
-        </div>
-      ),
-      nameRole: (
-        <div>
-          Srinivas
-          <br />
-          Super Admin
-          <br />
-          Hyderabad
-        </div>
-      ),
-      guestName: (
-        <div>
-          10 +<BsArrowDown />
-        </div>
-      ),
-      gender: "Male",
-      tourPack: "jej",
-      tatalAmount: "31/08/2023",
-      paidAmount: "10000",
-      clr: "Confirm",
-    },
+    // {
+    //   sl: 2,
+    //   website: "we2call.com",
+    //   dateTime: (
+    //     <div>
+    //       31/08/2023
+    //       <br />
+    //       14:51:20 PM
+    //     </div>
+    //   ),
+    //   nameRole: (
+    //     <div>
+    //       Srinivas
+    //       <br />
+    //       Super Admin
+    //       <br />
+    //       Hyderabad
+    //     </div>
+    //   ),
+    //   guestName: (
+    //     <div>
+    //       10 <BsArrowDown />
+    //     </div>
+    //   ),
+    //   gender: "Male",
+    //   tourPack: "jej",
+    //   tatalAmount: "31/08/2023",
+    //   paidAmount: "10000",
+    //   clr: "Confirm",
+    // }
   ];
 
   const handleManageHead = (index) => {
