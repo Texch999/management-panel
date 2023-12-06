@@ -9,13 +9,16 @@ import { GET_INTERESTED } from "../../config/endpoints";
 import { UPDATE_INTERESTED } from "../../config/endpoints";
 import { BOOKNOW_FOR_INTERESTED } from "../../config/endpoints";
 import { GET_TOUR_PAYMENT_DOCUMENTS } from "../../config/endpoints";
+import GuestDetailsPopup from "./GuestDetailsPopup";
 
 function ManageTournament() {
   const [activeManageIndex, setActiveManageIndex] = useState(0);
   const [interestedMembers, setInterestedMembers] = useState([]);
   const [status, setStatus] = useState(false);
-  const [addingTourDetails, setAddingTourDetails] = useState("")
-  const [guestDocs, setGuestDocs] = useState([])
+  const [addingTourDetails, setAddingTourDetails] = useState("");
+  const [guestDocs, setGuestDocs] = useState([]);
+  const [openGuestDetailsPopup, setOpenGuestDetailsPopup] = useState(false);
+  const [guestDetails, setGuestsDetails] = useState({})
   const [selectedFilter, setSelectedFilter] = useState({
     tour_name: "All",
     website: "All",
@@ -33,23 +36,25 @@ function ManageTournament() {
       .catch((error) => console.log(error));
   };
 
-  const tourdetailsSubmitButton = async(tableData2)=>{
-    const interestedMembersIds = tableData2.map((i)=>{return i.id})
+  const tourdetailsSubmitButton = async (tableData2) => {
+    const interestedMembersIds = tableData2.map((i) => {
+      return i.id;
+    });
     const payload = {
-      selectedTeam:interestedMembersIds,
-      tour_details:addingTourDetails
-    }
+      selectedTeam: interestedMembersIds,
+      tour_details: addingTourDetails,
+    };
     await call(BOOKNOW_FOR_INTERESTED, payload)
-            .then((res)=>console.log(res))
-            .catch((error)=>console.log(error))
-  }
-  const gettingguestsdocs = async() => {
-    const payload = {}
+      .then((res) => console.log(res))
+      .catch((error) => console.log(error));
+  };
+  const gettingguestsdocs = async () => {
+    const payload = {};
     await call(GET_TOUR_PAYMENT_DOCUMENTS, payload)
-            .then((res)=>setGuestDocs(res?.data?.data?.Items))
-            .then((error)=>console.log(error))
-  }
-  console.log(guestDocs,'.....guestdocs')
+            .then((res) => setGuestDocs(res?.data?.data?.Items))
+            .then((error) => console.log(error));
+  };
+  console.log(guestDocs, ".....guestdocs");
 
   useEffect(() => {
     gettingInterestedMembers();
@@ -63,7 +68,7 @@ function ManageTournament() {
     };
     await call(UPDATE_INTERESTED, payload)
       .then((res) => {
-        setStatus((prev)=>!prev)
+        setStatus((prev) => !prev);
       })
       .catch((error) => console.log(error));
   };
@@ -74,11 +79,11 @@ function ManageTournament() {
     };
     await call(UPDATE_INTERESTED, payload)
       .then((res) => {
-        setStatus((prev)=>!prev)
+        setStatus((prev) => !prev);
       })
       .catch((error) => console.log(error));
   };
-  
+
   const handleChange = (e) => {
     setSelectedFilter({
       ...selectedFilter,
@@ -191,10 +196,10 @@ function ManageTournament() {
               return item.tour_name === selectedFilter.tour_name;
             }
           })
-          .filter((item)=>{
-            if (selectedFilter?.location === "All"){
+          .filter((item) => {
+            if (selectedFilter?.location === "All") {
               return item;
-            }else {
+            } else {
               return item.location === selectedFilter.location;
             }
           })
@@ -235,10 +240,7 @@ function ManageTournament() {
                     Select
                   </button>
                 ) : (
-                  <button
-                    disabled
-                    className="select-button btn-color2"
-                  >
+                  <button disabled className="select-button btn-color2">
                     Selected
                   </button>
                 ),
@@ -258,10 +260,10 @@ function ManageTournament() {
               return item.tour_name === selectedFilter.tour_name;
             }
           })
-          .filter((item)=>{
-            if (selectedFilter?.location === "All"){
+          .filter((item) => {
+            if (selectedFilter?.location === "All") {
               return item;
-            }else {
+            } else {
               return item.location === selectedFilter.location;
             }
           })
@@ -291,17 +293,16 @@ function ManageTournament() {
               schedule_start: item.schedule_start,
               schedule_end: item.schedule_end,
               location: item.location,
-              cl:
-                item.selected === true && (
-                  <button
-                    className="select-button btn-color"
-                    name="deselect"
-                    value={item.selected}
-                    onClick={() => handleDeSelectButton(item.interested_id)}
-                  >
-                    De-select
-                  </button>
-                )
+              cl: item.selected === true && (
+                <button
+                  className="select-button btn-color"
+                  name="deselect"
+                  value={item.selected}
+                  onClick={() => handleDeSelectButton(item.interested_id)}
+                >
+                  De-select
+                </button>
+              ),
             };
           })
       : [];
@@ -341,7 +342,7 @@ function ManageTournament() {
     },
     {
       header: "PAID TO",
-      field: "paidTo"
+      field: "paidTo",
     },
     {
       header: "PAYMENT IDPROOF",
@@ -355,65 +356,79 @@ function ManageTournament() {
     //   field: "clr",
     // },
   ];
-
-  const tableDocData = 
-  guestDocs && guestDocs.length>0 ? guestDocs.map((item, index)=>{
-    return{
-      sl: index+1,
-      website: item.website,
-      date: (
-        <div>
-         {item.date}
-        </div>
-      ),
-      nameRole: (
-        <div>
-          {item.name}
-          <br />
-          {item.account_role}
-        </div>
-      ),
-      guestName: (
-        <div>
-          <button type="button"
+  const handleClickhereButton = (item)=>{
+    setGuestsDetails(item)
+    setOpenGuestDetailsPopup(true)
+  }
+  const tableDocData =
+    guestDocs && guestDocs.length > 0
+      ? guestDocs.map((item, index) => {
+          return {
+            sl: index + 1,
+            website: item.website,
+            date: <div>{item.date}</div>,
+            nameRole: (
+              <div>
+                {item.name}
+                <br />
+                {item.account_role}
+              </div>
+            ),
+            guestName: (
+              <div>
+                <button
+                  type="button"
                   className="btn btn-outline-secondary btn-sm"
-          >
-            Clickhere
-          </button> 
-        </div>
-      ),
-      tourPack: item.packages_selected && item.packages_selected.length > 0 ? (
-        item.packages_selected.map((packageItem) => (
-          Object.keys(packageItem).map((key)=>(
-            <div key={key}>{key}:{packageItem[key]}</div>
-          ))
-        ))
-      ):null,
-      totalAmount: item.total_amount,
-      paidAmount: item.paid_amount,
-      paidTo: item.payment_details.paymentmode==='neft'?(
-        <div>
-          {item.payment_details.name}
-          <br />
-          {item.payment_details.accountNo}
-          <br />
-          {item.payment_details.bank}
-          <br />
-          {item.payment_details.ifscCode}
-        </div>
-      ):(
-        <div>
-          {item.payment_details.name}
-          <br />
-          {item.payment_details.mobileNumber}
-          <br />
-          {item.payment_details.upiId}
-        </div>
-      ),
-      paymentIdproof: <button type="button" className="btn btn-outline-secondary btn-sm">View</button>,
-      clr: item.confirm_payment_status
-    }
-  }) : [];
+                  onClick={() => handleClickhereButton(item)}
+                >
+                  Clickhere
+                </button>
+              </div>
+            ),
+            tourPack:
+              item.packages_selected && item.packages_selected.length > 0
+                ? item.packages_selected.map((packageItem) =>
+                    Object.keys(packageItem).map((key) => (
+                      <div key={key}>
+                        {key}:{packageItem[key]}
+                      </div>
+                    ))
+                  )
+                : null,
+            totalAmount: item.total_amount,
+            paidAmount: item.paid_amount,
+            paidTo:
+              item.payment_details.paymentmode === "neft" ? (
+                <div>
+                  {item.payment_details.name}
+                  <br />
+                  {item.payment_details.accountNo}
+                  <br />
+                  {item.payment_details.bank}
+                  <br />
+                  {item.payment_details.ifscCode}
+                </div>
+              ) : (
+                <div>
+                  {item.payment_details.name}
+                  <br />
+                  {item.payment_details.mobileNumber}
+                  <br />
+                  {item.payment_details.upiId}
+                </div>
+              ),
+            paymentIdproof: (
+              <button
+                type="button"
+                className="btn btn-outline-secondary btn-sm"
+              >
+                View
+              </button>
+            ),
+            clr: item.confirm_payment_status,
+          };
+        })
+      : [];
 
   const ConfirmBookingHeading = [
     {
@@ -469,11 +484,7 @@ function ManageTournament() {
     {
       sl: 1,
       website: "we2call.com",
-      date: (
-        <div>
-          31/08/2023
-        </div>
-      ),
+      date: <div>31/08/2023</div>,
       nameRole: (
         <div>
           Srinivas
@@ -483,25 +494,38 @@ function ManageTournament() {
       ),
       guestName: (
         <div>
-          <button type="button" className="btn btn-outline-secondary btn-sm">Clickhere</button>
+          <button type="button" className="btn btn-outline-secondary btn-sm">
+            Clickhere
+          </button>
         </div>
       ),
-      tourPack: (<div>
-        Regularpack(1)
-        <br />
-        Premiumpack(4)
-      </div>),
-      tourAmenities: (<div>
-          travel bookings<MdInsertPhoto className="ms-1 ions-clr" />
+      tourPack: (
+        <div>
+          Regularpack(1)
           <br />
-          hotel bookings<MdInsertPhoto className="ms-1 ions-clr" />
+          Premiumpack(4)
+        </div>
+      ),
+      tourAmenities: (
+        <div>
+          travel bookings
+          <MdInsertPhoto className="ms-1 ions-clr" />
           <br />
-          tour guidance<MdInsertPhoto className="ms-1 ions-clr" />
-        </div>),
+          hotel bookings
+          <MdInsertPhoto className="ms-1 ions-clr" />
+          <br />
+          tour guidance
+          <MdInsertPhoto className="ms-1 ions-clr" />
+        </div>
+      ),
       totalAmount: "10,00,000",
       paidAmount: "8,00,000",
-      paymentIdproof: <button type="button" className="btn btn-outline-secondary btn-sm">View</button>,
-      confirmationStatus: "approved"
+      paymentIdproof: (
+        <button type="button" className="btn btn-outline-secondary btn-sm">
+          View
+        </button>
+      ),
+      confirmationStatus: "approved",
     },
     // {
     //   sl: 2,
@@ -599,11 +623,18 @@ function ManageTournament() {
               placeholder="Please enter Tour Details"
               name="tourdetails"
               value={addingTourDetails}
-              onChange={(e)=>{setAddingTourDetails(e.target.value)}}
+              onChange={(e) => {
+                setAddingTourDetails(e.target.value);
+              }}
             ></textarea>
-            <button className="select-button button-position"
-                    onClick={()=>{tourdetailsSubmitButton(tableData2)}}
-            >Submit</button>
+            <button
+              className="select-button button-position"
+              onClick={() => {
+                tourdetailsSubmitButton(tableData2);
+              }}
+            >
+              Submit
+            </button>
           </div>
         )}
         {activeManageIndex === 3 && (
@@ -616,6 +647,13 @@ function ManageTournament() {
           />
         )}
       </div>
+      {openGuestDetailsPopup && (
+        <GuestDetailsPopup
+          openGuestDetailsPopup={openGuestDetailsPopup}
+          setOpenGuestDetailsPopup={setOpenGuestDetailsPopup}
+          guestDetails={guestDetails}
+        />
+      )}
     </div>
   );
 }
