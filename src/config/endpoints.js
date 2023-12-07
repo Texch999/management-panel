@@ -48,13 +48,25 @@ const GET_INTERESTED = "/tours/get_interested";
 const UPDATE_INTERESTED = "/tours/update_interested";
 const BOOKNOW_FOR_INTERESTED = "/tours/booknow_for_interested";
 const ADD_TOUR_PAYMENT_GATEWAY = "/tours_banking/add_tour_payment_gateway";
-const GET_TOUR_PAYMENT_GATEWAY = "/tours_banking/get_tour_payment_gateway"
+const GET_TOUR_PAYMENT_GATEWAY = "/tours_banking/get_tour_payment_gateway";
+const UPDATE_TOUR_PAYMENT_GATEWAY = "/tours_banking/update_tour_payment_gateway";
+const GET_TOUR_PAYMENT_DOCUMENTS = "/tours/get_tour_payments_documents";
 
 // methods
 const DELETE = "DELETE";
 const POST = "POST";
 const GET = "POST";
 const PUT = "PUT";
+
+exports.GET_TOUR_PAYMENT_DOCUMENTS = {
+  method: POST,
+  url: GET_TOUR_PAYMENT_DOCUMENTS
+}
+
+exports.UPDATE_TOUR_PAYMENT_GATEWAY = {
+  url: UPDATE_TOUR_PAYMENT_GATEWAY,
+  method: POST
+}
 
 exports.GET_TOUR_PAYMENT_GATEWAY = {
   url: GET_TOUR_PAYMENT_GATEWAY,

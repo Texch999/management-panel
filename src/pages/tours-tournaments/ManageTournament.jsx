@@ -8,12 +8,17 @@ import { call } from "../../config/axios";
 import { GET_INTERESTED } from "../../config/endpoints";
 import { UPDATE_INTERESTED } from "../../config/endpoints";
 import { BOOKNOW_FOR_INTERESTED } from "../../config/endpoints";
+import { GET_TOUR_PAYMENT_DOCUMENTS } from "../../config/endpoints";
+import GuestDetailsPopup from "./GuestDetailsPopup";
 
 function ManageTournament() {
   const [activeManageIndex, setActiveManageIndex] = useState(0);
   const [interestedMembers, setInterestedMembers] = useState([]);
   const [status, setStatus] = useState(false);
-  const [addingTourDetails, setAddingTourDetails] = useState("")
+  const [addingTourDetails, setAddingTourDetails] = useState("");
+  const [guestDocs, setGuestDocs] = useState([]);
+  const [openGuestDetailsPopup, setOpenGuestDetailsPopup] = useState(false);
+  const [guestDetails, setGuestsDetails] = useState({})
   const [selectedFilter, setSelectedFilter] = useState({
     tour_name: "All",
     website: "All",
@@ -31,19 +36,29 @@ function ManageTournament() {
       .catch((error) => console.log(error));
   };
 
-  const tourdetailsSubmitButton = async(tableData2)=>{
-    const interestedMembersIds = tableData2.map((i)=>{return i.id})
+  const tourdetailsSubmitButton = async (tableData2) => {
+    const interestedMembersIds = tableData2.map((i) => {
+      return i.id;
+    });
     const payload = {
-      selectedTeam:interestedMembersIds,
-      tour_details:addingTourDetails
-    }
+      selectedTeam: interestedMembersIds,
+      tour_details: addingTourDetails,
+    };
     await call(BOOKNOW_FOR_INTERESTED, payload)
-            .then((res)=>console.log(res))
-            .catch((error)=>console.log(error))
-  }
+      .then((res) => console.log(res))
+      .catch((error) => console.log(error));
+  };
+  const gettingguestsdocs = async () => {
+    const payload = {};
+    await call(GET_TOUR_PAYMENT_DOCUMENTS, payload)
+            .then((res) => setGuestDocs(res?.data?.data?.Items))
+            .then((error) => console.log(error));
+  };
+  console.log(guestDocs, ".....guestdocs");
 
   useEffect(() => {
     gettingInterestedMembers();
+    gettingguestsdocs();
   }, [status]);
 
   const handleSelectButton = async (interested_id) => {
@@ -53,7 +68,7 @@ function ManageTournament() {
     };
     await call(UPDATE_INTERESTED, payload)
       .then((res) => {
-        setStatus((prev)=>!prev)
+        setStatus((prev) => !prev);
       })
       .catch((error) => console.log(error));
   };
@@ -64,11 +79,11 @@ function ManageTournament() {
     };
     await call(UPDATE_INTERESTED, payload)
       .then((res) => {
-        setStatus((prev)=>!prev)
+        setStatus((prev) => !prev);
       })
       .catch((error) => console.log(error));
   };
-  
+
   const handleChange = (e) => {
     setSelectedFilter({
       ...selectedFilter,
@@ -181,10 +196,10 @@ function ManageTournament() {
               return item.tour_name === selectedFilter.tour_name;
             }
           })
-          .filter((item)=>{
-            if (selectedFilter?.location === "All"){
+          .filter((item) => {
+            if (selectedFilter?.location === "All") {
               return item;
-            }else {
+            } else {
               return item.location === selectedFilter.location;
             }
           })
@@ -225,10 +240,7 @@ function ManageTournament() {
                     Select
                   </button>
                 ) : (
-                  <button
-                    disabled
-                    className="select-button btn-color2"
-                  >
+                  <button disabled className="select-button btn-color2">
                     Selected
                   </button>
                 ),
@@ -248,10 +260,10 @@ function ManageTournament() {
               return item.tour_name === selectedFilter.tour_name;
             }
           })
-          .filter((item)=>{
-            if (selectedFilter?.location === "All"){
+          .filter((item) => {
+            if (selectedFilter?.location === "All") {
               return item;
-            }else {
+            } else {
               return item.location === selectedFilter.location;
             }
           })
@@ -281,17 +293,16 @@ function ManageTournament() {
               schedule_start: item.schedule_start,
               schedule_end: item.schedule_end,
               location: item.location,
-              cl:
-                item.selected === true && (
-                  <button
-                    className="select-button btn-color"
-                    name="deselect"
-                    value={item.selected}
-                    onClick={() => handleDeSelectButton(item.interested_id)}
-                  >
-                    De-select
-                  </button>
-                )
+              cl: item.selected === true && (
+                <button
+                  className="select-button btn-color"
+                  name="deselect"
+                  value={item.selected}
+                  onClick={() => handleDeSelectButton(item.interested_id)}
+                >
+                  De-select
+                </button>
+              ),
             };
           })
       : [];
@@ -306,288 +317,118 @@ function ManageTournament() {
       field: "website",
     },
     {
-      header: "DATE & TIME",
-      field: "dateTime",
+      header: "DATE",
+      field: "date",
     },
     {
       header: "NAME & ROLE",
       field: "nameRole",
     },
     {
-      header: "GUEST NAME",
+      header: "GUESTS DETAILS",
       field: "guestName",
     },
     {
-      header: "GENDER",
-      field: "gender",
-    },
-    {
-      header: "TOUR PACK",
+      header: "PACKS SELECTED",
       field: "tourPack",
     },
     {
       header: "TOTAL AMOUNT",
-      field: "tatalAmount",
+      field: "totalAmount",
     },
     {
       header: "PAID AMOUNT",
       field: "paidAmount",
     },
     {
+      header: "PAID TO",
+      field: "paidTo",
+    },
+    {
+      header: "PAYMENT IDPROOF",
+      field: "paymentIdproof",
+    },
+    {
+      header: "CONFIRMATION STATUS",
       field: "clr",
     },
+    // {
+    //   field: "clr",
+    // },
   ];
-
-  const tableDocData = [
-    {
-      sl: 1,
-      website: "we2call.com",
-      dateTime: (
-        <div>
-          31/08/2023
-          <br />
-          14:51:20 PM
-        </div>
-      ),
-      nameRole: (
-        <div>
-          Srinivas
-          <br />
-          Super Admin
-          <br />
-          Hyderabad
-        </div>
-      ),
-      guestName: (
-        <div>
-          10 <BsArrowDown />
-        </div>
-      ),
-      gender: "Male",
-      tourPack: "jej",
-      tatalAmount: "31/08/2023",
-      paidAmount: (
-        <div>
-          10000
-          <br />
-          <div className="p-2 download-div">
-            id Proof
-            <MdInsertPhoto className="ms-1 ions-clr" />
-            <BsArrowDown className="ms-1 ions-clr" />
-          </div>
-        </div>
-      ),
-      clr: (
-        <div>
-          Confirm
-          <div className="p-2 download-div">
-            Payment
-            <MdInsertPhoto className="ms-1 ions-clr" />
-            <BsArrowDown className="ms-1 ions-clr" />
-          </div>
-        </div>
-      ),
-    },
-    {
-      sl: 2,
-      website: "we2call.com",
-      dateTime: (
-        <div>
-          31/08/2023
-          <br />
-          14:51:20 PM
-        </div>
-      ),
-      nameRole: (
-        <div>
-          Srinivas
-          <br />
-          Super Admin
-          <br />
-          Hyderabad
-        </div>
-      ),
-      guestName: (
-        <div>
-          10 <BsArrowDown />
-        </div>
-      ),
-      gender: "Male",
-      tourPack: "jej",
-      tatalAmount: "31/08/2023",
-      paidAmount: (
-        <div>
-          10000
-          <br />
-          <div className="p-2 download-div">
-            id Proof
-            <MdInsertPhoto className="ms-1 ions-clr" />
-            <BsArrowDown className="ms-1 ions-clr" />
-          </div>
-        </div>
-      ),
-      clr: (
-        <div>
-          Confirm
-          <div className="p-2 download-div">
-            Payment
-            <MdInsertPhoto className="ms-1 ions-clr" />
-            <BsArrowDown className="ms-1 ions-clr" />
-          </div>
-        </div>
-      ),
-    },
-    ,
-    {
-      sl: 3,
-      website: "we2call.com",
-      dateTime: (
-        <div>
-          31/08/2023
-          <br />
-          14:51:20 PM
-        </div>
-      ),
-      nameRole: (
-        <div>
-          Srinivas
-          <br />
-          Super Admin
-          <br />
-          Hyderabad
-        </div>
-      ),
-      guestName: (
-        <div>
-          10 <BsArrowDown />
-        </div>
-      ),
-      gender: "Male",
-      tourPack: "jej",
-      tatalAmount: "31/08/2023",
-      paidAmount: (
-        <div>
-          10000
-          <br />
-          <div className="p-2 download-div">
-            id Proof
-            <MdInsertPhoto className="ms-1 ions-clr" />
-            <BsArrowDown className="ms-1 ions-clr" />
-          </div>
-        </div>
-      ),
-      clr: (
-        <div>
-          Confirm
-          <div className="p-2 download-div">
-            Payment
-            <MdInsertPhoto className="ms-1 ions-clr" />
-            <BsArrowDown className="ms-1 ions-clr" />
-          </div>
-        </div>
-      ),
-    },
-    ,
-    {
-      sl: 4,
-      website: "we2call.com",
-      dateTime: (
-        <div>
-          31/08/2023
-          <br />
-          14:51:20 PM
-        </div>
-      ),
-      nameRole: (
-        <div>
-          Srinivas
-          <br />
-          Super Admin
-          <br />
-          Hyderabad
-        </div>
-      ),
-      guestName: (
-        <div>
-          10 <BsArrowDown />
-        </div>
-      ),
-      gender: "Male",
-      tourPack: "jej",
-      tatalAmount: "31/08/2023",
-      paidAmount: (
-        <div>
-          10000
-          <br />
-          <div className="p-2 download-div">
-            id Proof
-            <MdInsertPhoto className="ms-1 ions-clr" />
-            <BsArrowDown className="ms-1 ions-clr" />
-          </div>
-        </div>
-      ),
-      clr: (
-        <div>
-          Confirm
-          <div className="p-2 download-div">
-            Payment
-            <MdInsertPhoto className="ms-1 ions-clr" />
-            <BsArrowDown className="ms-1 ions-clr" />
-          </div>
-        </div>
-      ),
-    },
-    ,
-    {
-      sl: 5,
-      website: "we2call.com",
-      dateTime: (
-        <div>
-          31/08/2023
-          <br />
-          14:51:20 PM
-        </div>
-      ),
-      nameRole: (
-        <div>
-          Srinivas
-          <br />
-          Super Admin
-          <br />
-          Hyderabad
-        </div>
-      ),
-      guestName: (
-        <div>
-          10 <BsArrowDown />
-        </div>
-      ),
-      gender: "Male",
-      tourPack: "jej",
-      tatalAmount: "31/08/2023",
-      paidAmount: (
-        <div>
-          10000
-          <br />
-          <div className="p-2 download-div">
-            id Proof
-            <MdInsertPhoto className="ms-1 ions-clr" />
-            <BsArrowDown className="ms-1 ions-clr" />
-          </div>
-        </div>
-      ),
-      clr: (
-        <div>
-          Confirm
-          <div className="p-2 download-div">
-            Payment
-            <MdInsertPhoto className="ms-1 ions-clr" />
-            <BsArrowDown className="ms-1 ions-clr" />
-          </div>
-        </div>
-      ),
-    },
-  ];
+  const handleClickhereButton = (item)=>{
+    setGuestsDetails(item)
+    setOpenGuestDetailsPopup(true)
+  }
+  const tableDocData =
+    guestDocs && guestDocs.length > 0
+      ? guestDocs.map((item, index) => {
+          return {
+            sl: index + 1,
+            website: item.website,
+            date: <div>{item.date}</div>,
+            nameRole: (
+              <div>
+                {item.name}
+                <br />
+                {item.account_role}
+              </div>
+            ),
+            guestName: (
+              <div>
+                <button
+                  type="button"
+                  className="btn btn-outline-secondary btn-sm"
+                  onClick={() => handleClickhereButton(item)}
+                >
+                  Clickhere
+                </button>
+              </div>
+            ),
+            tourPack:
+              item.packages_selected && item.packages_selected.length > 0
+                ? item.packages_selected.map((packageItem) =>
+                    Object.keys(packageItem).map((key) => (
+                      <div key={key}>
+                        {key}:{packageItem[key]}
+                      </div>
+                    ))
+                  )
+                : null,
+            totalAmount: item.total_amount,
+            paidAmount: item.paid_amount,
+            paidTo:
+              item.payment_details.paymentmode === "neft" ? (
+                <div>
+                  {item.payment_details.name}
+                  <br />
+                  {item.payment_details.accountNo}
+                  <br />
+                  {item.payment_details.bank}
+                  <br />
+                  {item.payment_details.ifscCode}
+                </div>
+              ) : (
+                <div>
+                  {item.payment_details.name}
+                  <br />
+                  {item.payment_details.mobileNumber}
+                  <br />
+                  {item.payment_details.upiId}
+                </div>
+              ),
+            paymentIdproof: (
+              <button
+                type="button"
+                className="btn btn-outline-secondary btn-sm"
+              >
+                View
+              </button>
+            ),
+            clr: item.confirm_payment_status,
+          };
+        })
+      : [];
 
   const ConfirmBookingHeading = [
     {
@@ -599,32 +440,40 @@ function ManageTournament() {
       field: "website",
     },
     {
-      header: "DATE & TIME",
-      field: "dateTime",
+      header: "DATE",
+      field: "date",
     },
     {
       header: "NAME & ROLE",
       field: "nameRole",
     },
     {
-      header: "GUEST NAME",
+      header: "GUESTS DETAILS",
       field: "guestName",
     },
     {
-      header: "GENDER",
-      field: "gender",
+      header: "TOUR AMENITIES",
+      field: "tourAmenities",
     },
     {
-      header: "TOUR PACK",
+      header: "PACKS SELECTED",
       field: "tourPack",
     },
     {
       header: "TOTAL AMOUNT",
-      field: "tatalAmount",
+      field: "totalAmount",
     },
     {
       header: "PAID AMOUNT",
       field: "paidAmount",
+    },
+    {
+      header: "PAYMENT IDPROOF",
+      field: "paymentIdproof",
+    },
+    {
+      header: "CONFIRMATION STATUS",
+      field: "confirmationStatus",
     },
     {
       field: "clr",
@@ -635,156 +484,79 @@ function ManageTournament() {
     {
       sl: 1,
       website: "we2call.com",
-      dateTime: (
-        <div>
-          31/08/2023
-          <br />
-          14:51:20 PM
-        </div>
-      ),
+      date: <div>31/08/2023</div>,
       nameRole: (
         <div>
           Srinivas
           <br />
           Super Admin
-          <br />
-          Hyderabad
         </div>
       ),
       guestName: (
         <div>
-          10 <BsArrowDown />
+          <button type="button" className="btn btn-outline-secondary btn-sm">
+            Clickhere
+          </button>
         </div>
       ),
-      gender: "Male",
-      tourPack: "jej",
-      tatalAmount: "31/08/2023",
-      paidAmount: "10000",
-      clr: "Confirm",
+      tourPack: (
+        <div>
+          Regularpack(1)
+          <br />
+          Premiumpack(4)
+        </div>
+      ),
+      tourAmenities: (
+        <div>
+          travel bookings
+          <MdInsertPhoto className="ms-1 ions-clr" />
+          <br />
+          hotel bookings
+          <MdInsertPhoto className="ms-1 ions-clr" />
+          <br />
+          tour guidance
+          <MdInsertPhoto className="ms-1 ions-clr" />
+        </div>
+      ),
+      totalAmount: "10,00,000",
+      paidAmount: "8,00,000",
+      paymentIdproof: (
+        <button type="button" className="btn btn-outline-secondary btn-sm">
+          View
+        </button>
+      ),
+      confirmationStatus: "approved",
     },
-    {
-      sl: 2,
-      website: "we2call.com",
-      dateTime: (
-        <div>
-          31/08/2023
-          <br />
-          14:51:20 PM
-        </div>
-      ),
-      nameRole: (
-        <div>
-          Srinivas
-          <br />
-          Super Admin
-          <br />
-          Hyderabad
-        </div>
-      ),
-      guestName: (
-        <div>
-          10 <BsArrowDown />
-        </div>
-      ),
-      gender: "Male",
-      tourPack: "jej",
-      tatalAmount: "31/08/2023",
-      paidAmount: "10000",
-      clr: "Confirm",
-    },
-    ,
-    {
-      sl: 3,
-      website: "we2call.com",
-      dateTime: (
-        <div>
-          31/08/2023
-          <br />
-          14:51:20 PM
-        </div>
-      ),
-      nameRole: (
-        <div>
-          Srinivas
-          <br />
-          Super Admin
-          <br />
-          Hyderabad
-        </div>
-      ),
-      guestName: (
-        <div>
-          10 <BsArrowDown />
-        </div>
-      ),
-      gender: "Male",
-      tourPack: "jej",
-      tatalAmount: "31/08/2023",
-      paidAmount: "10000",
-      clr: "Confirm",
-    },
-    ,
-    {
-      sl: 4,
-      website: "we2call.com",
-      dateTime: (
-        <div>
-          31/08/2023
-          <br />
-          14:51:20 PM
-        </div>
-      ),
-      nameRole: (
-        <div>
-          Srinivas
-          <br />
-          Super Admin
-          <br />
-          Hyderabad
-        </div>
-      ),
-      guestName: (
-        <div>
-          10 <BsArrowDown />
-        </div>
-      ),
-      gender: "Male",
-      tourPack: "jej",
-      tatalAmount: "31/08/2023",
-      paidAmount: "10000",
-      clr: "Confirm",
-    },
-    ,
-    {
-      sl: 5,
-      website: "we2call.com",
-      dateTime: (
-        <div>
-          31/08/2023
-          <br />
-          14:51:20 PM
-        </div>
-      ),
-      nameRole: (
-        <div>
-          Srinivas
-          <br />
-          Super Admin
-          <br />
-          Hyderabad
-        </div>
-      ),
-      guestName: (
-        <div>
-          10 +<BsArrowDown />
-        </div>
-      ),
-      gender: "Male",
-      tourPack: "jej",
-      tatalAmount: "31/08/2023",
-      paidAmount: "10000",
-      clr: "Confirm",
-    },
+    // {
+    //   sl: 2,
+    //   website: "we2call.com",
+    //   dateTime: (
+    //     <div>
+    //       31/08/2023
+    //       <br />
+    //       14:51:20 PM
+    //     </div>
+    //   ),
+    //   nameRole: (
+    //     <div>
+    //       Srinivas
+    //       <br />
+    //       Super Admin
+    //       <br />
+    //       Hyderabad
+    //     </div>
+    //   ),
+    //   guestName: (
+    //     <div>
+    //       10 <BsArrowDown />
+    //     </div>
+    //   ),
+    //   gender: "Male",
+    //   tourPack: "jej",
+    //   tatalAmount: "31/08/2023",
+    //   paidAmount: "10000",
+    //   clr: "Confirm",
+    // }
   ];
 
   const handleManageHead = (index) => {
@@ -851,11 +623,18 @@ function ManageTournament() {
               placeholder="Please enter Tour Details"
               name="tourdetails"
               value={addingTourDetails}
-              onChange={(e)=>{setAddingTourDetails(e.target.value)}}
+              onChange={(e) => {
+                setAddingTourDetails(e.target.value);
+              }}
             ></textarea>
-            <button className="select-button button-position"
-                    onClick={()=>{tourdetailsSubmitButton(tableData2)}}
-            >Submit</button>
+            <button
+              className="select-button button-position"
+              onClick={() => {
+                tourdetailsSubmitButton(tableData2);
+              }}
+            >
+              Submit
+            </button>
           </div>
         )}
         {activeManageIndex === 3 && (
@@ -868,6 +647,13 @@ function ManageTournament() {
           />
         )}
       </div>
+      {openGuestDetailsPopup && (
+        <GuestDetailsPopup
+          openGuestDetailsPopup={openGuestDetailsPopup}
+          setOpenGuestDetailsPopup={setOpenGuestDetailsPopup}
+          guestDetails={guestDetails}
+        />
+      )}
     </div>
   );
 }
