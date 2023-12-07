@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { Col, Container, Row } from "react-bootstrap";
 import "react-datepicker/dist/react-datepicker.css";
-import { ADD_NOTIFICATIONS_TEXT_MESSAGES } from "../../config/endpoints";
-import { GET_COUNTRY_AND_CURRENCY } from "../../config/endpoints";
-import { GET_ALL_WEBSITES } from "../../config/endpoints";
-import { GET_ALL_USERS } from "../../config/endpoints";
+import {
+  ADD_NOTIFICATIONS_TEXT_MESSAGES,
+  GET_COUNTRY_AND_CURRENCY,
+  GET_ALL_WEBSITES,
+  GET_ALL_USERS,
+} from "../../config/endpoints";
+
 import { call } from "../../config/axios";
 import { FaRegCalendarAlt } from "react-icons/fa";
 
@@ -12,7 +15,6 @@ function TextMessage() {
   const [textmessage, setTextMessage] = useState({});
   const [error, setError] = useState("");
   const handelTextMessage = async (status) => {
-    console.log("click me.........", textmessage);
     if (
       !(
         textmessage?.country_name ||
@@ -197,7 +199,9 @@ function TextMessage() {
                         </option>
                         <option value="mobile">Mobile</option>
                         <option value="web">Web</option>
-                        <option value="web-pushnotification">Web-PushNotification</option>
+                        <option value="web-pushnotification">
+                          Web-PushNotification
+                        </option>
                       </>
                     ) : (
                       <>

@@ -14,6 +14,7 @@ function AddPolicyPopup(props) {
     setStatus,
     setSelectedPolicy,
     selectedPolicy,
+    Heading
   } = props;
   const [acceptClick, setAcceptClick] = useState(false);
   const [countryName, setCountryName] = useState("");
@@ -46,7 +47,6 @@ function AddPolicyPopup(props) {
     };
     await call(GET_ALL_WEBSITES, payload)
       .then((res) => {
-        console.log("response=====>", res);
         setwebsiteNames(res?.data?.data);
       })
       .catch((err) => console.log(err));
@@ -101,7 +101,7 @@ function AddPolicyPopup(props) {
       >
         <Modal.Header closeButton>
           <div className="px-5 mt-3">
-            <h6 className="text-start">Add Policy</h6>
+            <h6 className="text-start">{Heading}</h6>
           </div>
         </Modal.Header>
         <Modal.Body className="px-5">

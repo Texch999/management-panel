@@ -51,7 +51,6 @@ function Rejectionreason() {
     await call(GET_SETTINGS_DATA, payload)
       .then((res) => {
         const responseArray = res?.data?.data;
-        console.log("responseArray====>", responseArray);
         setAllQuestions(
           responseArray.length > 0
             ? responseArray.filter((item) => item.reason !== "")

@@ -17,6 +17,10 @@
   margin-left: 18%;
   color: #ffffff;
 }
+.scroll-table-div {
+  height: 50px;
+  overflow-x: scroll;
+}
 .match-share-modal .btn-close {
   color: #ffffff !important;
 }
@@ -197,12 +201,11 @@
   background: #30200c;
   color: #f99b2c;
 }
-.approved-btn{
+.approved-btn {
   background: #36483f;
   color: #71dd37;
 }
-.rejected-btn{
+.rejected-btn {
   background: #4d2930;
   color: #ff4747;
 }
-
