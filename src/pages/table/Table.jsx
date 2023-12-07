@@ -53,7 +53,11 @@ function Table(props) {
                       <div className="d-flex justify-content-center align-items-center">
                         <div
                           className={
-                            column?.clr ? getColor(item[column.field]) : ""
+                            column?.header === "DESCRIPTION"
+                              ? "scroll-table-div"
+                              : column?.clr
+                              ? getColor(item[column.field])
+                              : ""
                           }
                           onClick={() => handleClickTable(column.field)}
                         >
@@ -66,7 +70,7 @@ function Table(props) {
               </tr>
             ))}
         </tbody>
-        
+
         {/* <tfoot>
           <tr>
             <th

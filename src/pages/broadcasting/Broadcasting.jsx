@@ -11,6 +11,7 @@ import {
 import { call } from "../../config/axios";
 import Scheduled from "./Scheduled";
 import DraftTable from "./DraftTable";
+import TextMessage from "../Popups/TextMessagePopup";
 
 function Broadcasting() {
   const [searchOffer, setSearchOffer] = useState("");
@@ -166,17 +167,16 @@ function Broadcasting() {
           className="eye-icon-size"
           onClick={() => {
             console.log("testetestste");
-            setSelectedBroadcast(item);
-            handleBroadcastOpen();
+            handleBroadcastOpen(item);
           }}
         />
       ),
     };
   });
-  console.log("selectedBroadcast",selectedBroadcast)
 
-  const handleBroadcastOpen = () => {
+  const handleBroadcastOpen = (item) => {
     setShowBroadcastOpen(true);
+    setSelectedBroadcast(item);
   };
 
   const navigate = useNavigate();
@@ -240,8 +240,8 @@ function Broadcasting() {
         )}
         {activeIndex === 1 && (
           <Scheduled
-            // columns={cols}
-            // data={modifiedBroadcastingDetails}
+            columns={cols}
+            data={modifiedBroadcastingDetails}
             searchOffer={searchOffer}
           />
         )}
@@ -252,6 +252,11 @@ function Broadcasting() {
             searchOffer={searchOffer}
           />
         )}
+        <TextMessage
+          showBroadcastOpen={showBroadcastOpen}
+          setShowBroadcastOpen={setShowBroadcastOpen}
+          selectedBroadcast={selectedBroadcast}
+        />
       </div>
     </div>
   );

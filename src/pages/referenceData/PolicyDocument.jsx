@@ -29,7 +29,6 @@ function PolicyDocument() {
     };
     await call(GET_ALL_POLICY_DOCUMENTS, payload)
       .then((res) => {
-        console.log("response====>", res);
         setAllPolicyDocuments(res?.data?.data);
       })
       .catch((err) => console.log(err));

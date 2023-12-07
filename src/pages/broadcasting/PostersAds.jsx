@@ -4,11 +4,13 @@ import { FaRegCalendarAlt } from "react-icons/fa";
 import "react-datepicker/dist/react-datepicker.css";
 import { MdUpload } from "react-icons/md";
 import { call } from "../../config/axios";
-import { ADD_POSTERS_AND_ADS } from "../../config/endpoints";
-import { GET_ALL_WEBSITES } from "../../config/endpoints";
-import { GET_ALL_USERS } from "../../config/endpoints";
-import { GET_COUNTRY_AND_CURRENCY } from "../../config/endpoints";
-import { GENERATE_SIGNED_URL } from "../../config/endpoints";
+import {
+  ADD_POSTERS_AND_ADS,
+  GET_ALL_WEBSITES,
+  GET_ALL_USERS,
+  GET_COUNTRY_AND_CURRENCY,
+  GENERATE_SIGNED_URL,
+} from "../../config/endpoints";
 
 function OfferPosterAdds() {
   const ImageBaseUrl = "https://we2-call-images.s3.us-east-2.amazonaws.com";
@@ -31,7 +33,6 @@ function OfferPosterAdds() {
     uploadfileInputRef.current.click();
   };
   const handelOffers = async (status) => {
-    console.log("click me............", status);
     if (
       !(
         allPosters?.website_name ||
@@ -41,7 +42,6 @@ function OfferPosterAdds() {
         allPosters?.description
       )
     ) {
-      console.log("testing.........");
       return setError("missing required fields");
     } else {
       setError("");
@@ -102,7 +102,6 @@ function OfferPosterAdds() {
   }, []);
 
   const handelChange = (e) => {
-    //console.log("result", [e.target.name], e.target.value);
     setallPosters({
       ...allPosters,
       [e.target.name]: e.target.value,
@@ -126,8 +125,6 @@ function OfferPosterAdds() {
     getwebsiteNames();
   }, []);
 
-  console.log("websiteNames", websiteNames);
-
   const [allUsers, setgetallUsers] = useState([]);
   const getallUsers = async () => {
     const payload = {
@@ -135,7 +132,6 @@ function OfferPosterAdds() {
     };
     await call(GET_ALL_USERS, payload)
       .then((res) => {
-        console.log("response=====>", res);
         setgetallUsers(res?.data?.data);
       })
       .catch((err) => console.log(err));
@@ -143,7 +139,6 @@ function OfferPosterAdds() {
   useEffect(() => {
     getallUsers();
   }, []);
-  console.log("allUsers", allUsers);
 
   const [allCountries, setallCountries] = useState([]);
   const getallCountries = async () => {
@@ -189,6 +184,18 @@ function OfferPosterAdds() {
                       ))}
                     </select>
                   </div>
+                </Col>
+                <Col className="pe-0">
+                  <div className="small-font my-2 clr-grey">Match Name</div>
+                  <input
+                    type="text"
+                    name="match_name"
+                    id="match_name"
+                    value={allPosters?.match_name || ""}
+                    onChange={(e) => handelChange(e)}
+                    placeholder="Type Here ............"
+                    className="w-100 custom-select small-font input-btn-bg px-2 py-3 all-none rounded all-none"
+                  ></input>
                 </Col>
               </Row>
               <Row>

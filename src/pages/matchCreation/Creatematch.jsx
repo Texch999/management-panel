@@ -11,9 +11,12 @@ import { MdOutlineEdit } from "react-icons/md";
 import { GET_MATCHES_DATA, GET_ALL_WEBSITES } from "../../config/endpoints";
 import { CREATE_OFFLINE_MATCHES } from "../../config/endpoints";
 import { call } from "../../config/axios";
+import MatchPopup from "../Popups/MatchPopup";
 
 function Creatematch() {
   const [createMatch, setcreateMatch] = useState({});
+  const [selectedMatch,setSelectedMatch]=useState([]);
+  const [showMatchOpen,setShowMatchOpen] =useState(false)
   const [Error, setError] = useState(false);
   const handleSubmitMatch = async () => {
     if (
@@ -201,8 +204,16 @@ function Creatematch() {
     seriesname: item?.series_name,
     sportsname: item?.sport_name,
     matchplace: item?.match_place,
-    icon: <AiOutlineEdit className="eye-icon-size" />,
+    icon: <AiOutlineEdit className="eye-icon-size" 
+    onClick={()=>{
+      handleMatchOpen(item)
+    }}/>,
   }));
+
+  const handleMatchOpen=(item)=>{
+    setShowMatchOpen(true)
+    setSelectedMatch(item)
+  }
 
   return (
     <div className="p-4 w-100">
@@ -392,6 +403,11 @@ function Creatematch() {
         </div>
 
         <Table columns={cols} data={modifiedCreatematchDetails} />
+        <MatchPopup 
+          selectedMatch={selectedMatch}
+          showMatchOpen={showMatchOpen}
+          setShowMatchOpen={setShowMatchOpen}
+        />
       </div>
     </div>
   );

@@ -2,14 +2,14 @@ import React, { useState, useEffect } from "react";
 import { Col, Container, Modal, Row } from "react-bootstrap";
 import "./styles.css";
 import MatchSubmitPopup from "../../matchpopups/MatchSubmitPopup";
-import { GET_ALL_WEBSITES, UPDATE_NOTIFICATION } from "../../config/endpoints";
+import { GET_ALL_WEBSITES, UPDATE_OFFER } from "../../config/endpoints";
 import { call } from "../../config/axios";
 import { FaRegCalendarAlt } from "react-icons/fa";
-function TextMessage(props) {
-  const { showBroadcastOpen, setShowBroadcastOpen, selectedBroadcast } = props;
+function OfferMessagePopup(props) {
+  const { showOfferOpen, setShowOfferOpen, selectedOffer } = props;
   const [textmessage, setTextMessage] = useState({});
-  const handleAddDirectorClose = () => {
-    setShowBroadcastOpen(false);
+  const handleOfferClose = () => {
+    setShowOfferOpen(false);
   };
 
   const handleChange = (e) => {
@@ -17,30 +17,30 @@ function TextMessage(props) {
     setTextMessage({ ...textmessage, [e.target.name]: e.target.value });
   };
 
-  const [addDirectorsPopup, setAddDirectorPopup] = useState(false);
+  const [addOfferssPopup, setAddOffersPopup] = useState(false);
 
-  const handleUpdateNotification = async () => {
-    let p_id = selectedBroadcast.p_id;
-    let notification_id = selectedBroadcast.notification_id;
+  const handleUpdateOffer = async () => {
+    let p_id = selectedOffer.p_id;
+    let offer_id = selectedOffer.offer_id;
     const payload = {
       p_id,
-      notification_id,
+      offer_id,
       ...textmessage,
     };
 
-    await call(UPDATE_NOTIFICATION, payload)
+    await call(UPDATE_OFFER, payload)
       .then((res) => {
         if (res.status.data === 200) {
           setTimeout(() => {
-            setAddDirectorPopup(false);
-            setShowBroadcastOpen(false);
+            setAddOffersPopup(false);
+            setShowOfferOpen(false);
           }, 2000);
         }
         if (res.data.error) {
           console.log("API Error...", res.data.message);
         } else {
-          setAddDirectorPopup(false);
-          handleAddDirectorClose();
+          setAddOffersPopup(false);
+          handleOfferClose();
           setTextMessage({});
         }
       })
@@ -48,15 +48,15 @@ function TextMessage(props) {
   };
 
   useEffect(() => {
-    if (selectedBroadcast) {
+    if (selectedOffer) {
       setTextMessage({});
     }
-  }, [selectedBroadcast]);
+  }, [selectedOffer]);
 
   const [websiteNames, setwebsiteNames] = useState([]);
 
   const getwebsiteNames = async () => {
-    setTextMessage(selectedBroadcast);
+    setTextMessage(selectedOffer);
     const payload = {
       register_id: "company",
     };
@@ -68,19 +68,19 @@ function TextMessage(props) {
   };
   useEffect(() => {
     getwebsiteNames();
-  }, [selectedBroadcast]);
+  }, [selectedOffer]);
 
   return (
     <div className="modal fade bd-example-modal-lg container mt-5">
       <Modal
-        show={showBroadcastOpen}
-        onHide={handleAddDirectorClose}
+        show={showOfferOpen}
+        onHide={handleOfferClose}
         centered
         className="match-share-modal payment-modal"
       >
         <Modal.Header closeButton>
           <div className="w-100 mt-4">
-            <h5 className="text-center mt-2 mb-4">Update Notifications</h5>
+            <h5 className="text-center mt-2 mb-4">Update Offer</h5>
           </div>
         </Modal.Header>
         <Modal.Body>
@@ -90,8 +90,8 @@ function TextMessage(props) {
                 <div className="small-font my-2 clr-grey">Title</div>
                 <input
                   type="text"
-                  name="event_name"
-                  value={textmessage?.event_name || ""}
+                  name="title"
+                  value={textmessage?.title || ""}
                   onChange={(e) => handleChange(e)}
                   placeholder="Type Here ............"
                   className="w-100 small-font login-inputs input-btn-bg px-2 py-3 all-none rounded"
@@ -148,7 +148,7 @@ function TextMessage(props) {
                 ></input>
               </Col>
             </Row>
-            <Col>
+            <Col>   
               <div className="small-font my-2 clr-grey">Description</div>
               <textarea
                 type="text"
@@ -184,9 +184,9 @@ function TextMessage(props) {
             <div className="d-flex justify-content-center w-100 my-4">
               <button
                 className="add-button rounded px-2 py-3 w-50 medium-font"
-                onClick={() => handleUpdateNotification()}
+                onClick={() => handleUpdateOffer()}
               >
-                {selectedBroadcast ? "Update" : ""}
+                {selectedOffer ? "Update" : ""}
               </button>
             </div>
           </div>
@@ -194,11 +194,11 @@ function TextMessage(props) {
       </Modal>
       <MatchSubmitPopup
         header={"Upgraded  Successfully"}
-        state={addDirectorsPopup}
-        setState={setAddDirectorPopup}
+        state={addOfferssPopup}
+        setState={setAddOffersPopup}
       />
     </div>
   );
 }
 
-export default TextMessage;
+export default OfferMessagePopup;

@@ -70,7 +70,6 @@ function Paymentgateway() {
       .catch((err) => console.log(err));
   };
 
-  console.log("allPayments===>",allPayments)
 
   useEffect(() => {
     getPaymentWay();
@@ -182,7 +181,6 @@ function Paymentgateway() {
         inputData={inputData}
         setInputData={setInputData}
         updateGatway={updateGatway}
-        // componentType="PAYMENT"
       />
     </div>
   );

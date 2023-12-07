@@ -40,6 +40,8 @@ const BULK_PACKAGE_APPROVE_REJECT = "/packages/bulk_package_approve_reject";
 const GET_ADMIN_PACKAGE_REQUEST = "/packages/get_all_admin_package_request";
 const GET_SETTINGS_DATA = "/settings/getall_security_questions";
 const ADD_REASON_REJECTIONS = "/settings/add_reason_rejection";
+const UPDATE_NOTIFICATION = "/management/update_notifications";
+const UPDATE_OFFER = "/management/update_offers";
 
 const ADD_TOURS = "/tours/add_tours";
 const GET_TOURS = "/tours/get_tours";
@@ -378,4 +380,15 @@ exports.PACKAGE_APPROVE_REJECT = {
 exports.GET_USER_MESSAGES = {
   url: GET_USER_MESSAGES,
   method: POST,
+};
+
+
+exports.UPDATE_NOTIFICATION = {
+  url: UPDATE_NOTIFICATION,
+  method: POST
+};
+
+exports.UPDATE_OFFER = {
+  url: UPDATE_OFFER,
+  method: POST
 };

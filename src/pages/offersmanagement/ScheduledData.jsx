@@ -4,10 +4,13 @@ import { AiOutlineEdit } from "react-icons/ai";
 import { useEffect, useState } from "react";
 import { GET_ALL_OFFERS } from "../../config/endpoints";
 import { call } from "../../config/axios";
+import OfferMessagePopup from "../Popups/OfferMessagePopup";
 
 function PublishedTabledata(props) {
   const { searchOffer } = props;
   const [Offersmanagement, setOffermanagement] = useState([]);
+  const [selectedOffer,setSelectedOffer] =useState([]);
+  const [showOfferOpen,setShowOfferOpen] =useState(false)
   const cols = [
     {
       header: "TITLE",
@@ -76,13 +79,25 @@ function PublishedTabledata(props) {
       ) : (
         <div className="custom-deactive-button px-2">InActive</div>
       ),
-    icon: <AiOutlineEdit className="eye-icon-size" />,
+    icon: <AiOutlineEdit className="eye-icon-size" onClick={()=>{
+      handleOfferOpen(item)
+    }}/>,
   }));
+  const handleOfferOpen=(item)=>{
+    setShowOfferOpen(true)
+    setSelectedOffer(item)
+}
 
   return (
     <div className="p-4 w-100">
       <div className="sidebar-bg rounded">
-        <Table columns={cols} data={modifiedOffersmanagementDetails} />
+        <Table columns={cols} data={modifiedOffersmanagementDetails} 
+        />
+         <OfferMessagePopup
+            selectedOffer={selectedOffer}
+            showOfferOpen={showOfferOpen}
+            setShowOfferOpen={setShowOfferOpen}
+         />
       </div>
     </div>
   );

@@ -9,9 +9,12 @@ import {
   GET_BROADCAST_EVENTS,
 } from "../../config/endpoints";
 import { call } from "../../config/axios";
+import TextMessage from "../Popups/TextMessagePopup";
 
 function Scheduled(props) {
   const { searchOffer } = props;
+  const [selectedBroadcast, setSelectedBroadcast] = useState();
+  const [showBroadcastOpen, setShowBroadcastOpen] = useState(false);
 
   const cols = [
     {
@@ -50,13 +53,11 @@ function Scheduled(props) {
     };
     await call(GET_BROADCAST_EVENTS, payload)
       .then((res) => {
-        console.log("response====>", res);
         setGetBroadcasting(res?.data?.data);
       })
 
       .catch((err) => console.log(err));
   };
-  console.log("getBroadcasting", getBroadcasting);
 
   const [notifications, setnotifications] = useState([]);
   const getNotifications = async () => {
@@ -65,7 +66,6 @@ function Scheduled(props) {
     };
     await call(GET_ALL_NOTIFICATIONS, payload)
       .then((res) => {
-        console.log("response=====>", res);
         const arr = res?.data?.data?.map((obj) => {
           return {
             ...obj,
@@ -88,7 +88,6 @@ function Scheduled(props) {
     };
     await call(GET_ALL_POSTERS, payload)
       .then((res) => {
-        console.log("response=====>", res);
         const arr = res?.data?.data?.map((obj) => {
           return {
             ...obj,
@@ -103,7 +102,6 @@ function Scheduled(props) {
       })
       .catch((err) => console.log(err));
   };
-  console.log("getPoster", getPoster);
 
   useEffect(() => {
     getBroadcastingEvent();
@@ -111,7 +109,6 @@ function Scheduled(props) {
     getAllposters();
   }, []);
   const currentDate = new Date().toISOString().split("T")[0];
-  // console.log("---------->", currentDate);
   const scheduledData = [
     ...getBroadcasting,
     ...notifications,
@@ -145,14 +142,30 @@ function Scheduled(props) {
       ) : (
         <div className="custom-deactive-button px-2">InActive</div>
       ),
-    icon: <AiOutlineEdit className="eye-icon-size" />,
+    icon: (
+      <AiOutlineEdit
+        className="eye-icon-size"
+        onClick={() => {
+          handleBroadcastOpen(item);
+        }}
+      />
+    ),
   }));
+  const handleBroadcastOpen = (item) => {
+    setShowBroadcastOpen(true);
+    setSelectedBroadcast(item);
+  };
 
   const navigate = useNavigate();
   return (
     <div className="p-4 w-100">
       <div className="sidebar-bg rounded">
         <Table columns={cols} data={modifiedBroadcastingDetails} />
+        <TextMessage
+          showBroadcastOpen={showBroadcastOpen}
+          setShowBroadcastOpen={setShowBroadcastOpen}
+          selectedBroadcast={selectedBroadcast}
+        />
       </div>
     </div>
   );
