@@ -188,10 +188,15 @@ function Tickets() {
       transaction_id,
       status,
       reason,
+      company_id: "company_id",
     })
       .then((res) => {
         if (res.status === 200) {
           setIsProcessing(false);
+          setTimeout(() => {
+            setIsProcessing(false);
+            setShowPackageUpgrade(false);
+          }, 2000);
         }
       })
       .catch((err) => {
@@ -243,8 +248,8 @@ function Tickets() {
       package: item?.summary.final_package_cost,
       pkgamnt: item?.summary.total_packages_cost,
       status:
-        item?.status === "approve" ? (
-          <div className="rounded p-1 approved-btn">Completed</div>
+        item?.status === "Approved" ? (
+          <div className="rounded p-1 approved-btn">Approved</div>
         ) : item?.status === "Reject" ? (
           <div className="rounded p-1 rejected-btn">Reject</div>
         ) : (
@@ -270,18 +275,15 @@ function Tickets() {
       package: item?.summary.final_package_cost,
       pkgamnt: item?.summary.total_packages_cost,
       status:
-        item?.status === "approve" ? (
-          <div className="rounded p-1 approved-btn">Completed</div>
+        item?.status === "Approved" ? (
+          <div className="rounded p-1 approved-btn">Approved</div>
         ) : item?.status === "Reject" ? (
           <div className="rounded p-1 rejected-btn">Reject</div>
         ) : (
           <div className="rounded p-1 px-2 pending-btn">Pending</div>
         ),
       icon: (
-        <AiOutlineEye
-          className="eye-icon-size"
-          onClick={() => handlePackageUpgrade(item)}
-        />
+        <AiOutlineEye className="" onClick={() => handlePackageUpgrade(item)} />
       ),
     }));
 
@@ -340,10 +342,7 @@ function Tickets() {
           <div className="rounded p-1 px-2 pending-btn">Pending</div>
         ),
       icon: (
-        <AiOutlineEye
-          className="eye-icon-size"
-          onClick={() => handlePackageUpgrade(item)}
-        />
+        <AiOutlineEye className="" onClick={() => handlePackageUpgrade(item)} />
       ),
     }));
 

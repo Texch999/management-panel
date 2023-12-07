@@ -20,8 +20,6 @@ import { open, send } from "../utils/WebSocket";
 function Chats() {
   const ImageBaseUrl = "https://we2-call-images.s3.us-east-2.amazonaws.com";
   const [clientsData, setClientsData] = useState([]);
-  const [filteredClients, setFilteredClients] = useState([]);
-  const [searchText, setSearchText] = useState("");
   const [supportData, setSupportData] = useState([]);
   const [selectedChat, setSelectedChat] = useState(null);
   const [selectedUser, setSelectedUser] = useState("");
@@ -179,20 +177,6 @@ function Chats() {
       .then(async (res) => {
         console.log("support data", res.data.data);
         setSupportData(res?.data?.data);
-        // singedUrl &&
-        //   profileImage &&
-        //   (await fetch(singedUrl, {
-        //     method: "PUT",
-        //     body: profileImage,
-        //     headers: {
-        //       "Content-Type": "image/jpeg",
-        //       "cache-control": "public, max-age=0",
-        //     },
-        //   })
-        //     .then((res) => {})
-        //     .catch((err) => {
-        //       console.log("err: ", err);
-        //     }));
       })
       .catch((err) => {
         console.log(err);
@@ -366,15 +350,6 @@ function Chats() {
                             <div className="chat_ib">
                               <h5>
                                 {user?.first_name} {user?.last_name}
-                                {/* {selectedChat === index &&
-                                items?.messages?.map((msg, Index) => (
-                                  <div key={Index}>
-                                    <p>{msg.message}</p>
-                                    <span>
-                                      {moment(msg?.time).format("hh:mm a")}
-                                    </span>
-                                  </div>
-                                ))} */}
                                 <span className="chat_date">{user?.time}</span>
                               </h5>
                               <p>{user?.messages} </p>
@@ -383,28 +358,6 @@ function Chats() {
                         </div>
                       </div>
                     ))}
-                  {/* {chatsDetails?.map((items, index) => (
-                    <div key={index}>
-                      <div className="chat_list">
-                        <div className="chat_people d-flex justify-content-between align-items-center">
-                          <div className="chat_img">
-                            <img
-                              className="rounded-circle chat-contact-image"
-                              src={Images.dhawan_image}
-                              alt="sunil"
-                            />{" "}
-                          </div>
-                          <div className="chat_ib">
-                            <h5>
-                              {items?.name}{" "}
-                              <span className="chat_date">{items?.time}</span>
-                            </h5>
-                            <p>{items?.messages} </p>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  ))} */}
                 </div>
               </div>
             </div>
@@ -492,8 +445,8 @@ function Chats() {
                   />
                 </div>
                 <div className="bg-clr-chat px-2 py-1 rounded mx-2">
-                  {/* onClick={handleUploadButtonClick}
-                disabled={uploadImage} */}
+                onClick={handleUploadButtonClick}
+                {/* disabled={uploadImage}  */}
                   <label htmlFor="attachment">
                     <ImAttachment className="upload-icon" />
                   </label>
