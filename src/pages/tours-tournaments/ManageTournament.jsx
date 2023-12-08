@@ -10,6 +10,7 @@ import { UPDATE_INTERESTED } from "../../config/endpoints";
 import { BOOKNOW_FOR_INTERESTED } from "../../config/endpoints";
 import { GET_TOUR_PAYMENT_DOCUMENTS } from "../../config/endpoints";
 import GuestDetailsPopup from "./GuestDetailsPopup";
+import PaymentDetailsPopup from "./PaymentDetailsPopup";
 
 function ManageTournament() {
   const [activeManageIndex, setActiveManageIndex] = useState(0);
@@ -18,7 +19,8 @@ function ManageTournament() {
   const [addingTourDetails, setAddingTourDetails] = useState("");
   const [guestDocs, setGuestDocs] = useState([]);
   const [openGuestDetailsPopup, setOpenGuestDetailsPopup] = useState(false);
-  const [guestDetails, setGuestsDetails] = useState({})
+  const [guestDetails, setGuestsDetails] = useState({});
+  const [showPaymentDetailsPopup, setShowPaymentDetailsPopup] = useState(false);
   const [selectedFilter, setSelectedFilter] = useState({
     tour_name: "All",
     website: "All",
@@ -51,10 +53,10 @@ function ManageTournament() {
   const gettingguestsdocs = async () => {
     const payload = {};
     await call(GET_TOUR_PAYMENT_DOCUMENTS, payload)
-            .then((res) => setGuestDocs(res?.data?.data?.Items))
-            .then((error) => console.log(error));
+      .then((res) => setGuestDocs(res?.data?.data?.Items))
+      .then((error) => console.log(error));
   };
-  console.log(guestDocs, ".....guestdocs");
+  // console.log(guestDocs, ".....guestdocs");
 
   useEffect(() => {
     gettingInterestedMembers();
@@ -356,10 +358,14 @@ function ManageTournament() {
     //   field: "clr",
     // },
   ];
-  const handleClickhereButton = (item)=>{
-    setGuestsDetails(item)
-    setOpenGuestDetailsPopup(true)
-  }
+  const handleClickhereButton = (item) => {
+    setGuestsDetails(item);
+    setOpenGuestDetailsPopup(true);
+  };
+  const handlePaymentDetailsClick = (item) => {
+    setGuestsDetails(item);
+    setShowPaymentDetailsPopup(true);
+  };
   const tableDocData =
     guestDocs && guestDocs.length > 0
       ? guestDocs.map((item, index) => {
@@ -421,6 +427,7 @@ function ManageTournament() {
               <button
                 type="button"
                 className="btn btn-outline-secondary btn-sm"
+                onClick={() => handlePaymentDetailsClick(item)}
               >
                 View
               </button>
@@ -654,6 +661,11 @@ function ManageTournament() {
           guestDetails={guestDetails}
         />
       )}
+      <PaymentDetailsPopup
+        showPaymentDetailsPopup={showPaymentDetailsPopup}
+        setShowPaymentDetailsPopup={setShowPaymentDetailsPopup}
+        guestDetails={guestDetails}
+      />
     </div>
   );
 }

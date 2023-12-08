@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Modal } from "react-bootstrap";
+import { PRESIGNED_URL } from "../../config/endpoints";
+const axios = require("axios")
 
 function GuestDetailsPopup(props) {
   const { openGuestDetailsPopup, setOpenGuestDetailsPopup, guestDetails } = props;
@@ -12,11 +14,6 @@ function GuestDetailsPopup(props) {
   const luxurypacks = guestdetails.filter((item) => Object.keys(item)[0]?.includes('luxury'));
   const vippacks = guestdetails.filter((item) => /^vip/i.test(Object.keys(item)[0]));
   const vvippacks = guestdetails.filter((item) => /^vvip/i.test(Object.keys(item)[0]));
-//   console.log(regularpacks,'.....regularpacks')
-//   console.log(premiumpacks,'.....premiumpacks')
-//   console.log(luxurypacks,'.....luxurypacks')
-//   console.log(vippacks,'.....vippacks')
-//   console.log(vvippacks,'.....vvippacks')
 
   const membersInEachPack = (pkg, pkgType) => {
     const packageMembers = [];
@@ -44,11 +41,7 @@ function GuestDetailsPopup(props) {
   const luxurypackMembers = luxurypacks.length>0?membersInEachPack(luxurypacks,"luxuryPack"):null;
   const vippackMembers = vippacks.length>0?membersInEachPack(vippacks,"vipPack"):null;
   const vvippackMembers = vvippacks.length>0?membersInEachPack(vvippacks,"vvipPack"):null;
-//   console.log(regularpackMembers,'........regularpackmembers')
-//   console.log(premiumpackMembers,'........premiumpackMembers')
-//   console.log(luxurypackMembers,'........luxurypackMembers')
-//   console.log(vippackMembers,'........vippackMembers')
-//   console.log(vvippackMembers,'........vvippackMembers')
+
   const setAllMembers = () => {
         let previousMembers = [];
       
@@ -80,6 +73,52 @@ function GuestDetailsPopup(props) {
     setAllMembers();
   },[])
 //   console.log(allPackMembers,'......allpackmembers')
+  // const handleDownload = (imageUrl, imageName) => {
+  //     var element = document.createElement("a");
+  //     var file = new Blob(
+  //       [
+  //         imageUrl
+  //       ],
+  //       { type: "image/jpg" }
+  //     );
+  //     element.href = URL.createObjectURL(file);
+  //     element.download = imageName;
+  //     element.click();
+  // const handleDownload = async (imageUrl, imageName) => {
+  //   const element = document.createElement("a");
+  //   element.href = imageUrl;
+  //   element.download = imageName || "image.png";
+  //   element.target = 'blank';
+  //   document.body.appendChild(element);
+  //   element.click();
+  //   document.body.removeChild(element);
+  // };
+  const handleDownload = async (imageUrl, imageName) => {
+    // try {
+    //   const payload = {
+    //     imageurl: imageUrl,
+    //   };
+  
+    //   const response = await axios({
+    //     url: "https://gddigb51ed.execute-api.us-east-2.amazonaws.com/prod/tours/presignedurl",
+    //     method: 'POST',
+    //     responseType: 'arraybuffer', // Use 'blob' for binary data like images
+    //     data: payload, // Send the payload in the request body
+    //   });
+  
+    //   const url = window.URL.createObjectURL(new Blob([response.data]));
+      const link = document.createElement('a');
+      link.href = imageUrl;
+      link.setAttribute('download', imageName || 'image.png');
+      link.target = 'blank';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    // } catch (error) {
+    //   console.error('Error downloading image:', error);
+    // }
+  };
+  
 
   const TableHeads = [
     {
@@ -114,6 +153,7 @@ function GuestDetailsPopup(props) {
 
   const TableData = allPackMembers && allPackMembers.length > 0
   ? allPackMembers.map((guest, index) => {
+    console.log(guest,'......guest')
       if (guest) {
         return {
           s_no: index+1,
@@ -122,7 +162,15 @@ function GuestDetailsPopup(props) {
           dob: guest.userdob,
           gender: guest.usergender,
           documentType: guest.useridproof,
-          document: "Download"
+          document: (<div>
+            {/* <img src={guest.userimage} style={{width: "20px",height: "20px"}} alt="Downloadable Image" /> */}
+            <button className="btn btn-primary font-10"
+                    type="button" 
+                    onClick={()=>handleDownload(guest.userimage, guest.username)}
+            >
+              Download
+            </button>
+          </div>)
         };
       } else {
         return null;
@@ -141,12 +189,12 @@ function GuestDetailsPopup(props) {
         size="lg"
         className="match-share-modal w-100 close-btn"
       >
-        <Modal.Header closeButton>
+        <Modal.Header closeButton className="clr-grey">
           <Modal.Title className="w-100 text-center">Guests List</Modal.Title>
         </Modal.Header>
         {/* <center>Select Your Tours</center> */}
         <div className="p-2 w-100">
-          <table className="w-100">
+          <table className="tickets-table table table-borderless">
             <thead id="home-table-head" className="p-3">
               <tr>
                 {TableHeads.map((item, i) => {
@@ -159,31 +207,13 @@ function GuestDetailsPopup(props) {
                 return (
                   <tr key={i} className="tr-item">
                     {TableHeads.map((headItem, i) => {
-                      return <td key={i} className="td-item p-2">{item[headItem.field]}</td>;
+                      return <td key={i} className="td-item p-2 text-center">{item[headItem.field]}</td>;
                     })}
                   </tr>
                 );
               })}
             </tbody>
           </table>
-          {/* <Row className="mt-2 p-2">
-            <Col>
-              <Button
-                className="add-user-button w-100"
-                onClick={() => handleSubmit()}
-              >
-                Submit
-              </Button>
-            </Col>
-            <Col>
-              <Button
-                className="cancel-button w-100"
-                onClick={() => setOpenToursPopup(false)}
-              >
-                Cancel
-              </Button>
-            </Col>
-          </Row> */}
         </div>
       </Modal>
     </div>
