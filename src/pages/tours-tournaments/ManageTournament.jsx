@@ -21,6 +21,7 @@ function ManageTournament() {
   const [openGuestDetailsPopup, setOpenGuestDetailsPopup] = useState(false);
   const [guestDetails, setGuestsDetails] = useState({});
   const [showPaymentDetailsPopup, setShowPaymentDetailsPopup] = useState(false);
+  const [reRendering, setReRendering] = useState(false)
   const [selectedFilter, setSelectedFilter] = useState({
     tour_name: "All",
     website: "All",
@@ -28,6 +29,9 @@ function ManageTournament() {
     user_name: "All",
     location: "All",
   });
+  const changeStatusonPopupClosing = () =>{
+    setReRendering((prev)=>!prev)
+  }
 
   const gettingInterestedMembers = async () => {
     const payload = {};
@@ -60,8 +64,11 @@ function ManageTournament() {
 
   useEffect(() => {
     gettingInterestedMembers();
-    gettingguestsdocs();
   }, [status]);
+
+  useEffect(()=>{
+    gettingguestsdocs();
+  },[reRendering])
 
   const handleSelectButton = async (interested_id) => {
     const payload = {
@@ -665,6 +672,7 @@ function ManageTournament() {
         showPaymentDetailsPopup={showPaymentDetailsPopup}
         setShowPaymentDetailsPopup={setShowPaymentDetailsPopup}
         guestDetails={guestDetails}
+        changeStatusonPopupClosing={changeStatusonPopupClosing}
       />
     </div>
   );
