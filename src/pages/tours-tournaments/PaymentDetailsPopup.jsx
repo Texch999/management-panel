@@ -6,7 +6,8 @@ import { PiArrowsOutLight } from "react-icons/pi";
 import MatchSubmitPopup from "../../matchpopups/MatchSubmitPopup";
 import { GET_SETTINGS_DATA, UPDATE_TOUR_PAYMENTS_DOCUMENTS } from "../../config/endpoints";
 import { call } from "../../config/axios";
-import ShowImagePopup from "../Popups/ShowImagePopup";
+import PaymentImagePopup from "../tours-tournaments/PaymentImagePopup";
+
 function PaymentDetailsPopup(props) {
   const {
     showPaymentDetailsPopup,
@@ -17,7 +18,7 @@ function PaymentDetailsPopup(props) {
   const [updatePayment, setUpdatePayment] = useState({});
   const [rejected, setRejected] = useState(false);
   const [showScreenshotImg, setShowScreenshotImg] = useState(false);
-  console.log(updatePayment, ".....updatepayment");
+  // console.log(updatePayment, ".....updatepayment");
 
   const handleShowImg = () => {
     setShowScreenshotImg(true);
@@ -30,7 +31,7 @@ function PaymentDetailsPopup(props) {
     changeStatusonPopupClosing()
   };
   const [acceptClick, setAcceptClick] = useState(false);
-  console.log(guestDetails, "......guestdetails");
+  // console.log(guestDetails, "......guestdetails");
 
   const getAllRejections = async () => {
     const payload = {
@@ -72,7 +73,7 @@ function PaymentDetailsPopup(props) {
       rejection_reason: rejectionReason,
       tour_payment_id: guestDetails.tour_payment_id
     }
-    console.log(payload,'......payload')
+    // console.log(payload,'......payload')
     await call(UPDATE_TOUR_PAYMENTS_DOCUMENTS, payload)
             .then((res)=>console.log(res,'.....res'))
             .catch((error)=>console.log(error))
@@ -161,7 +162,7 @@ function PaymentDetailsPopup(props) {
             <div className="w-100 my-2 relative-position">
               <img
                 className="w-100 h15vh rounded"
-                src={process.env.PUBLIC_URL + "./assets/dog_imge.jpg"}
+                src={guestDetails.payment_screenshot}
                 alt=""
               />
               <PiArrowsOutLight
@@ -288,9 +289,10 @@ function PaymentDetailsPopup(props) {
           </div>
         </Modal.Header>
       </Modal>
-      <ShowImagePopup
+      <PaymentImagePopup
         showScreenshotImg={showScreenshotImg}
         setShowScreenshotImg={setShowScreenshotImg}
+        imageurl={guestDetails.payment_screenshot}
       />
       <MatchSubmitPopup
         header={"Ticket Upgraded Successfully"}

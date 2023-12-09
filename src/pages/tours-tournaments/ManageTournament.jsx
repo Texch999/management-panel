@@ -58,7 +58,7 @@ function ManageTournament() {
     const payload = {};
     await call(GET_TOUR_PAYMENT_DOCUMENTS, payload)
       .then((res) => setGuestDocs(res?.data?.data?.Items))
-      .then((error) => console.log(error));
+      .catch((error) => console.log(error));
   };
   // console.log(guestDocs, ".....guestdocs");
 
