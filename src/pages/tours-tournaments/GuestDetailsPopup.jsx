@@ -153,7 +153,6 @@ function GuestDetailsPopup(props) {
 
   const TableData = allPackMembers && allPackMembers.length > 0
   ? allPackMembers.map((guest, index) => {
-    console.log(guest,'......guest')
       if (guest) {
         return {
           s_no: index+1,

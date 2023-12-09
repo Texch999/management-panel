@@ -144,3 +144,12 @@
 .td-item {
   color: whitesmoke !important;
 }
+.button-custom {
+  border: 1px solid grey;
+  border-radius: 5px;
+  padding: 1px 5px;
+}
+.table-wrapper {
+  overflow-y: scroll;
+  width: 77vw;
+}

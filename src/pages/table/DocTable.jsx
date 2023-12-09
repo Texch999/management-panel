@@ -10,6 +10,8 @@ function DocTable(props) {
         return "pending-button w-fit-content p-1 px-2";
       case "In-active":
         return "custom-deactive-button w-fit-content p-1 px-2";
+      case "Approved":
+        return "custom-active-button w-fit-content p-1 px-2";
       case "Rejected":
         return "custom-deactive-button w-fit-content p-1 px-2";
       case "Pending":
@@ -51,7 +53,7 @@ function DocTable(props) {
                     <div className="d-flex justify-content-center align-items-center">
                       <div
                         className={
-                          column?.clr ? getColor(item[column.field]) : ""
+                          getColor(item[column.field])
                         }
                         onClick={() => handleClickTable(column.field)}
                       >

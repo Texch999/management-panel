@@ -183,13 +183,14 @@
   color: #cbcbe2;
 }
 .custom-active-button {
-  border-radius: 2px !important;
+  border-radius: 5px !important;
+  border: none !important;
   background-color: #365345 !important;
   color: #71dd37 !important;
-  padding: 0px !important;
 }
 .custom-deactive-button {
-  border-radius: 2px;
+  border-radius: 5px !important;
+  border: none !important;
   background-color: #4d2f3a !important;
   color: #ff5426 !important;
 }

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Table from "../table/Table";
 import DocTable from "../table/DocTable";
 import { BsArrowDown } from "react-icons/bs";
-import { MdInsertPhoto } from "react-icons/md";
+import { MdDriveFolderUpload, MdInsertPhoto, MdUpload } from "react-icons/md";
 import ConformBookingTable from "../table/ConformBookingTable";
 import { call } from "../../config/axios";
 import { GET_INTERESTED } from "../../config/endpoints";
@@ -11,6 +11,7 @@ import { BOOKNOW_FOR_INTERESTED } from "../../config/endpoints";
 import { GET_TOUR_PAYMENT_DOCUMENTS } from "../../config/endpoints";
 import GuestDetailsPopup from "./GuestDetailsPopup";
 import PaymentDetailsPopup from "./PaymentDetailsPopup";
+import { FaRegEye } from "react-icons/fa";
 
 function ManageTournament() {
   const [activeManageIndex, setActiveManageIndex] = useState(0);
@@ -21,7 +22,7 @@ function ManageTournament() {
   const [openGuestDetailsPopup, setOpenGuestDetailsPopup] = useState(false);
   const [guestDetails, setGuestsDetails] = useState({});
   const [showPaymentDetailsPopup, setShowPaymentDetailsPopup] = useState(false);
-  const [reRendering, setReRendering] = useState(false)
+  const [reRendering, setReRendering] = useState(false);
   const [selectedFilter, setSelectedFilter] = useState({
     tour_name: "All",
     website: "All",
@@ -29,9 +30,9 @@ function ManageTournament() {
     user_name: "All",
     location: "All",
   });
-  const changeStatusonPopupClosing = () =>{
-    setReRendering((prev)=>!prev)
-  }
+  const changeStatusonPopupClosing = () => {
+    setReRendering((prev) => !prev);
+  };
 
   const gettingInterestedMembers = async () => {
     const payload = {};
@@ -66,9 +67,9 @@ function ManageTournament() {
     gettingInterestedMembers();
   }, [status]);
 
-  useEffect(()=>{
+  useEffect(() => {
     gettingguestsdocs();
-  },[reRendering])
+  }, [reRendering]);
 
   const handleSelectButton = async (interested_id) => {
     const payload = {
@@ -333,6 +334,10 @@ function ManageTournament() {
       header: "NAME & ROLE",
       field: "nameRole",
     },
+    // {
+    //   header: "TOUR NAME",
+    //   field: "tourName"
+    // },
     {
       header: "GUESTS DETAILS",
       field: "guestName",
@@ -387,15 +392,15 @@ function ManageTournament() {
                 {item.account_role}
               </div>
             ),
+            // tourName: "goa trip",
             guestName: (
               <div>
-                <button
-                  type="button"
-                  className="btn btn-outline-secondary btn-sm"
+                <div
+                  className="d-flex align-items-center button-custom"
                   onClick={() => handleClickhereButton(item)}
                 >
                   Clickhere
-                </button>
+                </div>
               </div>
             ),
             tourPack:
@@ -431,13 +436,13 @@ function ManageTournament() {
                 </div>
               ),
             paymentIdproof: (
-              <button
-                type="button"
-                className="btn btn-outline-secondary btn-sm"
+              <div
+                className="d-flex align-items-center button-custom"
                 onClick={() => handlePaymentDetailsClick(item)}
               >
+                <FaRegEye className="me-1 ions-clr"/>
                 View
-              </button>
+              </div>
             ),
             clr: item.confirm_payment_status,
           };
@@ -466,25 +471,37 @@ function ManageTournament() {
       field: "guestName",
     },
     {
-      header: "TOUR AMENITIES",
-      field: "tourAmenities",
-    },
-    {
       header: "PACKS SELECTED",
       field: "tourPack",
     },
+    // {
+    //   header: "TOUR AMENITIES",
+    //   field: "tourAmenities",
+    // },
     {
-      header: "TOTAL AMOUNT",
-      field: "totalAmount",
+      header: "HOTEL BOOKINGS",
+      field: "hotelBookings",
     },
     {
-      header: "PAID AMOUNT",
-      field: "paidAmount",
+      header: "TRAVEL BOOKINGS",
+      field: "travelBookings",
     },
     {
-      header: "PAYMENT IDPROOF",
-      field: "paymentIdproof",
+      header: "TOUR GUIDANCE",
+      field: "tourGuidance",
     },
+    // {
+    //   header: "TOTAL AMOUNT",
+    //   field: "totalAmount",
+    // },
+    // {
+    //   header: "PAID AMOUNT",
+    //   field: "paidAmount",
+    // },
+    // {
+    //   header: "PAYMENT IDPROOF",
+    //   field: "paymentIdproof",
+    // },
     {
       header: "CONFIRMATION STATUS",
       field: "confirmationStatus",
@@ -494,84 +511,102 @@ function ManageTournament() {
     },
   ];
 
-  const ConfirmBookingData = [
-    {
-      sl: 1,
-      website: "we2call.com",
-      date: <div>31/08/2023</div>,
-      nameRole: (
-        <div>
-          Srinivas
-          <br />
-          Super Admin
-        </div>
-      ),
-      guestName: (
-        <div>
-          <button type="button" className="btn btn-outline-secondary btn-sm">
-            Clickhere
-          </button>
-        </div>
-      ),
-      tourPack: (
-        <div>
-          Regularpack(1)
-          <br />
-          Premiumpack(4)
-        </div>
-      ),
-      tourAmenities: (
-        <div>
-          travel bookings
-          <MdInsertPhoto className="ms-1 ions-clr" />
-          <br />
-          hotel bookings
-          <MdInsertPhoto className="ms-1 ions-clr" />
-          <br />
-          tour guidance
-          <MdInsertPhoto className="ms-1 ions-clr" />
-        </div>
-      ),
-      totalAmount: "10,00,000",
-      paidAmount: "8,00,000",
-      paymentIdproof: (
-        <button type="button" className="btn btn-outline-secondary btn-sm">
-          View
-        </button>
-      ),
-      confirmationStatus: "approved",
-    },
-    // {
-    //   sl: 2,
-    //   website: "we2call.com",
-    //   dateTime: (
-    //     <div>
-    //       31/08/2023
-    //       <br />
-    //       14:51:20 PM
-    //     </div>
-    //   ),
-    //   nameRole: (
-    //     <div>
-    //       Srinivas
-    //       <br />
-    //       Super Admin
-    //       <br />
-    //       Hyderabad
-    //     </div>
-    //   ),
-    //   guestName: (
-    //     <div>
-    //       10 <BsArrowDown />
-    //     </div>
-    //   ),
-    //   gender: "Male",
-    //   tourPack: "jej",
-    //   tatalAmount: "31/08/2023",
-    //   paidAmount: "10000",
-    //   clr: "Confirm",
-    // }
-  ];
+  const ConfirmBookingData =
+    guestDocs && guestDocs.length > 0
+      ? guestDocs
+          .filter((item) => item.confirm_payment_status === "Approved")
+          .map((item, index) => {
+            return {
+              sl: index + 1,
+              website: item.website,
+              date: item.date,
+              nameRole: (
+                <div>
+                  {item.name}
+                  <br />
+                  {item.account_role}
+                </div>
+              ),
+              guestName: (
+                <div>
+                  <div
+                    className="d-flex align-items-center button-custom"
+                    onClick={() => handleClickhereButton(item)}
+                  >
+                    Clickhere
+                  </div>
+                </div>
+              ),
+              tourPack:
+                item.packages_selected && item.packages_selected.length > 0
+                  ? item.packages_selected.map((packageItem) =>
+                      Object.keys(packageItem).map((key) => (
+                        <div key={key}>
+                          {key}:{packageItem[key]}
+                        </div>
+                      ))
+                    )
+                  : null,
+              // tourAmenities: (
+              //   <div>
+              //     travel bookings
+              //     <MdInsertPhoto className="ms-1 ions-clr" />
+              //     <br />
+              //     hotel bookings
+              //     <MdInsertPhoto className="ms-1 ions-clr" />
+              //     <br />
+              //     tour guidance
+              //     <MdInsertPhoto className="ms-1 ions-clr" />
+              //   </div>
+              // ),
+              travelBookings: (
+                <div>
+                  <div className="d-flex align-items-center button-custom">
+                    <FaRegEye className="me-1 ions-clr"/>
+                      View
+                    </div>
+                  <div className="d-flex align-items-center mt-1 button-custom">
+                  <MdUpload className="me-1 ions-clr"/>
+                    Upload
+                  </div>
+                </div>
+              ),
+              hotelBookings: (
+                <div>
+                  <div className="d-flex align-items-center button-custom">
+                    <FaRegEye className="me-1 ions-clr"/>
+                      View
+                    </div>
+                  <div className="d-flex align-items-center mt-1 button-custom">
+                  <MdUpload className="me-1 ions-clr"/>
+                    Upload
+                  </div>
+                </div>
+              ),
+              tourGuidance: (
+                  <div>
+                    <div className="d-flex align-items-center button-custom">
+                    <FaRegEye className="me-1 ions-clr"/>
+                      View
+                    </div>
+                    {/* <MdInsertPhoto className="ms-1 ions-clr" /> */}
+                    <div className="d-flex align-items-center mt-1 button-custom">
+                    <MdUpload className="me-1 ions-clr"/>
+                      Upload
+                    </div>
+                  </div>
+                ),
+              // totalAmount: "10,00,000",
+              // paidAmount: "8,00,000",
+              // paymentIdproof: (
+              //   <button type="button" className="btn btn-outline-secondary btn-sm">
+              //     View
+              //   </button>
+              // ),
+              confirmationStatus: item.confirm_payment_status,
+            };
+          })
+      : [];
 
   const handleManageHead = (index) => {
     setActiveManageIndex(index);
@@ -652,13 +687,14 @@ function ManageTournament() {
           </div>
         )}
         {activeManageIndex === 3 && (
-          <DocTable columns={tableDocHeading} data={tableDocData} />
+          <div className="table-wrapper">
+            <DocTable columns={tableDocHeading} data={tableDocData} />
+          </div>
         )}
         {activeManageIndex === 4 && (
-          <ConformBookingTable
-            columns={ConfirmBookingHeading}
-            data={ConfirmBookingData}
-          />
+          <div className="table-wrapper">
+            <DocTable columns={ConfirmBookingHeading} data={ConfirmBookingData} />
+          </div>
         )}
       </div>
       {openGuestDetailsPopup && (
