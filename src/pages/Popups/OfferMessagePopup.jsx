@@ -39,7 +39,7 @@ function OfferMessagePopup(props) {
         if (res.data.error) {
           console.log("API Error...", res.data.message);
         } else {
-          setAddOffersPopup(false);
+          setAddOffersPopup(true);
           handleOfferClose();
           setTextMessage({});
         }
@@ -193,7 +193,7 @@ function OfferMessagePopup(props) {
         </Modal.Body>
       </Modal>
       <MatchSubmitPopup
-        header={"Upgraded  Successfully"}
+        header={"Offer Updated  Successfully"}
         state={addOfferssPopup}
         setState={setAddOffersPopup}
       />

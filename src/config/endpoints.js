@@ -42,6 +42,7 @@ const GET_SETTINGS_DATA = "/settings/getall_security_questions";
 const ADD_REASON_REJECTIONS = "/settings/add_reason_rejection";
 const UPDATE_NOTIFICATION = "/management/update_notifications";
 const UPDATE_OFFER = "/management/update_offers";
+const UPDATE_MATCH = "/offline-management/update_matchid_data";
 
 const ADD_TOURS = "/tours/add_tours";
 const GET_TOURS = "/tours/get_tours";
@@ -390,5 +391,10 @@ exports.UPDATE_NOTIFICATION = {
 
 exports.UPDATE_OFFER = {
   url: UPDATE_OFFER,
+  method: POST
+};
+
+exports.UPDATE_MATCH = {
+  url: UPDATE_MATCH,
   method: POST
 };

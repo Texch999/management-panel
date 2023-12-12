@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { BsChevronDown } from "react-icons/bs";
 import { FaLocationDot, FaTrophy } from "react-icons/fa6";
-import { MdStadium } from "react-icons/md";
+// import { MdStadium } from "react-icons/md";
 import Table from "../table/Table";
 import { AiOutlineEdit } from "react-icons/ai";
 import { MdDateRange } from "react-icons/md";
@@ -15,8 +15,8 @@ import MatchPopup from "../Popups/MatchPopup";
 
 function Creatematch() {
   const [createMatch, setcreateMatch] = useState({});
-  const [selectedMatch,setSelectedMatch]=useState([]);
-  const [showMatchOpen,setShowMatchOpen] =useState(false)
+  const [selectedMatch, setSelectedMatch] = useState([]);
+  const [showMatchOpen, setShowMatchOpen] = useState(false);
   const [Error, setError] = useState(false);
   const handleSubmitMatch = async () => {
     if (
@@ -145,7 +145,7 @@ function Creatematch() {
       field: "dateAndTime",
     },
     {
-      header: "",
+      header: "Action",
       field: "icon",
     },
   ];
@@ -198,22 +198,27 @@ function Creatematch() {
     ),
     dateAndTime: (
       <div>
-        {item?.date}<br /> <span>{item?.time}</span>{" "}
+        {item?.date}
+        <br /> <span>{item?.time}</span>{" "}
       </div>
     ),
     seriesname: item?.series_name,
     sportsname: item?.sport_name,
     matchplace: item?.match_place,
-    icon: <AiOutlineEdit className="eye-icon-size" 
-    onClick={()=>{
-      handleMatchOpen(item)
-    }}/>,
+    icon: (
+      <AiOutlineEdit
+        className="eye-icon-size"
+        onClick={() => {
+          handleMatchOpen(item);
+        }}
+      />
+    ),
   }));
 
-  const handleMatchOpen=(item)=>{
-    setShowMatchOpen(true)
-    setSelectedMatch(item)
-  }
+  const handleMatchOpen = (item) => {
+    setShowMatchOpen(true);
+    setSelectedMatch(item);
+  };
 
   return (
     <div className="p-4 w-100">
@@ -403,7 +408,7 @@ function Creatematch() {
         </div>
 
         <Table columns={cols} data={modifiedCreatematchDetails} />
-        <MatchPopup 
+        <MatchPopup
           selectedMatch={selectedMatch}
           showMatchOpen={showMatchOpen}
           setShowMatchOpen={setShowMatchOpen}
