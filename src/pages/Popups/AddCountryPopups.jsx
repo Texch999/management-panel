@@ -37,8 +37,6 @@ function AddCountryPopups(props) {
   const [uploadImage, setuploadImage] = useState([]);
   const [processing, setProcessing] = useState(false);
 
-  // console.log("paymentGateway====>", paymentGateway);
-
   const handleAddCountryOpenClose = () => {
     setAddCountryOpen(false);
     setData(null);
@@ -325,7 +323,7 @@ function AddCountryPopups(props) {
         </Modal.Body>
       </Modal>
       <MatchSubmitPopup
-        header={"Ticket Upgraded Successfully"}
+        header={"Payment Upgraded Successfully"}
         state={acceptClick}
         setState={setAcceptClick}
         setStatus={setStatus}

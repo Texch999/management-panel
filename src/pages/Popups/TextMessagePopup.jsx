@@ -8,7 +8,7 @@ import { FaRegCalendarAlt } from "react-icons/fa";
 function TextMessage(props) {
   const { showBroadcastOpen, setShowBroadcastOpen, selectedBroadcast } = props;
   const [textmessage, setTextMessage] = useState({});
-  const handleAddDirectorClose = () => {
+  const handleUpdateBroadCastClose = () => {
     setShowBroadcastOpen(false);
   };
 
@@ -17,7 +17,7 @@ function TextMessage(props) {
     setTextMessage({ ...textmessage, [e.target.name]: e.target.value });
   };
 
-  const [addDirectorsPopup, setAddDirectorPopup] = useState(false);
+  const [updateBroadCastPopup, setUpdateBroadCastPopup] = useState(false);
 
   const handleUpdateNotification = async () => {
     let p_id = selectedBroadcast.p_id;
@@ -31,16 +31,17 @@ function TextMessage(props) {
     await call(UPDATE_NOTIFICATION, payload)
       .then((res) => {
         if (res.status.data === 200) {
+          setUpdateBroadCastPopup(true);
           setTimeout(() => {
-            setAddDirectorPopup(false);
+            setUpdateBroadCastPopup(false);
             setShowBroadcastOpen(false);
           }, 2000);
         }
         if (res.data.error) {
           console.log("API Error...", res.data.message);
         } else {
-          setAddDirectorPopup(false);
-          handleAddDirectorClose();
+          setUpdateBroadCastPopup(true);
+          handleUpdateBroadCastClose();
           setTextMessage({});
         }
       })
@@ -74,7 +75,7 @@ function TextMessage(props) {
     <div className="modal fade bd-example-modal-lg container mt-5">
       <Modal
         show={showBroadcastOpen}
-        onHide={handleAddDirectorClose}
+        onHide={handleUpdateBroadCastClose}
         centered
         className="match-share-modal payment-modal"
       >
@@ -193,9 +194,9 @@ function TextMessage(props) {
         </Modal.Body>
       </Modal>
       <MatchSubmitPopup
-        header={"Upgraded  Successfully"}
-        state={addDirectorsPopup}
-        setState={setAddDirectorPopup}
+        header={" BroadCast Updated  Successfully"}
+        state={updateBroadCastPopup}
+        setState={setUpdateBroadCastPopup}
       />
     </div>
   );

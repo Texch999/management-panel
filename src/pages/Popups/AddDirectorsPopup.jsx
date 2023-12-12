@@ -460,7 +460,7 @@ function AddDirectorsPopup(props) {
         </Modal.Body>
       </Modal>
       <MatchSubmitPopup
-        header={"created Successfully"}
+        header={"Director created Successfully"}
         state={addDirectorsPopup}
         setState={setAddDirectorPopup}
       />
