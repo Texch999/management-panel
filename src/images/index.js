@@ -30,3 +30,5 @@ export const Images = {
     raina_image: "./assets/raina.png",
     GreenDoubleTick: "./assets/green_double_tick.png",
 };
+
+export const ImageBaseUrl = "https://we2-call-images.s3.us-east-2.amazonaws.com";
