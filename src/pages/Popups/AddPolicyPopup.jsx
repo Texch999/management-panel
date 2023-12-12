@@ -7,6 +7,7 @@ import {
   GET_ALL_WEBSITES,
 } from "../../config/endpoints";
 import { call } from "../../config/axios";
+
 function AddPolicyPopup(props) {
   const {
     addPolicyOpen,
@@ -14,14 +15,13 @@ function AddPolicyPopup(props) {
     setStatus,
     setSelectedPolicy,
     selectedPolicy,
-    Heading
+    Heading,
   } = props;
   const [acceptClick, setAcceptClick] = useState(false);
   const [countryName, setCountryName] = useState("");
   const [website, setWebsite] = useState("");
   const [policyDetails, setPolicyDetails] = useState("");
   const [active, setActive] = useState("Select");
-  const [addPolicyData, setAddPolicyData] = useState("");
 
   const handleAddPolicyClose = () => {
     setAddPolicyOpen(false);
@@ -51,7 +51,6 @@ function AddPolicyPopup(props) {
       })
       .catch((err) => console.log(err));
   };
-
   useEffect(() => {
     getwebsiteNames();
   }, []);
@@ -65,14 +64,11 @@ function AddPolicyPopup(props) {
         website_name: website,
         active: active,
       };
-
       if (selectedPolicy) {
         requestData.policy_id = selectedPolicy.policy_id;
         requestData.p_id = selectedPolicy.p_id;
       }
-
       const res = await call(url, requestData);
-
       if (res.data.error) {
         console.error("API Error:", res.data.message);
       } else {
@@ -144,8 +140,8 @@ function AddPolicyPopup(props) {
                   className="w-100 custom-select small-font input-btn-bg px-2 py-3 all-none rounded all-none"
                 >
                   <option selected>Select</option>
-                  <option>Yes</option>
-                  <option>No</option>
+                  <option value="active">Active</option>
+                  <option value="Inactive">Inactive</option>
                 </select>
               </Col>
             </Row>
