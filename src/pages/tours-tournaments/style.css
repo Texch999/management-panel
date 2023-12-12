@@ -133,3 +133,14 @@
 .none-outline {
   outline: none;
 }
+.popup-header-color {
+  color: #696cff !important;
+  text-align: center;
+}
+#home-table-head {
+  background-color: #112e69;
+  color: whitesmoke;
+}
+.td-item {
+  color: whitesmoke !important;
+}

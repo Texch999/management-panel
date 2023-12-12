@@ -4,13 +4,15 @@ import { AiOutlineEdit } from "react-icons/ai";
 import { useEffect, useState } from "react";
 import { GET_ALL_OFFERS } from "../../config/endpoints";
 import { call } from "../../config/axios";
+import { OFFERS_ACTIVE_INACTIVE } from "../../config/endpoints";
 import OfferMessagePopup from "../Popups/OfferMessagePopup";
 
 function PublishedTabledata(props) {
   const { searchOffer } = props;
   const [Offersmanagement, setOffermanagement] = useState([]);
-  const [selectedOffer,setSelectedOffer] =useState([]);
-  const [showOfferOpen,setShowOfferOpen] =useState(false)
+  const [selectedOffer, setSelectedOffer] = useState([]);
+  const [showOfferOpen, setShowOfferOpen] = useState(false);
+  const [active, setActive] = useState(false);
   const cols = [
     {
       header: "TITLE",
@@ -53,11 +55,22 @@ function PublishedTabledata(props) {
       setOffermanagement(arr);
     });
   };
+  const handleBlockUnBlock = async (item) => {
+    const payload = {
+      offer_id: item,
+      active: active,
+    };
+    await call(OFFERS_ACTIVE_INACTIVE, payload)
+      .then((res) => {
+        setActive((prev) => !prev);
+        console.log(res);
+      })
+      .catch((err) => console.log(err));
+  };
   useEffect(() => {
     getAllOffers();
   }, []);
   const currentDate = new Date().toISOString().split("T")[0];
-  console.log("---------->", currentDate);
   const scheduledData = Offersmanagement.filter(
     (res) =>
       res.publish_date > currentDate &&
@@ -74,30 +87,48 @@ function PublishedTabledata(props) {
     publishwebsite: item?.website_name,
     type: item?.country_name,
     status:
-      item?.status === true ? (
-        <div className="font-green custom-active-button px-2">Active</div>
+      item?.active === true ? (
+        <div
+          className="font-green custom-active-button px-2"
+          onClick={() => {
+            handleBlockUnBlock(item?.offer_id);
+          }}
+        >
+          Active
+        </div>
       ) : (
-        <div className="custom-deactive-button px-2">InActive</div>
+        <div
+          className="custom-deactive-button px-2"
+          onClick={() => {
+            handleBlockUnBlock(item.offer_id);
+          }}
+        >
+          InActive
+        </div>
       ),
-    icon: <AiOutlineEdit className="eye-icon-size" onClick={()=>{
-      handleOfferOpen(item)
-    }}/>,
+    icon: (
+      <AiOutlineEdit
+        className="eye-icon-size"
+        onClick={() => {
+          handleOfferOpen(item);
+        }}
+      />
+    ),
   }));
-  const handleOfferOpen=(item)=>{
-    setShowOfferOpen(true)
-    setSelectedOffer(item)
-}
+  const handleOfferOpen = (item) => {
+    setShowOfferOpen(true);
+    setSelectedOffer(item);
+  };
 
   return (
     <div className="p-4 w-100">
       <div className="sidebar-bg rounded">
-        <Table columns={cols} data={modifiedOffersmanagementDetails} 
+        <Table columns={cols} data={modifiedOffersmanagementDetails} />
+        <OfferMessagePopup
+          selectedOffer={selectedOffer}
+          showOfferOpen={showOfferOpen}
+          setShowOfferOpen={setShowOfferOpen}
         />
-         <OfferMessagePopup
-            selectedOffer={selectedOffer}
-            showOfferOpen={showOfferOpen}
-            setShowOfferOpen={setShowOfferOpen}
-         />
       </div>
     </div>
   );

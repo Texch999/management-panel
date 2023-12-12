@@ -52,7 +52,11 @@ const UPDATE_INTERESTED = "/tours/update_interested";
 const BOOKNOW_FOR_INTERESTED = "/tours/booknow_for_interested";
 const ADD_TOUR_PAYMENT_GATEWAY = "/tours_banking/add_tour_payment_gateway";
 const GET_TOUR_PAYMENT_GATEWAY = "/tours_banking/get_tour_payment_gateway";
-const UPDATE_TOUR_PAYMENT_GATEWAY = "/tours_banking/update_tour_payment_gateway"
+const UPDATE_TOUR_PAYMENT_GATEWAY =
+  "/tours_banking/update_tour_payment_gateway";
+const GET_TOUR_PAYMENT_DOCUMENTS = "/tours/get_tour_payments_documents";
+const OFFERS_ACTIVE_INACTIVE = "/management/offers_active_inactive";
+const USERS_ACTIVE_INACTIVE = "/management/block_unblock_users";
 
 // methods
 const DELETE = "DELETE";
@@ -60,20 +64,25 @@ const POST = "POST";
 const GET = "POST";
 const PUT = "PUT";
 
+exports.GET_TOUR_PAYMENT_DOCUMENTS = {
+  method: POST,
+  url: GET_TOUR_PAYMENT_DOCUMENTS,
+};
+
 exports.UPDATE_TOUR_PAYMENT_GATEWAY = {
   url: UPDATE_TOUR_PAYMENT_GATEWAY,
-  method: POST
-}
+  method: POST,
+};
 
 exports.GET_TOUR_PAYMENT_GATEWAY = {
   url: GET_TOUR_PAYMENT_GATEWAY,
-  method: POST
-}
+  method: POST,
+};
 
 exports.ADD_TOUR_PAYMENT_GATEWAY = {
   method: POST,
-  url: ADD_TOUR_PAYMENT_GATEWAY
-}
+  url: ADD_TOUR_PAYMENT_GATEWAY,
+};
 
 exports.BOOKNOW_FOR_INTERESTED = {
   url: BOOKNOW_FOR_INTERESTED,
@@ -383,15 +392,24 @@ exports.GET_USER_MESSAGES = {
   method: POST,
 };
 
-
 exports.UPDATE_NOTIFICATION = {
   url: UPDATE_NOTIFICATION,
-  method: POST
+  method: POST,
 };
 
 exports.UPDATE_OFFER = {
   url: UPDATE_OFFER,
-  method: POST
+  method: POST,
+};
+
+exports.OFFERS_ACTIVE_INACTIVE = {
+  url: OFFERS_ACTIVE_INACTIVE,
+  method: POST,
+};
+
+exports.USERS_ACTIVE_INACTIVE = {
+  url: USERS_ACTIVE_INACTIVE,
+  method: POST,
 };
 
 exports.UPDATE_MATCH = {

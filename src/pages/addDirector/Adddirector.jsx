@@ -2,13 +2,9 @@ import React, { useState, useEffect } from "react";
 import Table from "../table/Table";
 import { MdOutlineEdit } from "react-icons/md";
 import Totalaccount from "../home/Totalaccount";
-import { MdKeyboardArrowUp, MdKeyboardArrowDown } from "react-icons/md";
-import { AiOutlineSetting } from "react-icons/ai";
-import { TbUserEdit } from "react-icons/tb";
-import { LuFileClock } from "react-icons/lu";
-import { TbFileText } from "react-icons/tb";
 import AddDirectorsPopup from "../Popups/AddDirectorsPopup";
-import { GET_ALL_USERS} from "../../config/endpoints";
+import { GET_ALL_USERS } from "../../config/endpoints";
+import { USERS_ACTIVE_INACTIVE } from "../../config/endpoints";
 import { call } from "../../config/axios";
 
 function Adddirector() {
@@ -16,7 +12,7 @@ function Adddirector() {
   const [selectedDirector, setSelectedDirector] = useState(null);
   const [filteredDirectors, setFilteredDirectors] = useState([]);
   const [searchText, setSearchText] = useState("");
-  const [status, setStatus] = useState(false);
+  const [active, setActive] = useState(false);
 
   const searchContent = (value) => {
     setSearchText(value);
@@ -31,12 +27,6 @@ function Adddirector() {
       header: (
         <div className="d-flex justify-content-center align-items-center ">
           <div className="marginright-10">ROLE</div>
-          {/* <div>
-            <div>
-              <MdKeyboardArrowUp className="fs-6" />
-            </div>
-            <MdKeyboardArrowDown className="fs-6 margintop-10" />
-          </div> */}
         </div>
       ),
       field: "role",
@@ -45,12 +35,6 @@ function Adddirector() {
       header: (
         <div className="d-flex justify-content-center align-items-center">
           <div className="marginright-10">USER NAME</div>
-          {/* <div>
-            <div>
-              <MdKeyboardArrowUp className="fs-6" />
-            </div>
-            <MdKeyboardArrowDown className="fs-6 margintop-10" />
-          </div> */}
         </div>
       ),
       field: "username",
@@ -59,12 +43,6 @@ function Adddirector() {
       header: (
         <div className="d-flex justify-content-center align-items-center">
           <div className="marginright-10">In USED</div>
-          {/* <div>
-            <div>
-              <MdKeyboardArrowUp className="fs-6" />
-            </div>
-            <MdKeyboardArrowDown className="fs-6 margintop-10" />
-          </div> */}
         </div>
       ),
       field: "inused",
@@ -73,12 +51,6 @@ function Adddirector() {
       header: (
         <div className="d-flex justify-content-center align-items-center">
           <div className="marginright-10">WEBSITE</div>
-          {/* <div>
-            <div>
-              <MdKeyboardArrowUp className="fs-6" />
-            </div>
-            <MdKeyboardArrowDown className="fs-6 margintop-10" />
-          </div> */}
         </div>
       ),
       field: "website1Andwebsite2Andwebsite3",
@@ -87,12 +59,6 @@ function Adddirector() {
       header: (
         <div className="d-flex justify-content-center align-items-center">
           <div className="marginright-10">BILLING</div>
-          {/* <div>
-            <div>
-              <MdKeyboardArrowUp className="fs-6" />
-            </div>
-            <MdKeyboardArrowDown className="fs-6 margintop-10" />
-          </div> */}
         </div>
       ),
       field: "billing",
@@ -101,12 +67,6 @@ function Adddirector() {
       header: (
         <div className="d-flex justify-content-center align-items-center">
           <div className="marginright-10">PROFIT/LOSS</div>
-          {/* <div>
-            <div>
-              <MdKeyboardArrowUp className="fs-6" />
-            </div>
-            <MdKeyboardArrowDown className="fs-6 margintop-10" />
-          </div> */}
         </div>
       ),
       field: "profitloss",
@@ -124,12 +84,6 @@ function Adddirector() {
       header: (
         <div className="d-flex justify-content-center align-items-center">
           <div className="marginright-10">ACTION</div>
-          {/* <div>
-            <div>
-              <MdKeyboardArrowUp className="fs-6" />
-            </div>
-            <MdKeyboardArrowDown className="fs-6 margintop-10" />
-          </div> */}
         </div>
       ),
       field: "icon",
@@ -146,10 +100,23 @@ function Adddirector() {
 
       .catch((err) => console.log(err));
   };
+
+  const handleBlockUnBlock = async (item) => {
+    const payload = {
+      register_id: item,
+      active: active,
+    };
+    await call(USERS_ACTIVE_INACTIVE, payload)
+      .then((res) => {
+        setActive((prev) => !prev);
+        console.log(res);
+      })
+      .catch((err) => console.log(err));
+  };
+
   useEffect(() => {
     getDirectors();
-  }, [status]);
-  console.log("getAllDirectors=====>", getAllDirectors);
+  }, []);
 
   const modifiedAdddirectorDetails = searchText.length
     ? filteredDirectors
@@ -166,9 +133,8 @@ function Adddirector() {
             username: item?.user_name,
             inused: item?.country_name,
             website1Andwebsite2Andwebsite3: item?.website_name,
-            // status: "Active",
             status:
-              item?.is_active === "active" ? (
+              item?.active === true ? (
                 <div className="font-green custom-active-button px-2">
                   Active
                 </div>
@@ -188,10 +154,26 @@ function Adddirector() {
           username: item?.user_name,
           inused: item?.country_name,
           website1Andwebsite2Andwebsite3: item?.website_name,
-          //status: "Active",
-          status: (
-            <div className="font-green custom-active-button px-2">Active</div>
-          ),
+          status:
+            item?.active === true ? (
+              <div
+                className="font-green custom-active-button px-2"
+                onClick={() => {
+                  handleBlockUnBlock(item?.register_id);
+                }}
+              >
+                Active
+              </div>
+            ) : (
+              <div
+                className="custom-deactive-button px-2"
+                onClick={() => {
+                  handleBlockUnBlock(item?.register_id);
+                }}
+              >
+                InActive
+              </div>
+            ),
           icon: (
             <MdOutlineEdit
               className="eye-icon-size"
@@ -241,18 +223,16 @@ function Adddirector() {
             </div>
           </div>
         </div>
-
         <Table columns={cols} data={modifiedAdddirectorDetails} />
       </div>
       <AddDirectorsPopup
         showAddDirectorPopup={showAddDirectorPopup}
         setShowAddDirectorPopup={setShowAddDirectorPopup}
         selectedDirector={selectedDirector}
-        // heading="Add Director & SA"
         heading={`${selectedDirector ? "Update" : "Add"}  Director & SA`}
         firstTextBox="Select Website *"
         firstSelect="Time Zone"
-        setStatus={setStatus}
+        setStatus={setActive}
         setSelectedDirector={setSelectedDirector}
       />
     </div>
