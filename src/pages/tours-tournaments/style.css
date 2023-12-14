@@ -68,6 +68,9 @@
 .ions-clr {
   color: #696cff;
 }
+.ions-deactive-clr {
+  color: #4e4f70;
+}
 .btn-cls {
   width: fit-content;
 }
@@ -143,4 +146,22 @@
 }
 .td-item {
   color: whitesmoke !important;
+}
+.button-custom {
+  border: 1px solid grey;
+  border-radius: 5px;
+  padding: 1px 5px;
+}
+.button-custom-deactive {
+  border: 1px solid rgb(88, 88, 88);
+  color:rgb(104, 104, 104) !important;
+  border-radius: 5px;
+  padding: 1px 5px;
+}
+.table-wrapper {
+  overflow-y: scroll;
+  width: 77vw;
+}
+.fileupload-input-display-none {
+  display: none;
 }

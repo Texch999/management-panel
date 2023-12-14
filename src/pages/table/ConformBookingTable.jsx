@@ -15,6 +15,7 @@ function ConformBookingTable(props) {
     uploadfileInputRef.current.click();
   };
   const getColor = (clr) => {
+    // console.log(clr,'...clr')
     switch (clr) {
       case "Shedule":
         return "pending-button w-fit-content p-1 px-2";
@@ -24,6 +25,8 @@ function ConformBookingTable(props) {
         return "reject-button w-fit-content p-1 px-2";
       case "Pending":
         return "pending-button custom-active-button w-fit-content p-1 px-2";
+      case "Approved":
+        return "custom-active-button w-fit-content p-1 px-2";
       case "Select":
         return "select-button w-fit-content p-1 px-2";
       default:
@@ -60,7 +63,7 @@ function ConformBookingTable(props) {
                     <div className="d-flex justify-content-center align-items-center">
                       <div
                         className={
-                          column && column.clr ? getColor(item[column.field]) : ""
+                          getColor(item[column.field])
                         }
                         onClick={() => handleClickTable(column.field)}
                       >

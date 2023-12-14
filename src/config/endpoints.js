@@ -57,12 +57,24 @@ const UPDATE_TOUR_PAYMENT_GATEWAY =
 const GET_TOUR_PAYMENT_DOCUMENTS = "/tours/get_tour_payments_documents";
 const OFFERS_ACTIVE_INACTIVE = "/management/offers_active_inactive";
 const USERS_ACTIVE_INACTIVE = "/management/block_unblock_users";
+const PRESIGNED_URL = "/tours/presignedurl";
+const UPDATE_TOUR_PAYMENTS_DOCUMENTS = "/tours/update_tour_payments_documents";
 
 // methods
 const DELETE = "DELETE";
 const POST = "POST";
 const GET = "POST";
 const PUT = "PUT";
+
+exports.UPDATE_TOUR_PAYMENTS_DOCUMENTS = {
+  url: UPDATE_TOUR_PAYMENTS_DOCUMENTS,
+  method: POST
+}
+
+exports.PRESIGNED_URL = {
+  url: PRESIGNED_URL,
+  method: POST
+}
 
 exports.GET_TOUR_PAYMENT_DOCUMENTS = {
   method: POST,
