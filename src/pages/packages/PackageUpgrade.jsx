@@ -18,6 +18,7 @@ function PackageUpgrade(props) {
   const [singedUrl, setSignedUrl] = useState("");
   const [uploadImage, setuploadImage] = useState([]);
   const [packageId, setPackageId] = useState("");
+  const [packageDuration, setPackageDuration] = useState(null);
 
   const uploadfileInputRef = useRef(null);
 
@@ -37,6 +38,7 @@ function PackageUpgrade(props) {
 
   const handleSubmitPackageCreation = async (item, packageName, index) => {
     setActiveIndex(index);
+   
     if (
       !(
         inputData[item?.userTextKey] &&
@@ -53,10 +55,16 @@ function PackageUpgrade(props) {
     ) {
       return setErr("Please enter required fields");
     }
+    // if (
+    //   inputData[item?.monthlyHoursKey] &&
+    //   inputData[item?.monthlyPriceKey] &&
+    //   inputData[item?.monthlydiscountPriceKey]
+    // ) {
+    //   setPackageDuration("monthly");
+    // } else {
+    //   setPackageDuration("yearly");
+    // }
     const payload = {
-      created_date: "12:30:20 PM",
-      created_time: "5/11/2023",
-      expiry_time: "5/11/2023",
       is_autherised: "true",
       monthly_package: {
         montly_package_cost: inputData[item?.monthlyPriceKey],
@@ -68,6 +76,7 @@ function PackageUpgrade(props) {
         yearly_package_hours: inputData[item?.yearlyHoursKey],
         yearly_package_discount: inputData[item?.yearlydiscountPriceKey],
       },
+      package_duration: packageDuration,
       package_limits: {
         members: inputData[item?.membersKey],
         join_call_with_users: inputData[item?.userTextKey],
