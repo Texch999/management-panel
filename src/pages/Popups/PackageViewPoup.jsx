@@ -37,7 +37,7 @@ function PackageViewPoup(props) {
     const payload = {
       register_id: "company",
     };
-    await call(GET_ADMIN_PACKAGE_REQUEST, payload)
+    const res = await call(GET_ADMIN_PACKAGE_REQUEST, payload)
       .then((res) => {
         setSaleTicket(res?.data?.data);
       })

@@ -18,7 +18,7 @@ function AddDirectorsPopup(props) {
     firstTextBox,
     firstSelect,
     selectedDirector,
-    setStatus,
+    setActive,
   } = props;
 
   const [userId, setUserId] = useState("");
@@ -33,6 +33,7 @@ function AddDirectorsPopup(props) {
   const [packageDiscount, setPackageDiscount] = useState("");
   const [share, setShare] = useState("");
   const [ulshare, setUlshare] = useState("");
+  const [showEye, setShowEye] = useState(false);
 
   const handleAddDirectorClose = () => {
     setShowAddDirectorPopup(false);
@@ -122,7 +123,7 @@ function AddDirectorsPopup(props) {
         } else {
           setAddDirectorPopup(false);
           handleAddDirectorPopup();
-          setStatus((prev) => !prev);
+          setActive((prev) => !prev);
           setFirstName("");
           setLastName("");
           setWebsite("");
@@ -439,7 +440,7 @@ function AddDirectorsPopup(props) {
                     placeholder="Enter"
                     name="share"
                     className="w-100 custom-select small-font login-inputs input-btn-bg px-2 py-2 all-none rounded all-none"
-                    value={100- + ulshare ||100}
+                    value={100 - +ulshare || 100}
                     onChange={(e) => setShare(e.target.value)}
                   ></input>
                 </Col>
@@ -459,7 +460,7 @@ function AddDirectorsPopup(props) {
         </Modal.Body>
       </Modal>
       <MatchSubmitPopup
-        header={"created Successfully"}
+        header={"Director created Successfully"}
         state={addDirectorsPopup}
         setState={setAddDirectorPopup}
       />

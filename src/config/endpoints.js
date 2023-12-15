@@ -40,6 +40,9 @@ const BULK_PACKAGE_APPROVE_REJECT = "/packages/bulk_package_approve_reject";
 const GET_ADMIN_PACKAGE_REQUEST = "/packages/get_all_admin_package_request";
 const GET_SETTINGS_DATA = "/settings/getall_security_questions";
 const ADD_REASON_REJECTIONS = "/settings/add_reason_rejection";
+const UPDATE_NOTIFICATION = "/management/update_notifications";
+const UPDATE_OFFER = "/management/update_offers";
+const UPDATE_MATCH = "/offline-management/update_matchid_data";
 
 const ADD_TOURS = "/tours/add_tours";
 const GET_TOURS = "/tours/get_tours";
@@ -49,10 +52,13 @@ const UPDATE_INTERESTED = "/tours/update_interested";
 const BOOKNOW_FOR_INTERESTED = "/tours/booknow_for_interested";
 const ADD_TOUR_PAYMENT_GATEWAY = "/tours_banking/add_tour_payment_gateway";
 const GET_TOUR_PAYMENT_GATEWAY = "/tours_banking/get_tour_payment_gateway";
-const UPDATE_TOUR_PAYMENT_GATEWAY = "/tours_banking/update_tour_payment_gateway";
+const UPDATE_TOUR_PAYMENT_GATEWAY =
+  "/tours_banking/update_tour_payment_gateway";
 const GET_TOUR_PAYMENT_DOCUMENTS = "/tours/get_tour_payments_documents";
 const PRESIGNED_URL = "/tours/presignedurl";
 const UPDATE_TOUR_PAYMENTS_DOCUMENTS = "/tours/update_tour_payments_documents";
+const OFFERS_ACTIVE_INACTIVE = "/management/offers_active_inactive";
+const USERS_ACTIVE_INACTIVE = "/management/block_unblock_users";
 
 // methods
 const DELETE = "DELETE";
@@ -72,23 +78,23 @@ exports.PRESIGNED_URL = {
 
 exports.GET_TOUR_PAYMENT_DOCUMENTS = {
   method: POST,
-  url: GET_TOUR_PAYMENT_DOCUMENTS
-}
+  url: GET_TOUR_PAYMENT_DOCUMENTS,
+};
 
 exports.UPDATE_TOUR_PAYMENT_GATEWAY = {
   url: UPDATE_TOUR_PAYMENT_GATEWAY,
-  method: POST
-}
+  method: POST,
+};
 
 exports.GET_TOUR_PAYMENT_GATEWAY = {
   url: GET_TOUR_PAYMENT_GATEWAY,
-  method: POST
-}
+  method: POST,
+};
 
 exports.ADD_TOUR_PAYMENT_GATEWAY = {
   method: POST,
-  url: ADD_TOUR_PAYMENT_GATEWAY
-}
+  url: ADD_TOUR_PAYMENT_GATEWAY,
+};
 
 exports.BOOKNOW_FOR_INTERESTED = {
   url: BOOKNOW_FOR_INTERESTED,
@@ -396,4 +402,29 @@ exports.PACKAGE_APPROVE_REJECT = {
 exports.GET_USER_MESSAGES = {
   url: GET_USER_MESSAGES,
   method: POST,
+};
+
+exports.UPDATE_NOTIFICATION = {
+  url: UPDATE_NOTIFICATION,
+  method: POST,
+};
+
+exports.UPDATE_OFFER = {
+  url: UPDATE_OFFER,
+  method: POST,
+};
+
+exports.OFFERS_ACTIVE_INACTIVE = {
+  url: OFFERS_ACTIVE_INACTIVE,
+  method: POST,
+};
+
+exports.USERS_ACTIVE_INACTIVE = {
+  url: USERS_ACTIVE_INACTIVE,
+  method: POST,
+};
+
+exports.UPDATE_MATCH = {
+  url: UPDATE_MATCH,
+  method: POST
 };

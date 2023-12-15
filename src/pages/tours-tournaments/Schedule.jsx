@@ -69,7 +69,7 @@ function Schedule() {
                   <HiPhotograph className="ms-1 ions-clr" />
                 </div>
               </div>
-              <div className="col">
+              <div className="col-2">
                 <div className="font-grey col-2 mt-1">Schedule_From</div>
                 <div className="tt-content-box p-2">{item.schedule_from}</div>
               </div>
@@ -85,7 +85,7 @@ function Schedule() {
                 <div className="font-grey col-2 mt-1">Location</div>
                 <div className="tt-content-box p-2">{item.country}</div>
               </div>
-              <div className="col-1 ">
+              <div className="col-2 ">
                 <div className="font-grey col-2 mt-1">Website</div>
                 <div className="tt-content-box p-2">{item.website}</div>
               </div>

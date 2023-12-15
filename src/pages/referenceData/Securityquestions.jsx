@@ -47,7 +47,7 @@ function Securityquestions() {
       .catch((err) => console.log(err));
   };
 
-  console.log("allQuestions", allQuestions);
+
 
   useEffect(() => {
     getAllSecurityQuestions();

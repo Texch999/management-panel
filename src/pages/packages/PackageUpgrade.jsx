@@ -1,18 +1,35 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { Images } from "./../../images/index";
 import { MdFileUpload } from "react-icons/md";
-import { PACKAGES_CREATION } from "../../config/endpoints";
+import { PACKAGES_CREATION, GENERATE_SIGNED_URL } from "../../config/endpoints";
 import { call } from "../../config/axios";
 import MatchDeclarationPopup from "../../matchpopups/MatchDeclarationPopup";
 import MatchSubmitPopup from "../../matchpopups/MatchSubmitPopup";
 
 function PackageUpgrade(props) {
+  const ImageBaseUrl = "https://we2-call-images.s3.us-east-2.amazonaws.com";
   const { selectedPackage, packageInputs } = props;
   const [inputData, setInputData] = useState({});
   const [isProcessing, setIsProcessing] = useState(false);
   const [showSuccessfulPopup, setShowSuccessfulPopup] = useState(false);
   const [err, setErr] = useState();
   const [activeIndex, setActiveIndex] = useState();
+  const [profileImage, setProfileImage] = useState("");
+  const [singedUrl, setSignedUrl] = useState("");
+  const [uploadImage, setuploadImage] = useState([]);
+  const [packageId, setPackageId] = useState("");
+
+  const uploadfileInputRef = useRef(null);
+
+  const handleUploadFileSelect = (e) => {
+    const file = e.target.file[0];
+    setProfileImage(file);
+    generateSignedUrl();
+  };
+
+  const handleUploadButtonClick = () => {
+    uploadfileInputRef.current.click();
+  };
 
   const handleInputChange = (e) => {
     setInputData({ ...inputData, [e.target.name]: e.target.value });
@@ -62,20 +79,35 @@ function PackageUpgrade(props) {
       status: "active",
       website: packageInputs?.website_name || 0,
       country_name: packageInputs?.country_name || 0,
+      upload_image: `${ImageBaseUrl}/${"package-images"}/${packageId}.png`,
     };
     setErr("");
     setIsProcessing(true);
     await call(PACKAGES_CREATION, payload)
-      .then((res) => {
-        if (res.data.statusCode === 200) {
-          console.log("res====>", res);
-          setIsProcessing(false);
-          setInputData({});
-        } else {
-          setErr(
-            res?.data?.message ? res?.data?.message : `something wen't wrong`
-          );
-        }
+      .then(async (res) => {
+        // if (res.data.statusCode === 200) {
+        console.log("res====>", res);
+        singedUrl &&
+          profileImage &&
+          (await fetch(singedUrl, {
+            method: "PUT",
+            body: profileImage,
+            headers: {
+              "Content-Type": "image/jpeg",
+              "cache-control": "public, max-age=0",
+            },
+          })
+            .then((res) => {})
+            .catch((err) => {
+              console.log("err: ", err);
+            }));
+        setIsProcessing(false);
+        setInputData({});
+        // } else {
+        //   setErr(
+        //     res?.data?.message ? res?.data?.message : `something wen't wrong`
+        //   );
+        // }
       })
       .catch((err) => {
         setIsProcessing(false);
@@ -86,6 +118,26 @@ function PackageUpgrade(props) {
   };
   console.log(packageInputs, "........packageInputs");
   console.log("Input Data========>", inputData);
+
+  const generateSignedUrl = async () => {
+    setuploadImage(true);
+    const posetNewId = new Date().getTime();
+    await call(GENERATE_SIGNED_URL, {
+      register_id: `${posetNewId}`,
+      event_type: "package_image",
+      folder_name: "package-images",
+    })
+      .then(async (res) => {
+        setuploadImage(false);
+        let url = res?.data?.data?.result?.signed_url;
+        setSignedUrl(url);
+        setPackageId(posetNewId);
+      })
+      .catch((err) => {
+        setuploadImage(false);
+        console.log("generating signed url error", err);
+      });
+  };
   const PACKAGES_DATA = [
     {
       packagename: "Standard",
@@ -263,12 +315,23 @@ function PackageUpgrade(props) {
                   <div className="medium-font package-btn-bg p-2 rounded font-white fw-semibold">
                     Package Logo
                   </div>
-                  <div className="medium-font package-btn-bg p-2 rounded mt-1 d-flex align-items-center justify-content-between">
+                  <div
+                    className="medium-font package-btn-bg p-2 rounded mt-1 d-flex align-items-center justify-content-between"
+                    onClick={handleUploadButtonClick}
+                    disabled={uploadImage}
+                  >
                     <img
                       className="standard-image"
                       src={item.packageLogo}
                       alt="Standard_Image"
                     />
+                    <input
+                      type="file"
+                      ref={uploadfileInputRef}
+                      style={{ display: "none" }}
+                      onChange={handleUploadFileSelect}
+                      className="login-inputs"
+                    ></input>
                     <MdFileUpload className="bluecolor-text large-font" />
                   </div>
                 </div>

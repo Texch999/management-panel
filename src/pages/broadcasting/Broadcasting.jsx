@@ -11,9 +11,12 @@ import {
 import { call } from "../../config/axios";
 import Scheduled from "./Scheduled";
 import DraftTable from "./DraftTable";
+import TextMessage from "../Popups/TextMessagePopup";
 
 function Broadcasting() {
   const [searchOffer, setSearchOffer] = useState("");
+  const [selectedBroadcast, setSelectedBroadcast] = useState();
+  const [showBroadcastOpen, setShowBroadcastOpen] = useState(false);
   const cols = [
     {
       header: "TITLE",
@@ -36,6 +39,10 @@ function Broadcasting() {
       field: "type",
     },
     {
+      header: "DESCRIPTION",
+      field: "description",
+    },
+    {
       header: "STATUS",
       field: "status",
     },
@@ -51,7 +58,6 @@ function Broadcasting() {
     };
     await call(GET_BROADCAST_EVENTS, payload)
       .then((res) => {
-        console.log("response====>", res);
         setGetBroadcasting(res?.data?.data);
       })
 
@@ -67,7 +73,6 @@ function Broadcasting() {
     };
     await call(GET_ALL_NOTIFICATIONS, payload)
       .then((res) => {
-        // console.log("response=====>", res);
         const arr = res?.data?.data?.map((obj) => {
           return {
             ...obj,
@@ -90,7 +95,6 @@ function Broadcasting() {
     };
     await call(GET_ALL_POSTERS, payload)
       .then((res) => {
-        console.log("response=====>", res);
         const arr = res?.data?.data?.map((obj) => {
           return {
             ...obj,
@@ -134,7 +138,7 @@ function Broadcasting() {
       item.publish_date <= currentDate &&
       item?.event_name?.toLowerCase().includes(searchOffer.toLowerCase())
   );
-  const modifiedBroadcastingDetails = publishedData.map((item) => {
+  const modifiedBroadcastingDetails = publishedData?.map((item) => {
     return {
       ...item,
       title: (
@@ -158,9 +162,22 @@ function Broadcasting() {
         ) : (
           <div className="custom-deactive-button px-2">InActive</div>
         ),
-      icon: <AiOutlineEdit className="eye-icon-size" />,
+      icon: (
+        <AiOutlineEdit
+          className="eye-icon-size"
+          onClick={() => {
+            console.log("testetestste");
+            handleBroadcastOpen(item);
+          }}
+        />
+      ),
     };
   });
+
+  const handleBroadcastOpen = (item) => {
+    setShowBroadcastOpen(true);
+    setSelectedBroadcast(item);
+  };
 
   const navigate = useNavigate();
 
@@ -235,6 +252,11 @@ function Broadcasting() {
             searchOffer={searchOffer}
           />
         )}
+        <TextMessage
+          showBroadcastOpen={showBroadcastOpen}
+          setShowBroadcastOpen={setShowBroadcastOpen}
+          selectedBroadcast={selectedBroadcast}
+        />
       </div>
     </div>
   );

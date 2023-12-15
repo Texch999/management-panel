@@ -8,9 +8,12 @@ import {
   GET_ALL_NOTIFICATIONS,
   GET_ALL_POSTERS,
 } from "../../config/endpoints";
+import TextMessage from "../Popups/TextMessagePopup";
 
 function DraftTable(props) {
   const { searchOffer } = props;
+  const [selectedBroadcast, setSelectedBroadcast] = useState();
+  const [showBroadcastOpen, setShowBroadcastOpen] = useState(false);
   const [getBroadcasting, setGetBroadcasting] = useState([]);
   const cols = [
     {
@@ -51,7 +54,6 @@ function DraftTable(props) {
 
       .catch((err) => console.log(err));
   };
-  console.log("getBroadcasting", getBroadcasting);
 
   const [notifications, setnotifications] = useState([]);
   const getNotifications = async () => {
@@ -60,7 +62,6 @@ function DraftTable(props) {
     };
     await call(GET_ALL_NOTIFICATIONS, payload)
       .then((res) => {
-        console.log("response=====>", res);
         const arr = res?.data?.data?.map((obj) => {
           return {
             ...obj,
@@ -75,7 +76,6 @@ function DraftTable(props) {
       })
       .catch((err) => console.log(err));
   };
-  console.log("notifications", notifications);
 
   const [getPoster, setgetPoster] = useState([]);
   const getAllposters = async () => {
@@ -99,7 +99,6 @@ function DraftTable(props) {
       })
       .catch((err) => console.log(err));
   };
-  console.log("getPoster", getPoster);
 
   useEffect(() => {
     getBroadcastingEvent();
@@ -114,7 +113,7 @@ function DraftTable(props) {
       res.status === false &&
       res?.event_name?.toLowerCase().includes(searchOffer.toLowerCase())
   );
-  const modifiedOffersmanagementDetails = draftData.map((item) => ({
+  const modifiedOffersmanagementDetails = draftData?.map((item) => ({
     ...item,
     title: (
       <div className="role-color">
@@ -137,13 +136,29 @@ function DraftTable(props) {
       ) : (
         <div className="custom-deactive-button px-2">InActive</div>
       ),
-    icon: <AiOutlineEdit className="eye-icon-size" />,
+    icon: (
+      <AiOutlineEdit
+        className="eye-icon-size"
+        onClick={() => {
+          handleBroadcastOpen(item);
+        }}
+      />
+    ),
   }));
-  //console.log(filterData,"..........filterData")
+
+  const handleBroadcastOpen = (item) => {
+    setShowBroadcastOpen(true);
+    setSelectedBroadcast(item);
+  };
   return (
     <div className="p-4 w-100">
       <div className="sidebar-bg rounded">
         <Table columns={cols} data={modifiedOffersmanagementDetails} />
+        <TextMessage
+          showBroadcastOpen={showBroadcastOpen}
+          setShowBroadcastOpen={setShowBroadcastOpen}
+          selectedBroadcast={selectedBroadcast}
+        />
       </div>
     </div>
   );
