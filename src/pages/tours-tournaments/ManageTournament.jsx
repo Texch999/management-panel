@@ -381,21 +381,27 @@ function ManageTournament() {
     //   field: "clr",
     // },
   ];
-  const handleClickhereButton = (item) => {
+  const handleDocClickhereButton = (item) => {
     setGuestsDetails(item);
     setOpenGuestDetailsPopup(true);
   };
+  const handleClickhereButton = (item) => {
+    setGuestsDetails(item);
+    setOpenGuestDetailsPopup(true);
+  }
   const handlePaymentDetailsClick = (item) => {
     setGuestsDetails(item);
     setShowPaymentDetailsPopup(true);
   };
 
   const updatingImageUrlinTable = async (url, item, amenityType) => {
-    console.log(amenityType, "...amenitytype");
+    // console.log(item,'.......item')
+    // console.log(amenityType, "...amenitytype");
     const payload = {
       [amenityType]: url,
       tour_payment_id: item.tour_payment_id,
     };
+    console.log(payload,'......payload')
     await call(UPDATE_TOUR_PAYMENTS_DOCUMENTS, payload)
       .then((res) => {
         setReRendering((prev) => !prev);
@@ -405,6 +411,7 @@ function ManageTournament() {
   };
 
   const handleUploadChange = async (e, item, amenityType) => {
+    console.log(item,'.....consolefrom onclick')
     const imagefile = e.target.files[0];
     const imageId = Date.now();
     const imageuploadingurl = await generatesignedurl(imageId);
@@ -485,7 +492,7 @@ function ManageTournament() {
               <div>
                 <div
                   className="d-flex align-items-center button-custom"
-                  onClick={() => handleClickhereButton(item)}
+                  onClick={() => handleDocClickhereButton(item)}
                 >
                   Clickhere
                 </div>
@@ -571,12 +578,12 @@ function ManageTournament() {
       field: "totalAmount",
     },
     {
-      header: "HOTEL BOOKINGS",
-      field: "hotelBookings",
-    },
-    {
       header: "TRAVEL BOOKINGS",
       field: "travelBookings",
+    },
+    {
+      header: "HOTEL BOOKINGS",
+      field: "hotelBookings",
     },
     {
       header: "TOUR GUIDANCE",
@@ -604,6 +611,7 @@ function ManageTournament() {
       ? guestDocs
           .filter((item) => item.confirm_payment_status === "Approved")
           .map((item, index) => {
+            // console.log(item,'....item from map')
             return {
               sl: index + 1,
               website: item.website,
@@ -635,18 +643,6 @@ function ManageTournament() {
                       ))
                     )
                   : null,
-              // tourAmenities: (
-              //   <div>
-              //     travel bookings
-              //     <MdInsertPhoto className="ms-1 ions-clr" />
-              //     <br />
-              //     hotel bookings
-              //     <MdInsertPhoto className="ms-1 ions-clr" />
-              //     <br />
-              //     tour guidance
-              //     <MdInsertPhoto className="ms-1 ions-clr" />
-              //   </div>
-              // ),
               travelBookings: (
                 <div>
                   <div
@@ -673,12 +669,12 @@ function ManageTournament() {
                   </div>
                   <label
                     className="d-flex align-items-center mt-1 button-custom"
-                    htmlFor="travel_bookings"
+                    htmlFor={`travel_bookings_${index}`}
                   >
                     <input
                       type="file"
-                      id="travel_bookings"
-                      name="travel_bookings"
+                      id={`travel_bookings_${index}`}
+                      name={`travel_bookings_${index}`}
                       className="fileupload-input-display-none"
                       onChange={(e) =>
                         handleUploadChange(e, item, "travel_bookings")
@@ -714,12 +710,12 @@ function ManageTournament() {
                   </div>
                   <label
                     className="d-flex align-items-center mt-1 button-custom"
-                    htmlFor="hotel_bookings"
+                    htmlFor={`hotel_bookings_${index}`}
                   >
                     <input
                       type="file"
-                      id="hotel_bookings"
-                      name="hotel_bookings"
+                      id={`hotel_bookings_${index}`}
+                      name={`hotel_bookings_${index}`}
                       className="fileupload-input-display-none"
                       onChange={(e) =>
                         handleUploadChange(e, item, "hotel_bookings")
@@ -755,13 +751,13 @@ function ManageTournament() {
                   </div>
                   <label
                     className="d-flex align-items-center mt-1 button-custom"
-                    htmlFor="tour_guidance"
+                    htmlFor={`tour_guidance_${index}`}
                     // onClick={()=>handleUploadClick(tourGuidanceRef)}
                   >
                     <input
                       type="file"
-                      id="tour_guidance"
-                      name="tour_guidance"
+                      id={`tour_guidance_${index}`}
+                      name={`tour_guidance_${index}`}
                       // ref={tourGuidanceRef}
                       className="fileupload-input-display-none"
                       onChange={(e) =>
@@ -784,7 +780,7 @@ function ManageTournament() {
             };
           })
       : [];
-
+// console.log(ConfirmBookingData,".........ConfirmBookingData")
   const handleManageHead = (index) => {
     setActiveManageIndex(index);
   };
