@@ -100,7 +100,7 @@ function Adddirector() {
 
       .catch((err) => console.log(err));
   };
-
+  console.log("getAllDirectors===>",getAllDirectors)
   const handleBlockUnBlock = async (item) => {
     const payload = {
       register_id: item,

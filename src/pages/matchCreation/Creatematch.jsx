@@ -12,12 +12,15 @@ import { GET_MATCHES_DATA, GET_ALL_WEBSITES } from "../../config/endpoints";
 import { CREATE_OFFLINE_MATCHES } from "../../config/endpoints";
 import { call } from "../../config/axios";
 import MatchPopup from "../Popups/MatchPopup";
+import MatchSubmitPopup from "../../matchpopups/MatchSubmitPopup";
 
 function Creatematch() {
   const [createMatch, setcreateMatch] = useState({});
   const [selectedMatch, setSelectedMatch] = useState([]);
   const [showMatchOpen, setShowMatchOpen] = useState(false);
   const [Error, setError] = useState(false);
+  const [matchSubmitPopup,setMatchSubmitPopup] =useState(false)
+
   const handleSubmitMatch = async () => {
     if (
       !createMatch.series_name ||
@@ -55,6 +58,10 @@ function Creatematch() {
           match_type: createMatch?.match_type,
         },
       }).then((res) => {
+        setMatchSubmitPopup(true)
+        setTimeout(()=>{
+          setMatchSubmitPopup(false)
+        },2000)
         console.log("------------>", res.data);
       });
     }
@@ -408,6 +415,11 @@ function Creatematch() {
         </div>
 
         <Table columns={cols} data={modifiedCreatematchDetails} />
+        <MatchSubmitPopup
+            header={"Match Created Successfully"}
+            state={matchSubmitPopup}
+            setState={setMatchSubmitPopup}
+        />
         <MatchPopup
           selectedMatch={selectedMatch}
           showMatchOpen={showMatchOpen}

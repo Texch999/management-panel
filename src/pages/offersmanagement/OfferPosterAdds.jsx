@@ -10,6 +10,7 @@ import { GET_ALL_WEBSITES } from "../../config/endpoints";
 import { GET_ALL_USERS } from "../../config/endpoints";
 import { GET_COUNTRY_AND_CURRENCY } from "../../config/endpoints";
 import { GENERATE_SIGNED_URL } from "../../config/endpoints";
+import MatchSubmitPopup from "../../matchpopups/MatchSubmitPopup";
 
 function OfferPosterAdds() {
   const ImageBaseUrl = "https://we2-call-images.s3.us-east-2.amazonaws.com";
@@ -19,6 +20,7 @@ function OfferPosterAdds() {
   const [uploadImage, setuploadImage] = useState([]);
   const [profileImage, setProfileImage] = useState("");
   const [error, setError] = useState("");
+  const [offerSubmitPopup,setOfferSubmitPopup] =useState(false)
   //console.log(notificationtextmsg, "res----------->");
 
   const uploadfileInputRef = useRef(null);
@@ -60,6 +62,10 @@ function OfferPosterAdds() {
         status,
       }).then(async (res) => {
         setallOffers(res?.data);
+        setOfferSubmitPopup(true)
+        setTimeout(()=>{
+          setOfferSubmitPopup(false)
+        },2000)
         singedUrl &&
           profileImage &&
           (await fetch(singedUrl, {
@@ -383,6 +389,11 @@ function OfferPosterAdds() {
             Cancel
           </button>
         </div>
+        <MatchSubmitPopup          
+            header={"Offer Created Submitfully"}
+            state={offerSubmitPopup}
+            setState={setOfferSubmitPopup}
+        />
       </div>
     </div>
   );
