@@ -8,31 +8,31 @@ import MatchSubmitPopup from "../../matchpopups/MatchSubmitPopup";
 
 function ToursAmount() {
   const [showReturnPopup, setShowReturnPopup] = useState(false);
-  const [headerMessage, setHeaderMessage] = useState("")
+  const [headerMessage, setHeaderMessage] = useState("");
   const [activeHeadIndex, setActiveHeadIndex] = useState(0);
   const [tours, setTours] = useState([]);
   const [tourname, setTourname] = useState("All Tours");
 
-  const submitTourPackages = async(item)=>{
+  const submitTourPackages = async (item) => {
     const payload = {
-      tour_id:item.tour_id,
-      packages:item.packages
-    }
+      tour_id: item.tour_id,
+      packages: item.packages,
+    };
     await call(UPDATE_TOURS, payload)
-            // setShowReturnPopup(true)
-            // .then((res)=>(res.data,'.....res'))
-            .then((res)=>{
-              // console.log(res,'......res')
-              if(res.status === 200){
-                setShowReturnPopup(true);
-                setHeaderMessage("Tour Updated Successfully")
-              }
-            })
-            .catch((error)=>{
-              setShowReturnPopup(true)
-              setHeaderMessage(error)
-            })
-  }
+      // setShowReturnPopup(true)
+      // .then((res)=>(res.data,'.....res'))
+      .then((res) => {
+        // console.log(res,'......res')
+        if (res.status === 200) {
+          setShowReturnPopup(true);
+          setHeaderMessage("Tour Updated Successfully");
+        }
+      })
+      .catch((error) => {
+        setShowReturnPopup(true);
+        setHeaderMessage(error);
+      });
+  };
   const packOnchangeHandle = (tourId, pkgtype, field, value) => {
     setTours((prevTours) =>
       prevTours.map((tour) => {
@@ -54,7 +54,7 @@ function ToursAmount() {
       })
     );
   };
-  
+
   // console.log(tours,'......tours')
   const getTours = async () => {
     const payload = {};
@@ -117,8 +117,8 @@ function ToursAmount() {
       website: item.website,
       tour_title: item.tour_title,
       packages: (
-        <div>
-          <div className="d-flex justify-content-center ms-2">
+        <div className="amount-div">
+          <div className="d-flex justify-content-center ms-2 w-100">
             <div className="input-custum text-center d-flex align-items-center">
               Min Amount
             </div>
@@ -131,30 +131,49 @@ function ToursAmount() {
           </div>
           {packagesType.map((pkgtype, index) => {
             return (
-              <div className="d-flex align-items-center"
-                    key={index}
-              >
-                <div>{pkgtype}</div>
+              <div className="d-flex align-items-center w-100 row" key={index}>
+                <div className="col-3">{pkgtype}</div>
                 <input
-                  className="input-custum text-center"
+                  className="input-custum text-center col-3"
                   type="number"
                   name="minamount"
                   defaultValue={item?.packages[pkgtype]?.minamount || ""}
-                  onChange={(e) => packOnchangeHandle(item.tour_id,pkgtype, "minamount", e.target.value)}
+                  onChange={(e) =>
+                    packOnchangeHandle(
+                      item.tour_id,
+                      pkgtype,
+                      "minamount",
+                      e.target.value
+                    )
+                  }
                 ></input>
                 <input
-                  className="input-custum text-center"
+                  className="input-custum text-center col-3"
                   type="number"
                   name="maxamount"
                   defaultValue={item?.packages[pkgtype]?.maxamount || ""}
-                  onChange={(e) => packOnchangeHandle(item.tour_id,pkgtype, "maxamount", e.target.value)}
+                  onChange={(e) =>
+                    packOnchangeHandle(
+                      item.tour_id,
+                      pkgtype,
+                      "maxamount",
+                      e.target.value
+                    )
+                  }
                 ></input>
                 <input
-                  className="input-custum text-center"
+                  className="input-custum text-center col-3"
                   type="number"
                   name="allowedpersons"
-                  defaultValue={item?.packages[pkgtype]?.allowedpersons  || ""}
-                  onChange={(e) => packOnchangeHandle(item.tour_id,pkgtype, "allowedpersons", e.target.value)}
+                  defaultValue={item?.packages[pkgtype]?.allowedpersons || ""}
+                  onChange={(e) =>
+                    packOnchangeHandle(
+                      item.tour_id,
+                      pkgtype,
+                      "allowedpersons",
+                      e.target.value
+                    )
+                  }
                 ></input>
               </div>
             );

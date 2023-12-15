@@ -7,6 +7,9 @@
   border: none;
   outline: none;
 }
+.amount-div{
+  width: 350px;
+}
 .btn-color {
   background: #fa2424 !important;
   color: whitesmoke;
