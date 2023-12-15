@@ -118,7 +118,7 @@ function ToursAmount() {
       tour_title: item.tour_title,
       packages: (
         <div className="amount-div">
-          <div className="d-flex justify-content-center ms-2 w-100">
+          <div className="d-flex justify-content-center ms-4 w-100 head-position">
             <div className="input-custum text-center d-flex align-items-center">
               Min Amount
             </div>
@@ -178,16 +178,16 @@ function ToursAmount() {
               </div>
             );
           })}
-          <div className="d-flex align-items-center ms-2">
+          <div className="d-flex align-items-center">
             <button
-              className="input-custum text-center select-button"
+              className="input-custum text-center select-button update-position"
               onClick={() => submitTourPackages(item)}
             >
-              SUBMIT
+              UPDATE
             </button>
-            <button className="input-custum text-center select-button" disabled>
+            {/* <button className="input-custum text-center select-button" disabled>
               EDIT
-            </button>
+            </button> */}
           </div>
         </div>
       ),
