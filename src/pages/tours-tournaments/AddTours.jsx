@@ -7,8 +7,8 @@ import { HiMiniArrowUpCircle } from "react-icons/hi2";
 import ReturnedPaymentPopup from "../Popups/ReturnedPaymentPopup";
 import MatchSubmitPopup from "../../matchpopups/MatchSubmitPopup";
 import { call } from "../../config/axios";
-import { ADD_TOURS, GET_COUNTRY_AND_CURRENCY } from "../../config/endpoints";
-import { GET_ALL_WEBSITES } from "../../config/endpoints";
+import { ADD_TOURS } from "../../config/endpoints";
+import { GET_ADMIN_ALL_ACCOUNTS } from "../../config/endpoints";
 
 function AddTours() {
   const toursType = [
@@ -21,11 +21,12 @@ function AddTours() {
   const [showReturnPopup, setShowReturnPopup] = useState(false);
   const [activeIndex, setActiveIndex] = useState();
   const [website, setWebsite] = useState([]);
-  const [allWebsites, setAllwebsites] = useState([]);
+  const [allWebsites, setAllWebsites] = useState([]);
   const [country, setCountry] = useState("");
   const [allCountries, setAllCountries] = useState([]);
   const [formData, setFormData] = useState({});
   const [headerMessage, setHeaderMessage] = useState("");
+
   const handleReturnPaymentpopup = (tourType) => {
     addingTours(tourType);
   };
@@ -39,6 +40,7 @@ function AddTours() {
       tour_name: tourType,
       website: website,
       country: country,
+      tour_location: formData.tourLocation,
       publish_from: formData.publishFrom,
       publish_upto: formData.publishUpto,
       schedule_from: formData.scheduleFrom,
@@ -59,29 +61,30 @@ function AddTours() {
         setHeaderMessage(error);
       });
   };
-  const getAllWebsites = async () => {
-    const payload = {
-      register_id: "reg-20230710182031623",
-    };
-    await call(GET_ALL_WEBSITES, payload)
+  const gettingAllCountries = async () => {
+    const payload = {};
+    await call(GET_ADMIN_ALL_ACCOUNTS, payload)
       .then((res) => {
-        setAllwebsites(res?.data?.data);
+        setAllCountries([
+          ...new Set(
+            res?.data?.data
+              .filter((item) => item.country_name !== undefined)
+              .map((item) => item.country_name)
+          ),
+        ]);
+        setAllWebsites([
+          ...new Set(
+            res?.data?.data
+              .filter((item) => item.website_name !== undefined)
+              .map((item) => item.website_name)
+          ),
+        ]);
       })
       .catch((err) => console.log(err));
   };
-  const getCountries = async () => {
-    const payload = {
-      register_id: "",
-    };
-    await call(GET_COUNTRY_AND_CURRENCY, payload)
-      .then((res) => {
-        setAllCountries(res?.data?.data);
-      })
-      .catch((err) => console.log(err));
-  };
+
   useEffect(() => {
-    getAllWebsites();
-    getCountries();
+    gettingAllCountries();
   }, []);
 
   return (
@@ -94,10 +97,13 @@ function AddTours() {
             onChange={(e) => setWebsite(e.target.value)}
           >
             <option selected>select website</option>
-            <option value="www.we2call.com">www.we2call.com</option>
-            <option value="www.texchange.com">www.texchange.com</option>
-            <option value="www.raavana.com">www.raavana.com</option>
-            <option value="www.brahma.com">www.brahma.com</option>
+            {allWebsites &&
+              allWebsites.length > 0 &&
+              allWebsites.map((item) => {
+                if (item.length > 0) {
+                  return <option value={item}>{item}</option>;
+                }
+              })}
           </select>
           <select
             className="tours-box p-2 medium-font rounded-top text-center"
@@ -105,16 +111,13 @@ function AddTours() {
             onChange={(e) => setCountry(e.target.value)}
           >
             <option selected>select country</option>
-            {/* <option value="All">All</option>
-          {allCountries.map((obj) => (
-            <option value={obj.country_name} selected>
-              {obj.country_name}
-            </option>
-          ))} */}
-            <option value="India">India</option>
-            <option value="Europe">Europe</option>
-            <option value="Bangladesh">Bangladesh</option>
-            <option value="Srilanka">Srilanka</option>
+            {allCountries &&
+              allCountries.length > 0 &&
+              allCountries.map((item) => {
+                if (item.length > 0) {
+                  return <option value={item}>{item}</option>;
+                }
+              })}
           </select>
         </div>
       </div>
@@ -124,17 +127,34 @@ function AddTours() {
             <div className="sub-head medium-font">{item}</div>
             <div className="row mt-2 vh-17vh">
               <div className="col-4">
-                <div>
-                  <div className="medium-font font-grey">Upload Poster</div>
-                  <div className="upload-poster-div d-felx align-items-center justify-content-between p-2">
-                    <input
-                      id="files"
-                      className="file-input"
-                      placeholder="Select file"
-                      styles="visibility:hidden;"
-                      name="poster_img"
-                    ></input>
-                    <HiMiniArrowUpCircle className="ions-clr" />
+                <div className="row">
+                  <div className="col-6">
+                    <div className="medium-font font-grey">Upload Poster</div>
+                    <div className="upload-poster-div d-flex align-items-center p-2">
+                      <input
+                        id="files"
+                        className="file-input w-75"
+                        placeholder="Select file"
+                        styles="visibility:hidden;"
+                        name="poster_img"
+                        disabled
+                      ></input>
+                      <HiMiniArrowUpCircle className="ions-clr" />
+                    </div>
+                  </div>
+                  <div className="col-6">
+                    <div className="medium-font font-grey">Tour Location</div>
+                    <div className="upload-poster-div d-flex align-items-center justify-content-between p-2">
+                      <input
+                        className="text-input-poster"
+                        name="tourLocation"
+                        placeholder="Enter tour location"
+                        value={
+                          activeIndex === index ? formData.tourLocation : ""
+                        }
+                        onChange={(e) => handleChange(e, index)}
+                      ></input>
+                    </div>
                   </div>
                 </div>
                 <div className="row mt-2">
@@ -176,6 +196,7 @@ function AddTours() {
                   <textarea
                     className="text-input-poster"
                     name="tourTitle"
+                    placeholder="Enter tour title"
                     value={activeIndex === index ? formData.tourTitle : ""}
                     onChange={(e) => handleChange(e, index)}
                   ></textarea>

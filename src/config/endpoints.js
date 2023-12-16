@@ -59,12 +59,18 @@ const PRESIGNED_URL = "/tours/presignedurl";
 const UPDATE_TOUR_PAYMENTS_DOCUMENTS = "/tours/update_tour_payments_documents";
 const OFFERS_ACTIVE_INACTIVE = "/management/offers_active_inactive";
 const USERS_ACTIVE_INACTIVE = "/management/block_unblock_users";
+const GET_ADMIN_ALL_ACCOUNTS = "/management/get_admin_all_accounts";
 
 // methods
 const DELETE = "DELETE";
 const POST = "POST";
 const GET = "POST";
 const PUT = "PUT";
+
+exports.GET_ADMIN_ALL_ACCOUNTS = {
+  method: POST,
+  url: GET_ADMIN_ALL_ACCOUNTS
+}
 
 exports.UPDATE_TOUR_PAYMENTS_DOCUMENTS = {
   url: UPDATE_TOUR_PAYMENTS_DOCUMENTS,
