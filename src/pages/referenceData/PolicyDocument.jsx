@@ -64,9 +64,7 @@ function PolicyDocument() {
     },
   ];
   console.log(load, ".......load");
-  const handleBlockUnBlock = async (item, i) => {
-    setActive(i);
-    setLoad(true);
+  const handleBlockUnBlock = async (item) => {
     const payload = {
       policy_id: item,
       active: !active,
@@ -81,8 +79,7 @@ function PolicyDocument() {
       })
       .catch((err) => console.log(err));
   };
-  console.log("Active=====>", active);
-  console.log(allPolicyDocuments, "...........allPolicyDocuments");
+
   const modifiedPolicydocumentDetails = searchText.length
     ? filteredQuestions
         .filter((item) =>

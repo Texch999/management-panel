@@ -61,6 +61,7 @@ const PRESIGNED_URL = "/tours/presignedurl";
 const UPDATE_TOUR_PAYMENTS_DOCUMENTS = "/tours/update_tour_payments_documents";
 const POLICY_DOCUMENT_ACTIVE_INACTIVE="/management/policy_document_active_inactive"
 const SECURITY_QUESTIONS_ACTIVE_INACTIVE="/management/security_questions_active_inactive"
+const REJECT_QUESTIONS_ACTIVE_INACTIVE="/management/reject_reasons_active_inactive"
 
 
 // methods
@@ -441,6 +442,11 @@ exports.POLICY_DOCUMENT_ACTIVE_INACTIVE = {
 
 exports.SECURITY_QUESTIONS_ACTIVE_INACTIVE = {
   url: SECURITY_QUESTIONS_ACTIVE_INACTIVE,
+  method: POST
+};
+
+exports.REJECT_QUESTIONS_ACTIVE_INACTIVE = {
+  url: REJECT_QUESTIONS_ACTIVE_INACTIVE,
   method: POST
 };
 
