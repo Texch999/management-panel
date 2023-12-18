@@ -12,7 +12,7 @@ function Adddirector() {
   const [selectedDirector, setSelectedDirector] = useState(null);
   const [filteredDirectors, setFilteredDirectors] = useState([]);
   const [searchText, setSearchText] = useState("");
-  const [active, setActive] = useState(false);
+  const [active, setActive] = useState();
 
   const searchContent = (value) => {
     setSearchText(value);
@@ -100,15 +100,15 @@ function Adddirector() {
 
       .catch((err) => console.log(err));
   };
-  console.log("getAllDirectors===>",getAllDirectors)
-  const handleBlockUnBlock = async (item) => {
+
+  const handleBlockUnBlock = async (item, active) => {
     const payload = {
       register_id: item,
-      active: active,
+      active: !active,
     };
     await call(USERS_ACTIVE_INACTIVE, payload)
       .then((res) => {
-        setActive((prev) => !prev);
+        setActive(!active);
         console.log(res);
       })
       .catch((err) => console.log(err));
@@ -116,7 +116,7 @@ function Adddirector() {
 
   useEffect(() => {
     getDirectors();
-  }, []);
+  }, [active]);
 
   const modifiedAdddirectorDetails = searchText.length
     ? filteredDirectors
@@ -159,7 +159,7 @@ function Adddirector() {
               <div
                 className="font-green custom-active-button px-2"
                 onClick={() => {
-                  handleBlockUnBlock(item?.register_id);
+                  handleBlockUnBlock(item?.register_id, item?.active);
                 }}
               >
                 Active
@@ -168,7 +168,7 @@ function Adddirector() {
               <div
                 className="custom-deactive-button px-2"
                 onClick={() => {
-                  handleBlockUnBlock(item?.register_id);
+                  handleBlockUnBlock(item?.register_id, item?.active);
                 }}
               >
                 InActive

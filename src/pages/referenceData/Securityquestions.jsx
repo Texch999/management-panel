@@ -50,26 +50,24 @@ function Securityquestions() {
       })
       .catch((err) => console.log(err));
   };
-
-  useEffect(() => {
-    getAllSecurityQuestions();
-  }, [status]);
-
   const handleBlockUnBlock = async (item) => {
     const payload = {
       s_id: item,
       active: !active,
     };
     await call(SECURITY_QUESTIONS_ACTIVE_INACTIVE, payload)
-    .then((res) => {
-      if (res.status === 200) {
-        setActive((prev) => !prev);
-      }
-      console.log(res, "res===>");
-    })
-    .catch((err)=>console.log(err))
-
+      .then((res) => {
+        if (res.status === 200) {
+          setActive((prev) => !prev);
+        }
+        console.log(res, "res===>");
+      })
+      .catch((err) => console.log(err));
   };
+
+  useEffect(() => {
+    getAllSecurityQuestions();
+  }, [active]);
 
   const modifiedSecurityquestionsDetails = allQuestions?.map((item) => {
     return {

@@ -19,6 +19,7 @@ function Broadcasting() {
   const [selectedBroadcast, setSelectedBroadcast] = useState();
   const [showBroadcastOpen, setShowBroadcastOpen] = useState(false);
   const [active, setActive] = useState([]);
+  const [status, setStatus] = useState(false);
   const cols = [
     {
       header: "TITLE",
@@ -129,6 +130,7 @@ function Broadcasting() {
     await call(BROADCAST_ACTIVE_INACTIVE, payload)
       .then((res) => {
         setActive(!currentActiveState);
+        setStatus((prev) => !prev);
         console.log(res);
       })
       .catch((err) => console.log(err));
@@ -138,9 +140,9 @@ function Broadcasting() {
     getBroadcastingEvent();
     getNotifications();
     getAllposters();
-  }, []);
-  const [activeIndex, setActiveIndex] = useState(0);
+  }, [status]);
 
+  const [activeIndex, setActiveIndex] = useState(0);
   const currentDate = new Date().toISOString().split("T")[0];
   console.log("---------->", currentDate);
   const publishedData = [

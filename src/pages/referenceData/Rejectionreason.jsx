@@ -63,10 +63,6 @@ function Rejectionreason() {
       })
       .catch((err) => console.log(err));
   };
-  useEffect(() => {
-    getAllRejectQuestions();
-  }, [status]);
-
   const handleBlockUnBlock = async (item) => {
     const payload = {
       s_id: item,
@@ -81,6 +77,10 @@ function Rejectionreason() {
       })
       .catch((err) => console.log(err));
   };
+  useEffect(() => {
+    getAllRejectQuestions();
+  }, [active]);
+
 
   const modifiedRejectionreasonDetails = searchText.length
     ? filteredQuestions

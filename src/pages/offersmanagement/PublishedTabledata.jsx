@@ -62,14 +62,15 @@ function PublishedTabledata(props) {
     };
     await call(OFFERS_ACTIVE_INACTIVE, payload)
       .then((res) => {
-        setActive(!currentActiveState);
+        // setActive(!currentActiveState);
+        setActive((prev) => !prev);
         console.log(res);
       })
       .catch((err) => console.log(err));
   };
   useEffect(() => {
     getAllOffers();
-  }, []);
+  }, [active]);
 
   const currentDate = new Date().toISOString().split("T")[0];
   const filterStatus = Offersmanagement.filter(

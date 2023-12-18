@@ -71,21 +71,21 @@ function Paymentgateway() {
       .catch((err) => console.log(err));
   };
 
-  const handleBlockUnBlock = async (item, currentActiveState) => {
+  const handleBlockUnBlock = async (item, active) => {
     const payload = {
       pg_id: item,
-      active: !currentActiveState,
+      active: !active,
     };
     await call(PG_ACTIVE_INACTIVE, payload)
       .then((res) => {
-        setActive(!currentActiveState);
+        setActive((prev) => !prev);
         console.log(res);
       })
       .catch((err) => console.log(err));
   };
   useEffect(() => {
     getPaymentWay();
-  }, [status]);
+  }, [active]);
 
   const modifiedPaymentgatewayDetails = searchText.length
     ? filteredQuestions

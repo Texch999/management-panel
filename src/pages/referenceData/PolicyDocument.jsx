@@ -15,7 +15,6 @@ function PolicyDocument() {
   const [status, setStatus] = useState(false);
   const [selectedPolicy, setSelectedPolicy] = useState();
   const [active, setActive] = useState(false);
-  const [load, setLoad] = useState(false);
 
   const handlePolicyOpen = () => {
     setAddPolicyOpen(true);
@@ -27,6 +26,7 @@ function PolicyDocument() {
     );
     setFilteredQuestions(filteredSearchText);
   };
+  
   const getallPolicyDocuments = async () => {
     const payload = {
       register_id: "company",
@@ -39,9 +39,6 @@ function PolicyDocument() {
       .catch((err) => console.log(err));
   };
 
-  useEffect(() => {
-    getallPolicyDocuments();
-  }, [load]);
   const cols = [
     {
       header: "COUNTRY NAME",
@@ -63,7 +60,7 @@ function PolicyDocument() {
       field: "icon",
     },
   ];
-  console.log(load, ".......load");
+
   const handleBlockUnBlock = async (item) => {
     const payload = {
       policy_id: item,
@@ -72,13 +69,15 @@ function PolicyDocument() {
     await call(POLICY_DOCUMENT_ACTIVE_INACTIVE, payload)
       .then((res) => {
         if (res.status === 200) {
-          setLoad(false);
           setActive((prev) => !prev);
         }
-        console.log(res, "res===>");
       })
       .catch((err) => console.log(err));
   };
+
+  useEffect(() => {
+    getallPolicyDocuments();
+  }, [active]);
 
   const modifiedPolicydocumentDetails = searchText.length
     ? filteredQuestions
