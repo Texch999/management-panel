@@ -55,14 +55,14 @@ function PublishedTabledata(props) {
       setOffermanagement(arr);
     });
   };
-  const handleBlockUnBlock = async (item) => {
+  const handleBlockUnBlock = async (item, currentActiveState) => {
     const payload = {
       offer_id: item,
-      active: active,
+      active: !currentActiveState,
     };
     await call(OFFERS_ACTIVE_INACTIVE, payload)
       .then((res) => {
-        setActive((prev) => !prev);
+        setActive(!currentActiveState);
         console.log(res);
       })
       .catch((err) => console.log(err));
@@ -95,7 +95,7 @@ function PublishedTabledata(props) {
           <div
             className="font-green custom-active-button px-2"
             onClick={() => {
-              handleBlockUnBlock(item.offer_id);
+              handleBlockUnBlock(item.offer_id, item?.active);
             }}
           >
             Active
@@ -104,7 +104,7 @@ function PublishedTabledata(props) {
           <div
             className="custom-deactive-button px-2"
             onClick={() => {
-              handleBlockUnBlock(item.offer_id);
+              handleBlockUnBlock(item.offer_id, item?.active);
             }}
           >
             InActive

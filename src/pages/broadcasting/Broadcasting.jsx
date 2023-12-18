@@ -7,6 +7,7 @@ import {
   GET_ALL_NOTIFICATIONS,
   GET_ALL_POSTERS,
   GET_BROADCAST_EVENTS,
+  BROADCAST_ACTIVE_INACTIVE,
 } from "../../config/endpoints";
 import { call } from "../../config/axios";
 import Scheduled from "./Scheduled";
@@ -17,6 +18,7 @@ function Broadcasting() {
   const [searchOffer, setSearchOffer] = useState("");
   const [selectedBroadcast, setSelectedBroadcast] = useState();
   const [showBroadcastOpen, setShowBroadcastOpen] = useState(false);
+  const [active, setActive] = useState([]);
   const cols = [
     {
       header: "TITLE",
@@ -119,6 +121,19 @@ function Broadcasting() {
   console.log("getPoster", getPoster);
   console.log("notifications", notifications);
 
+  const handleBlockUnBlock = async (item, currentActiveState) => {
+    const payload = {
+      notification_id: item,
+      active: !currentActiveState,
+    };
+    await call(BROADCAST_ACTIVE_INACTIVE, payload)
+      .then((res) => {
+        setActive(!currentActiveState);
+        console.log(res);
+      })
+      .catch((err) => console.log(err));
+  };
+
   useEffect(() => {
     getBroadcastingEvent();
     getNotifications();
@@ -140,7 +155,6 @@ function Broadcasting() {
   );
   const modifiedBroadcastingDetails = publishedData?.map((item) => {
     return {
-      ...item,
       title: (
         <div className="role-color">
           <span className="role-color">{item?.event_name}</span>{" "}
@@ -157,10 +171,24 @@ function Broadcasting() {
       dateandtime: item?.create_at,
       type: item?.event_location,
       status:
-        item?.status === true ? (
-          <div className="font-green custom-active-button px-2">Active</div>
+        item?.active === true ? (
+          <div
+            className="font-green custom-active-button px-2"
+            onClick={() => {
+              handleBlockUnBlock(item?.notification_id, item?.active);
+            }}
+          >
+            Active
+          </div>
         ) : (
-          <div className="custom-deactive-button px-2">InActive</div>
+          <div
+            className="custom-deactive-button px-2"
+            onClick={() => {
+              handleBlockUnBlock(item?.notification_id, item?.active);
+            }}
+          >
+            InActive
+          </div>
         ),
       icon: (
         <AiOutlineEdit

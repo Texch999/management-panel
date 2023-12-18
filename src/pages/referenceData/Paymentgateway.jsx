@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Table from "../table/Table";
 import { MdOutlineEdit } from "react-icons/md";
 import { useEffect } from "react";
-import { GET_ALL_PAYMENTS } from "../../config/endpoints";
+import { GET_ALL_PAYMENTS, PG_ACTIVE_INACTIVE } from "../../config/endpoints";
 import { call } from "../../config/axios";
 import AddCountryPopups from "../Popups/AddCountryPopups";
 
@@ -14,6 +14,7 @@ function Paymentgateway() {
   const [selectedPayment, setSelectedPayment] = useState();
   const [inputData, setInputData] = useState({});
   const [updateGatway, setUpdateGatway] = useState(false);
+  const [active, setActive] = useState([]);
 
   const cols = [
     {
@@ -70,10 +71,22 @@ function Paymentgateway() {
       .catch((err) => console.log(err));
   };
 
-
+  const handleBlockUnBlock = async (item, currentActiveState) => {
+    const payload = {
+      pg_id: item,
+      active: !currentActiveState,
+    };
+    await call(PG_ACTIVE_INACTIVE, payload)
+      .then((res) => {
+        setActive(!currentActiveState);
+        console.log(res);
+      })
+      .catch((err) => console.log(err));
+  };
   useEffect(() => {
     getPaymentWay();
   }, [status]);
+
   const modifiedPaymentgatewayDetails = searchText.length
     ? filteredQuestions
         .filter((item) =>
@@ -102,12 +115,25 @@ function Paymentgateway() {
           country: item?.country_name,
           currency: item?.currency_name,
           lastupdate: item?.update_at,
-          status:
-            item?.is_active === 1 ? (
-              <div className="font-green custom-active-button px-2">Active</div>
-            ) : (
-              <div className="custom-deactive-button px-2">InActive</div>
-            ),
+          status: item?.active ? (
+            <div
+              className="font-green custom-active-button px-2"
+              onClick={() => {
+                handleBlockUnBlock(item?.pg_id, item?.active);
+              }}
+            >
+              Active
+            </div>
+          ) : (
+            <div
+              className="custom-deactive-button px-2"
+              onClick={() => {
+                handleBlockUnBlock(item.pg_id, item?.active);
+              }}
+            >
+              InActive
+            </div>
+          ),
           icon: (
             <MdOutlineEdit
               className="eye-icon-size"

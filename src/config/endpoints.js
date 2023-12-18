@@ -59,9 +59,10 @@ const OFFERS_ACTIVE_INACTIVE = "/management/offers_active_inactive";
 const USERS_ACTIVE_INACTIVE = "/management/block_unblock_users";
 const PRESIGNED_URL = "/tours/presignedurl";
 const UPDATE_TOUR_PAYMENTS_DOCUMENTS = "/tours/update_tour_payments_documents";
-const POLICY_DOCUMENT_ACTIVE_INACTIVE="/management/policy_document_active_inactive"
+const POLICY_DOCUMENT_ACTIVE_INACTIVE="/management/policy_document_active_inactive";
+const PG_ACTIVE_INACTIVE = "/management/pg_active_inactive";
 const SECURITY_QUESTIONS_ACTIVE_INACTIVE="/management/security_questions_active_inactive"
-
+const BROADCAST_ACTIVE_INACTIVE = "/management/broadcast_active_inactive";
 
 // methods
 const DELETE = "DELETE";
@@ -438,9 +439,18 @@ exports.POLICY_DOCUMENT_ACTIVE_INACTIVE = {
   method: POST
 };
 
+exports.PG_ACTIVE_INACTIVE = {
+  url: PG_ACTIVE_INACTIVE,
+  method: POST
+};
 
 exports.SECURITY_QUESTIONS_ACTIVE_INACTIVE = {
   url: SECURITY_QUESTIONS_ACTIVE_INACTIVE,
+  method: POST
+};
+
+exports.BROADCAST_ACTIVE_INACTIVE = {
+  url: BROADCAST_ACTIVE_INACTIVE,
   method: POST
 };
 
