@@ -97,7 +97,7 @@ function AddDirectorsPopup(props) {
         password: passwordInput,
         pg_upi: paymentGateway,
         share: 100 - +ulshare,
-        ulshare: ulshare,
+        ul_share: ulshare,
         package_discount: packageDiscount,
       };
 
@@ -159,22 +159,22 @@ function AddDirectorsPopup(props) {
     getwebsiteNames();
   }, []);
 
-  const [allCountries, setallCountries] = useState([]);
-  const getallCountries = async () => {
-    const payload = {
-      register_id: "company",
-    };
-    await call(GET_COUNTRY_AND_CURRENCY, payload)
-      .then((res) => {
-        setallCountries(res?.data?.data);
-      })
-      .catch((err) => {
-        setShowAddDirectorPopup(true);
-      });
-  };
-  useEffect(() => {
-    getallCountries();
-  }, []);
+  // const [allCountries, setallCountries] = useState([]);
+  // const getallCountries = async () => {
+  //   const payload = {
+  //     register_id: "company",
+  //   };
+  //   await call(GET_COUNTRY_AND_CURRENCY, payload)
+  //     .then((res) => {
+  //       setallCountries(res?.data?.data);
+  //     })
+  //     .catch((err) => {
+  //       setShowAddDirectorPopup(true);
+  //     });
+  // };
+  // useEffect(() => {
+  //   getallCountries();
+  // }, []);
 
   const [allPayments, setAllPayments] = useState([]);
   const getPaymentWay = async () => {
@@ -193,6 +193,8 @@ function AddDirectorsPopup(props) {
   useEffect(() => {
     getPaymentWay();
   }, []);
+
+  console.log("allPayments===>", allPayments);
 
   return (
     <div className="modal fade bd-example-modal-lg container mt-5">
@@ -233,7 +235,7 @@ function AddDirectorsPopup(props) {
                 >
                   <option value="select">select</option>
                   <option value="All">All</option>
-                  {allCountries?.map((obj) => (
+                  {allPayments?.map((obj) => (
                     <option value={obj.country_name} selected>
                       {obj.country_name}
                     </option>
@@ -297,7 +299,7 @@ function AddDirectorsPopup(props) {
                     ) : (
                       <>
                         <option value="">Select</option>
-                        {allPayments.map((obj) => (
+                        {allPayments?.map((obj) => (
                           <option value={obj.pg_upi}>{obj.pg_upi}</option>
                         ))}
                       </>
@@ -449,10 +451,8 @@ function AddDirectorsPopup(props) {
             <div className="d-flex justify-content-center w-100 my-4">
               <button
                 className="add-button rounded px-2 py-3 w-50 medium-font"
-                // onClick={() => handleAddDirectorPopup()}
                 onClick={() => handleCreateOrUpdateDirector(true)}
               >
-                {/* Create */}
                 {selectedDirector ? "Update" : "Create"}
               </button>
             </div>
@@ -460,7 +460,11 @@ function AddDirectorsPopup(props) {
         </Modal.Body>
       </Modal>
       <MatchSubmitPopup
-        header={"Director created Successfully"}
+        header={
+          selectedDirector
+            ? "Director created Successfully"
+            : "Director updated Successfully"
+        }
         state={addDirectorsPopup}
         setState={setAddDirectorPopup}
       />

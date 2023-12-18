@@ -15,7 +15,7 @@ import MatchSubmitPopup from "../../matchpopups/MatchSubmitPopup";
 function TextMessage() {
   const [textmessage, setTextMessage] = useState({});
   const [error, setError] = useState("");
-  const [textSubmitPopup,setTextCastSubmitPopup] =useState(false)
+  const [textSubmitPopup, setTextSubmitPopup] = useState(false);
   const handelTextMessage = async (status) => {
     if (
       !(
@@ -43,10 +43,11 @@ function TextMessage() {
       }).then((res) => {
         console.log("------------>", res);
         setTextMessage(res?.data?.data);
-        setTextCastSubmitPopup(true)
-        setTimeout(()=>{
-          setTextCastSubmitPopup(false)
-        })
+        setTextSubmitPopup(true);
+        setTimeout(() => {
+          setTextSubmitPopup(false);
+        });
+      
       });
     }
   };
@@ -321,9 +322,9 @@ function TextMessage() {
           </button>
         </div>
         <MatchSubmitPopup
-            header={"BroadCast Added successfully"}
-            state={textSubmitPopup}
-            setState={setTextCastSubmitPopup}
+          header={"BroadCast Added successfully"}
+          state={textSubmitPopup}
+          setState={setTextSubmitPopup}
         />
       </div>
     </div>

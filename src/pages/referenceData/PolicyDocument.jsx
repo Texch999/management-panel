@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from "react";
 import Table from "../table/Table";
 import AddPolicyPopup from "../Popups/AddPolicyPopup";
-import { GET_ALL_POLICY_DOCUMENTS } from "../../config/endpoints";
+import {
+  GET_ALL_POLICY_DOCUMENTS,
+  POLICY_DOCUMENT_ACTIVE_INACTIVE,
+} from "../../config/endpoints";
 import { call } from "../../config/axios";
 import { MdOutlineEdit } from "react-icons/md";
 function PolicyDocument() {
@@ -11,6 +14,8 @@ function PolicyDocument() {
   const [searchText, setSearchText] = useState("");
   const [status, setStatus] = useState(false);
   const [selectedPolicy, setSelectedPolicy] = useState();
+  const [active, setActive] = useState(false);
+  const [load, setLoad] = useState(false);
 
   const handlePolicyOpen = () => {
     setAddPolicyOpen(true);
@@ -25,7 +30,7 @@ function PolicyDocument() {
   const getallPolicyDocuments = async () => {
     const payload = {
       register_id: "company",
-      website_name: "www.we2call.com"
+      website_name: "www.we2call.com",
     };
     await call(GET_ALL_POLICY_DOCUMENTS, payload)
       .then((res) => {
@@ -36,7 +41,7 @@ function PolicyDocument() {
 
   useEffect(() => {
     getallPolicyDocuments();
-  }, [status]);
+  }, [load]);
   const cols = [
     {
       header: "COUNTRY NAME",
@@ -58,7 +63,26 @@ function PolicyDocument() {
       field: "icon",
     },
   ];
-
+  console.log(load, ".......load");
+  const handleBlockUnBlock = async (item, i) => {
+    setActive(i);
+    setLoad(true);
+    const payload = {
+      policy_id: item,
+      active: !active,
+    };
+    await call(POLICY_DOCUMENT_ACTIVE_INACTIVE, payload)
+      .then((res) => {
+        if (res.status === 200) {
+          setLoad(false);
+          setActive((prev) => !prev);
+        }
+        console.log(res, "res===>");
+      })
+      .catch((err) => console.log(err));
+  };
+  console.log("Active=====>", active);
+  console.log(allPolicyDocuments, "...........allPolicyDocuments");
   const modifiedPolicydocumentDetails = searchText.length
     ? filteredQuestions
         .filter((item) =>
@@ -68,12 +92,26 @@ function PolicyDocument() {
           return {
             countryname: <div className="role-color">{item?.country_name}</div>,
             showwebsites: item?.website_name,
-            status:
-              item?.is_active === 1 ? (
-                <div className="font-green">Active</div>
-              ) : (
-                <div className="custom-deactive-button px-2">InActive</div>
-              ),
+            // status:
+            //   item?.active === true ? (
+            //     <div className="font-green custom-active-button px-2">
+            //       Active
+            //     </div>
+            //   ) : (
+            //     <div className="custom-deactive-button px-2">InActive</div>
+            //   ),
+            status: (
+              <div
+                className={
+                  item?.active === true
+                    ? "font-green custom-active-button px-2"
+                    : "custom-deactive-button px-2"
+                }
+                onClick={() => handleBlockUnBlock(item?.policy_id)}
+              >
+                {item?.active ? "Active" : "InActive"}
+              </div>
+            ),
             icon: <MdOutlineEdit className="eye-icon-size" />,
           };
         })
@@ -81,12 +119,18 @@ function PolicyDocument() {
         return {
           countryname: <div className="role-color">{item?.country_name}</div>,
           showwebsites: item?.website_name,
-          status:
-            item?.is_active === 1 ? (
-              <div className="custom-active-button px-2">Active</div>
-            ) : (
-              <div className="custom-deactive-button px-2">InActive</div>
-            ),
+          status: (
+            <div
+              className={
+                item?.active
+                  ? "font-green custom-active-button px-2"
+                  : "custom-deactive-button px-2"
+              }
+              onClick={() => handleBlockUnBlock(item?.policy_id)}
+            >
+              {item?.active ? "Active" : "InActive"}
+            </div>
+          ),
           icon: (
             <MdOutlineEdit
               className="eye-icon-size"
@@ -137,7 +181,7 @@ function PolicyDocument() {
       <AddPolicyPopup
         addPolicyOpen={addPolicyOpen}
         setAddPolicyOpen={setAddPolicyOpen}
-        Heading={`${selectedPolicy ? "Update Policy":"Add Policy"}`}
+        Heading={`${selectedPolicy ? "Update Policy" : "Add Policy"}`}
         setStatus={setStatus}
         selectedPolicy={selectedPolicy}
         setSelectedPolicy={setSelectedPolicy}

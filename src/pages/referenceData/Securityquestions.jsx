@@ -3,7 +3,10 @@ import Table from "../table/Table";
 // import { MdOutlineEdit } from "react-icons/md";
 import AddSecurityPopup from "../Popups/AddSecurityPopup";
 import { useEffect, useState } from "react";
-import { GET_SETTINGS_DATA } from "../../config/endpoints";
+import {
+  GET_SETTINGS_DATA,
+  SECURITY_QUESTIONS_ACTIVE_INACTIVE,
+} from "../../config/endpoints";
 import { call } from "../../config/axios";
 import { MdOutlineEdit } from "react-icons/md";
 
@@ -12,6 +15,7 @@ function Securityquestions() {
   const [selectedQuestion, setSelectedQuestion] = useState("");
   const [selectedOption, setSelectedOption] = useState("Active");
   const [status, setStatus] = useState(false);
+  const [active, setActive] = useState(false);
 
   const handleSelectChange = (event) => {
     const selectedValue = event.target.value;
@@ -33,7 +37,7 @@ function Securityquestions() {
   ];
   const getAllSecurityQuestions = async () => {
     const payload = {
-      p_id: "SECURITY_QUESTIONS"
+      p_id: "SECURITY_QUESTIONS",
     };
     await call(GET_SETTINGS_DATA, payload)
       .then((res) => {
@@ -47,26 +51,51 @@ function Securityquestions() {
       .catch((err) => console.log(err));
   };
 
-
-
   useEffect(() => {
     getAllSecurityQuestions();
   }, [status]);
 
-  const modifiedSecurityquestionsDetails = allQuestions.map((item) => {
+  const handleBlockUnBlock = async (item) => {
+    const payload = {
+      s_id: item,
+      active: !active,
+    };
+    await call(SECURITY_QUESTIONS_ACTIVE_INACTIVE, payload)
+    .then((res) => {
+      if (res.status === 200) {
+        setActive((prev) => !prev);
+      }
+      console.log(res, "res===>");
+    })
+    .catch((err)=>console.log(err))
+
+  };
+
+  const modifiedSecurityquestionsDetails = allQuestions?.map((item) => {
     return {
       questions: <div className="role-color">{item?.question}</div>,
-      status:
-        item?.is_active === "Active" ? (
-          <div className="font-green custom-active-button px-2">Active</div>
-        ) : (
-          <div className="custom-deactive-button px-2">InActive</div>
-        ),
+      // status:
+      //   item?.is_active === "Active" ? (
+      //     <div className="font-green custom-active-button px-2">Active</div>
+      //   ) : (
+      //     <div className="custom-deactive-button px-2">InActive</div>
+      //   ),
+      status: (
+        <div
+          className={
+            item?.active
+              ? "font-green custom-active-button px-2"
+              : "custom-deactive-button px-2"
+          }
+          onClick={() => handleBlockUnBlock(item?.s_id)}
+        >
+          {item?.active ? "Active" : "InActive"}
+        </div>
+      ),
       icon: (
         <MdOutlineEdit
           className="eye-icon-size"
           onClick={() => {
-            console.log("testetestste");
             setSelectedQuestion(item);
             handleRejectionPopupOpen();
           }}
