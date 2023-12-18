@@ -112,11 +112,11 @@ function Sidebar() {
       ariaExpanded: "false",
       ariaControls: "reference",
       childMenu: [
-        {
-          title: "Country/Currency",
-          path: "/countrycurrency",
-          reactIcon: <AiOutlineGlobal />,
-        },
+        // {
+        //   title: "Country/Currency",
+        //   path: "/countrycurrency",
+        //   reactIcon: <AiOutlineGlobal />,
+        // },
         {
           title: "Payment Gateway",
           path: "/paymentgateway",
