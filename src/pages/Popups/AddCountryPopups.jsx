@@ -84,6 +84,10 @@ function AddCountryPopups(props) {
 
         const res = await call(url, payload);
         setProcessing(true);
+        setAcceptClick(true)
+        setTimeout(()=>{
+          setAcceptClick(false)
+        },2000)
         setAddCountryOpen(false);
         setInputData({});
 
@@ -323,7 +327,11 @@ function AddCountryPopups(props) {
         </Modal.Body>
       </Modal>
       <MatchSubmitPopup
-        header={"Payment Upgraded Successfully"}
+        header={
+          updateGatway === true
+            ? "Payment Gateway Updated Successfully"
+            : "Payment Gateway Added Successfully"
+        }
         state={acceptClick}
         setState={setAcceptClick}
         setStatus={setStatus}

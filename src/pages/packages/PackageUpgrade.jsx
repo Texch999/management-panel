@@ -38,7 +38,7 @@ function PackageUpgrade(props) {
 
   const handleSubmitPackageCreation = async (item, packageName, index) => {
     setActiveIndex(index);
-   
+
     if (
       !(
         inputData[item?.userTextKey] &&
@@ -275,6 +275,16 @@ function PackageUpgrade(props) {
 
   return (
     <div className="W-100 medium-font font-grey package-bg p-3 package-radius package-input">
+      <div className="row">
+        <div className="col-2">
+          <div class="checkbox">
+            <label>
+              <input type="checkbox" data-toggle="toggle" />
+              Option one is enabled
+            </label>
+          </div>
+        </div>
+      </div>
       {selectPackage?.map((item, index) => (
         <div key={index} className="mt-3">
           <div className="d-flex align-items-center justify-content-between">
