@@ -69,6 +69,13 @@ function AddPolicyPopup(props) {
         requestData.p_id = selectedPolicy.p_id;
       }
       const res = await call(url, requestData);
+      if (res.data.status === 200) {
+        setAcceptClick(true);
+        setTimeout(() => {
+          setAcceptClick(false);
+          setAddPolicyOpen(false);
+        }, 2000);
+      }
       if (res.data.error) {
         console.error("API Error:", res.data.message);
       } else {
@@ -176,7 +183,11 @@ function AddPolicyPopup(props) {
         </Modal.Body>
       </Modal>
       <MatchSubmitPopup
-        header={"Ticket Upgraded Successfully"}
+        header={
+          acceptClick
+            ? "Updated Policy Successfully "
+            : "Created Policy Successfully"
+        }
         state={acceptClick}
         setState={setAcceptClick}
         setStatus={setStatus}

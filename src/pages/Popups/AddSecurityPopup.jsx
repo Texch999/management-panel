@@ -79,6 +79,13 @@ function AddSecurityPopup(props) {
       }
 
       const res = await call(url, requestData);
+      if (res.data.status === 200) {
+        setAcceptClick(true);
+        setTimeout(() => {
+          setAcceptClick(false);
+          SetRejectpopupOpen(false);
+        }, 2000);
+      }
 
       if (res.data.error) {
         console.error("API Error:", res.data.message);
@@ -163,7 +170,7 @@ function AddSecurityPopup(props) {
                   className="add-button small-font rounded px-4 py-3 mx-2 my-3 w-50 all-none"
                   onClick={handleCreateOrUpdateQuestions}
                 >
-                  {selectedQuestion ? "Update" : "Create"}
+                  {selectedQuestion ? "Update " : "Create"}
                 </button>
               </Col>
             </Row>
@@ -171,7 +178,11 @@ function AddSecurityPopup(props) {
         </Modal.Body>
       </Modal>
       <MatchSubmitPopup
-        header={"Ticket Upgraded Successfully"}
+        header={
+          acceptClick
+            ? "Updated Security Questions Successfully"
+            : "Created Security Questions Successfully"
+        }
         state={acceptClick}
         setState={setAcceptClick}
         setStatus={setStatus}
