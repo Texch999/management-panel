@@ -154,6 +154,7 @@ function Schedule() {
                   </div>
                 </div>
               </div>
+              <hr style={{color:"whitesmoke"}}></hr>
             </div>
           );
         })}
