@@ -9,6 +9,7 @@ import MatchSubmitPopup from "../../matchpopups/MatchSubmitPopup";
 import { call } from "../../config/axios";
 import { ADD_TOURS } from "../../config/endpoints";
 import { GET_ADMIN_ALL_ACCOUNTS } from "../../config/endpoints";
+import Schedule from "./Schedule";
 
 function AddTours() {
   const toursType = [
@@ -265,7 +266,10 @@ function AddTours() {
         header={headerMessage}
         state={showReturnPopup}
         setState={setShowReturnPopup}
+        allWebsites={allWebsites}
+        allCountries={allCountries}
       />
+      {/* <Schedule allCountries={allCountries} allWebsites={allWebsites}/> */}
     </div>
   );
 }

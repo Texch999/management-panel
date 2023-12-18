@@ -1,14 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { HiPhotograph } from "react-icons/hi";
 import { call } from "../../config/axios";
-import { GET_TOURS } from "../../config/endpoints";
+import { GET_TOURS, UPDATE_TOURS } from "../../config/endpoints";
 import TourEditPopup from "./TourEditPopup";
+import MatchSubmitPopup from "../../matchpopups/MatchSubmitPopup";
 
 function Schedule() {
   const [activeHeadIndex, setActiveHeadIndex] = useState(0);
   const [tours, setTours] = useState([]);
   const [showEditPopup, setShowEditPopup] = useState(false);
   const [editTourDetails, setEditTourDetails] = useState({});
+  const [isUpdate, setisUpdate] = useState(false);
+  const [status, setStatus] = useState(false);
   const [tourname, setTourname] = useState("All Tours");
   const getTours = async () => {
     const payload = {};
@@ -17,7 +20,7 @@ function Schedule() {
 
   useEffect(() => {
     getTours();
-  }, []);
+  }, [status]);
 
   const scheduleButtons = [
     "All Tours",
@@ -31,11 +34,30 @@ function Schedule() {
     setActiveHeadIndex(index);
     setTourname(item);
   };
-  const handleEditClick = (item) => {
+  const handleOpenButton = (item) => {
+    setEditTourDetails(item);
+    setisUpdate(false)
+    setShowEditPopup(true);
+  };
+  const handleEditButton = (item) => {
+    setisUpdate(true);
     setEditTourDetails(item);
     setShowEditPopup(true);
   };
-
+  const handleBlockButton = async (item) => {
+    const payload = {
+      tour_id: item.tour_id,
+      status: item.status === "active" ? "inactive" : "active",
+    };
+    await call(UPDATE_TOURS, payload)
+      .then((res) => {
+        if (res?.data?.status === 200) {
+          setStatus((prev) => !prev);
+        }
+      })
+      .catch((error) => console.log(error, "...error"));
+  };
+  // console.log(header, ".......header");
   const filteredTours = tours?.filter((item) => item.tour_name === tourname);
   const mappingArray = tourname === "All Tours" ? tours : filteredTours;
   return (
@@ -100,17 +122,31 @@ function Schedule() {
               </div>
               <div className="row justify-content-between mt-2">
                 <div className="col-1 d-flex">
-                  <div className="open-button p-1">Open</div>
+                  <div
+                    className="open-button p-1"
+                    onClick={() => handleOpenButton(item)}
+                  >
+                    Open
+                  </div>
                 </div>
                 <div className="col-2">
                   <div className="row d-flex justify-content-between">
                     <div className="col-5">
-                      <div className="black-button p-1">Block</div>
+                      <div
+                        className={
+                          item.status === "active"
+                            ? "black-button p-1 fit-content"
+                            : "unblock-button p-1 fit-content"
+                        }
+                        onClick={() => handleBlockButton(item)}
+                      >
+                        {item.status === "active" ? "Block" : "Unblock"}
+                      </div>
                     </div>
                     <div className="col-5 ">
                       <div
                         className="edit-button p-1"
-                        onClick={() => handleEditClick(item)}
+                        onClick={() => handleEditButton(item)}
                       >
                         Edit
                       </div>
@@ -125,6 +161,9 @@ function Schedule() {
         showEditPopup={showEditPopup}
         setShowEditPopup={setShowEditPopup}
         editTourDetails={editTourDetails}
+        setEditTourDetails={setEditTourDetails}
+        setStatus={setStatus}
+        isUpdate={isUpdate}
       />
     </div>
   );

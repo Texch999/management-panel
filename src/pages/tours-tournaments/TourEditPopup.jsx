@@ -1,90 +1,250 @@
-import { Col, Container, Modal, Row } from "react-bootstrap";
-import { Dropdown } from "react-bootstrap";
-import "bootstrap/dist/css/bootstrap.min.css";
 import React, { useEffect, useState } from "react";
-import { HiPhotograph } from "react-icons/hi";
+import MatchSubmitPopup from "../../matchpopups/MatchSubmitPopup";
+import { Col, Container, Dropdown, Modal, Row } from "react-bootstrap";
+import { GET_ADMIN_ALL_ACCOUNTS, UPDATE_TOURS } from "../../config/endpoints";
+import { call } from "../../config/axios";
 
 function TourEditPopup(props) {
-  const { showEditPopup, setShowEditPopup, editTourDetails } = props;
+  const {
+    isUpdate,
+    setStatus,
+    setShowEditPopup,
+    showEditPopup,
+    editTourDetails,
+    setEditTourDetails,
+  } = props;
+  const [acceptClick, setAcceptClick] = useState(false);
+  const [header, setHeader] = useState("");
+  const [allCountries, setAllCountries] = useState([]);
+  const [allWebsites, setAllWebsites] = useState([]);
+
+  const handleClose = () => {
+    setShowEditPopup(false);
+  };
+  const handleOnchange = (e) => {
+    setEditTourDetails({
+      ...editTourDetails,
+      [e.target.name]: e.target.value,
+    });
+  };
+  const handleAcceptClickPopupOpen = async () => {
+    const payload = {
+      tour_id: editTourDetails.tour_id,
+      ...editTourDetails,
+    };
+    await call(UPDATE_TOURS, payload)
+      .then((res) => {
+        if (res?.data?.status === 200) {
+          setAcceptClick(true);
+          setHeader(res?.data?.message);
+          setShowEditPopup(false);
+          setStatus((prev) => !prev);
+        }
+      })
+      .catch((error) => console.log(error, "...error"));
+  };
+
+  const gettingAllCountries = async () => {
+    const payload = {};
+    await call(GET_ADMIN_ALL_ACCOUNTS, payload)
+      .then((res) => {
+        setAllCountries([
+          ...new Set(
+            res?.data?.data
+              .filter((item) => item.country_name !== undefined)
+              .map((item) => item.country_name)
+          ),
+        ]);
+        setAllWebsites([
+          ...new Set(
+            res?.data?.data
+              .filter((item) => item.website_name !== undefined)
+              .map((item) => item.website_name)
+          ),
+        ]);
+      })
+      .catch((err) => console.log(err));
+  };
+
+  useEffect(() => {
+    gettingAllCountries();
+  }, []);
 
   return (
     <div className="modal fade bd-example-modal-lg container mt-5">
       <Modal
-        size="md"
+        size="lg"
         show={showEditPopup}
-        onHide={setShowEditPopup}
+        onHide={handleClose}
         centered
         className="match-share-modal payment-modal"
       >
         <Modal.Header closeButton>
-          <h4 className="align-items-center">Tour Details</h4>
+          <div className="px-5 mt-3">
+            <h5 className="text-start">
+              {isUpdate === true ? "Update Tour" : "Tour Details"}
+            </h5>
+          </div>
         </Modal.Header>
-        <div className="add-tours p-3 mt-3">
-          <div className="sub-head medium-font mt-3">Tours</div>
-          {editTourDetails &&
-            editTourDetails.length > 0 &&
-            editTourDetails.map((item, index) => {
-              return (
-                <div className="mb-3">
-                  <div className="row">
-                    <div className="col-2"></div>
-                    <div className="font-grey col-2 mt-1"></div>
-                  </div>
-                  <div className="row font-grey medium-font gx-2">
-                    <div className="col-2">
-                      <div className="font-grey col-2 mt-1">Poster_img</div>
-                      <div className=" tt-content-box p-2 ">
-                        IMG4567959.jpg
-                        <HiPhotograph className="ms-1 ions-clr" />
-                      </div>
-                    </div>
-                    <div className="col-2">
-                      <div className="font-grey col-2 mt-1">Schedule_From</div>
-                      <div className="tt-content-box p-2">
-                        {item.schedule_from}
-                      </div>
-                    </div>
-                    <div className="col">
-                      <div className="font-grey col-2 mt-1">Tour_Title</div>
-                      <div className="tt-content-box p-2">
-                        {item.tour_title}
-                      </div>
-                    </div>
-                    <div className="col-3">
-                      <div className="font-grey col-2 mt-1">Quotation</div>
-                      <div className="tt-content-box p-2">
-                        {item.quotations}
-                      </div>
-                    </div>
-                    <div className="col-1 ">
-                      <div className="font-grey col-2 mt-1">Country</div>
-                      <div className="tt-content-box p-2">{item.country}</div>
-                    </div>
-                    <div className="col-2 ">
-                      <div className="font-grey col-2 mt-1">Website</div>
-                      <div className="tt-content-box p-2">{item.website}</div>
-                    </div>
-                  </div>
-                  <div className="row justify-content-between mt-2">
-                    <div className="col-1 d-flex">
-                      <div className="open-button p-1">Open</div>
-                    </div>
-                    <div className="col-2">
-                      <div className="row d-flex justify-content-between">
-                        <div className="col-5">
-                          <div className="black-button p-1">Block</div>
-                        </div>
-                        <div className="col-5 ">
-                          <div className="edit-button p-1">Edit</div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              );
-            })}
-        </div>
+        <Modal.Body className="px-5">
+          <Container fluid className="my-2">
+            <Row>
+              <Col className="ps-0 pe-0">
+                <div className="small-font my-1">Tour Title</div>
+                <input
+                  type="text"
+                  placeholder="Enter"
+                  name="tour_title"
+                  value={editTourDetails.tour_title || ""}
+                  onChange={(e) => handleOnchange(e)}
+                  className="w-100 custom-select small-font login-inputs input-btn-bg px-2 py-3 all-none rounded all-none"
+                ></input>
+              </Col>
+              <Col className="pe-0">
+                <div className="small-font my-1">Tour Name</div>
+                <select
+                  className="w-100 custom-select small-font input-btn-bg px-2 py-3 all-none rounded all-none"
+                  name="tour_name"
+                  value={editTourDetails.tour_name || ""}
+                  onChange={(e) => handleOnchange(e)}
+                >
+                  <option value="1.Take Part in Our Tour">
+                    1.Take Part in Our Tour
+                  </option>
+                  ;<option value="2.Cricket Tour">2.Cricket Tour</option>;
+                  <option value="3.Sports Tour">3.Sports Tour</option>;
+                  <option value="4.Casino Tour">4.Casino Tour</option>;
+                  <option value="5.Entertainment Tour">
+                    5.Entertainment Tour
+                  </option>
+                  ;
+                </select>
+              </Col>
+              <Col className="pe-0">
+                <div className="small-font my-1">Website</div>
+                <select
+                  className="w-100 custom-select small-font input-btn-bg px-2 py-3 all-none rounded all-none"
+                  name="website"
+                  value={editTourDetails.website || ""}
+                  onChange={(e) => handleOnchange(e)}
+                >
+                  {allWebsites &&
+                    allWebsites.length > 0 &&
+                    allWebsites.map((item) => {
+                      if (item.length > 0) {
+                        return <option value={item}>{item}</option>;
+                      }
+                    })}
+                </select>
+              </Col>
+            </Row>
+          </Container>
+          <Container fluid className="my-1">
+            <Row>
+              <Col className="ps-0 pe-0">
+                <div className="small-font my-1">Publish From</div>
+                <input
+                  type="text"
+                  placeholder="Enter"
+                  name="publish_from"
+                  value={editTourDetails.publish_from || ""}
+                  onChange={(e) => handleOnchange(e)}
+                  className="w-100 custom-select small-font login-inputs input-btn-bg px-2 py-3 all-none rounded all-none"
+                ></input>
+              </Col>
+              <Col className="pe-0">
+                <div className="small-font my-1">Publish Upto</div>
+                <input
+                  type="text"
+                  placeholder="Enter"
+                  name="publish_upto"
+                  value={editTourDetails.publish_upto || ""}
+                  onChange={(e) => handleOnchange(e)}
+                  className="w-100 custom-select small-font login-inputs input-btn-bg px-2 py-3 all-none rounded all-none"
+                ></input>
+              </Col>
+              <Col className="pe-0">
+                <div className="small-font my-1">Country</div>
+                <select
+                  className="w-100 custom-select small-font input-btn-bg px-2 py-3 all-none rounded all-none"
+                  name="country"
+                  value={editTourDetails.country || ""}
+                  onChange={(e) => handleOnchange(e)}
+                >
+                  {allCountries &&
+                    allCountries.length > 0 &&
+                    allCountries.map((item) => {
+                      if (item.length > 0) {
+                        return <option value={item}>{item}</option>;
+                      }
+                    })}
+                </select>
+              </Col>
+            </Row>
+          </Container>
+          <Container fluid className="my-2">
+            <Row>
+              <Col className="ps-0 pe-0">
+                <div className="small-font my-1">Schedule From</div>
+                <input
+                  type="text"
+                  placeholder="Enter"
+                  name="schedule_from"
+                  value={editTourDetails.schedule_from || ""}
+                  onChange={(e) => handleOnchange(e)}
+                  className="w-100 custom-select small-font login-inputs input-btn-bg px-2 py-3 all-none rounded all-none"
+                ></input>
+              </Col>
+              <Col className="pe-0">
+                <div className="small-font my-1">Schedule Upto</div>
+                <input
+                  type="text"
+                  placeholder="Enter"
+                  name="schedule_upto"
+                  value={editTourDetails.schedule_upto || ""}
+                  onChange={(e) => handleOnchange(e)}
+                  className="w-100 custom-select small-font login-inputs input-btn-bg px-2 py-3 all-none rounded all-none"
+                ></input>
+              </Col>
+              <Col className="pe-0 pb-4">
+                <div className="small-font my-1">Status</div>
+                <select
+                  className="w-100 custom-select small-font input-btn-bg px-2 py-3 all-none rounded all-none"
+                  name="status"
+                  value={editTourDetails.status || ""}
+                  onChange={(e) => handleOnchange(e)}
+                >
+                  {/* <option selected>Select</option> */}
+                  <option value={"active"}>Active</option>
+                  <option value={"inactive"}>InActive</option>
+                </select>
+              </Col>
+            </Row>
+          </Container>
+          {isUpdate && (
+            <div>
+              <Container>
+                <Row className="ps-0">
+                  <Col xs={8}>
+                    <button
+                      type="submit"
+                      className="add-button  small-font rounded ps-0 px-4 py-3  my-3 w-50 all-none"
+                      onClick={() => handleAcceptClickPopupOpen()}
+                    >
+                      Update
+                    </button>
+                  </Col>
+                </Row>
+              </Container>
+            </div>
+          )}
+        </Modal.Body>
       </Modal>
+      <MatchSubmitPopup
+        header={header}
+        state={acceptClick}
+        setState={setAcceptClick}
+      />
     </div>
   );
 }
