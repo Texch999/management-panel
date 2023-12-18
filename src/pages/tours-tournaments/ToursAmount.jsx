@@ -94,8 +94,8 @@ function ToursAmount() {
       field: "tour_date",
     },
     {
-      header: "LOCATION",
-      field: "location",
+      header: "COUNTRY",
+      field: "country",
     },
     {
       header: "TOUR_TITLE",
@@ -113,7 +113,7 @@ function ToursAmount() {
   const tableData = mappingArray?.map((item) => {
     return {
       tour_date: item.schedule_from,
-      location: item.country,
+      country: item.country,
       website: item.website,
       tour_title: item.tour_title,
       packages: (

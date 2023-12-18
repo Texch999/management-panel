@@ -39,7 +39,7 @@ function ManageTournament() {
     website: "All",
     role: "All",
     user_name: "All",
-    location: "All",
+    country: "All",
   });
   const changeStatusonPopupClosing = () => {
     setReRendering((prev) => !prev);
@@ -133,8 +133,8 @@ function ManageTournament() {
       ],
     },
     {
-      head: "Location",
-      name: "location",
+      head: "Country",
+      name: "country",
       options: ["All", "India", "Srilanka", "Bangladesh", "Dubai"],
     },
     {
@@ -198,15 +198,15 @@ function ManageTournament() {
       field: "schedule_start",
     },
     {
-      header: "LOCATION",
-      field: "location",
+      header: "COUNTRY",
+      field: "country",
     },
     {
       field: "cl",
       clr: true,
     },
   ];
-
+  // console.log(interestedMembers,'......interestedmembers')
   const tableData =
     interestedMembers && interestedMembers.length > 0
       ? interestedMembers
@@ -218,10 +218,10 @@ function ManageTournament() {
             }
           })
           .filter((item) => {
-            if (selectedFilter?.location === "All") {
+            if (selectedFilter?.country === "All") {
               return item;
             } else {
-              return item.location === selectedFilter.location;
+              return item.country === selectedFilter.country;
             }
           })
           .filter((item) => {
@@ -249,7 +249,7 @@ function ManageTournament() {
               tour_name: item.tour_name,
               schedule_start: item.schedule_start,
               schedule_end: item.schedule_end,
-              location: item.location,
+              country: item.country,
               cl:
                 item.selected === false ? (
                   <button
@@ -282,10 +282,10 @@ function ManageTournament() {
             }
           })
           .filter((item) => {
-            if (selectedFilter?.location === "All") {
+            if (selectedFilter?.country === "All") {
               return item;
             } else {
-              return item.location === selectedFilter.location;
+              return item.country === selectedFilter.country;
             }
           })
           .filter((item) => {
@@ -313,7 +313,7 @@ function ManageTournament() {
               tour_name: item.tour_name,
               schedule_start: item.schedule_start,
               schedule_end: item.schedule_end,
-              location: item.location,
+              country: item.country,
               cl: item.selected === true && (
                 <button
                   className="select-button btn-color"

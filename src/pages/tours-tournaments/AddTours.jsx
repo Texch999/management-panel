@@ -54,6 +54,7 @@ function AddTours() {
         if (res.status === 200) {
           setShowReturnPopup(true);
           setHeaderMessage("Tour Added Successfully");
+          setFormData({})
         }
       })
       .catch((error) => {
