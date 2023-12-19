@@ -461,7 +461,7 @@ function AddDirectorsPopup(props) {
       </Modal>
       <MatchSubmitPopup
         header={
-          selectedDirector
+          addDirectorsPopup
             ? "Director created Successfully"
             : "Director updated Successfully"
         }

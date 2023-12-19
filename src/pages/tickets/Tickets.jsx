@@ -57,8 +57,12 @@ function Tickets() {
 
   const cols1 = [
     {
-      header: "DATE & TIME",
-      field: "dateAndTime",
+      header: "DATE",
+      field: "date",
+    },
+    {
+      header: "TIME",
+      field: "time",
     },
     // {
     //   header: "Name & ROLE",
@@ -266,11 +270,10 @@ function Tickets() {
           {item?.name} <br /> <span className="role-color">{item?.role}</span>{" "}
         </div>
       ),
-      dateAndTime: (
-        <div>
-          {item?.created_date} <br /> <span>{item?.created_time}</span>{" "}
-        </div>
-      ),
+      date: `${item?.created_date}`,
+
+      time: `${item?.created_time}`,
+
       trxid: item?.transaction_id,
       package: item?.summary.final_package_cost,
       pkgamnt: item?.summary.total_packages_cost,
@@ -371,9 +374,9 @@ function Tickets() {
             </div>
           ))}
         </div>
-        {activeIndex === 0 && (
+        {/* {activeIndex === 0 && (
           <Table columns={cols} data={modifiedTicketDetails} />
-        )}
+        )} */}
         {activeIndex === 1 && (
           <Table columns={cols1} data={modifiedTicketDetails1} />
         )}
