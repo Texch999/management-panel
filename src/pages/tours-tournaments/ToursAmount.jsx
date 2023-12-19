@@ -18,6 +18,7 @@ function ToursAmount() {
       tour_id: item.tour_id,
       packages: item.packages,
     };
+    console.log(payload,'......payload')
     await call(UPDATE_TOURS, payload)
       // setShowReturnPopup(true)
       // .then((res)=>(res.data,'.....res'))
@@ -38,6 +39,7 @@ function ToursAmount() {
       prevTours.map((tour) => {
         // console.log(tour,'.......tourfromsettours')
         if (tour.tour_id === tourId) {
+          // console.log(tour,'....tourinside')
           return {
             ...tour,
             packages: {
@@ -58,7 +60,9 @@ function ToursAmount() {
   // console.log(tours,'......tours')
   const getTours = async () => {
     const payload = {};
-    await call(GET_TOURS, payload).then((res) => setTours(res?.data?.data));
+    await call(GET_TOURS, payload)
+          .then((res) => setTours(res?.data?.data))
+          .catch((error)=>console.log(error,'.....error'));
   };
 
   useEffect(() => {
@@ -135,9 +139,9 @@ function ToursAmount() {
                 <div className="col-3">{pkgtype}</div>
                 <input
                   className="input-custum text-center col-3"
-                  type="number"
+                  type="text"
                   name="minamount"
-                  defaultValue={item?.packages[pkgtype]?.minamount || ""}
+                  value={item?.packages[pkgtype]?.minamount || ""}
                   onChange={(e) =>
                     packOnchangeHandle(
                       item.tour_id,
@@ -149,9 +153,9 @@ function ToursAmount() {
                 ></input>
                 <input
                   className="input-custum text-center col-3"
-                  type="number"
+                  type="text"
                   name="maxamount"
-                  defaultValue={item?.packages[pkgtype]?.maxamount || ""}
+                  value={item?.packages[pkgtype]?.maxamount || ""}
                   onChange={(e) =>
                     packOnchangeHandle(
                       item.tour_id,
@@ -163,9 +167,9 @@ function ToursAmount() {
                 ></input>
                 <input
                   className="input-custum text-center col-3"
-                  type="number"
+                  type="text"
                   name="allowedpersons"
-                  defaultValue={item?.packages[pkgtype]?.allowedpersons || ""}
+                  value={item?.packages[pkgtype]?.allowedpersons || ""}
                   onChange={(e) =>
                     packOnchangeHandle(
                       item.tour_id,
@@ -185,9 +189,6 @@ function ToursAmount() {
             >
               UPDATE
             </button>
-            {/* <button className="input-custum text-center select-button" disabled>
-              EDIT
-            </button> */}
           </div>
         </div>
       ),
