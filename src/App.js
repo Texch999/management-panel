@@ -32,6 +32,7 @@ import CreateNewOffers from "./pages/offersmanagement/CreateNewOffers";
 import Chats from "./pages/chat/Chats";
 import AddNewOffer from "./pages/offersmanagement/AddNewOffer";
 import ToursBanking from "./pages/tourBanking/ToursBanking";
+import Login from "./pages/home/Login";
 function App() {
   return (
     <BrowserRouter>
@@ -40,10 +41,10 @@ function App() {
           <Sidebar />
         </div>
         <div className="w-100 home-bg vh-100">
-          {/*  */}
           <div className="w-100 homepage-div mt-8vh">
             <Header />
             <Routes>
+              <Route path="/login" element={<Login />}></Route>
               <Route path="/" element={<Homepage />}></Route>
               <Route path="/addwebsites" element={<Addwebsites />}></Route>
               <Route path="/adddirectors" element={<Adddirector />}></Route>
@@ -101,7 +102,7 @@ function App() {
               />
 
               <Route path="/support-chat" element={<Chats />} />
-              <Route path="/toursbanking" element={<ToursBanking />}/>
+              <Route path="/toursbanking" element={<ToursBanking />} />
             </Routes>
           </div>
         </div>
