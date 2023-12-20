@@ -30,7 +30,7 @@ const GET_ALL_USERS = "/offline-management/get_user_list";
 const GENERATE_SIGNED_URL = "/admin/profile_signed_url";
 const GET_MATCHES_DATA = "/offline-management/get_matches_data";
 const CREATE_OFFLINE_MATCHES = "/offline-management/match_creation";
-const PACKAGES_CREATION = "/packages/package_creation_upgrade_discount";
+const PACKAGES_CREATION = "/packages/package_creation";
 const GET_USER_MESSAGES = "/chat/get_user_messages";
 const GET_REQUEST_PACKAGES =
   "/packages/get_package_histroy_bypackage_requestid";

@@ -178,6 +178,8 @@ function Creatematch() {
 
   const allMatches = [...liveMatches, ...upcomingMatches, ...todayMatches];
 
+  console.log("allMatches====>",allMatches);
+
   useEffect(() => {
     getAllMatches();
   }, []);

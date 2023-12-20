@@ -7,11 +7,11 @@ import MatchSubmitPopup from "../../matchpopups/MatchSubmitPopup";
 function BulkPackageDiscount(props) {
   const { selectedPackage, packageInputs } = props;
   const [isProcessing, setIsProcessing] = useState(false);
-
   const [err, setErr] = useState();
   const [inputData, setInputData] = useState({});
   const [successfulPopUp, setSuccessfulPopUp] = useState(false);
   const [activeIndex, setActiveIndex] = useState();
+  const [selectedDuration, setSelectedDuration] = useState("monthly");
   const handleInputChange = (e) => {
     setInputData({ ...inputData, [e.target.name]: e.target.value });
   };
@@ -20,15 +20,13 @@ function BulkPackageDiscount(props) {
     setActiveIndex(index);
     if (
       !(
-        inputData[item?.membersKey] &&
-        inputData[item?.monthlyHoursKey] &&
-        inputData[item?.yearlyHoursKey] &&
-        inputData[item?.monthlyPriceKey] &&
-        inputData[item?.yearlyPriceKey] &&
-        inputData[item?.monthlydiscountPriceKey] &&
-        inputData[item?.yearlydiscountPriceKey] &&
-        inputData[item?.monthlybulkPackagesKey] &&
-        inputData[item?.yearlybulkPackagesKey]
+        inputData[item?.userTextKey] &&
+        inputData[item?.meetingTextKey] &&
+        inputData[item?.numberOfMeetingsKey] &&
+        inputData[item?.audioCallsKey] &&
+        inputData[item?.hoursKey] &&
+        inputData[item?.priceKey] &&
+        inputData[item?.discountPriceKey]
       )
     ) {
       return setErr("Please enter required fields");
@@ -36,24 +34,13 @@ function BulkPackageDiscount(props) {
     console.log("item=====>", item);
 
     const payload = {
-      created_date: "12:30:20 PM",
-      created_time: "5/11/2023",
-      expiry_time: "5/11/2023",
-      is_autherised: "true",
-      monthly_package: {
-        monthly_pack: inputData[item?.monthlybulkPackagesKey],
-        montly_package_cost: inputData[item?.monthlyPriceKey],
-        montly_package_hours: inputData[item?.monthlyHoursKey],
-        montly_package_discount: inputData[item?.monthlydiscountPriceKey],
-      },
-      yearly_package: {
-        yearly_pack: inputData[item?.yearlybulkPackagesKey],
-        yearly_package_cost: inputData[item?.yearlyPriceKey],
-        yearly_package_hours: inputData[item?.yearlyHoursKey],
-        yearly_package_discount: inputData[item?.yearlydiscountPriceKey],
-      },
+      package_cost: inputData[item?.priceKey],
+      package_duration: selectedDuration,
+      discount: inputData[item?.discountPriceKey],
+      monthlybulkPackagesKey: inputData[item?.monthlybulkPackagesKey],
       package_limits: {
         members: inputData[item?.membersKey],
+        duration: inputData[item?.hoursKey],
         join_call_with_users: inputData[item?.userTextKey],
         personal_meetings: inputData[item?.meetingTextKey],
         meetings: inputData[item?.numberOfMeetingsKey],
@@ -64,13 +51,15 @@ function BulkPackageDiscount(props) {
       website: packageInputs?.website_name || 0,
       country_name: packageInputs?.country_name || 0,
     };
-    console.log("payload====>", payload);
     setErr("");
     setIsProcessing(true);
     await call(PACKAGES_CREATION, payload)
       .then((res) => {
         if (res.data.statusCode === 200) {
-          console.log("res====>", res);
+          setSuccessfulPopUp(true)
+          setTimeout(()=>{
+            setSuccessfulPopUp(false)
+          },2000)
           setIsProcessing(false);
           setInputData({});
         } else {
@@ -103,13 +92,9 @@ function BulkPackageDiscount(props) {
         audioCallsKey: "standard_audio_calls",
         membersKey: "standard_members",
         monthlybulkPackagesKey: "standard_monthly_bulk_packages",
-        yearlybulkPackagesKey: "standard_yearly_bulk_packages",
-        monthlyHoursKey: "standard_monthly_Hours",
-        yearlyHoursKey: "standard_yearly_Hours",
-        monthlyPriceKey: "standard_monthly_Price",
-        yearlyPriceKey: "standard_yearly_Price",
-        monthlydiscountPriceKey: "standard_monthly_discount_Price",
-        yearlydiscountPriceKey: "standard_yearly_discount_Price",
+        hoursKey: "standard_Hours",
+        priceKey: "standard_Price",
+        discountPriceKey: "standard_discount_Price",
       },
     },
     {
@@ -128,13 +113,9 @@ function BulkPackageDiscount(props) {
         audioCallsKey: "silver_audio_calls",
         membersKey: "silver_members",
         monthlybulkPackagesKey: "silver_monthly_bulk_packages",
-        yearlybulkPackagesKey: "silver_yearly_bulk_packages",
-        monthlyHoursKey: "silver_monthly_Hours",
-        yearlyHoursKey: "silver_yearly_Hours",
-        monthlyPriceKey: "silver_monthly_Price",
-        yearlyPriceKey: "silver_yearly_Price",
-        monthlydiscountPriceKey: "silver_monthly_discount_Price",
-        yearlydiscountPriceKey: "silver_yearly_discount_Price",
+        hoursKey: "silver_Hours",
+        priceKey: "silver_Price",
+        discountPriceKey: "silver_discount_Price",
       },
     },
     {
@@ -153,13 +134,9 @@ function BulkPackageDiscount(props) {
         audioCallsKey: "gold_audio_calls",
         membersKey: "gold_members",
         monthlybulkPackagesKey: "gold_monthly_bulk_packages",
-        yearlybulkPackagesKey: "gold_yearly_bulk_packages",
-        monthlyHoursKey: "gold_monthly_Hours",
-        yearlyHoursKey: "gold_yearly_Hours",
-        monthlyPriceKey: "gold_monthly_Price",
-        yearlyPriceKey: "gold_yearly_Price",
-        monthlydiscountPriceKey: "gold_monthly_discount_Price",
-        yearlydiscountPriceKey: "gold_yearly_discount_Price",
+        hoursKey: "gold_Hours",
+        priceKey: "gold_Price",
+        discountPriceKey: "gold_discount_Price",
       },
     },
     {
@@ -178,13 +155,9 @@ function BulkPackageDiscount(props) {
         audioCallsKey: "diamond_audio_calls",
         membersKey: "diamond_members",
         monthlybulkPackagesKey: "diamond_monthly_bulk_packages",
-        yearlybulkPackagesKey: "diamond_yearly_bulk_packages",
-        monthlyHoursKey: "diamond_monthly_Hours",
-        yearlyHoursKey: "diamond_yearly_Hours",
-        monthlyPriceKey: "diamond_monthly_Price",
-        yearlyPriceKey: "diamond_yearly_Price",
-        monthlydiscountPriceKey: "diamond_monthly_discount_Price",
-        yearlydiscountPriceKey: "diamond_yearly_discount_Price",
+        hoursKey: "diamond_Hours",
+        priceKey: "diamond_Price",
+        discountPriceKey: "diamond_discount_Price",
       },
     },
     {
@@ -202,14 +175,9 @@ function BulkPackageDiscount(props) {
         numberOfMeetingsKey: "vip_num_of_meetings",
         audioCallsKey: "vip_audio_calls",
         monthlybulkPackagesKey: "vip_monthly_bulk_packages",
-        yearlybulkPackagesKey: "vip_yearly_bulk_packages",
-        membersKey: "vip_members",
-        monthlyHoursKey: "vip_monthly_Hours",
-        yearlyHoursKey: "vip_yearly_Hours",
-        monthlyPriceKey: "vip_monthly_Price",
-        yearlyPriceKey: "vip_yearly_Price",
-        monthlydiscountPriceKey: "vip_monthly_discount_Price",
-        yearlydiscountPriceKey: "vip_yearly_discount_Price",
+        hoursKey: "vip_Hours",
+        priceKey: "vip_Price",
+        discountPriceKey: "vip_discount_Price",
       },
     },
   ];
@@ -218,8 +186,61 @@ function BulkPackageDiscount(props) {
     selectedPackage === "all"
       ? BULK_PACKAGES_DATA
       : BULK_PACKAGES_DATA.filter((i) => i.packageId === selectedPackage);
+
+  const handleDurationChange = (obj) => {
+    setSelectedDuration(obj);
+  };
+  const packageDurations = ["monthly", "yearly"];
   return (
     <div className="W-100 medium-font font-grey package-bg p-3 package-radius package-input">
+      <div className="row">
+        <div className="row">
+          {packageDurations.map((obj) => {
+            return (
+              <div className="col-sm-2 col-lg-1 d-flex align-items-center">
+                <div className="medium-font role-color d-flex">
+                  <input
+                    type="radio"
+                    id={obj}
+                    name="duration"
+                    value={obj}
+                    checked={selectedDuration === obj}
+                    onChange={() => handleDurationChange(obj)}
+                  />
+                  <label htmlFor={obj}>{obj}</label>
+                </div>
+              </div>
+            );
+          })}
+
+          {/* <div className="col-sm-2 col-lg-1 d-flex align-items-center">
+            <div className="medium-font role-color d-flex">
+              <input
+                type="radio"
+                id="yearly"
+                name="duration"
+                value="yearly"
+                checked={selectedDuration === "yearly"}
+                onChange={() => handleDurationChange("yearly")}
+              />
+              <label htmlFor="yearly">Yearly</label>
+            </div>
+          </div>
+          <div className="col-sm-2 col-lg-1 d-flex align-items-center">
+            <div className="medium-font role-color d-flex">
+              <input
+                type="radio"
+                id="hourly"
+                name="duration"
+                value="hourly"
+                checked={selectedDuration === "hourly"}
+                onChange={() => handleDurationChange("hourly")}
+              />
+              <label htmlFor="hourly">Hourly</label>
+            </div>
+          </div> */}
+        </div>
+      </div>
       {selectPackage?.map((item, index) => (
         <div key={index} className="mt-3">
           <div className="d-flex align-items-center justify-content-between">
@@ -293,16 +314,6 @@ function BulkPackageDiscount(props) {
                     }
                     onChange={(e) => handleInputChange(e)}
                   />
-                  <input
-                    className="medium-font package-btn-bg p-2 rounded mt-1 font-grey"
-                    placeholder="10 Y"
-                    name={item?.payloadObject?.yearlybulkPackagesKey}
-                    value={
-                      inputData[item?.payloadObject?.yearlybulkPackagesKey] ||
-                      ""
-                    }
-                    onChange={(e) => handleInputChange(e)}
-                  />
                 </div>
               </div>
               <div className="col">
@@ -313,17 +324,8 @@ function BulkPackageDiscount(props) {
                   <input
                     className="medium-font package-btn-bg p-2 rounded mt-1 font-grey"
                     placeholder="40 Hours"
-                    name={item?.payloadObject?.monthlyHoursKey}
-                    value={
-                      inputData[item?.payloadObject?.monthlyHoursKey] || ""
-                    }
-                    onChange={(e) => handleInputChange(e)}
-                  />
-                  <input
-                    className="medium-font package-btn-bg p-2 rounded mt-1 font-grey"
-                    placeholder="4800 Hours"
-                    name={item?.payloadObject?.yearlyHoursKey}
-                    value={inputData[item?.payloadObject?.yearlyHoursKey] || ""}
+                    name={item?.payloadObject?.hoursKey}
+                    value={inputData[item?.payloadObject?.hoursKey] || ""}
                     onChange={(e) => handleInputChange(e)}
                   />
                 </div>
@@ -336,17 +338,8 @@ function BulkPackageDiscount(props) {
                   <input
                     className="medium-font package-btn-bg p-2 rounded mt-1 font-grey"
                     placeholder="5000 M"
-                    name={item?.payloadObject?.monthlyPriceKey}
-                    value={
-                      inputData[item?.payloadObject?.monthlyPriceKey] || ""
-                    }
-                    onChange={(e) => handleInputChange(e)}
-                  />
-                  <input
-                    className="medium-font package-btn-bg p-2 rounded mt-1 font-grey"
-                    placeholder="50000 Y"
-                    name={item?.payloadObject?.yearlyPriceKey}
-                    value={inputData[item?.payloadObject?.yearlyPriceKey] || ""}
+                    name={item?.payloadObject?.priceKey}
+                    value={inputData[item?.payloadObject?.priceKey] || ""}
                     onChange={(e) => handleInputChange(e)}
                   />
                 </div>
@@ -359,20 +352,9 @@ function BulkPackageDiscount(props) {
                   <input
                     className="medium-font package-btn-bg p-2 rounded mt-1 font-grey"
                     placeholder="5% M"
-                    name={item?.payloadObject?.monthlydiscountPriceKey}
+                    name={item?.payloadObject?.discountPriceKey}
                     value={
-                      inputData[item?.payloadObject?.monthlydiscountPriceKey] ||
-                      ""
-                    }
-                    onChange={(e) => handleInputChange(e)}
-                  />
-                  <input
-                    className="medium-font package-btn-bg p-2 rounded mt-1 font-grey"
-                    placeholder="15% Y"
-                    name={item?.payloadObject?.yearlydiscountPriceKey}
-                    value={
-                      inputData[item?.payloadObject?.yearlydiscountPriceKey] ||
-                      ""
+                      inputData[item?.payloadObject?.discountPriceKey] || ""
                     }
                     onChange={(e) => handleInputChange(e)}
                   />

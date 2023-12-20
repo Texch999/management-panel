@@ -3,7 +3,6 @@ import { Images } from "./../../images/index";
 import { MdFileUpload } from "react-icons/md";
 import { PACKAGES_CREATION, GENERATE_SIGNED_URL } from "../../config/endpoints";
 import { call } from "../../config/axios";
-import MatchDeclarationPopup from "../../matchpopups/MatchDeclarationPopup";
 import MatchSubmitPopup from "../../matchpopups/MatchSubmitPopup";
 
 function PackageUpgrade(props) {
@@ -18,7 +17,7 @@ function PackageUpgrade(props) {
   const [singedUrl, setSignedUrl] = useState("");
   const [uploadImage, setuploadImage] = useState([]);
   const [packageId, setPackageId] = useState("");
-  const [packageDuration, setPackageDuration] = useState(null);
+  const [selectedDuration, setSelectedDuration] = useState("monthly");
 
   const uploadfileInputRef = useRef(null);
 
@@ -45,39 +44,20 @@ function PackageUpgrade(props) {
         inputData[item?.meetingTextKey] &&
         inputData[item?.numberOfMeetingsKey] &&
         inputData[item?.audioCallsKey] &&
-        inputData[item?.monthlyHoursKey] &&
-        inputData[item?.yearlyHoursKey] &&
-        inputData[item?.monthlyPriceKey] &&
-        inputData[item?.yearlyPriceKey] &&
-        inputData[item?.monthlydiscountPriceKey] &&
-        inputData[item?.yearlydiscountPriceKey]
+        inputData[item?.hoursKey] &&
+        inputData[item?.priceKey] &&
+        inputData[item?.discountPriceKey]
       )
     ) {
       return setErr("Please enter required fields");
     }
-    // if (
-    //   inputData[item?.monthlyHoursKey] &&
-    //   inputData[item?.monthlyPriceKey] &&
-    //   inputData[item?.monthlydiscountPriceKey]
-    // ) {
-    //   setPackageDuration("monthly");
-    // } else {
-    //   setPackageDuration("yearly");
-    // }
     const payload = {
-      is_autherised: "true",
-      monthly_package: {
-        montly_package_cost: inputData[item?.monthlyPriceKey],
-        montly_package_hours: inputData[item?.monthlyHoursKey],
-        montly_package_discount: inputData[item?.monthlydiscountPriceKey],
-      },
-      yearly_package: {
-        yearly_package_cost: inputData[item?.yearlyPriceKey],
-        yearly_package_hours: inputData[item?.yearlyHoursKey],
-        yearly_package_discount: inputData[item?.yearlydiscountPriceKey],
-      },
-      package_duration: packageDuration,
+      // is_autherised: "true",
+      package_cost: inputData[item?.priceKey],
+      package_duration: selectedDuration,
+      discount: inputData[item?.discountPriceKey],
       package_limits: {
+        duration: inputData[item?.hoursKey],
         members: inputData[item?.membersKey],
         join_call_with_users: inputData[item?.userTextKey],
         personal_meetings: inputData[item?.meetingTextKey],
@@ -95,6 +75,10 @@ function PackageUpgrade(props) {
     await call(PACKAGES_CREATION, payload)
       .then(async (res) => {
         // if (res.data.statusCode === 200) {
+        setShowSuccessfulPopup(true)
+        setTimeout(()=>{
+          setShowSuccessfulPopup(false)
+        },2000)
         console.log("res====>", res);
         singedUrl &&
           profileImage &&
@@ -125,9 +109,6 @@ function PackageUpgrade(props) {
       });
     setShowSuccessfulPopup(true);
   };
-  console.log(packageInputs, "........packageInputs");
-  console.log("Input Data========>", inputData);
-
   const generateSignedUrl = async () => {
     setuploadImage(true);
     const posetNewId = new Date().getTime();
@@ -147,6 +128,7 @@ function PackageUpgrade(props) {
         console.log("generating signed url error", err);
       });
   };
+
   const PACKAGES_DATA = [
     {
       packagename: "Standard",
@@ -163,12 +145,9 @@ function PackageUpgrade(props) {
         numberOfMeetingsKey: "standard_num_of_meetings",
         audioCallsKey: "standard_audio_calls",
         membersKey: "standard_members",
-        monthlyHoursKey: "standard_monthly_Hours",
-        yearlyHoursKey: "standard_yearly_Hours",
-        monthlyPriceKey: "standard_monthly_Price",
-        yearlyPriceKey: "standard_yearly_Price",
-        monthlydiscountPriceKey: "standard_monthly_discount_Price",
-        yearlydiscountPriceKey: "standard_yearly_discount_Price",
+        hoursKey: "standard_Hours",
+        priceKey: "standard_Price",
+        discountPriceKey: "standard_discount_Price",
       },
     },
     {
@@ -186,12 +165,9 @@ function PackageUpgrade(props) {
         numberOfMeetingsKey: "silver_num_of_meetings",
         audioCallsKey: "silver_audio_calls",
         membersKey: "silver_members",
-        monthlyHoursKey: "silver_monthly_Hours",
-        yearlyHoursKey: "silver_yearly_Hours",
-        monthlyPriceKey: "silver_monthly_Price",
-        yearlyPriceKey: "silver_yearly_Price",
-        monthlydiscountPriceKey: "silver_monthly_discount_Price",
-        yearlydiscountPriceKey: "silver_yearly_discount_Price",
+        hoursKey: "silver_Hours",
+        priceKey: "silver_Price",
+        discountPriceKey: "silver_discount_Price"
       },
     },
     {
@@ -209,12 +185,9 @@ function PackageUpgrade(props) {
         numberOfMeetingsKey: "gold_num_of_meetings",
         audioCallsKey: "gold_audio_calls",
         membersKey: "gold_members",
-        monthlyHoursKey: "gold_monthly_Hours",
-        yearlyHoursKey: "gold_yearly_Hours",
-        monthlyPriceKey: "gold_monthly_Price",
-        yearlyPriceKey: "gold_yearly_Price",
-        monthlydiscountPriceKey: "gold_monthly_discount_Price",
-        yearlydiscountPriceKey: "gold_yearly_discount_Price",
+        hoursKey: "gold_Hours",
+        priceKey: "gold_Price",
+        discountPriceKey: "gold_discount_Price",
       },
     },
     {
@@ -232,12 +205,9 @@ function PackageUpgrade(props) {
         numberOfMeetingsKey: "diamond_num_of_meetings",
         audioCallsKey: "diamond_audio_calls",
         membersKey: "diamond_members",
-        monthlyHoursKey: "diamond_monthly_Hours",
-        yearlyHoursKey: "diamond_yearly_Hours",
-        monthlyPriceKey: "diamond_monthly_Price",
-        yearlyPriceKey: "diamond_yearly_Price",
-        monthlydiscountPriceKey: "diamond_monthly_discount_Price",
-        yearlydiscountPriceKey: "diamond_yearly_discount_Price",
+        hoursKey: "diamond_Hours",
+        priceKey: "diamond_Price",
+        discountPriceKey: "diamond_discount_Price",
       },
     },
     {
@@ -255,12 +225,9 @@ function PackageUpgrade(props) {
         numberOfMeetingsKey: "vip_num_of_meetings",
         audioCallsKey: "vip_audio_calls",
         membersKey: "vip_members",
-        monthlyHoursKey: "vip_monthly_Hours",
-        yearlyHoursKey: "vip_yearly_Hours",
-        monthlyPriceKey: "vip_monthly_Price",
-        yearlyPriceKey: "vip_yearly_Price",
-        monthlydiscountPriceKey: "vip_monthly_discount_Price",
-        yearlydiscountPriceKey: "vip_yearly_discount_Price",
+        hoursKey: "vip_Hours",
+        priceKey: "vip_Price",
+        discountPriceKey: "vip_discount_Price",
       },
     },
   ];
@@ -273,16 +240,60 @@ function PackageUpgrade(props) {
         });
   console.log("INPUTDATA", inputData);
 
+  const handleDurationChange = (obj) => { 
+    setSelectedDuration(obj);
+  };
+
+  const packageDurations = ["monthly", "yearly", "hourly"];
+
   return (
     <div className="W-100 medium-font font-grey package-bg p-3 package-radius package-input">
       <div className="row">
-        <div className="col-2">
-          <div class="checkbox">
-            <label>
-              <input type="checkbox" data-toggle="toggle" />
-              Option one is enabled
-            </label>
+        <div className="row">
+          {packageDurations.map((obj) => {
+            return (
+              <div className="col-sm-2 col-lg-1 d-flex align-items-center">
+                <div className="medium-font role-color d-flex">
+                  <input
+                    type="radio"
+                    id={obj}
+                    name="duration"
+                    value={obj}
+                    checked={selectedDuration === obj}
+                    onChange={() => handleDurationChange(obj)}
+                  />
+                  <label htmlFor={obj}>{obj}</label>
+                </div>
+              </div>
+            );
+          })}
+
+          {/* <div className="col-sm-2 col-lg-1 d-flex align-items-center">
+            <div className="medium-font role-color d-flex">
+              <input
+                type="radio"
+                id="yearly"
+                name="duration"
+                value="yearly"
+                checked={selectedDuration === "yearly"}
+                onChange={() => handleDurationChange("yearly")}
+              />
+              <label htmlFor="yearly">Yearly</label>
+            </div>
           </div>
+          <div className="col-sm-2 col-lg-1 d-flex align-items-center">
+            <div className="medium-font role-color d-flex">
+              <input
+                type="radio"
+                id="hourly"
+                name="duration"
+                value="hourly"
+                checked={selectedDuration === "hourly"}
+                onChange={() => handleDurationChange("hourly")}
+              />
+              <label htmlFor="hourly">Hourly</label>
+            </div>
+          </div> */}
         </div>
       </div>
       {selectPackage?.map((item, index) => (
@@ -377,17 +388,8 @@ function PackageUpgrade(props) {
                   <input
                     className="medium-font package-btn-bg p-2 rounded mt-1 font-grey"
                     placeholder="40 Hours"
-                    name={item?.payloadObject?.monthlyHoursKey}
-                    value={
-                      inputData[item?.payloadObject?.monthlyHoursKey] || ""
-                    }
-                    onChange={(e) => handleInputChange(e)}
-                  />
-                  <input
-                    className="medium-font package-btn-bg p-2 rounded mt-1 font-grey"
-                    placeholder="480 Hours"
-                    name={item?.payloadObject?.yearlyHoursKey}
-                    value={inputData[item?.payloadObject?.yearlyHoursKey] || ""}
+                    name={item?.payloadObject?.hoursKey}
+                    value={inputData[item?.payloadObject?.hoursKey] || ""}
                     onChange={(e) => handleInputChange(e)}
                   />
                 </div>
@@ -400,17 +402,8 @@ function PackageUpgrade(props) {
                   <input
                     className="medium-font package-btn-bg p-2 rounded mt-1 font-grey"
                     placeholder="4000 M"
-                    name={item?.payloadObject?.monthlyPriceKey}
-                    value={
-                      inputData[item?.payloadObject?.monthlyPriceKey] || ""
-                    }
-                    onChange={(e) => handleInputChange(e)}
-                  />
-                  <input
-                    className="medium-font package-btn-bg p-2 rounded mt-1 font-grey"
-                    placeholder="50000 Y"
-                    name={item?.payloadObject?.yearlyPriceKey}
-                    value={inputData[item?.payloadObject?.yearlyPriceKey] || ""}
+                    name={item?.payloadObject?.priceKey}
+                    value={inputData[item?.payloadObject?.priceKey] || ""}
                     onChange={(e) => handleInputChange(e)}
                   />
                 </div>
@@ -423,20 +416,9 @@ function PackageUpgrade(props) {
                   <input
                     className="medium-font package-btn-bg p-2 rounded mt-1 font-grey"
                     placeholder="5% M"
-                    name={item?.payloadObject?.monthlydiscountPriceKey}
+                    name={item?.payloadObject?.discountPriceKey}
                     value={
-                      inputData[item?.payloadObject?.monthlydiscountPriceKey] ||
-                      ""
-                    }
-                    onChange={(e) => handleInputChange(e)}
-                  />
-                  <input
-                    className="medium-font package-btn-bg p-2 rounded mt-1 font-grey"
-                    placeholder="10% Y"
-                    name={item?.payloadObject?.yearlydiscountPriceKey}
-                    value={
-                      inputData[item?.payloadObject?.yearlydiscountPriceKey] ||
-                      ""
+                      inputData[item?.payloadObject?.discountPriceKey] || ""
                     }
                     onChange={(e) => handleInputChange(e)}
                   />
