@@ -8,36 +8,38 @@ import MatchSubmitPopup from "../../matchpopups/MatchSubmitPopup";
 
 function ToursAmount() {
   const [showReturnPopup, setShowReturnPopup] = useState(false);
-  const [headerMessage, setHeaderMessage] = useState("")
+  const [headerMessage, setHeaderMessage] = useState("");
   const [activeHeadIndex, setActiveHeadIndex] = useState(0);
   const [tours, setTours] = useState([]);
   const [tourname, setTourname] = useState("All Tours");
 
-  const submitTourPackages = async(item)=>{
+  const submitTourPackages = async (item) => {
     const payload = {
-      tour_id:item.tour_id,
-      packages:item.packages
-    }
+      tour_id: item.tour_id,
+      packages: item.packages,
+    };
+    console.log(payload,'......payload')
     await call(UPDATE_TOURS, payload)
-            // setShowReturnPopup(true)
-            // .then((res)=>(res.data,'.....res'))
-            .then((res)=>{
-              // console.log(res,'......res')
-              if(res.status === 200){
-                setShowReturnPopup(true);
-                setHeaderMessage("Tour Updated Successfully")
-              }
-            })
-            .catch((error)=>{
-              setShowReturnPopup(true)
-              setHeaderMessage(error)
-            })
-  }
+      // setShowReturnPopup(true)
+      // .then((res)=>(res.data,'.....res'))
+      .then((res) => {
+        // console.log(res,'......res')
+        if (res.status === 200) {
+          setShowReturnPopup(true);
+          setHeaderMessage("Tour Updated Successfully");
+        }
+      })
+      .catch((error) => {
+        setShowReturnPopup(true);
+        setHeaderMessage(error);
+      });
+  };
   const packOnchangeHandle = (tourId, pkgtype, field, value) => {
     setTours((prevTours) =>
       prevTours.map((tour) => {
         // console.log(tour,'.......tourfromsettours')
         if (tour.tour_id === tourId) {
+          // console.log(tour,'....tourinside')
           return {
             ...tour,
             packages: {
@@ -54,11 +56,13 @@ function ToursAmount() {
       })
     );
   };
-  
+
   // console.log(tours,'......tours')
   const getTours = async () => {
     const payload = {};
-    await call(GET_TOURS, payload).then((res) => setTours(res?.data?.data));
+    await call(GET_TOURS, payload)
+          .then((res) => setTours(res?.data?.data))
+          .catch((error)=>console.log(error,'.....error'));
   };
 
   useEffect(() => {
@@ -94,8 +98,8 @@ function ToursAmount() {
       field: "tour_date",
     },
     {
-      header: "LOCATION",
-      field: "location",
+      header: "COUNTRY",
+      field: "country",
     },
     {
       header: "TOUR_TITLE",
@@ -113,12 +117,12 @@ function ToursAmount() {
   const tableData = mappingArray?.map((item) => {
     return {
       tour_date: item.schedule_from,
-      location: item.country,
+      country: item.country,
       website: item.website,
       tour_title: item.tour_title,
       packages: (
-        <div>
-          <div className="d-flex justify-content-center ms-2">
+        <div className="amount-div">
+          <div className="d-flex justify-content-center ms-4 w-100 head-position">
             <div className="input-custum text-center d-flex align-items-center">
               Min Amount
             </div>
@@ -131,43 +135,59 @@ function ToursAmount() {
           </div>
           {packagesType.map((pkgtype, index) => {
             return (
-              <div className="d-flex align-items-center"
-                    key={index}
-              >
-                <div>{pkgtype}</div>
+              <div className="d-flex align-items-center w-100 row" key={index}>
+                <div className="col-3">{pkgtype}</div>
                 <input
-                  className="input-custum text-center"
-                  type="number"
+                  className="input-custum text-center col-3"
+                  type="text"
                   name="minamount"
-                  defaultValue={item?.packages[pkgtype]?.minamount || ""}
-                  onChange={(e) => packOnchangeHandle(item.tour_id,pkgtype, "minamount", e.target.value)}
+                  value={item?.packages[pkgtype]?.minamount || ""}
+                  onChange={(e) =>
+                    packOnchangeHandle(
+                      item.tour_id,
+                      pkgtype,
+                      "minamount",
+                      e.target.value
+                    )
+                  }
                 ></input>
                 <input
-                  className="input-custum text-center"
-                  type="number"
+                  className="input-custum text-center col-3"
+                  type="text"
                   name="maxamount"
-                  defaultValue={item?.packages[pkgtype]?.maxamount || ""}
-                  onChange={(e) => packOnchangeHandle(item.tour_id,pkgtype, "maxamount", e.target.value)}
+                  value={item?.packages[pkgtype]?.maxamount || ""}
+                  onChange={(e) =>
+                    packOnchangeHandle(
+                      item.tour_id,
+                      pkgtype,
+                      "maxamount",
+                      e.target.value
+                    )
+                  }
                 ></input>
                 <input
-                  className="input-custum text-center"
-                  type="number"
+                  className="input-custum text-center col-3"
+                  type="text"
                   name="allowedpersons"
-                  defaultValue={item?.packages[pkgtype]?.allowedpersons  || ""}
-                  onChange={(e) => packOnchangeHandle(item.tour_id,pkgtype, "allowedpersons", e.target.value)}
+                  value={item?.packages[pkgtype]?.allowedpersons || ""}
+                  onChange={(e) =>
+                    packOnchangeHandle(
+                      item.tour_id,
+                      pkgtype,
+                      "allowedpersons",
+                      e.target.value
+                    )
+                  }
                 ></input>
               </div>
             );
           })}
-          <div className="d-flex align-items-center ms-2">
+          <div className="d-flex align-items-center">
             <button
-              className="input-custum text-center select-button"
+              className="input-custum text-center select-button update-position"
               onClick={() => submitTourPackages(item)}
             >
-              SUBMIT
-            </button>
-            <button className="input-custum text-center select-button" disabled>
-              EDIT
+              UPDATE
             </button>
           </div>
         </div>

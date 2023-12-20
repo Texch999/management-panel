@@ -34,17 +34,20 @@ function ManageTournament() {
   const [reRendering, setReRendering] = useState(false);
   const [showScreenshotImg, setShowScreenshotImg] = useState(false);
   const [documentView, setDocumentView] = useState("");
+  const [booknowSelectedIds, setBooknowSelectedIds] = useState([]);
+  // const [isChecked, setIsChecked] = useState(false);
   const [selectedFilter, setSelectedFilter] = useState({
     tour_name: "All",
     website: "All",
     role: "All",
     user_name: "All",
-    location: "All",
+    country: "All",
   });
+  // console.log(isChecked, ".......isChecked");
   const changeStatusonPopupClosing = () => {
     setReRendering((prev) => !prev);
   };
-
+  // console.log(interestedMembers, "......interested");
   const gettingInterestedMembers = async () => {
     const payload = {};
     await call(GET_INTERESTED, payload)
@@ -54,16 +57,20 @@ function ManageTournament() {
       .catch((error) => console.log(error));
   };
 
-  const tourdetailsSubmitButton = async (tableData2) => {
-    const interestedMembersIds = tableData2.map((i) => {
-      return i.id;
-    });
+  const tourdetailsSubmitButton = async () => {
     const payload = {
-      selectedTeam: interestedMembersIds,
+      selectedTeam: booknowSelectedIds,
       tour_details: addingTourDetails,
     };
     await call(BOOKNOW_FOR_INTERESTED, payload)
-      .then((res) => console.log(res))
+      .then((res) => {
+        if(res?.data?.status===200){
+          setHeader("Tour Details Added Successfully")
+          setState(true)
+          setAddingTourDetails("")
+          setBooknowSelectedIds([])
+        }
+      })
       .catch((error) => console.log(error));
   };
   const gettingguestsdocs = async () => {
@@ -111,6 +118,15 @@ function ManageTournament() {
       [e.target.name]: e.target.value,
     });
   };
+  const handleBooknowtoggleClick = (e, interested_id) => {
+    let filterArrey = booknowSelectedIds?.filter(
+      (item) => item !== interested_id
+    );
+    e?.target?.checked === true
+      ? setBooknowSelectedIds([...booknowSelectedIds, interested_id])
+      : setBooknowSelectedIds(filterArrey);
+  };
+  // console.log(booknowSelectedIds, ".......booknowselectedids");
 
   const manageButtons = [
     "Interested Team",
@@ -119,6 +135,7 @@ function ManageTournament() {
     "Receive Document/Payment",
     "Confirm Booking List",
   ];
+  // const countryArray =
   const manageDropdown = [
     {
       head: "Tours",
@@ -133,18 +150,35 @@ function ManageTournament() {
       ],
     },
     {
-      head: "Location",
-      name: "location",
-      options: ["All", "India", "Srilanka", "Bangladesh", "Dubai"],
+      head: "Country",
+      name: "country",
+      options: [
+        "All",
+        ...new Set(
+          interestedMembers
+            .filter((item) => {
+              if (item.country !== undefined) {
+                return item;
+              }
+            })
+            .map((item) => item.country)
+        ),
+      ],
     },
     {
       head: "Website",
       name: "website",
       options: [
         "All",
-        "www.we2call.com",
-        "www.texchange.com",
-        "www.raavana.com",
+        ...new Set(
+          interestedMembers
+            .filter((item) => {
+              if (item.website !== undefined) {
+                return item;
+              }
+            })
+            .map((item) => item.website)
+        ),
       ],
     },
     {
@@ -152,19 +186,32 @@ function ManageTournament() {
       name: "role",
       options: [
         "All",
-        "Director",
-        "super-admin",
-        "Sub Admin",
-        "admin",
-        "Super Master",
-        "Master",
-        "Agent",
+        ...new Set(
+          interestedMembers
+            .filter((item) => {
+              if (item.role !== undefined) {
+                return item;
+              }
+            })
+            .map((item) => item.role)
+        ),
       ],
     },
     {
       head: "Name",
       name: "user_name",
-      options: ["All", "jay", "vinod", "ravi", "babu"],
+      options: [
+        "All",
+        ...new Set(
+          interestedMembers
+            .filter((item) => {
+              if (item.user_name !== undefined) {
+                return item;
+              }
+            })
+            .map((item) => item.user_name)
+        ),
+      ],
     },
   ];
 
@@ -198,15 +245,18 @@ function ManageTournament() {
       field: "schedule_start",
     },
     {
-      header: "LOCATION",
-      field: "location",
+      header: "COUNTRY",
+      field: "country",
     },
     {
       field: "cl",
       clr: true,
     },
+    {
+      field: "check",
+    },
   ];
-
+  // console.log(interestedMembers,'......interestedmembers')
   const tableData =
     interestedMembers && interestedMembers.length > 0
       ? interestedMembers
@@ -218,10 +268,10 @@ function ManageTournament() {
             }
           })
           .filter((item) => {
-            if (selectedFilter?.location === "All") {
+            if (selectedFilter?.country === "All") {
               return item;
             } else {
-              return item.location === selectedFilter.location;
+              return item.country === selectedFilter.country;
             }
           })
           .filter((item) => {
@@ -238,6 +288,13 @@ function ManageTournament() {
               return item.role === selectedFilter.role;
             }
           })
+          .filter((item) => {
+            if (selectedFilter?.user_name === "All") {
+              return item;
+            } else {
+              return item.user_name === selectedFilter.user_name;
+            }
+          })
           .map((item, index) => {
             return {
               id: item.interested_id,
@@ -249,7 +306,7 @@ function ManageTournament() {
               tour_name: item.tour_name,
               schedule_start: item.schedule_start,
               schedule_end: item.schedule_end,
-              location: item.location,
+              country: item.country,
               cl:
                 item.selected === false ? (
                   <button
@@ -282,10 +339,10 @@ function ManageTournament() {
             }
           })
           .filter((item) => {
-            if (selectedFilter?.location === "All") {
+            if (selectedFilter?.country === "All") {
               return item;
             } else {
-              return item.location === selectedFilter.location;
+              return item.country === selectedFilter.country;
             }
           })
           .filter((item) => {
@@ -302,6 +359,13 @@ function ManageTournament() {
               return item.role === selectedFilter.role;
             }
           })
+          .filter((item) => {
+            if (selectedFilter?.user_name === "All") {
+              return item;
+            } else {
+              return item.user_name === selectedFilter.user_name;
+            }
+          })
           .map((item, index) => {
             return {
               id: item.interested_id,
@@ -313,7 +377,7 @@ function ManageTournament() {
               tour_name: item.tour_name,
               schedule_start: item.schedule_start,
               schedule_end: item.schedule_end,
-              location: item.location,
+              country: item.country,
               cl: item.selected === true && (
                 <button
                   className="select-button btn-color"
@@ -324,6 +388,16 @@ function ManageTournament() {
                   De-select
                 </button>
               ),
+              check:
+                activeManageIndex === 2 ? (
+                  <input
+                    className="d-flex justify-content-center align-items-center text-center"
+                    type="checkbox"
+                    onChange={(e) =>
+                      handleBooknowtoggleClick(e, item.interested_id)
+                    }
+                  ></input>
+                ) : null,
             };
           })
       : [];
@@ -381,6 +455,10 @@ function ManageTournament() {
     //   field: "clr",
     // },
   ];
+  const handleDocClickhereButton = (item) => {
+    setGuestsDetails(item);
+    setOpenGuestDetailsPopup(true);
+  };
   const handleClickhereButton = (item) => {
     setGuestsDetails(item);
     setOpenGuestDetailsPopup(true);
@@ -391,20 +469,23 @@ function ManageTournament() {
   };
 
   const updatingImageUrlinTable = async (url, item, amenityType) => {
-    console.log(amenityType, "...amenitytype");
+    // console.log(item,'.......item')
+    // console.log(amenityType, "...amenitytype");
     const payload = {
       [amenityType]: url,
       tour_payment_id: item.tour_payment_id,
     };
+    // console.log(payload, "......payload");
     await call(UPDATE_TOUR_PAYMENTS_DOCUMENTS, payload)
       .then((res) => {
         setReRendering((prev) => !prev);
-        console.log(res, "......image url updated successfully in table");
+        // console.log(res, "......image url updated successfully in table");
       })
       .catch((error) => console.log(error));
   };
 
   const handleUploadChange = async (e, item, amenityType) => {
+    // console.log(item, ".....consolefrom onclick");
     const imagefile = e.target.files[0];
     const imageId = Date.now();
     const imageuploadingurl = await generatesignedurl(imageId);
@@ -485,7 +566,7 @@ function ManageTournament() {
               <div>
                 <div
                   className="d-flex align-items-center button-custom"
-                  onClick={() => handleClickhereButton(item)}
+                  onClick={() => handleDocClickhereButton(item)}
                 >
                   Clickhere
                 </div>
@@ -571,12 +652,12 @@ function ManageTournament() {
       field: "totalAmount",
     },
     {
-      header: "HOTEL BOOKINGS",
-      field: "hotelBookings",
-    },
-    {
       header: "TRAVEL BOOKINGS",
       field: "travelBookings",
+    },
+    {
+      header: "HOTEL BOOKINGS",
+      field: "hotelBookings",
     },
     {
       header: "TOUR GUIDANCE",
@@ -604,6 +685,7 @@ function ManageTournament() {
       ? guestDocs
           .filter((item) => item.confirm_payment_status === "Approved")
           .map((item, index) => {
+            // console.log(item,'....item from map')
             return {
               sl: index + 1,
               website: item.website,
@@ -635,18 +717,6 @@ function ManageTournament() {
                       ))
                     )
                   : null,
-              // tourAmenities: (
-              //   <div>
-              //     travel bookings
-              //     <MdInsertPhoto className="ms-1 ions-clr" />
-              //     <br />
-              //     hotel bookings
-              //     <MdInsertPhoto className="ms-1 ions-clr" />
-              //     <br />
-              //     tour guidance
-              //     <MdInsertPhoto className="ms-1 ions-clr" />
-              //   </div>
-              // ),
               travelBookings: (
                 <div>
                   <div
@@ -673,12 +743,12 @@ function ManageTournament() {
                   </div>
                   <label
                     className="d-flex align-items-center mt-1 button-custom"
-                    htmlFor="travel_bookings"
+                    htmlFor={`travel_bookings_${index}`}
                   >
                     <input
                       type="file"
-                      id="travel_bookings"
-                      name="travel_bookings"
+                      id={`travel_bookings_${index}`}
+                      name={`travel_bookings_${index}`}
                       className="fileupload-input-display-none"
                       onChange={(e) =>
                         handleUploadChange(e, item, "travel_bookings")
@@ -714,12 +784,12 @@ function ManageTournament() {
                   </div>
                   <label
                     className="d-flex align-items-center mt-1 button-custom"
-                    htmlFor="hotel_bookings"
+                    htmlFor={`hotel_bookings_${index}`}
                   >
                     <input
                       type="file"
-                      id="hotel_bookings"
-                      name="hotel_bookings"
+                      id={`hotel_bookings_${index}`}
+                      name={`hotel_bookings_${index}`}
                       className="fileupload-input-display-none"
                       onChange={(e) =>
                         handleUploadChange(e, item, "hotel_bookings")
@@ -755,13 +825,13 @@ function ManageTournament() {
                   </div>
                   <label
                     className="d-flex align-items-center mt-1 button-custom"
-                    htmlFor="tour_guidance"
+                    htmlFor={`tour_guidance_${index}`}
                     // onClick={()=>handleUploadClick(tourGuidanceRef)}
                   >
                     <input
                       type="file"
-                      id="tour_guidance"
-                      name="tour_guidance"
+                      id={`tour_guidance_${index}`}
+                      name={`tour_guidance_${index}`}
                       // ref={tourGuidanceRef}
                       className="fileupload-input-display-none"
                       onChange={(e) =>
@@ -784,7 +854,7 @@ function ManageTournament() {
             };
           })
       : [];
-
+  // console.log(ConfirmBookingData,".........ConfirmBookingData")
   const handleManageHead = (index) => {
     setActiveManageIndex(index);
   };
@@ -856,7 +926,7 @@ function ManageTournament() {
             <button
               className="select-button button-position"
               onClick={() => {
-                tourdetailsSubmitButton(tableData2);
+                tourdetailsSubmitButton();
               }}
             >
               Submit
