@@ -44,7 +44,7 @@ function ManageTournament() {
   const changeStatusonPopupClosing = () => {
     setReRendering((prev) => !prev);
   };
-
+  console.log(interestedMembers, "......interested");
   const gettingInterestedMembers = async () => {
     const payload = {};
     await call(GET_INTERESTED, payload)
@@ -119,6 +119,7 @@ function ManageTournament() {
     "Receive Document/Payment",
     "Confirm Booking List",
   ];
+  // const countryArray =
   const manageDropdown = [
     {
       head: "Tours",
@@ -135,16 +136,33 @@ function ManageTournament() {
     {
       head: "Country",
       name: "country",
-      options: ["All", "India", "Srilanka", "Bangladesh", "Dubai"],
+      options: [
+        "All",
+        ...new Set(
+          interestedMembers
+            .filter((item) => {
+              if (item.country !== undefined) {
+                return item;
+              }
+            })
+            .map((item) => item.country)
+        ),
+      ],
     },
     {
       head: "Website",
       name: "website",
       options: [
         "All",
-        "www.we2call.com",
-        "www.texchange.com",
-        "www.raavana.com",
+        ...new Set(
+          interestedMembers
+            .filter((item) => {
+              if (item.website !== undefined) {
+                return item;
+              }
+            })
+            .map((item) => item.website)
+        ),
       ],
     },
     {
@@ -152,19 +170,32 @@ function ManageTournament() {
       name: "role",
       options: [
         "All",
-        "Director",
-        "super-admin",
-        "Sub Admin",
-        "admin",
-        "Super Master",
-        "Master",
-        "Agent",
+        ...new Set(
+          interestedMembers
+            .filter((item) => {
+              if (item.role !== undefined) {
+                return item;
+              }
+            })
+            .map((item) => item.role)
+        ),
       ],
     },
     {
       head: "Name",
       name: "user_name",
-      options: ["All", "jay", "vinod", "ravi", "babu"],
+      options: [
+        "All",
+        ...new Set(
+          interestedMembers
+            .filter((item) => {
+              if (item.user_name !== undefined) {
+                return item;
+              }
+            })
+            .map((item) => item.user_name)
+        ),
+      ],
     },
   ];
 
@@ -238,6 +269,13 @@ function ManageTournament() {
               return item.role === selectedFilter.role;
             }
           })
+          .filter((item) => {
+            if (selectedFilter?.user_name === "All") {
+              return item;
+            } else {
+              return item.user_name === selectedFilter.user_name;
+            }
+          })
           .map((item, index) => {
             return {
               id: item.interested_id,
@@ -300,6 +338,13 @@ function ManageTournament() {
               return item;
             } else {
               return item.role === selectedFilter.role;
+            }
+          })
+          .filter((item) => {
+            if (selectedFilter?.user_name === "All") {
+              return item;
+            } else {
+              return item.user_name === selectedFilter.user_name;
             }
           })
           .map((item, index) => {
@@ -388,7 +433,7 @@ function ManageTournament() {
   const handleClickhereButton = (item) => {
     setGuestsDetails(item);
     setOpenGuestDetailsPopup(true);
-  }
+  };
   const handlePaymentDetailsClick = (item) => {
     setGuestsDetails(item);
     setShowPaymentDetailsPopup(true);
@@ -401,7 +446,7 @@ function ManageTournament() {
       [amenityType]: url,
       tour_payment_id: item.tour_payment_id,
     };
-    console.log(payload,'......payload')
+    console.log(payload, "......payload");
     await call(UPDATE_TOUR_PAYMENTS_DOCUMENTS, payload)
       .then((res) => {
         setReRendering((prev) => !prev);
@@ -411,7 +456,7 @@ function ManageTournament() {
   };
 
   const handleUploadChange = async (e, item, amenityType) => {
-    console.log(item,'.....consolefrom onclick')
+    console.log(item, ".....consolefrom onclick");
     const imagefile = e.target.files[0];
     const imageId = Date.now();
     const imageuploadingurl = await generatesignedurl(imageId);
@@ -780,7 +825,7 @@ function ManageTournament() {
             };
           })
       : [];
-// console.log(ConfirmBookingData,".........ConfirmBookingData")
+  // console.log(ConfirmBookingData,".........ConfirmBookingData")
   const handleManageHead = (index) => {
     setActiveManageIndex(index);
   };
