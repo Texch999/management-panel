@@ -37,9 +37,6 @@ function TopupHoursDiscount(props) {
     }
     
     const payload = {
-      created_date: "12:30:20 PM",
-      created_time: "5/11/2023",
-      expiry_time: "5/11/2023",
       is_autherised: "true",
       monthly_package: {
         montly_package_cost: inputData[item?.monthlyPriceKey],
@@ -63,13 +60,11 @@ function TopupHoursDiscount(props) {
       website: packageInputs?.website_name || 0,
       country_name: packageInputs?.country_name || 0,
     };
-    console.log("payload====>", payload);
     setErr("");
     setIsProcessing(true);
     await call(PACKAGES_CREATION, payload)
       .then((res) => {
         if (res.data.statusCode === 200) {
-          console.log("res====>", res);
           setIsProcessing(false);
           setInputData({});
         } else {

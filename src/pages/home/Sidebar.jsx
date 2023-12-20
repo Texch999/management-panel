@@ -1,11 +1,10 @@
-import React, { useState } from "react";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import "font-awesome/css/font-awesome.min.css";
 import "./style.css";
 import { HiOutlineUserAdd } from "react-icons/hi";
 import { LiaAdSolid } from "react-icons/lia";
 import { LuCopyPlus } from "react-icons/lu";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { ImTicket } from "react-icons/im";
 import { BsBank2 } from "react-icons/bs";
 import { GrDocumentText } from "react-icons/gr";
@@ -14,7 +13,6 @@ import { LuHeartHandshake } from "react-icons/lu";
 import { HiOutlineClipboardDocumentList } from "react-icons/hi2";
 import { TbPackages } from "react-icons/tb";
 import { RiUserShared2Line } from "react-icons/ri";
-import { AiOutlineGlobal } from "react-icons/ai";
 import { FaMoneyCheck } from "react-icons/fa";
 import { GoXCircle } from "react-icons/go";
 import { AiOutlineQuestionCircle } from "react-icons/ai";
@@ -24,10 +22,9 @@ import { BiSolidOffer } from "react-icons/bi";
 import { PiAirplaneTiltBold } from "react-icons/pi";
 import { TiMessages } from "react-icons/ti";
 import { Images } from "../../images";
-import { BsChevronDown } from "react-icons/bs";
 function Sidebar() {
   const location = useLocation();
-
+  const navigate = useNavigate();
   const sidebar = [
     {
       title: "Dashboard",
@@ -112,11 +109,11 @@ function Sidebar() {
       ariaExpanded: "false",
       ariaControls: "reference",
       childMenu: [
-        {
-          title: "Country/Currency",
-          path: "/countrycurrency",
-          reactIcon: <AiOutlineGlobal />,
-        },
+        // {
+        //   title: "Country/Currency",
+        //   path: "/countrycurrency",
+        //   reactIcon: <AiOutlineGlobal />,
+        // },
         {
           title: "Payment Gateway",
           path: "/paymentgateway",
@@ -164,7 +161,10 @@ function Sidebar() {
   return (
     <div className="d-flex justify-content-between flex-column sidebar-bg th-color p-1 vh-100">
       <div className="sidebar">
-        <div className="d-flex align-items-center justfy-content-center p-2">
+        <div
+          className="d-flex align-items-center justfy-content-center p-2"
+          onClick={() => navigate("/login")}
+        >
           <img src={Images.SsevenLogo} className="sseven-logo-size" />
         </div>
         <hr className="th-color mt-2"></hr>
@@ -242,7 +242,10 @@ function Sidebar() {
       <div>
         <hr className="text-white mt-2"></hr>
         <div className="nav-item p-2 d-flex align-items-center">
-          <a href="" className="d-flex align-items-center p-1 text-decoration-none text-white">
+          <a
+            href=""
+            className="d-flex align-items-center p-1 text-decoration-none text-white"
+          >
             <i className="d-flex align-items-center bi bi-person-circle me-3 fs-5"></i>
             <span className="text-white fs-8">Name</span>
           </a>

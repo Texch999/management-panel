@@ -60,6 +60,11 @@
   border: none;
   color: #ffffff;
 }
+.all-none2 {
+  outline: none;
+  border: none;
+  background: none;
+}
 /* .all-none::placeholder {
   color: #8da3d0;
   font-weight: 600;

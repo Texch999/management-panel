@@ -3,7 +3,10 @@ import Table from "../table/Table";
 import { MdOutlineEdit } from "react-icons/md";
 import AddReasonPopup from "../Popups/AddReasonPopup";
 import { useEffect, useState } from "react";
-import { GET_SETTINGS_DATA } from "../../config/endpoints";
+import {
+  GET_SETTINGS_DATA,
+  REJECT_QUESTIONS_ACTIVE_INACTIVE  
+} from "../../config/endpoints";
 import { call } from "../../config/axios";
 
 function Rejectionreason() {
@@ -13,6 +16,7 @@ function Rejectionreason() {
   const [selectedOption, setSelectedOption] = useState("Active");
   const [searchText, setSearchText] = useState("");
   const [status, setStatus] = useState(false);
+  const [active, setActive] = useState(false);
   const handleSelectChange = (event) => {
     const selectedValue = event.target.value;
     setSelectedOption(selectedValue);
@@ -59,9 +63,24 @@ function Rejectionreason() {
       })
       .catch((err) => console.log(err));
   };
+  const handleBlockUnBlock = async (item) => {
+    const payload = {
+      s_id: item,
+      active: !active,
+    };
+    await call(REJECT_QUESTIONS_ACTIVE_INACTIVE, payload)
+      .then((res) => {
+        if (res.status === 200) {
+          setActive((prev) => !prev);
+        }
+        console.log(res, "res===>");
+      })
+      .catch((err) => console.log(err));
+  };
   useEffect(() => {
     getAllRejectQuestions();
-  }, [status]);
+  }, [active]);
+
 
   const modifiedRejectionreasonDetails = searchText.length
     ? filteredQuestions
@@ -73,19 +92,23 @@ function Rejectionreason() {
         .filter((item) =>
           item?.reason?.toLowerCase().includes(searchText.toLowerCase())
         )
-        .map((item)=>{
+        .map((item) => {
           if (item.reason !== "") {
             return {
               reason: <div className="role-color">{item?.reason}</div>,
               description: item?.description,
-              status:
-                item?.is_active === 1 ? (
-                  <div className="font-green custom-active-button px-2">
-                    Active
-                  </div>
-                ) : (
-                  <div className="custom-deactive-button px-2">InActive</div>
-                ),
+              status: (
+                <div
+                  className={
+                    item?.active
+                      ? "font-green custom-active-button px-2"
+                      : "custom-deactive-button px-2"
+                  }
+                  onClick={() => handleBlockUnBlock(item?.s_id)}
+                >
+                  {item?.active ? "Active" : "InActive"}
+                </div>
+              ),
               icon: <MdOutlineEdit className="eye-icon-size" />,
             };
           }
@@ -100,19 +123,22 @@ function Rejectionreason() {
           return {
             reason: <div className="role-color">{item?.reason}</div>,
             description: item?.description,
-            status:
-              item?.is_active === 1 ? (
-                <div className="font-green custom-active-button px-2">
-                  Active
-                </div>
-              ) : (
-                <div className="custom-deactive-button px-2">InActive</div>
-              ),
+            status: (
+              <div
+                className={
+                  item?.active
+                    ? "font-green custom-active-button px-2"
+                    : "custom-deactive-button px-2"
+                }
+                onClick={() => handleBlockUnBlock(item?.s_id)}
+              >
+                {item?.active ? "Active" : "InActive"}
+              </div>
+            ),
             icon: (
               <MdOutlineEdit
                 className="eye-icon-size"
                 onClick={() => {
-                  console.log("testetestste");
                   setSelectedQuestion(item);
                   handleRejectionPopupOpen();
                 }}
@@ -176,7 +202,11 @@ function Rejectionreason() {
       <AddReasonPopup
         rejectPopupOpen={rejectPopupOpen}
         SetRejectpopupOpen={SetRejectpopupOpen}
-        Heading={`${selectedQuestion ? "Update Reason" : "Add Reason"} `}
+        Heading={`${
+          selectedQuestion
+            ? "Update Reason"
+            : "Add Reason"
+        } `}
         firstSelect="Reason"
         firstTextarea="Description"
         setStatus={setStatus}

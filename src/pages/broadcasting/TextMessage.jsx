@@ -10,10 +10,12 @@ import {
 
 import { call } from "../../config/axios";
 import { FaRegCalendarAlt } from "react-icons/fa";
+import MatchSubmitPopup from "../../matchpopups/MatchSubmitPopup";
 
 function TextMessage() {
   const [textmessage, setTextMessage] = useState({});
   const [error, setError] = useState("");
+  const [textSubmitPopup, setTextSubmitPopup] = useState(false);
   const handelTextMessage = async (status) => {
     if (
       !(
@@ -41,6 +43,11 @@ function TextMessage() {
       }).then((res) => {
         console.log("------------>", res);
         setTextMessage(res?.data?.data);
+        setTextSubmitPopup(true);
+        setTimeout(() => {
+          setTextSubmitPopup(false);
+        });
+      
       });
     }
   };
@@ -151,7 +158,7 @@ function TextMessage() {
                         Select...
                       </option>
                       <option value="All">All</option>
-                      {allUsers.map((obj) => (
+                      {allUsers?.map((obj) => (
                         <option value={obj.user_name} selected>
                           {obj.user_name}
                         </option>
@@ -172,7 +179,7 @@ function TextMessage() {
                     >
                       <option value="select">select</option>
                       <option value="All">All</option>
-                      {allCountries.map((obj) => (
+                      {allCountries?.map((obj) => (
                         <option value={obj.country_name} selected>
                           {obj.country_name}
                         </option>
@@ -314,6 +321,11 @@ function TextMessage() {
             Cancel
           </button>
         </div>
+        <MatchSubmitPopup
+          header={"BroadCast Added successfully"}
+          state={textSubmitPopup}
+          setState={setTextSubmitPopup}
+        />
       </div>
     </div>
   );

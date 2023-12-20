@@ -11,6 +11,7 @@ import {
   GET_COUNTRY_AND_CURRENCY,
   GENERATE_SIGNED_URL,
 } from "../../config/endpoints";
+import MatchSubmitPopup from "../../matchpopups/MatchSubmitPopup";
 
 function OfferPosterAdds() {
   const ImageBaseUrl = "https://we2-call-images.s3.us-east-2.amazonaws.com";
@@ -20,6 +21,7 @@ function OfferPosterAdds() {
   const [uploadImage, setuploadImage] = useState([]);
   const [profileImage, setProfileImage] = useState("");
   const [error, setError] = useState("");
+  const [broadCastSubmitPopup,setBroadCastSubmitPopup]=useState(false)
   //console.log(notificationtextmsg, "res----------->");
 
   const uploadfileInputRef = useRef(null);
@@ -59,6 +61,10 @@ function OfferPosterAdds() {
         status,
       }).then(async (res) => {
         setallPosters(res?.data);
+        setBroadCastSubmitPopup(true)
+        setTimeout(()=>{
+          setBroadCastSubmitPopup(false)
+        },2000)
         singedUrl &&
           profileImage &&
           (await fetch(singedUrl, {
@@ -215,7 +221,7 @@ function OfferPosterAdds() {
                         Select...
                       </option>
                       <option value="All">All</option>
-                      {allUsers.map((obj) => (
+                      {allUsers?.map((obj) => (
                         <option value={obj.user_name} selected>
                           {obj.user_name}
                         </option>
@@ -237,7 +243,7 @@ function OfferPosterAdds() {
                     >
                       <option value="select">select..</option>
                       <option value="All">All</option>
-                      {allCountries.map((obj) => (
+                      {allCountries?.map((obj) => (
                         <option value={obj.country_name} selected>
                           {obj.country_name}
                         </option>
@@ -404,6 +410,11 @@ function OfferPosterAdds() {
             Cancel
           </button>
         </div>
+        <MatchSubmitPopup
+            header={"Poster Added Successfully"}
+            state={broadCastSubmitPopup}
+            setState={setBroadCastSubmitPopup}
+        />
       </div>
     </div>
   );

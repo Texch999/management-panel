@@ -7,6 +7,14 @@
 .package-heading-bg {
   background-color: #313248;
 }
+.form-switch .form-check-input {
+  width: 5em;
+  border: solid 1px #264990;
+  background-color: #5648d6;
+}
+.form-check-input {
+  height: 2em;
+}
 .dollar-icon-bg {
   background-color: #9155fd;
   color: #ffffff;
@@ -81,4 +89,7 @@
 }
 .font-20 {
   font-size: 20px !important;
+}
+.font-1rem {
+  font-size: 1.5rem !important;
 }

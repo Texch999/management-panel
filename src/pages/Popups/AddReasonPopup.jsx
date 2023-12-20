@@ -19,7 +19,6 @@ function AddReasonPopup(props) {
   const [formData, setFormData] = useState({
     p_id: "REJECT-REASON",
     register_id: "company",
-    question: "",
     reason: "",
     active: "Select",
     description: "",
@@ -31,7 +30,7 @@ function AddReasonPopup(props) {
         p_id: "REJECT-REASON",
         register_id: "company",
         reason: selectedQuestion.reason || "",
-        active: selectedQuestion.is_active || "Select",
+        active: selectedQuestion.active || "Select",
         description: selectedQuestion.description || "",
       });
     } else {
@@ -77,6 +76,13 @@ function AddReasonPopup(props) {
       }
 
       const res = await call(url, requestData);
+      if (res.data.status === 200) {
+        setAcceptClick(true);
+        setTimeout(() => {
+          setAcceptClick(false);
+          SetRejectpopupOpen(false);
+        }, 2000);
+      }
 
       if (res.data.error) {
         console.error("API Error:", res.data.message);
@@ -168,7 +174,11 @@ function AddReasonPopup(props) {
         </Modal.Body>
       </Modal>
       <MatchSubmitPopup
-        header={"Ticket Upgraded Successfully"}
+        header={
+          acceptClick
+            ? "Updated Reject Questions Successfully "
+            : "Created Reject Questions Successfully"
+        }
         state={acceptClick}
         setState={setAcceptClick}
         setStatus={setStatus}

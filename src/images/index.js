@@ -18,17 +18,17 @@ export const Images = {
   Vip: "./assets/VIP.png",
   QuestionMark: "./assets/question_mark.png",
   CheckedMark: "./assets/checked_Mark.png",
-  SsevenLogo:"./assets/ssevenLogo.png",
-
-    //added//
-    DarkBGImage: "/assets/dark_back_ground.png",
-    dhawan_image: "./assets/dhawan.png",
-    sachin_image: "./assets/sachin.png",
-    kohli_image: "./assets/kohli.png",
-    dhoni_image: "./assets/dhoni.png",
-    rohit_image: "./assets/rohit.png",
-    raina_image: "./assets/raina.png",
-    GreenDoubleTick: "./assets/green_double_tick.png",
+  SsevenLogo: "./assets/ssevenLogo.png",
+  DarkBGImage: "/assets/dark_back_ground.png",
+  dhawan_image: "./assets/dhawan.png",
+  sachin_image: "./assets/sachin.png",
+  kohli_image: "./assets/kohli.png",
+  dhoni_image: "./assets/dhoni.png",
+  rohit_image: "./assets/rohit.png",
+  raina_image: "./assets/raina.png",
+  GreenDoubleTick: "./assets/green_double_tick.png",
+  LoginLogo: "./assets/Login_Logo.png",
 };
 
-export const ImageBaseUrl = "https://we2-call-images.s3.us-east-2.amazonaws.com";
+export const ImageBaseUrl =
+  "https://we2-call-images.s3.us-east-2.amazonaws.com";

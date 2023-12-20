@@ -31,15 +31,16 @@ function OfferMessagePopup(props) {
     await call(UPDATE_OFFER, payload)
       .then((res) => {
         if (res.status.data === 200) {
+          setAddOffersPopup(true);
           setTimeout(() => {
             setAddOffersPopup(false);
-            setShowOfferOpen(false);
+            // setShowOfferOpen(false);
           }, 2000);
         }
         if (res.data.error) {
           console.log("API Error...", res.data.message);
         } else {
-          setAddOffersPopup(true);
+          // setAddOffersPopup(true);
           handleOfferClose();
           setTextMessage({});
         }
