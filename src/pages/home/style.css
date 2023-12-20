@@ -2,7 +2,6 @@ input::-webkit-calendar-picker-indicator {
   color: red;
   opacity: 0;
 }
-
 .header-div {
   width: 91%;
   height: 10vh !important;
@@ -10,15 +9,29 @@ input::-webkit-calendar-picker-indicator {
   top: 0;
   background: #232333;
 }
-/* .homepage-div {
-  width: 86%;
-  height: 92vh;
-  position: fixed;
-  bottom: 0;
-  overflow-y: scroll;
-} */
+.border-right {
+  border-right: 1px solid #727488;
+}
 .mt-8vh {
   margin-top: 8vh;
+}
+.h-92vh {
+  height: 92vh;
+}
+.login-logo {
+  width: 45%;
+  height: 15vh;
+}
+.login-bg {
+  background: #33344b;
+}
+.flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.red {
+  outline: 1px solid red;
 }
 @media (min-width: 577px) and (max-width: 768px) {
   .small-font {
@@ -191,6 +204,9 @@ input::-webkit-calendar-picker-indicator {
 }
 .day-button {
   border: solid 1px rgba(204, 201, 226, 0.28);
+  background-color: #3a3c58;
+}
+.day-button2 {
   background-color: #3a3c58;
 }
 .hr-color {
