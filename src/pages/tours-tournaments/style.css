@@ -7,6 +7,9 @@
   border: none;
   outline: none;
 }
+.amount-div {
+  width: 400px;
+}
 .btn-color {
   background: #fa2424 !important;
   color: whitesmoke;
@@ -99,6 +102,12 @@
   color: #2b2c40;
   border-radius: 5px;
 }
+.unblock-button {
+  background: orange;
+  color: #2b2c40;
+  border-radius: 5px;
+  width: 70px;
+}
 .edit-button {
   background: #696cff;
   color: #ffffff;
@@ -123,10 +132,18 @@
   height: 60vh;
   overflow-y: scroll;
 }
+.update-position {
+  position: relative;
+  left: 22%;
+}
+.head-position {
+  position: relative;
+  left: 1vw;
+}
 .input-custum {
   background: #3a3c58;
   border-radius: 5px;
-  width: 70px;
+  width: 90px;
   outline: none;
   border: none;
   color: #ffffff;
@@ -154,7 +171,7 @@
 }
 .button-custom-deactive {
   border: 1px solid rgb(88, 88, 88);
-  color:rgb(104, 104, 104) !important;
+  color: rgb(104, 104, 104) !important;
   border-radius: 5px;
   padding: 1px 5px;
 }

@@ -40,7 +40,7 @@ function Table(props) {
             ))}
           </tr>
         </thead>
-        <tbody className="td-color">
+        <tbody className="td-color w-100">
           {data?.length > 0 &&
             data?.map((item, rowIndex) => (
               <tr key={rowIndex} className="small-font td-color text-center">
@@ -50,7 +50,7 @@ function Table(props) {
                       key={colIndex}
                       className=" text-center d-felx align-items-center"
                     >
-                      <div className="d-flex justify-content-center align-items-center">
+                      <div className="justify-content-center align-items-center">
                         <div
                           className={
                             column?.header === "DESCRIPTION"
@@ -61,13 +61,33 @@ function Table(props) {
                           }
                           onClick={() => handleClickTable(column.field)}
                         >
-                          <td>{item[column.field]}</td>
+                          <div>{item[column.field]}</div>
                         </div>
                       </div>
                     </td>
                   );
                 })}
               </tr>
+
+              // <tr>
+              //   {columns?.map((col, colIndex) => {
+              //     return (
+              //       <td className="text-center">
+              //         <div
+              //           className={
+              //             col?.header === "DESCRIPTION"
+              //               ? "scroll-table-div"
+              //               : col?.clr
+              //               ? getColor(item[col.field])
+              //               : "d-flex text-center"
+              //           }
+              //         >
+              //           {item[col?.field]}
+              //         </div>
+              //       </td>
+              //     );
+              //   })}
+              // </tr>
             ))}
         </tbody>
 

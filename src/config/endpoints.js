@@ -55,10 +55,11 @@ const GET_TOUR_PAYMENT_GATEWAY = "/tours_banking/get_tour_payment_gateway";
 const UPDATE_TOUR_PAYMENT_GATEWAY =
   "/tours_banking/update_tour_payment_gateway";
 const GET_TOUR_PAYMENT_DOCUMENTS = "/tours/get_tour_payments_documents";
-const OFFERS_ACTIVE_INACTIVE = "/management/offers_active_inactive";
-const USERS_ACTIVE_INACTIVE = "/management/block_unblock_users";
 const PRESIGNED_URL = "/tours/presignedurl";
 const UPDATE_TOUR_PAYMENTS_DOCUMENTS = "/tours/update_tour_payments_documents";
+const OFFERS_ACTIVE_INACTIVE = "/management/offers_active_inactive";
+const USERS_ACTIVE_INACTIVE = "/management/block_unblock_users";
+const GET_ADMIN_ALL_ACCOUNTS = "/management/get_admin_all_accounts";
 const POLICY_DOCUMENT_ACTIVE_INACTIVE =
   "/management/policy_document_active_inactive";
 const PG_ACTIVE_INACTIVE = "/management/pg_active_inactive";
@@ -73,6 +74,11 @@ const DELETE = "DELETE";
 const POST = "POST";
 const GET = "POST";
 const PUT = "PUT";
+
+exports.GET_ADMIN_ALL_ACCOUNTS = {
+  method: POST,
+  url: GET_ADMIN_ALL_ACCOUNTS,
+};
 
 exports.UPDATE_TOUR_PAYMENTS_DOCUMENTS = {
   url: UPDATE_TOUR_PAYMENTS_DOCUMENTS,
