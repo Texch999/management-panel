@@ -30,8 +30,15 @@ input::-webkit-calendar-picker-indicator {
   align-items: center;
   justify-content: center;
 }
-.red {
-  outline: 1px solid red;
+.login-logo {
+  height: 50vh;
+  background-image: url("./assets/Map-BG.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.login-logo img {
+  height: 18vh;
+  width: 50%;
 }
 @media (min-width: 577px) and (max-width: 768px) {
   .small-font {
