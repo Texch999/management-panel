@@ -5,8 +5,8 @@ import { useNavigate } from "react-router-dom";
 
 function Login() {
   const navigate = useNavigate();
-  const user_name = "seven_boundaries";
-  const password = "seven_boundaries";
+  const user_name = "sseven";
+  const password = "sri@srija@1989";
   const [loginData, setLoginData] = useState();
   const [error, setError] = useState("");
   const handleChage = (e) => {

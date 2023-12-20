@@ -40,7 +40,7 @@ function App() {
   return (
     <>
       <BrowserRouter>
-        {isLogin !== "seven_boundaries" ? (
+        {isLogin !== "sseven" ? (
           <Login />
         ) : (
           <div className="d-flex main">
