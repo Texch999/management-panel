@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 import { HiPhotograph } from "react-icons/hi";
 import { call } from "../../config/axios";
 import { GET_TOURS, UPDATE_TOURS } from "../../config/endpoints";
-import TourEditPopup from "./TourEditPopup";
 import MatchSubmitPopup from "../../matchpopups/MatchSubmitPopup";
+import TourEditPopup from "./TourEditPopup";
 
 function Schedule() {
   const [activeHeadIndex, setActiveHeadIndex] = useState(0);
@@ -36,7 +36,7 @@ function Schedule() {
   };
   const handleOpenButton = (item) => {
     setEditTourDetails(item);
-    setisUpdate(false)
+    setisUpdate(false);
     setShowEditPopup(true);
   };
   const handleEditButton = (item) => {
@@ -154,7 +154,7 @@ function Schedule() {
                   </div>
                 </div>
               </div>
-              <hr style={{color:"whitesmoke"}}></hr>
+              <hr style={{ color: "whitesmoke" }}></hr>
             </div>
           );
         })}
