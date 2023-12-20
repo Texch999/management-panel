@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./App.css";
 import Sidebar from "./pages/home/Sidebar";
 import Homepage from "./pages/dashboard/Homepage";
@@ -33,81 +33,105 @@ import Chats from "./pages/chat/Chats";
 import AddNewOffer from "./pages/offersmanagement/AddNewOffer";
 import ToursBanking from "./pages/tourBanking/ToursBanking";
 import Login from "./pages/home/Login";
+
 function App() {
+  const isLogin = localStorage?.getItem("isLogin");
+
   return (
-    <BrowserRouter>
-      <div className="d-flex main">
-        <div className="w-auto side-b">
-          <Sidebar />
-        </div>
-        <div className="w-100 home-bg vh-100">
-          <div className="w-100 homepage-div mt-8vh">
-            <Header />
-            <Routes>
-              <Route path="/login" element={<Login />}></Route>
-              <Route path="/" element={<Homepage />}></Route>
-              <Route path="/addwebsites" element={<Addwebsites />}></Route>
-              <Route path="/adddirectors" element={<Adddirector />}></Route>
-              <Route
-                path="/usertransaction"
-                element={<Usertransaction />}
-              ></Route>
-              <Route path="/addtt" element={<Addtt />}></Route>
-              <Route path="/matchCreation" element={<Creatematch />}></Route>
-              <Route path="/tickets" element={<Tickets />}></Route>
-              <Route path="/reports" element={<Reports />}></Route>
-              <Route path="/packages" element={<Packages />}></Route>
-              <Route path="/settlement" element={<Settlement />}></Route>
-              <Route path="/mystatement" element={<MyStatement />}></Route>
-              <Route
-                path="/settlementstatement"
-                element={<SettlementStatement />}
-              ></Route>
-              <Route
-                path="/policydocuments"
-                element={<PolicyDocument />}
-              ></Route>
-              <Route
-                path="/countrycurrency"
-                element={<Countrycurrency />}
-              ></Route>
-              <Route
-                path="/paymentgateway"
-                element={<Paymentgateway />}
-              ></Route>
-              <Route
-                path="/rejectionreason"
-                element={<Rejectionreason />}
-              ></Route>
-              <Route
-                path="/securityquestions"
-                element={<Securityquestions />}
-              ></Route>
-              <Route path="/broadcasting" element={<Broadcasting />}></Route>
-              <Route
-                path="/publish-notification"
-                element={<NotificationTextMsg />}
-              ></Route>
+    <>
+      <BrowserRouter>
+        {isLogin !== "seven_boundaries" ? (
+          <Login />
+        ) : (
+          <div className="d-flex main">
+            <div className="w-auto side-b">
+              <Sidebar />
+            </div>
+            <div className="w-100 home-bg vh-100">
+              <div className="w-100 homepage-div mt-8vh">
+                <Header />
+                <Routes>
+                  {/* <Route
+                    path="/login"
+                    element={<Login setIsLogin={setIsLogin} />}
+                  ></Route> */}
+                  <Route path="/" element={<Homepage />}></Route>
+                  <Route path="/addwebsites" element={<Addwebsites />}></Route>
+                  <Route path="/adddirectors" element={<Adddirector />}></Route>
+                  <Route
+                    path="/usertransaction"
+                    element={<Usertransaction />}
+                  ></Route>
+                  <Route path="/addtt" element={<Addtt />}></Route>
+                  <Route
+                    path="/matchCreation"
+                    element={<Creatematch />}
+                  ></Route>
+                  <Route path="/tickets" element={<Tickets />}></Route>
+                  <Route path="/reports" element={<Reports />}></Route>
+                  <Route path="/packages" element={<Packages />}></Route>
+                  <Route path="/settlement" element={<Settlement />}></Route>
+                  <Route path="/mystatement" element={<MyStatement />}></Route>
+                  <Route
+                    path="/settlementstatement"
+                    element={<SettlementStatement />}
+                  ></Route>
+                  <Route
+                    path="/policydocuments"
+                    element={<PolicyDocument />}
+                  ></Route>
+                  <Route
+                    path="/countrycurrency"
+                    element={<Countrycurrency />}
+                  ></Route>
+                  <Route
+                    path="/paymentgateway"
+                    element={<Paymentgateway />}
+                  ></Route>
+                  <Route
+                    path="/rejectionreason"
+                    element={<Rejectionreason />}
+                  ></Route>
+                  <Route
+                    path="/securityquestions"
+                    element={<Securityquestions />}
+                  ></Route>
+                  <Route
+                    path="/broadcasting"
+                    element={<Broadcasting />}
+                  ></Route>
+                  <Route
+                    path="/publish-notification"
+                    element={<NotificationTextMsg />}
+                  ></Route>
 
-              <Route
-                path="/offersmanagement"
-                element={<Offersmanagement />}
-              ></Route>
-              <Route path="/statement" element={<Statement />} />
-              <Route path="/tours-tournaments" element={<ToursManagement />} />
-              <Route path="/create-new-offer" element={<CreateNewOffers />} />
-              <Route
-                path="/create-new-offer-management"
-                element={<AddNewOffer />}
-              />
+                  <Route
+                    path="/offersmanagement"
+                    element={<Offersmanagement />}
+                  ></Route>
+                  <Route path="/statement" element={<Statement />} />
+                  <Route
+                    path="/tours-tournaments"
+                    element={<ToursManagement />}
+                  />
+                  <Route
+                    path="/create-new-offer"
+                    element={<CreateNewOffers />}
+                  />
+                  <Route
+                    path="/create-new-offer-management"
+                    element={<AddNewOffer />}
+                  />
 
-              <Route path="/support-chat" element={<Chats />} />
-              <Route path="/toursbanking" element={<ToursBanking />} />
-            </Routes>
+                  <Route path="/support-chat" element={<Chats />} />
+                  <Route path="/toursbanking" element={<ToursBanking />} />
+                </Routes>
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
-    </BrowserRouter>
+        )}
+      </BrowserRouter>
+    </>
   );
 }
 

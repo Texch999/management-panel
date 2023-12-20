@@ -27,6 +27,7 @@ export const Images = {
   rohit_image: "./assets/rohit.png",
   raina_image: "./assets/raina.png",
   GreenDoubleTick: "./assets/green_double_tick.png",
+  LoginLogo: "./assets/Login_Logo.png",
 };
 
 export const ImageBaseUrl =
