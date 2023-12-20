@@ -34,6 +34,8 @@ function ManageTournament() {
   const [reRendering, setReRendering] = useState(false);
   const [showScreenshotImg, setShowScreenshotImg] = useState(false);
   const [documentView, setDocumentView] = useState("");
+  const [booknowSelectedIds, setBooknowSelectedIds] = useState([]);
+  // const [isChecked, setIsChecked] = useState(false);
   const [selectedFilter, setSelectedFilter] = useState({
     tour_name: "All",
     website: "All",
@@ -41,10 +43,11 @@ function ManageTournament() {
     user_name: "All",
     country: "All",
   });
+  // console.log(isChecked, ".......isChecked");
   const changeStatusonPopupClosing = () => {
     setReRendering((prev) => !prev);
   };
-  console.log(interestedMembers, "......interested");
+  // console.log(interestedMembers, "......interested");
   const gettingInterestedMembers = async () => {
     const payload = {};
     await call(GET_INTERESTED, payload)
@@ -54,16 +57,20 @@ function ManageTournament() {
       .catch((error) => console.log(error));
   };
 
-  const tourdetailsSubmitButton = async (tableData2) => {
-    const interestedMembersIds = tableData2.map((i) => {
-      return i.id;
-    });
+  const tourdetailsSubmitButton = async () => {
     const payload = {
-      selectedTeam: interestedMembersIds,
+      selectedTeam: booknowSelectedIds,
       tour_details: addingTourDetails,
     };
     await call(BOOKNOW_FOR_INTERESTED, payload)
-      .then((res) => console.log(res))
+      .then((res) => {
+        if(res?.data?.status===200){
+          setHeader("Tour Details Added Successfully")
+          setState(true)
+          setAddingTourDetails("")
+          setBooknowSelectedIds([])
+        }
+      })
       .catch((error) => console.log(error));
   };
   const gettingguestsdocs = async () => {
@@ -111,6 +118,15 @@ function ManageTournament() {
       [e.target.name]: e.target.value,
     });
   };
+  const handleBooknowtoggleClick = (e, interested_id) => {
+    let filterArrey = booknowSelectedIds?.filter(
+      (item) => item !== interested_id
+    );
+    e?.target?.checked === true
+      ? setBooknowSelectedIds([...booknowSelectedIds, interested_id])
+      : setBooknowSelectedIds(filterArrey);
+  };
+  // console.log(booknowSelectedIds, ".......booknowselectedids");
 
   const manageButtons = [
     "Interested Team",
@@ -235,6 +251,9 @@ function ManageTournament() {
     {
       field: "cl",
       clr: true,
+    },
+    {
+      field: "check",
     },
   ];
   // console.log(interestedMembers,'......interestedmembers')
@@ -369,6 +388,16 @@ function ManageTournament() {
                   De-select
                 </button>
               ),
+              check:
+                activeManageIndex === 2 ? (
+                  <input
+                    className="d-flex justify-content-center align-items-center text-center"
+                    type="checkbox"
+                    onChange={(e) =>
+                      handleBooknowtoggleClick(e, item.interested_id)
+                    }
+                  ></input>
+                ) : null,
             };
           })
       : [];
@@ -446,17 +475,17 @@ function ManageTournament() {
       [amenityType]: url,
       tour_payment_id: item.tour_payment_id,
     };
-    console.log(payload, "......payload");
+    // console.log(payload, "......payload");
     await call(UPDATE_TOUR_PAYMENTS_DOCUMENTS, payload)
       .then((res) => {
         setReRendering((prev) => !prev);
-        console.log(res, "......image url updated successfully in table");
+        // console.log(res, "......image url updated successfully in table");
       })
       .catch((error) => console.log(error));
   };
 
   const handleUploadChange = async (e, item, amenityType) => {
-    console.log(item, ".....consolefrom onclick");
+    // console.log(item, ".....consolefrom onclick");
     const imagefile = e.target.files[0];
     const imageId = Date.now();
     const imageuploadingurl = await generatesignedurl(imageId);
@@ -897,7 +926,7 @@ function ManageTournament() {
             <button
               className="select-button button-position"
               onClick={() => {
-                tourdetailsSubmitButton(tableData2);
+                tourdetailsSubmitButton();
               }}
             >
               Submit
