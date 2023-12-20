@@ -374,9 +374,9 @@ function Tickets() {
             </div>
           ))}
         </div>
-        {/* {activeIndex === 0 && (
+        {activeIndex === 0 && (
           <Table columns={cols} data={modifiedTicketDetails} />
-        )} */}
+        )}
         {activeIndex === 1 && (
           <Table columns={cols1} data={modifiedTicketDetails1} />
         )}
