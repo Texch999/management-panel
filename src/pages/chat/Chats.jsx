@@ -28,7 +28,7 @@ function Chats() {
   };
   const getAllUserData = async () => {
     await call(GET_ALL_USERS, {
-      register_id: "reg-20231111083458442",
+      register_id: localStorage.getItem("register_id"),
     })
       .then((res) => {
         console.log("res====>", res);
@@ -43,7 +43,7 @@ function Chats() {
     getAllUserData();
   }, []);
 
-  let register_id = "reg-20230920132711772";
+  let register_id = "reg-20231213100459470";
   let creator_id = localStorage?.getItem("creator_id");
   const [uploadImage, setuploadImage] = useState([]);
   const [singedUrl, setSignedUrl] = useState("");
@@ -138,7 +138,7 @@ function Chats() {
   const getAllUserMessages = async (registerId) => {
     await call(GET_USER_MESSAGES, {
       from_user_id: registerId, //reg-20231121132839869 // dynamic user id
-      to_user_id: "reg-20231111083458442", // localStorage.getItem('') -> Login user id
+      to_user_id: localStorage.getItem("register_id"),
       upload_image: `${ImageBaseUrl}/${"chat-images"}/${Id}.png`,
     })
       .then(async (res) => {
@@ -341,7 +341,7 @@ function Chats() {
           </div>
           <div class="mesgs">
             <div class="msg_history px-4 py-3">
-              <div class="incoming_msg">
+              {/* <div class="incoming_msg">
                 <div class="incoming_msg_img">
                   {" "}
                   <img
@@ -356,7 +356,7 @@ function Chats() {
                     <span class="time_date"> 11:01 AM | June 9</span>
                   </div>
                 </div>
-              </div>
+              </div> */}
               {supportData &&
                 supportData?.length > 0 &&
                 supportData?.map((item, index) => {

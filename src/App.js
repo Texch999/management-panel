@@ -40,7 +40,7 @@ function App() {
   return (
     <>
       <BrowserRouter>
-        {isLogin !== "sseven" ? (
+        {isLogin !== "company" ? (
           <Login />
         ) : (
           <div className="d-flex main">
