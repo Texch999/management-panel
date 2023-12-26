@@ -127,6 +127,97 @@ function ManageTournament() {
       : setBooknowSelectedIds(filterArrey);
   };
   // console.log(booknowSelectedIds, ".......booknowselectedids");
+  const handleDocClickhereButton = (item) => {
+    setGuestsDetails(item);
+    setOpenGuestDetailsPopup(true);
+  };
+  const handleClickhereButton = (item) => {
+    setGuestsDetails(item);
+    setOpenGuestDetailsPopup(true);
+  };
+  const handlePaymentDetailsClick = (item) => {
+    setGuestsDetails(item);
+    setShowPaymentDetailsPopup(true);
+  };
+
+  const updatingImageUrlinTable = async (url, item, amenityType) => {
+    // console.log(item,'.......item')
+    // console.log(amenityType, "...amenitytype");
+    const payload = {
+      [amenityType]: url,
+      tour_payment_id: item.tour_payment_id,
+    };
+    // console.log(payload, "......payload");
+    await call(UPDATE_TOUR_PAYMENTS_DOCUMENTS, payload)
+      .then((res) => {
+        setReRendering((prev) => !prev);
+        // console.log(res, "......image url updated successfully in table");
+      })
+      .catch((error) => console.log(error));
+  };
+
+  const handleUploadChange = async (e, item, amenityType) => {
+    // console.log(item, ".....consolefrom onclick");
+    const imagefile = e.target.files[0];
+    const imageId = Date.now();
+    const imageuploadingurl = await generatesignedurl(imageId);
+    imageUploading(imageuploadingurl, imagefile, imageId, item, amenityType);
+  };
+  const imageUploading = async (
+    imageuploadingurl,
+    imagefile,
+    imageId,
+    item,
+    amenityType
+  ) => {
+    // console.log(imageuploadingurl, ".......imageuploadingurl");
+    // console.log(imagefile, ".......imagefile");
+    imageuploadingurl &&
+      imagefile &&
+      (await fetch(imageuploadingurl, {
+        method: "PUT",
+        body: imagefile,
+        headers: {
+          "Content-Type": "image/jpeg",
+          "cache-control": "public, max-age=0",
+        },
+      })
+        .then((res) => {
+          // console.log(res, ".......res");
+          if (res.status === 200) {
+            setHeader("image uploaded successfully");
+            setState(true);
+            updatingImageUrlinTable(
+              `${ImageBaseUrl}/tour_booking_docs_from_company/${imageId}.png`,
+              item,
+              amenityType
+            );
+          }
+        })
+        .catch((err) => {
+          setHeader(`err:${err}`);
+          setState(true);
+        }));
+  };
+  const generatesignedurl = async (imageId) => {
+    const payload = {
+      register_id: `${imageId}`,
+      event_type: "user_profile_image",
+      folder_name: "tour_booking_docs_from_company",
+    };
+    try {
+      const res = await call(GENERATE_SIGNED_URL, payload);
+      const url = res?.data?.data?.result?.signed_url;
+      return url;
+    } catch (error) {
+      console.log("error while creating the signed url", error);
+      return "";
+    }
+  };
+  const handleViewClick = async (item, amenityType) => {
+    setDocumentView(item[amenityType]);
+    setShowScreenshotImg(true);
+  };
 
   const manageButtons = [
     "Interested Team",
@@ -455,101 +546,47 @@ function ManageTournament() {
     //   field: "clr",
     // },
   ];
-  const handleDocClickhereButton = (item) => {
-    setGuestsDetails(item);
-    setOpenGuestDetailsPopup(true);
-  };
-  const handleClickhereButton = (item) => {
-    setGuestsDetails(item);
-    setOpenGuestDetailsPopup(true);
-  };
-  const handlePaymentDetailsClick = (item) => {
-    setGuestsDetails(item);
-    setShowPaymentDetailsPopup(true);
-  };
-
-  const updatingImageUrlinTable = async (url, item, amenityType) => {
-    // console.log(item,'.......item')
-    // console.log(amenityType, "...amenitytype");
-    const payload = {
-      [amenityType]: url,
-      tour_payment_id: item.tour_payment_id,
-    };
-    // console.log(payload, "......payload");
-    await call(UPDATE_TOUR_PAYMENTS_DOCUMENTS, payload)
-      .then((res) => {
-        setReRendering((prev) => !prev);
-        // console.log(res, "......image url updated successfully in table");
-      })
-      .catch((error) => console.log(error));
-  };
-
-  const handleUploadChange = async (e, item, amenityType) => {
-    // console.log(item, ".....consolefrom onclick");
-    const imagefile = e.target.files[0];
-    const imageId = Date.now();
-    const imageuploadingurl = await generatesignedurl(imageId);
-    imageUploading(imageuploadingurl, imagefile, imageId, item, amenityType);
-  };
-  const imageUploading = async (
-    imageuploadingurl,
-    imagefile,
-    imageId,
-    item,
-    amenityType
-  ) => {
-    // console.log(imageuploadingurl, ".......imageuploadingurl");
-    // console.log(imagefile, ".......imagefile");
-    imageuploadingurl &&
-      imagefile &&
-      (await fetch(imageuploadingurl, {
-        method: "PUT",
-        body: imagefile,
-        headers: {
-          "Content-Type": "image/jpeg",
-          "cache-control": "public, max-age=0",
-        },
-      })
-        .then((res) => {
-          // console.log(res, ".......res");
-          if (res.status === 200) {
-            setHeader("image uploaded successfully");
-            setState(true);
-            updatingImageUrlinTable(
-              `${ImageBaseUrl}/tour_booking_docs_from_company/${imageId}.png`,
-              item,
-              amenityType
-            );
-          }
-        })
-        .catch((err) => {
-          setHeader(`err:${err}`);
-          setState(true);
-        }));
-  };
-  const generatesignedurl = async (imageId) => {
-    const payload = {
-      register_id: `${imageId}`,
-      event_type: "user_profile_image",
-      folder_name: "tour_booking_docs_from_company",
-    };
-    try {
-      const res = await call(GENERATE_SIGNED_URL, payload);
-      const url = res?.data?.data?.result?.signed_url;
-      return url;
-    } catch (error) {
-      console.log("error while creating the signed url", error);
-      return "";
-    }
-  };
-  const handleViewClick = async (item, amenityType) => {
-    setDocumentView(item[amenityType]);
-    setShowScreenshotImg(true);
-  };
-
+  console.log(selectedFilter,'.......selected')
+ console.log(guestDocs,'....guestdocs')
   const tableDocData =
     guestDocs && guestDocs.length > 0
-      ? guestDocs.map((item, index) => {
+      ? guestDocs
+      .filter((item) => {
+        if (selectedFilter?.tour_name === "All") {
+          return item;
+        } else {
+          return item.tour_name === selectedFilter.tour_name;
+        }
+      })
+      .filter((item) => {
+        if (selectedFilter?.country === "All") {
+          return item;
+        } else {
+          return item.country === selectedFilter.country;
+        }
+      })
+      .filter((item) => {
+        if (selectedFilter?.website === "All") {
+          return item;
+        } else {
+          return item.website === selectedFilter.website;
+        }
+      })
+      .filter((item) => {
+        if (selectedFilter?.role === "All") {
+          return item;
+        } else {
+          return item.role === selectedFilter.role;
+        }
+      })
+      .filter((item) => {
+        if (selectedFilter?.user_name === "All") {
+          return item;
+        } else {
+          return item.user_name === selectedFilter.user_name;
+        }
+      })
+      .map((item, index) => {
           return {
             sl: index + 1,
             website: item.website,
@@ -684,6 +721,41 @@ function ManageTournament() {
     guestDocs && guestDocs.length > 0
       ? guestDocs
           .filter((item) => item.confirm_payment_status === "Approved")
+          .filter((item) => {
+            if (selectedFilter?.tour_name === "All") {
+              return item;
+            } else {
+              return item.tour_name === selectedFilter.tour_name;
+            }
+          })
+          .filter((item) => {
+            if (selectedFilter?.country === "All") {
+              return item;
+            } else {
+              return item.country === selectedFilter.country;
+            }
+          })
+          .filter((item) => {
+            if (selectedFilter?.website === "All") {
+              return item;
+            } else {
+              return item.website === selectedFilter.website;
+            }
+          })
+          .filter((item) => {
+            if (selectedFilter?.role === "All") {
+              return item;
+            } else {
+              return item.role === selectedFilter.role;
+            }
+          })
+          .filter((item) => {
+            if (selectedFilter?.user_name === "All") {
+              return item;
+            } else {
+              return item.user_name === selectedFilter.user_name;
+            }
+          })
           .map((item, index) => {
             // console.log(item,'....item from map')
             return {
