@@ -71,10 +71,10 @@ function Paymentgateway() {
       .catch((err) => console.log(err));
   };
 
-  const handleBlockUnBlock = async (item, active) => {
+  const handleBlockUnBlock = async (item, currentActiveState) => {
     const payload = {
       pg_id: item,
-      active: !active,
+      active: !currentActiveState,
     };
     await call(PG_ACTIVE_INACTIVE, payload)
       .then((res) => {
@@ -98,14 +98,25 @@ function Paymentgateway() {
             country: item?.country_name,
             currency: item?.currency_name,
             lastupdate: item?.update_at,
-            status:
-              item?.is_active === 1 ? (
-                <div className="font-green custom-active-button px-2">
-                  Active
-                </div>
-              ) : (
-                <div className="custom-deactive-butto px-2">InActive</div>
-              ),
+            status: item?.active ? (
+              <div
+                className="font-green custom-active-button px-2"
+                onClick={() => {
+                  handleBlockUnBlock(item?.pg_id, item?.active);
+                }}
+              >
+                Active
+              </div>
+            ) : (
+              <div
+                className="custom-deactive-button px-2"
+                onClick={() => {
+                  handleBlockUnBlock(item.pg_id, item?.active);
+                }}
+              >
+                InActive
+              </div>
+            ),
             icon: <MdOutlineEdit className="eye-icon-size" />,
           };
         })
@@ -198,7 +209,7 @@ function Paymentgateway() {
       </div>
       <AddCountryPopups
         addCountryOpen={addCountryOpen}
-        Heading={`${selectedPayment ? "Update" : "Add"} Payment Gateways`}
+        Heading={`${selectedPayment ? "Update" : "Add"} Payment Gateway`}
         setAddCountryOpen={setAddCountryOpen}
         setStatus={setStatus}
         selectedPayment={selectedPayment}

@@ -34,6 +34,7 @@ function AddDirectorsPopup(props) {
   const [share, setShare] = useState("");
   const [ulshare, setUlshare] = useState("");
   const [showEye, setShowEye] = useState(false);
+  const [ulCommision,setUlCommision] =useState("")
 
   const handleAddDirectorClose = () => {
     setShowAddDirectorPopup(false);
@@ -47,6 +48,7 @@ function AddDirectorsPopup(props) {
     setPackageDiscount("");
     setUlshare("");
     setShare("");
+    setUlCommision("")
   };
   const [passwordType, setPasswordType] = useState("password");
   const [passwordInput, setPasswordInput] = useState("");
@@ -75,6 +77,7 @@ function AddDirectorsPopup(props) {
       setPackageDiscount(selectedDirector.package_discount || "");
       setUlshare(selectedDirector.ul_share || "");
       setShare(selectedDirector.share || "");
+      setUlCommision(selectedDirector.ul_commision)
     }
   }, [selectedDirector]);
   const handleCreateOrUpdateDirector = async (status) => {
@@ -99,6 +102,7 @@ function AddDirectorsPopup(props) {
         share: 100 - +ulshare,
         ul_share: ulshare,
         package_discount: packageDiscount,
+        ul_commision:ulCommision
       };
 
       if (selectedDirector) {
@@ -132,6 +136,7 @@ function AddDirectorsPopup(props) {
           setCountryName("");
           setPasswordInput("");
           setPaymentGateway("");
+          setUlCommision("");
         }
       });
     } catch (err) {
@@ -308,20 +313,39 @@ function AddDirectorsPopup(props) {
                 </div>
               </Col>
             </Row>
-
-            <div className="d-flex flex-column w-100 mt-2">
-              <div className="small-font mb-1 mt-1">User ID *</div>
-              <div className="w-100">
-                <input
-                  type="text"
-                  placeholder="Enter UserId"
-                  name="user_name"
-                  className="w-100 custom-select small-font login-inputs input-btn-bg px-2 py-2 all-none rounded all-none"
-                  value={userId}
-                  onChange={(e) => setUserId(e.target.value)}
-                ></input>
-              </div>
-            </div>
+            <Row>
+               <Col>
+                  <div className="d-flex flex-column w-100 mt-2">
+                  <div className="small-font mb-1 mt-1">User ID *</div>
+                  <div className="w-100">
+                    <input
+                      type="text"
+                      placeholder="Enter UserId"
+                      name="user_name"
+                      className="w-100 custom-select small-font login-inputs input-btn-bg px-2 py-2 all-none rounded all-none"
+                      value={userId}
+                      onChange={(e) => setUserId(e.target.value)}
+                    ></input>
+                  </div>
+                </div>
+               </Col>
+               <Col>
+                  <div className="d-flex flex-column w-100 mt-2">
+                  <div className="small-font mb-1 mt-1">Phone *</div>
+                  <div className="w-100">
+                    <input
+                       type="number"
+                       placeholder="Enter"
+                       name="mobile_no"
+                       className="w-100 custom-select small-font login-inputs input-btn-bg px-2 py-2 all-none rounded all-none"
+                       value={phonenumber}
+                       onChange={(e) => setPhoneNumber(e.target.value)}
+                    ></input>
+                  </div>
+                </div>
+               </Col>
+            </Row>
+            
             <Container fluid className="my-2">
               <Row>
                 <Col className="ps-0">
@@ -401,14 +425,14 @@ function AddDirectorsPopup(props) {
             <Container fluid className="my-2">
               <Row>
                 <Col className="ps-0">
-                  <div className="small-font my-1">Phone *</div>
+                  <div className="small-font my-1">UL Commison*</div>
                   <input
-                    type="number"
-                    placeholder="Enter"
-                    name="mobile_no"
-                    className="w-100 custom-select small-font login-inputs input-btn-bg px-2 py-2 all-none rounded all-none"
-                    value={phonenumber}
-                    onChange={(e) => setPhoneNumber(e.target.value)}
+                     type="text"
+                     placeholder="Enter"
+                     name="ul_commision"
+                     className="w-100 custom-select small-font login-inputs input-btn-bg px-2 py-2 all-none rounded all-none"
+                     value={ulCommision}
+                     onChange={(e) => setUlCommision(e.target.value)}
                   ></input>
                 </Col>
                 <Col className="pe-0">
@@ -425,7 +449,7 @@ function AddDirectorsPopup(props) {
               </Row>
               <Row>
                 <Col className="pe-0 ps-0">
-                  <div className="small-font my-1">UL Share</div>
+                  <div className="small-font my-1">UL Share *</div>
                   <input
                     type="text"
                     placeholder="Enter"
@@ -436,7 +460,7 @@ function AddDirectorsPopup(props) {
                   ></input>
                 </Col>
                 <Col className="pe-0">
-                  <div className="small-font my-1">share</div>
+                  <div className="small-font my-1">share *</div>
                   <input
                     type="text"
                     placeholder="Enter"

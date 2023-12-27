@@ -61,10 +61,10 @@ function PolicyDocument() {
     },
   ];
 
-  const handleBlockUnBlock = async (item) => {
+  const handleBlockUnBlock = async (item,currentActiveState) => {
     const payload = {
       policy_id: item,
-      active: !active,
+      active: !currentActiveState
     };
     await call(POLICY_DOCUMENT_ACTIVE_INACTIVE, payload)
       .then((res) => {
@@ -103,7 +103,7 @@ function PolicyDocument() {
                     ? "font-green custom-active-button px-2"
                     : "custom-deactive-button px-2"
                 }
-                onClick={() => handleBlockUnBlock(item?.policy_id)}
+                onClick={() => handleBlockUnBlock(item?.policy_id,item?.active)}
               >
                 {item?.active ? "Active" : "InActive"}
               </div>
@@ -122,7 +122,7 @@ function PolicyDocument() {
                   ? "font-green custom-active-button px-2"
                   : "custom-deactive-button px-2"
               }
-              onClick={() => handleBlockUnBlock(item?.policy_id)}
+              onClick={() => handleBlockUnBlock(item?.policy_id,item?.active)}
             >
               {item?.active ? "Active" : "InActive"}
             </div>
