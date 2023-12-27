@@ -24,6 +24,8 @@ function PackageViewPoup(props) {
   };
   const [saleTicket, setSaleTicket] = useState([]);
   const [rejectionDropDown, setRejectionDropDown] = useState([]);
+  const [status, setStatus] = useState(false);
+
   const handleAdminTicketPopupClose = () => {
     setShowPackageUpgrade(false);
   };
@@ -40,6 +42,7 @@ function PackageViewPoup(props) {
     const res = await call(GET_ADMIN_PACKAGE_REQUEST, payload)
       .then((res) => {
         setSaleTicket(res?.data?.data);
+        // setStatus((prev) => !prev);
       })
       .catch((err) => console.log(err));
   };
@@ -65,6 +68,7 @@ function PackageViewPoup(props) {
       })
       .catch((err) => console.log(err));
   };
+  console.log("rejectionDropDown", rejectionDropDown);
   useEffect(() => {
     getAllRejections();
   }, []);
@@ -165,8 +169,7 @@ function PackageViewPoup(props) {
               </div>
               <div className="d-flex flex-row justify-content-between small-font  all-none  align-items-center justify-content-between my-1 ">
                 <div className="font-grey">To</div>
-                {transactionData?.user_name}-
-                {transactionData?.requested_account_role}
+                {localStorage.getItem("creator_id")}
                 {/* <div>Jayanta-Admin</div> */}
               </div>
               <div className="d-flex flex-row justify-content-between small-font  all-none  align-items-center justify-content-between my-1 ">
@@ -320,9 +323,12 @@ function PackageViewPoup(props) {
               >
                 <option value="">Select</option>
 
-                {rejectionDropDown?.map((obj) => (
-                  <option value={obj.reason}>{obj.reason}</option>
-                ))}
+                {rejectionDropDown?.map(
+                  (obj) =>
+                    obj.active === true && (
+                      <option value={obj.reason}>{obj.reason}</option>
+                    )
+                )}
               </select>
             </div>
             <hr />

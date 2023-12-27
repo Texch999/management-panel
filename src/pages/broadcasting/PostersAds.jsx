@@ -21,7 +21,7 @@ function OfferPosterAdds() {
   const [uploadImage, setuploadImage] = useState([]);
   const [profileImage, setProfileImage] = useState("");
   const [error, setError] = useState("");
-  const [broadCastSubmitPopup,setBroadCastSubmitPopup]=useState(false)
+  const [broadCastSubmitPopup, setBroadCastSubmitPopup] = useState(false);
   //console.log(notificationtextmsg, "res----------->");
 
   const uploadfileInputRef = useRef(null);
@@ -34,7 +34,7 @@ function OfferPosterAdds() {
   const handleUploadButtonClick = () => {
     uploadfileInputRef.current.click();
   };
-  const handelOffers = async (status) => {
+  const handelOffers = async () => {
     if (
       !(
         allPosters?.website_name ||
@@ -58,13 +58,13 @@ function OfferPosterAdds() {
         end_date: allPosters.end_date,
         publish_date: allPosters.publish_date,
         upload_image: `${ImageBaseUrl}/${"posters-images"}/${posterId}.png`,
-        status,
+        status: allPosters.status,
       }).then(async (res) => {
         setallPosters(res?.data);
-        setBroadCastSubmitPopup(true)
-        setTimeout(()=>{
-          setBroadCastSubmitPopup(false)
-        },2000)
+        setBroadCastSubmitPopup(true);
+        setTimeout(() => {
+          setBroadCastSubmitPopup(false);
+        }, 2000);
         singedUrl &&
           profileImage &&
           (await fetch(singedUrl, {
@@ -389,7 +389,7 @@ function OfferPosterAdds() {
           <button
             type="submit"
             className="add-button  medium-font rounded px-3 py-3 mx-2  all-none "
-            onClick={() => handelOffers(true)}
+            onClick={() => handelOffers()}
           >
             Publish
           </button>
@@ -397,7 +397,7 @@ function OfferPosterAdds() {
           <button
             type="submit"
             className="msg-deactive-button  medium-font rounded  mx-2 all-none px-3 py-3"
-            onClick={() => handelOffers(false)}
+            onClick={() => handelOffers()}
           >
             Save As Draft
           </button>
@@ -411,9 +411,9 @@ function OfferPosterAdds() {
           </button>
         </div>
         <MatchSubmitPopup
-            header={"Poster Added Successfully"}
-            state={broadCastSubmitPopup}
-            setState={setBroadCastSubmitPopup}
+          header={"Poster Added Successfully"}
+          state={broadCastSubmitPopup}
+          setState={setBroadCastSubmitPopup}
         />
       </div>
     </div>

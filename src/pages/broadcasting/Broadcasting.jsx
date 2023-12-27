@@ -103,13 +103,6 @@ function Broadcasting() {
             ...obj,
             event_name: "poster notification",
             status: obj.status,
-            // obj.status === true ? (
-            //   <div className="font-green custom-active-button px-2">
-            //     Active
-            //   </div>
-            // ) : (
-            //   <div className="custom-deactive-button px-2">InActive</div>
-            // ),
             event_location: obj.country_name,
             event_date: obj.publish_date,
             create_at: new Date().toISOString(),
