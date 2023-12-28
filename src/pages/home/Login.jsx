@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 
 function Login() {
   const navigate = useNavigate();
-  const user_name = "sseven";
+  const user_name = "company";
   const password = "sri@srija@1989";
   const [loginData, setLoginData] = useState();
   const [error, setError] = useState("");
@@ -18,7 +18,8 @@ function Login() {
       password === loginData?.password
     ) {
       navigate("/");
-      localStorage?.setItem("isLogin", loginData?.user_name);
+      localStorage.setItem("isLogin", loginData?.user_name);
+      localStorage.setItem("register_id", "company");
       window.location.reload(true);
     } else {
       setError("Invalid Credentials");

@@ -69,9 +69,9 @@ function GuestDetailsPopup(props) {
       }, []);
       
   
-  useEffect(()=>{
-    setAllMembers();
-  },[])
+  // useEffect(()=>{
+  //   setAllMembers();
+  // },[])
 
   const handleDownload = async (imageUrl, imageName) => {
     
