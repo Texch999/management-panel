@@ -1,125 +1,129 @@
 import React, { useEffect, useState } from "react";
 import { Modal } from "react-bootstrap";
 import { PRESIGNED_URL } from "../../config/endpoints";
-const axios = require("axios")
+const axios = require("axios");
 
 function GuestDetailsPopup(props) {
-  const { openGuestDetailsPopup, setOpenGuestDetailsPopup, guestDetails } = props;
-  const [allPackMembers, setAllPackMembers] = useState([])
-//   console.log(guestDetails.guests_details,'.....guestdetails')
+  const { openGuestDetailsPopup, setOpenGuestDetailsPopup, guestDetails } =
+    props;
+  const [allPackMembers, setAllPackMembers] = useState([]);
+  //   console.log(guestDetails.guests_details,'.....guestdetails')
   const guestdetails = guestDetails.guests_details;
-  
-  const regularpacks = guestdetails.filter((item) => Object.keys(item)[0]?.includes('regular'));
-  const premiumpacks = guestdetails.filter((item) => Object.keys(item)[0]?.includes('premium'));
-  const luxurypacks = guestdetails.filter((item) => Object.keys(item)[0]?.includes('luxury'));
-  const vippacks = guestdetails.filter((item) => /^vip/i.test(Object.keys(item)[0]));
-  const vvippacks = guestdetails.filter((item) => /^vvip/i.test(Object.keys(item)[0]));
+
+  const regularpacks = guestdetails.filter((item) =>
+    Object.keys(item)[0]?.includes("regular")
+  );
+  const premiumpacks = guestdetails.filter((item) =>
+    Object.keys(item)[0]?.includes("premium")
+  );
+  const luxurypacks = guestdetails.filter((item) =>
+    Object.keys(item)[0]?.includes("luxury")
+  );
+  const vippacks = guestdetails.filter((item) =>
+    /^vip/i.test(Object.keys(item)[0])
+  );
+  const vvippacks = guestdetails.filter((item) =>
+    /^vvip/i.test(Object.keys(item)[0])
+  );
 
   const membersInEachPack = (pkg, pkgType) => {
     const packageMembers = [];
-    pkg.forEach(user => {
-        for(let i=1; i <= (Object.keys(user).filter((item)=>{
-          if(item.includes('username')){
-            return item
+    pkg.forEach((user) => {
+      for (
+        let i = 1;
+        i <=
+        Object.keys(user).filter((item) => {
+          if (item.includes("username")) {
+            return item;
           }
-            }).length); i++){
-          const member = {
-                userpack: pkgType,
-                userdob: user[`${pkgType}userdob${i}`],
-                usergender: user[`${pkgType}usergender${i}`],
-                useridproof: user[`${pkgType}useridproof${i}`],
-                userimage: user[`${pkgType}userimage${i}`],
-                username: user[`${pkgType}username${i}`],
-              };
-          packageMembers.push(member);
-        }
-      });
+        }).length;
+        i++
+      ) {
+        const member = {
+          userpack: pkgType,
+          userdob: user[`${pkgType}userdob${i}`],
+          usergender: user[`${pkgType}usergender${i}`],
+          useridproof: user[`${pkgType}useridproof${i}`],
+          userimage: user[`${pkgType}userimage${i}`],
+          username: user[`${pkgType}username${i}`],
+        };
+        packageMembers.push(member);
+      }
+    });
     return packageMembers;
-  }
-  const regularpackMembers = regularpacks.length>0?membersInEachPack(regularpacks,"regularPack"):null;
-  const premiumpackMembers = premiumpacks.length>0?membersInEachPack(premiumpacks,"premiumPack"):null;
-  const luxurypackMembers = luxurypacks.length>0?membersInEachPack(luxurypacks,"luxuryPack"):null;
-  const vippackMembers = vippacks.length>0?membersInEachPack(vippacks,"vipPack"):null;
-  const vvippackMembers = vvippacks.length>0?membersInEachPack(vvippacks,"vvipPack"):null;
+  };
+  const regularpackMembers =
+    regularpacks.length > 0
+      ? membersInEachPack(regularpacks, "regularPack")
+      : null;
+  const premiumpackMembers =
+    premiumpacks.length > 0
+      ? membersInEachPack(premiumpacks, "premiumPack")
+      : null;
+  const luxurypackMembers =
+    luxurypacks.length > 0
+      ? membersInEachPack(luxurypacks, "luxuryPack")
+      : null;
+  const vippackMembers =
+    vippacks.length > 0 ? membersInEachPack(vippacks, "vipPack") : null;
+  const vvippackMembers =
+    vvippacks.length > 0 ? membersInEachPack(vvippacks, "vvipPack") : null;
 
   const setAllMembers = () => {
-        let previousMembers = [];
-      
-        if (regularpackMembers !== null) {
-            previousMembers = [...previousMembers, ...regularpackMembers];
-        }
-        if (premiumpackMembers !== null) {
-            previousMembers = [...previousMembers, ...premiumpackMembers];
-        }
-        if (luxurypackMembers !== null) {
-            previousMembers = [...previousMembers, ...luxurypackMembers];
-        }
-        if (vippackMembers !== null) {
-            previousMembers = [...previousMembers, ...vippackMembers];
-        }
-        if (vvippackMembers !== null) {
-            previousMembers = [...previousMembers, ...vvippackMembers];
-        }
-      
-        setAllPackMembers(previousMembers);
-      };
-      
-      useEffect(() => {
-        setAllMembers();
-      }, []);
-      
-  
-  useEffect(()=>{
-    setAllMembers();
-  },[])
-//   console.log(allPackMembers,'......allpackmembers')
-  // const handleDownload = (imageUrl, imageName) => {
-  //     var element = document.createElement("a");
-  //     var file = new Blob(
-  //       [
-  //         imageUrl
-  //       ],
-  //       { type: "image/jpg" }
-  //     );
-  //     element.href = URL.createObjectURL(file);
-  //     element.download = imageName;
-  //     element.click();
-  // const handleDownload = async (imageUrl, imageName) => {
-  //   const element = document.createElement("a");
-  //   element.href = imageUrl;
-  //   element.download = imageName || "image.png";
-  //   element.target = 'blank';
-  //   document.body.appendChild(element);
-  //   element.click();
-  //   document.body.removeChild(element);
-  // };
-  const handleDownload = async (imageUrl, imageName) => {
-    // try {
-    //   const payload = {
-    //     imageurl: imageUrl,
-    //   };
-  
-    //   const response = await axios({
-    //     url: "https://gddigb51ed.execute-api.us-east-2.amazonaws.com/prod/tours/presignedurl",
-    //     method: 'POST',
-    //     responseType: 'arraybuffer', // Use 'blob' for binary data like images
-    //     data: payload, // Send the payload in the request body
-    //   });
-  
-    //   const url = window.URL.createObjectURL(new Blob([response.data]));
-      const link = document.createElement('a');
-      link.href = imageUrl;
-      link.setAttribute('download', imageName || 'image.png');
-      link.target = 'blank';
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-    // } catch (error) {
-    //   console.error('Error downloading image:', error);
-    // }
-  };
-  
+    let previousMembers = [];
 
+    if (regularpackMembers !== null) {
+      previousMembers = [...previousMembers, ...regularpackMembers];
+    }
+    if (premiumpackMembers !== null) {
+      previousMembers = [...previousMembers, ...premiumpackMembers];
+    }
+    if (luxurypackMembers !== null) {
+      previousMembers = [...previousMembers, ...luxurypackMembers];
+    }
+    if (vippackMembers !== null) {
+      previousMembers = [...previousMembers, ...vippackMembers];
+    }
+    if (vvippackMembers !== null) {
+      previousMembers = [...previousMembers, ...vvippackMembers];
+    }
+
+    setAllPackMembers(previousMembers);
+  };
+
+  useEffect(() => {
+    setAllMembers();
+  }, []);
+
+  useEffect(() => {
+    setAllMembers();
+  }, []);
+  const handleDownload = async (imageUrl, imageName) => {
+    const link = document.createElement("a");
+    link.href = imageUrl;
+    link.setAttribute("download", imageName || "image.png");
+    link.target = "blank";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+  // const handleDownload = async (imageUrl, imageName) => {
+  //   try {
+  //     const response = await fetch(imageUrl);
+  //     const blob = await response.blob();
+  //     const url = window.URL.createObjectURL(blob);
+  //     const link = document.createElement("a");
+  //     link.href = url;
+  //     link.setAttribute("download", imageName || "image.png");
+  //     link.target = "_blank";
+  //     document.body.appendChild(link);
+  //     link.click();
+  //     document.body.removeChild(link);
+  //     window.URL.revokeObjectURL(url);
+  //   } catch (error) {
+  //     console.error("Error downloading image:", error);
+  //   }
+  // };
   const TableHeads = [
     {
       label: "SNO",
@@ -143,41 +147,45 @@ function GuestDetailsPopup(props) {
     },
     {
       label: "Document Type",
-      field: "documentType"
+      field: "documentType",
     },
     {
       label: "Document",
-      field: "document"
-    }
+      field: "document",
+    },
   ];
 
-  const TableData = allPackMembers && allPackMembers.length > 0
-  ? allPackMembers.map((guest, index) => {
-      if (guest) {
-        return {
-          s_no: index+1,
-          packageName: guest.userpack,
-          guestName: guest.username,
-          dob: guest.userdob,
-          gender: guest.usergender,
-          documentType: guest.useridproof,
-          document: (<div>
-            {/* <img src={guest.userimage} style={{width: "20px",height: "20px"}} alt="Downloadable Image" /> */}
-            <button className="btn btn-primary font-10"
-                    type="button" 
-                    onClick={()=>handleDownload(guest.userimage, guest.username)}
-            >
-              Download
-            </button>
-          </div>)
-        };
-      } else {
-        return null;
-      }
-    })
-  : [
-    {guests:"No guests to Display"}
-  ];
+  const TableData =
+    allPackMembers && allPackMembers.length > 0
+      ? allPackMembers.map((guest, index) => {
+          if (guest) {
+            return {
+              s_no: index + 1,
+              packageName: guest.userpack,
+              guestName: guest.username,
+              dob: guest.userdob,
+              gender: guest.usergender,
+              documentType: guest.useridproof,
+              document: (
+                <div>
+                  {/* <img src={guest.userimage} style={{width: "20px",height: "20px"}} alt="Downloadable Image" /> */}
+                  <button
+                    className="btn btn-primary font-10"
+                    type="button"
+                    onClick={() =>
+                      handleDownload(guest.userimage, guest.username)
+                    }
+                  >
+                    Download
+                  </button>
+                </div>
+              ),
+            };
+          } else {
+            return null;
+          }
+        })
+      : [{ guests: "No guests to Display" }];
 
   return (
     <div className="modal fade bd-example-modal-lg total-background container mt-5">
@@ -197,7 +205,11 @@ function GuestDetailsPopup(props) {
             <thead id="home-table-head" className="p-3">
               <tr>
                 {TableHeads.map((item, i) => {
-                  return <th key={i} className="text-center">{item.label}</th>;
+                  return (
+                    <th key={i} className="text-center">
+                      {item.label}
+                    </th>
+                  );
                 })}
               </tr>
             </thead>
@@ -206,7 +218,11 @@ function GuestDetailsPopup(props) {
                 return (
                   <tr key={i} className="tr-item">
                     {TableHeads.map((headItem, i) => {
-                      return <td key={i} className="td-item p-2 text-center">{item[headItem.field]}</td>;
+                      return (
+                        <td key={i} className="td-item p-2 text-center">
+                          {item[headItem.field]}
+                        </td>
+                      );
                     })}
                   </tr>
                 );
