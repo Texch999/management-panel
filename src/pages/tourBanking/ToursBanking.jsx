@@ -12,6 +12,7 @@ function Paymentgateway() {
   const [isUpdate, setisUpdate] = useState(false);
   const [renderingStatus, setRenderingStatus] = useState([])
   const [clickedCountry, setClickedCountry] = useState("All")
+ 
   console.log(clickedCountry,'......drop')
   
   const rendering = (inputData) => {
@@ -28,6 +29,8 @@ function Paymentgateway() {
   useEffect(() => {
     getPaymentGateway();
   }, [renderingStatus]);
+
+ 
 
   const countryFilteredGateways = paymentGateway && paymentGateway.length>0 && paymentGateway.filter((item)=>{
     return item.country === clickedCountry

@@ -15,6 +15,7 @@ function Tickets() {
   const [popupData, setPopupData] = useState([]);
   const [transactionData, setTransactionData] = useState({});
   const [isProcessing, setIsProcessing] = useState(false);
+  const [status, setStatus] = useState(false);
 
   const handleActiveIndex = (index) => {
     setActiveIndex(index);
@@ -216,13 +217,19 @@ function Tickets() {
     await call(GET_ADMIN_PACKAGE_REQUEST, payload)
       .then((res) => {
         setRequestedPackages(res?.data?.data);
+        // setStatus((prev) => !prev);
       })
       .catch((err) => console.log(err));
   };
 
   useEffect(() => {
-    getRequestedPackages();
+    const fetchData = async () => {
+      await getRequestedPackages();
+    };
+    fetchData();
   }, []);
+
+  console.log(status, "==>STATUS");
 
   const PACKAGE_TICKET_BUTTONS = [
     {
@@ -289,7 +296,6 @@ function Tickets() {
         <AiOutlineEye className="" onClick={() => handlePackageUpgrade(item)} />
       ),
     }));
-
   const modifiedTicketDetails2 = requestedPackages?.map((item) => ({
     nameAndRole: (
       <div>

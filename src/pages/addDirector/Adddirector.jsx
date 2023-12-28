@@ -45,7 +45,7 @@ function Adddirector() {
           <div className="marginright-10">In USED</div>
         </div>
       ),
-      field: "inused",
+      field: "inused",  
     },
     {
       header: (

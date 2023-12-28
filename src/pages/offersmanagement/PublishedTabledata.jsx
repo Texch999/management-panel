@@ -55,6 +55,7 @@ function PublishedTabledata(props) {
       setOffermanagement(arr);
     });
   };
+  console.log("Offersmanagement", Offersmanagement);
   const handleBlockUnBlock = async (item, currentActiveState) => {
     const payload = {
       offer_id: item,
@@ -62,7 +63,7 @@ function PublishedTabledata(props) {
     };
     await call(OFFERS_ACTIVE_INACTIVE, payload)
       .then((res) => {
-        // setActive(!currentActiveState);
+        setActive(!currentActiveState);
         setActive((prev) => !prev);
         console.log(res);
       })
@@ -96,7 +97,7 @@ function PublishedTabledata(props) {
           <div
             className="font-green custom-active-button px-2"
             onClick={() => {
-              handleBlockUnBlock(item.offer_id, item?.active);
+              handleBlockUnBlock(item?.offer_id, item?.active);
             }}
           >
             Active

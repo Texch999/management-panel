@@ -50,7 +50,7 @@ function Table(props) {
                       key={colIndex}
                       className=" text-center d-felx align-items-center"
                     >
-                      <div className="justify-content-center align-items-center">
+                      <div className="d-flex justify-content-center align-items-center">
                         <div
                           className={
                             column?.header === "DESCRIPTION"

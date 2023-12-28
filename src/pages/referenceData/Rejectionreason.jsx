@@ -63,10 +63,10 @@ function Rejectionreason() {
       })
       .catch((err) => console.log(err));
   };
-  const handleBlockUnBlock = async (item) => {
+  const handleBlockUnBlock = async (item,currentActiveState) => {
     const payload = {
       s_id: item,
-      active: !active,
+      active: !currentActiveState,
     };
     await call(REJECT_QUESTIONS_ACTIVE_INACTIVE, payload)
       .then((res) => {
@@ -104,7 +104,7 @@ function Rejectionreason() {
                       ? "font-green custom-active-button px-2"
                       : "custom-deactive-button px-2"
                   }
-                  onClick={() => handleBlockUnBlock(item?.s_id)}
+                  onClick={() => handleBlockUnBlock(item?.s_id,item?.active)}
                 >
                   {item?.active ? "Active" : "InActive"}
                 </div>
@@ -130,7 +130,7 @@ function Rejectionreason() {
                     ? "font-green custom-active-button px-2"
                     : "custom-deactive-button px-2"
                 }
-                onClick={() => handleBlockUnBlock(item?.s_id)}
+                onClick={() => handleBlockUnBlock(item?.s_id,item?.active)}
               >
                 {item?.active ? "Active" : "InActive"}
               </div>

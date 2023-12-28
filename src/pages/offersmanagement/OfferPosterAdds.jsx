@@ -20,7 +20,7 @@ function OfferPosterAdds() {
   const [uploadImage, setuploadImage] = useState([]);
   const [profileImage, setProfileImage] = useState("");
   const [error, setError] = useState("");
-  const [offerSubmitPopup,setOfferSubmitPopup] =useState(false)
+  const [offerSubmitPopup, setOfferSubmitPopup] = useState(false);
   //console.log(notificationtextmsg, "res----------->");
 
   const uploadfileInputRef = useRef(null);
@@ -62,10 +62,10 @@ function OfferPosterAdds() {
         status,
       }).then(async (res) => {
         setallOffers(res?.data);
-        setOfferSubmitPopup(true)
-        setTimeout(()=>{
-          setOfferSubmitPopup(false)
-        },2000)
+        setOfferSubmitPopup(true);
+        setTimeout(() => {
+          setOfferSubmitPopup(false);
+        }, 2000);
         singedUrl &&
           profileImage &&
           (await fetch(singedUrl, {
@@ -158,7 +158,7 @@ function OfferPosterAdds() {
         setallCountries(res?.data?.data);
       })
       .catch((err) => console.log(err));
-  };  
+  };
   useEffect(() => {
     getallCountries();
   }, []);
@@ -210,7 +210,7 @@ function OfferPosterAdds() {
                         Select...
                       </option>
                       <option value="All">All</option>
-                      {allUsers.map((obj) => (
+                      {allUsers?.map((obj) => (
                         <option value={obj.user_name} selected>
                           {obj.user_name}
                         </option>
@@ -389,10 +389,10 @@ function OfferPosterAdds() {
             Cancel
           </button>
         </div>
-        <MatchSubmitPopup          
-            header={"Offer Created Submitfully"}
-            state={offerSubmitPopup}
-            setState={setOfferSubmitPopup}
+        <MatchSubmitPopup
+          header={"Offer Created Submitfully"}
+          state={offerSubmitPopup}
+          setState={setOfferSubmitPopup}
         />
       </div>
     </div>
