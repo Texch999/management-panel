@@ -18,6 +18,7 @@ function AddDirectorsPopup(props) {
     firstTextBox,
     firstSelect,
     selectedDirector,
+    setSelectedDirector,
     setActive,
   } = props;
 
@@ -38,6 +39,7 @@ function AddDirectorsPopup(props) {
 
   const handleAddDirectorClose = () => {
     setShowAddDirectorPopup(false);
+    setUserId("")
     setFirstName("");
     setLastName("");
     setWebsite("");
@@ -49,11 +51,14 @@ function AddDirectorsPopup(props) {
     setUlshare("");
     setShare("");
     setUlCommision("")
+    setSelectedDirector("")
+    setPhoneNumber("")
   };
   const [passwordType, setPasswordType] = useState("password");
   const [passwordInput, setPasswordInput] = useState("");
   const handlePasswordChange = (evnt) => {
-    setPasswordInput(evnt.target.value);
+    setPasswordInput({
+      ...passwordInput, [evnt.target.name]:evnt.target.value});
   };
   const togglePassword = () => {
     if (passwordType === "password") {
@@ -137,6 +142,10 @@ function AddDirectorsPopup(props) {
           setPasswordInput("");
           setPaymentGateway("");
           setUlCommision("");
+          setUlshare("");
+          setShare("");
+          setPackageDiscount("");
+          setPhoneNumber("")
         }
       });
     } catch (err) {
@@ -267,11 +276,11 @@ function AddDirectorsPopup(props) {
                           <input type="checkbox" />
                           RRR
                         </option> */}
-                        {/* {websiteNames.map((obj) => (
+                        {websiteNames.map((obj) => (
                           <option value={obj.web_url}>
                             <input type="checkbox" /> {obj.web_url}
                           </option>
-                        ))} */}
+                        ))}
                       </>
                     ) : (
                       <>
@@ -299,7 +308,9 @@ function AddDirectorsPopup(props) {
                     {role === "director" ? (
                       <>
                         <option value="">Select</option>
-                        <option value="all">All</option>
+                        {allPayments?.map((obj) => (
+                          <option value={obj.pg_upi}>{obj.pg_upi}</option>
+                        ))}
                       </>
                     ) : (
                       <>
@@ -354,8 +365,8 @@ function AddDirectorsPopup(props) {
                     <input
                       type={passwordType}
                       onChange={handlePasswordChange}
-                      value={passwordInput}
-                      name="confirm password"
+                      value={passwordInput.password}
+                      name="password"
                       placeholder="Enter"
                       className="w-100 custom-select login-inputs small-font input-btn-bg px-2 py-2 all-none rounded all-none"
                     ></input>
@@ -377,8 +388,8 @@ function AddDirectorsPopup(props) {
                     <input
                       type={passwordType}
                       onChange={handlePasswordChange}
-                      value={passwordInput}
-                      name="password"
+                      value={passwordInput.confirm_password}
+                      name="confirm_password"
                       placeholder="Re-enter"
                       className="w-100 custom-select small-font login-inputs input-btn-bg px-2 py-2 all-none rounded all-none"
                     ></input>

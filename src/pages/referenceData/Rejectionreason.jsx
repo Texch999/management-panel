@@ -86,8 +86,8 @@ function Rejectionreason() {
     ? filteredQuestions
         .filter((item) =>
           selectedOption === "Active"
-            ? item?.is_active === 1
-            : item?.is_active === 0
+            ? item?.active === true
+            : item?.active === false
         )
         .filter((item) =>
           item?.reason?.toLowerCase().includes(searchText.toLowerCase())
@@ -116,8 +116,8 @@ function Rejectionreason() {
     : allQuestions
         .filter((item) =>
           selectedOption === "Active"
-            ? item?.is_active === 1
-            : item?.is_active === 0
+            ? item?.active === true
+            : item?.active === false
         )
         .map((item) => {
           return {

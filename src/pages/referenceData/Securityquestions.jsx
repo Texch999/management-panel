@@ -50,7 +50,7 @@ function Securityquestions() {
       })
       .catch((err) => console.log(err));
   };
-  const handleBlockUnBlock = async (item,currentActiveState) => {
+  const handleBlockUnBlock = async (item, currentActiveState) => {
     const payload = {
       s_id: item,
       active: !currentActiveState,
@@ -69,38 +69,44 @@ function Securityquestions() {
     getAllSecurityQuestions();
   }, [active]);
 
-  const modifiedSecurityquestionsDetails = allQuestions?.map((item) => {
-    return {
-      questions: <div className="role-color">{item?.question}</div>,
-      // status:
-      //   item?.is_active === "Active" ? (
-      //     <div className="font-green custom-active-button px-2">Active</div>
-      //   ) : (
-      //     <div className="custom-deactive-button px-2">InActive</div>
-      //   ),
-      status: (
-        <div
-          className={
-            item?.active
-              ? "font-green custom-active-button px-2"
-              : "custom-deactive-button px-2"
-          }
-          onClick={() => handleBlockUnBlock(item?.s_id,item?.active)}
-        >
-          {item?.active ? "Active" : "InActive"}
-        </div>
-      ),
-      icon: (
-        <MdOutlineEdit
-          className="eye-icon-size"
-          onClick={() => {
-            setSelectedQuestion(item);
-            handleRejectionPopupOpen();
-          }}
-        />
-      ),
-    };
-  });
+  const modifiedSecurityquestionsDetails = allQuestions
+    ?.filter((item) =>
+      selectedOption === "Active"
+        ? item?.active === true
+        : item?.active === false
+    )
+    .map((item) => {
+      return {
+        questions: <div className="role-color">{item?.question}</div>,
+        // status:
+        //   item?.is_active === "Active" ? (
+        //     <div className="font-green custom-active-button px-2">Active</div>
+        //   ) : (
+        //     <div className="custom-deactive-button px-2">InActive</div>
+        //   ),
+        status: (
+          <div
+            className={
+              item?.active
+                ? "font-green custom-active-button px-2"
+                : "custom-deactive-button px-2"
+            }
+            onClick={() => handleBlockUnBlock(item?.s_id, item?.active)}
+          >
+            {item?.active ? "Active" : "InActive"}
+          </div>
+        ),
+        icon: (
+          <MdOutlineEdit
+            className="eye-icon-size"
+            onClick={() => {
+              setSelectedQuestion(item);
+              handleRejectionPopupOpen();
+            }}
+          />
+        ),
+      };
+    });
   const [rejectPopupOpen, SetRejectpopupOpen] = useState(false);
 
   const handleRejectionPopupOpen = () => {

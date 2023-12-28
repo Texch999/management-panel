@@ -30,7 +30,7 @@ function AddReasonPopup(props) {
         p_id: "REJECT-REASON",
         register_id: "company",
         reason: selectedQuestion.reason || "",
-        active: selectedQuestion.active || "Select",
+        active: selectedQuestion.active || "",
         description: selectedQuestion.description || "",
       });
     } else {
@@ -39,7 +39,7 @@ function AddReasonPopup(props) {
         p_id: "REJECT-REASON",
         register_id: "company",
         reason: "",
-        active: "Select",
+        active: "",
         description: "",
       });
     }
@@ -93,7 +93,7 @@ function AddReasonPopup(props) {
         setStatus((prev) => !prev);
         setFormData({
           reason: "",
-          active: "Select",
+          active: "",
           description: "",
         });
       }

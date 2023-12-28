@@ -33,7 +33,7 @@ function AddSecurityPopup(props) {
         p_id: "SECURITY_QUESTIONS",
         register_id: "company",
         question: selectedQuestion.question || "",
-        active: selectedQuestion.is_active || "Select",
+        active: selectedQuestion.is_active || "",
         description: selectedQuestion.description || "",
       });
     } else {
@@ -96,7 +96,7 @@ function AddSecurityPopup(props) {
         setStatus((prev) => !prev);
         setFormData({
           question: "",
-          active: "Select",
+          active: "",
           description: "",
         });
       }

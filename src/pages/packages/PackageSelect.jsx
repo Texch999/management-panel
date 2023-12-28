@@ -97,9 +97,7 @@ function PackageSelect(props) {
                 {obj.country_name}
               </option>
             ))}
-            <option>Select</option>
-            <option>India</option>
-            <option>SriLanka</option>
+           
           </select>
         </div>
       </div>
