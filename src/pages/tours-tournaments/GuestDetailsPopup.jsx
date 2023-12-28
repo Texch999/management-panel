@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Modal } from "react-bootstrap";
 import { PRESIGNED_URL } from "../../config/endpoints";
+import { saveAs } from "file-saver";
 const axios = require("axios")
 
 function GuestDetailsPopup(props) {
@@ -84,6 +85,17 @@ function GuestDetailsPopup(props) {
       document.body.removeChild(link);
     
   };
+  // const handleDownload = async (imageUrl, imageName) => {
+  //   try {
+  //     const response = await fetch(imageUrl);
+  //     const blob = await response.blob();
+  //     console.log(imageUrl, "my image");
+  //     // Using file-saver to save the blob
+  //     saveAs(blob, imageName || "image.png");
+  //   } catch (error) {
+  //     console.error("Error downloading image:", error);
+  //   }
+  // };
   
 
   const TableHeads = [

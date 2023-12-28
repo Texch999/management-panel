@@ -153,11 +153,11 @@ function GuestDocsUploadPopup(props) {
               document: (
                 <div>
                   <div
-                    // className={
-                    //     guest[companyUploadingDocType] === false
-                    //     ? "d-flex align-items-center button-custom-deactive"
-                    //     : "d-flex align-items-center button-custom"
-                    // }
+                    className={
+                        guest.usertraveldoc === false
+                        ? "d-flex align-items-center button-custom-deactive"
+                        : "d-flex align-items-center button-custom"
+                    }
                     // onClick={
                     //   item?.hotel_bookings === false
                     //     ? null
@@ -165,13 +165,12 @@ function GuestDocsUploadPopup(props) {
                     // }
                   >
                     <FaRegEye
-                    //   className={
-                    //     guest[companyUploadingDocType] === false
-                    //       ? "me-1 ions-deactive-clr"
-                    //       : "me-1 ions-clr"
-                    //   }
+                      className={
+                        guest.usertraveldoc === false
+                          ? "me-1 ions-deactive-clr"
+                          : "me-1 ions-clr"
+                      }
                     />
-                    {guest}
                     View
                   </div>
                   <label
