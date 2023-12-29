@@ -185,7 +185,10 @@ function PackageViewPoup(props) {
             <div className="w-100 my-1 relative-position">
               <img
                 className="w-100 h9vh rounded"
-                src={process.env.PUBLIC_URL + "./assets/dog_imge.jpg"}
+                src={
+                  transactionData?.summary?.transaction_img ||
+                  process.env.PUBLIC_URL + "./assets/dog_imge.jpg"
+                }
                 alt=""
               />
               <PiArrowsOutLight
@@ -387,6 +390,7 @@ function PackageViewPoup(props) {
         </Modal.Header>
       </Modal>
       <ShowImagePopup
+        transactionData = {transactionData}
         showScreenshotImg={showScreenshotImg}
         setShowScreenshotImg={setShowScreenshotImg}
       />

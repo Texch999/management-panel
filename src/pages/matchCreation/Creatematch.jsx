@@ -1,13 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { BsChevronDown } from "react-icons/bs";
 import { FaLocationDot, FaTrophy } from "react-icons/fa6";
 // import { MdStadium } from "react-icons/md";
 import Table from "../table/Table";
 import { AiOutlineEdit } from "react-icons/ai";
 import { MdDateRange } from "react-icons/md";
 import { BiTimeFive } from "react-icons/bi";
-import moment from "moment";
-import { MdOutlineEdit } from "react-icons/md";
 import { GET_MATCHES_DATA, GET_ALL_WEBSITES } from "../../config/endpoints";
 import { CREATE_OFFLINE_MATCHES } from "../../config/endpoints";
 import { call } from "../../config/axios";
@@ -19,7 +16,11 @@ function Creatematch() {
   const [selectedMatch, setSelectedMatch] = useState([]);
   const [showMatchOpen, setShowMatchOpen] = useState(false);
   const [Error, setError] = useState(false);
-  const [matchSubmitPopup,setMatchSubmitPopup] =useState(false)
+  const [oversChange, setOversChange] = useState({});
+  const [matchSubmitPopup, setMatchSubmitPopup] = useState(false);
+  const [liveMatches, setLiveMatches] = useState([]);
+  const [upcomingMatches, setUpcommingMatches] = useState([]);
+  const [todayMatches, setTodayMatches] = useState([]);
 
   const handleSubmitMatch = async () => {
     if (
@@ -35,7 +36,6 @@ function Creatematch() {
     ) {
       return setError("Missing Required feilds");
     } else {
-      console.log("createMatch", createMatch);
       await call(CREATE_OFFLINE_MATCHES, {
         register_id: "company",
         series_name: createMatch.series_name,
@@ -58,11 +58,12 @@ function Creatematch() {
           match_type: createMatch?.match_type,
         },
       }).then((res) => {
-        setMatchSubmitPopup(true)
-        setTimeout(()=>{
-          setMatchSubmitPopup(false)
-        },2000)
-        console.log("------------>", res.data);
+        if (res?.data?.statusCode === 200) {
+          setMatchSubmitPopup(true);
+          setTimeout(() => {
+            setMatchSubmitPopup(false);
+          }, 2000);
+        }
       });
     }
   };
@@ -108,6 +109,14 @@ function Creatematch() {
       return results?.first;
     } else {
       return results?.second;
+    }
+  };
+
+  // const selectOvers = matchType.filter((i) => i.name === matchData?.macth_type);
+
+  const handleOversChange = (e) => {
+    setOversChange({ [e.target.name]: e.target.value });
+    if (e.target.name === "first_fancy") {
     }
   };
 
@@ -158,9 +167,6 @@ function Creatematch() {
   ];
 
   //const [getMatches, setgetMatches] = useState([]);
-  const [liveMatches, setLiveMatches] = useState([]);
-  const [upcomingMatches, setUpcommingMatches] = useState([]);
-  const [todayMatches, setTodayMatches] = useState([]);
   const getAllMatches = async () => {
     const payload = {
       register_id: "company",
@@ -177,8 +183,6 @@ function Creatematch() {
   };
 
   const allMatches = [...liveMatches, ...upcomingMatches, ...todayMatches];
-
-  console.log("allMatches====>",allMatches);
 
   useEffect(() => {
     getAllMatches();
@@ -394,7 +398,7 @@ function Creatematch() {
                     name={value.name}
                     value={value.overs}
                     disabled
-                    onChange={(e) => handelChange(e)}
+                    onChange={(e) => handleOversChange(e)}
                   ></input>
                 </div>
               </div>
@@ -415,12 +419,12 @@ function Creatematch() {
         <div className=" medium-font font-weight-bold px-2 p-2 pt-0 mt-0 th-color">
           Ur Creating Matches
         </div>
+        <Table columns={cols || []} data={modifiedCreatematchDetails} />
 
-        <Table columns={cols} data={modifiedCreatematchDetails} />
         <MatchSubmitPopup
-            header={"Match Created Successfully"}
-            state={matchSubmitPopup}
-            setState={setMatchSubmitPopup}
+          header={"Match Created Successfully"}
+          state={matchSubmitPopup}
+          setState={setMatchSubmitPopup}
         />
         <MatchPopup
           selectedMatch={selectedMatch}

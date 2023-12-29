@@ -42,10 +42,6 @@ function Broadcasting() {
       field: "type",
     },
     {
-      header: "DESCRIPTION",
-      field: "description",
-    },
-    {
       header: "STATUS",
       field: "status",
     },
