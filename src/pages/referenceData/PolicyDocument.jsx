@@ -77,7 +77,7 @@ function PolicyDocument() {
 
   useEffect(() => {
     getallPolicyDocuments();
-  }, [active]);
+  }, [active,status]);
 
   const modifiedPolicydocumentDetails = searchText.length
     ? filteredQuestions

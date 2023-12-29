@@ -1,12 +1,9 @@
 import React, { useState, useEffect } from "react";
-import {
-  GET_ALL_PAYMENTS,
-  GET_ALL_WEBSITES
-} from "../../config/endpoints";
+import { GET_ALL_PAYMENTS, GET_ALL_WEBSITES } from "../../config/endpoints";
 import { call } from "../../config/axios";
 
 function PackageSelect(props) {
-  const { setSelectedPackage,setPackageInputs,packageInputs} = props;
+  const { setSelectedPackage, setPackageInputs, packageInputs } = props;
   const [selectPackages, setSelectPackages] = useState([]);
   // const [activeIndex, setActiveIndex] = useState("all");
 
@@ -37,10 +34,6 @@ function PackageSelect(props) {
     getwebsiteNames();
   }, []);
 
-  console.log("websiteNames", websiteNames);
-
-  const [allCountries, setallCountries] = useState([]);
- 
   const [allPayments, setAllPayments] = useState([]);
   const getPaymentWay = async () => {
     const payload = {
@@ -97,7 +90,6 @@ function PackageSelect(props) {
                 {obj.country_name}
               </option>
             ))}
-           
           </select>
         </div>
       </div>

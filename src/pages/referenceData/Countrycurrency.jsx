@@ -14,7 +14,7 @@ function Countrycurrency() {
 
   const searchContent = (value) => {
     setSearchText(value);
-    const filteredSearchText = getallCountries.filter((res) =>
+    const filteredSearchText = getallCountries?.filter((res) =>
       res?.country_name.toLowerCase().includes(searchText.toLowerCase())
     );
     setFilteredCountries(filteredSearchText);
