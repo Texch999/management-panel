@@ -13,11 +13,12 @@ function Adddirector() {
   const [filteredDirectors, setFilteredDirectors] = useState([]);
   const [searchText, setSearchText] = useState("");
   const [active, setActive] = useState();
+  const [reRender, setReRender] = useState(false)
 
   const searchContent = (value) => {
     setSearchText(value);
     const filteredSearchText = getAllDirectors.filter((res) =>
-      res?.account_role?.toLowerCase().includes(searchText.toLowerCase())
+      res?.user_name?.toLowerCase().includes(searchText.toLowerCase())
     );
     setFilteredDirectors(filteredSearchText);
   };
@@ -116,12 +117,12 @@ function Adddirector() {
 
   useEffect(() => {
     getDirectors();
-  }, [active]);
+  }, [active, reRender]);
 
   const modifiedAdddirectorDetails = searchText.length
     ? filteredDirectors
         .filter((item) =>
-          item?.account_role.toLowerCase().includes(searchText.toLowerCase())
+          item?.user_name?.toLowerCase().includes(searchText.toLowerCase())
         )
         .map((item) => {
           return {
@@ -234,6 +235,7 @@ function Adddirector() {
         firstSelect="Time Zone"
         setStatus={setActive}
         setSelectedDirector={setSelectedDirector}
+        setReRender={setReRender}
       />
     </div>
   );

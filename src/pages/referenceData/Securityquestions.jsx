@@ -67,7 +67,7 @@ function Securityquestions() {
 
   useEffect(() => {
     getAllSecurityQuestions();
-  }, [active]);
+  }, [active,status]);
 
   const modifiedSecurityquestionsDetails = allQuestions
     ?.filter((item) =>

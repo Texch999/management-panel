@@ -22,7 +22,8 @@ function PackageUpgrade(props) {
   const uploadfileInputRef = useRef(null);
 
   const handleUploadFileSelect = (e) => {
-    const file = e.target.file[0];
+    const file = e.target.files[0];
+    console.log(file,"====>file");
     setProfileImage(file);
     generateSignedUrl();
   };
@@ -114,7 +115,7 @@ function PackageUpgrade(props) {
     const posetNewId = new Date().getTime();
     await call(GENERATE_SIGNED_URL, {
       register_id: `${posetNewId}`,
-      event_type: "package_image",
+      event_type: "user_profile_image",
       folder_name: "package-images",
     })
       .then(async (res) => {

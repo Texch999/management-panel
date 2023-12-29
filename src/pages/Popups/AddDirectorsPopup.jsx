@@ -20,6 +20,7 @@ function AddDirectorsPopup(props) {
     selectedDirector,
     setSelectedDirector,
     setActive,
+    setReRender,
   } = props;
 
   const [userId, setUserId] = useState("");
@@ -29,37 +30,49 @@ function AddDirectorsPopup(props) {
   const [lastName, setLastName] = useState("");
   const [phonenumber, setPhoneNumber] = useState("");
   const [website, setWebsite] = useState("");
-  const [timezone, setTimeZone] = useState("");
+  // const [timezone, setTimeZone] = useState("");
   const [paymentGateway, setPaymentGateway] = useState("");
   const [packageDiscount, setPackageDiscount] = useState("");
   const [share, setShare] = useState("");
   const [ulshare, setUlshare] = useState("");
   const [showEye, setShowEye] = useState(false);
-  const [ulCommision,setUlCommision] =useState("")
+  const [ulCommision, setUlCommision] = useState("");
 
   const handleAddDirectorClose = () => {
     setShowAddDirectorPopup(false);
-    setUserId("")
+    setUserId("");
     setFirstName("");
     setLastName("");
     setWebsite("");
     setCountryName("");
-    setTimeZone("");
+    // setTimeZone("");
     setRole("");
     setPaymentGateway("");
     setPackageDiscount("");
     setUlshare("");
     setShare("");
-    setUlCommision("")
-    setSelectedDirector("")
-    setPhoneNumber("")
+    setUlCommision("");
+    setSelectedDirector("");
+    setPhoneNumber("");
   };
   const [passwordType, setPasswordType] = useState("password");
   const [passwordInput, setPasswordInput] = useState("");
+  const [err, setErr] = useState("");
   const handlePasswordChange = (evnt) => {
     setPasswordInput({
-      ...passwordInput, [evnt.target.name]:evnt.target.value});
+      ...passwordInput,
+      [evnt.target.name]: evnt.target.value,
+    });
   };
+  const [confrmPasswordType, setConfrmPasswordType] = useState("password");
+  const [confrmPasswordInput, setConfrmPasswordInput] = useState("");
+  const handleConfirmPasswordChange = (evnt) => {
+    setConfrmPasswordInput({
+      ...confrmPasswordInput,
+      [evnt.target.name]: evnt.target.value,
+    });
+  };
+
   const togglePassword = () => {
     if (passwordType === "password") {
       setPasswordType("text");
@@ -67,25 +80,38 @@ function AddDirectorsPopup(props) {
     }
     setPasswordType("password");
   };
+
+  const toggleConfirmPassword = () => {
+    if (confrmPasswordType === "password") {
+      setConfrmPasswordType("text");
+      return;
+    }
+    setConfrmPasswordType("password");
+  };
+
   useEffect(() => {
     if (selectedDirector) {
       setUserId(selectedDirector.user_name || "");
       setFirstName(selectedDirector.first_name || "");
       setLastName(selectedDirector.last_name || "");
       setPhoneNumber(selectedDirector.mobile_no || "");
-      setWebsite(selectedDirector.website || "");
+      setWebsite(selectedDirector.website_name || "");
       setPaymentGateway(selectedDirector.pg_upi || "");
-      setTimeZone(selectedDirector.timezone || "");
+      // setTimeZone(selectedDirector.timezone || "");
       setRole(selectedDirector.account_role || "");
       setCountryName(selectedDirector.country_name || "");
       setPasswordInput(selectedDirector.password || "");
       setPackageDiscount(selectedDirector.package_discount || "");
       setUlshare(selectedDirector.ul_share || "");
       setShare(selectedDirector.share || "");
-      setUlCommision(selectedDirector.ul_commision)
+      setUlCommision(selectedDirector.ul_commision || "");
     }
   }, [selectedDirector]);
+
   const handleCreateOrUpdateDirector = async (status) => {
+    if (passwordInput?.password !== confrmPasswordInput?.confirm_password) {
+      return setErr(`password doesn't match`);
+    }
     try {
       const url = selectedDirector ? UPDATE_PROFILE : ACCOUNT_REGISTERATION;
       const requestData = {
@@ -99,15 +125,15 @@ function AddDirectorsPopup(props) {
         last_name: lastName,
         mobile_no: phonenumber,
         website_name: website,
-        time_zone: timezone,
+        // time_zone: timezone,
         account_role: role,
         country_name: countryName,
-        password: passwordInput,
+        password: passwordInput.password,
         pg_upi: paymentGateway,
         share: 100 - +ulshare,
         ul_share: ulshare,
         package_discount: packageDiscount,
-        ul_commision:ulCommision
+        ul_commision: ulCommision,
       };
 
       if (selectedDirector) {
@@ -116,11 +142,18 @@ function AddDirectorsPopup(props) {
         // requestData.creator_role = selectedDirector.creator_role;
         // requestData.creator_password = selectedDirector.creator_password;
         // requestData.management = selectedDirector.management;
+        setAddDirectorPopup(true);
+        setReRender((prev) => !prev);
+        setTimeout(() => {
+          setAddDirectorPopup(false);
+          setShowAddDirectorPopup(false);
+        }, 2000);
       }
       await call(url, requestData).then((res) => {
         console.log("-------->", res.data);
         if (res.data.status === 201) {
           setAddDirectorPopup(true);
+          setReRender((prev) => !prev);
           setTimeout(() => {
             setAddDirectorPopup(false);
             setShowAddDirectorPopup(false);
@@ -136,7 +169,7 @@ function AddDirectorsPopup(props) {
           setFirstName("");
           setLastName("");
           setWebsite("");
-          setTimeZone("");
+          // setTimeZone("");
           setRole("");
           setCountryName("");
           setPasswordInput("");
@@ -145,7 +178,7 @@ function AddDirectorsPopup(props) {
           setUlshare("");
           setShare("");
           setPackageDiscount("");
-          setPhoneNumber("")
+          setPhoneNumber("");
         }
       });
     } catch (err) {
@@ -172,24 +205,7 @@ function AddDirectorsPopup(props) {
   useEffect(() => {
     getwebsiteNames();
   }, []);
-
-  // const [allCountries, setallCountries] = useState([]);
-  // const getallCountries = async () => {
-  //   const payload = {
-  //     register_id: "company",
-  //   };
-  //   await call(GET_COUNTRY_AND_CURRENCY, payload)
-  //     .then((res) => {
-  //       setallCountries(res?.data?.data);
-  //     })
-  //     .catch((err) => {
-  //       setShowAddDirectorPopup(true);
-  //     });
-  // };
-  // useEffect(() => {
-  //   getallCountries();
-  // }, []);
-
+  
   const [allPayments, setAllPayments] = useState([]);
   const getPaymentWay = async () => {
     const payload = {
@@ -208,7 +224,8 @@ function AddDirectorsPopup(props) {
     getPaymentWay();
   }, []);
 
-  console.log("allPayments===>", allPayments);
+
+  console.log("===>addDirectorsPopup",addDirectorsPopup)
 
   return (
     <div className="modal fade bd-example-modal-lg container mt-5">
@@ -325,8 +342,8 @@ function AddDirectorsPopup(props) {
               </Col>
             </Row>
             <Row>
-               <Col>
-                  <div className="d-flex flex-column w-100 mt-2">
+              <Col>
+                <div className="d-flex flex-column w-100 mt-2">
                   <div className="small-font mb-1 mt-1">User ID *</div>
                   <div className="w-100">
                     <input
@@ -339,24 +356,24 @@ function AddDirectorsPopup(props) {
                     ></input>
                   </div>
                 </div>
-               </Col>
-               <Col>
-                  <div className="d-flex flex-column w-100 mt-2">
+              </Col>
+              <Col>
+                <div className="d-flex flex-column w-100 mt-2">
                   <div className="small-font mb-1 mt-1">Phone *</div>
                   <div className="w-100">
                     <input
-                       type="number"
-                       placeholder="Enter"
-                       name="mobile_no"
-                       className="w-100 custom-select small-font login-inputs input-btn-bg px-2 py-2 all-none rounded all-none"
-                       value={phonenumber}
-                       onChange={(e) => setPhoneNumber(e.target.value)}
+                      type="number"
+                      placeholder="Enter"
+                      name="mobile_no"
+                      className="w-100 custom-select small-font login-inputs input-btn-bg px-2 py-2 all-none rounded all-none"
+                      value={phonenumber}
+                      onChange={(e) => setPhoneNumber(e.target.value)}
                     ></input>
                   </div>
                 </div>
-               </Col>
+              </Col>
             </Row>
-            
+
             <Container fluid className="my-2">
               <Row>
                 <Col className="ps-0">
@@ -386,18 +403,18 @@ function AddDirectorsPopup(props) {
                   <div className="small-font my-1">Confirm Password *</div>
                   <div className="d-flex justify-content-between flex-row aligin-items-center input-btn-bg w-100 rounded">
                     <input
-                      type={passwordType}
-                      onChange={handlePasswordChange}
+                      type={confrmPasswordType}
+                      onChange={handleConfirmPasswordChange}
                       value={passwordInput.confirm_password}
                       name="confirm_password"
                       placeholder="Re-enter"
                       className="w-100 custom-select small-font login-inputs input-btn-bg px-2 py-2 all-none rounded all-none"
                     ></input>
                     <button
-                      onClick={togglePassword}
+                      onClick={toggleConfirmPassword}
                       className="all-none input-btn-bg"
                     >
-                      {passwordType === "password" ? (
+                      {confrmPasswordType === "password" ? (
                         <i className="bi bi-eye-slash"></i>
                       ) : (
                         <i className="bi bi-eye"></i>
@@ -438,12 +455,12 @@ function AddDirectorsPopup(props) {
                 <Col className="ps-0">
                   <div className="small-font my-1">UL Commison*</div>
                   <input
-                     type="text"
-                     placeholder="Enter"
-                     name="ul_commision"
-                     className="w-100 custom-select small-font login-inputs input-btn-bg px-2 py-2 all-none rounded all-none"
-                     value={ulCommision}
-                     onChange={(e) => setUlCommision(e.target.value)}
+                    type="text"
+                    placeholder="Enter"
+                    name="ul_commision"
+                    className="w-100 custom-select small-font login-inputs input-btn-bg px-2 py-2 all-none rounded all-none"
+                    value={ulCommision}
+                    onChange={(e) => setUlCommision(e.target.value)}
                   ></input>
                 </Col>
                 <Col className="pe-0">
@@ -483,6 +500,7 @@ function AddDirectorsPopup(props) {
                 </Col>
               </Row>
             </Container>
+            {err && <div className="error-message mb-1">{err}</div>}
             <div className="d-flex justify-content-center w-100 my-4">
               <button
                 className="add-button rounded px-2 py-3 w-50 medium-font"

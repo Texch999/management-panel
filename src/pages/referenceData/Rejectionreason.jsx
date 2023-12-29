@@ -79,7 +79,7 @@ function Rejectionreason() {
   };
   useEffect(() => {
     getAllRejectQuestions();
-  }, [active]);
+  }, [active,status]);
 
 
   const modifiedRejectionreasonDetails = searchText.length
