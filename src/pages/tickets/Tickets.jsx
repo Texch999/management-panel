@@ -21,163 +21,55 @@ function Tickets() {
     setActiveIndex(index);
   };
   const cols = [
-    {
-      header: "DATE & TIME",
-      field: "dateAndTime",
-    },
-    // {
-    //   header: "Name & ROLE",
-    //   field: "nameAndRole",
-    // },
-    {
-      header: "TRX ID",
-      field: "trxid",
-    },
-    {
-      header: "PACKAGE TRX",
-      field: "package",
-    },
-    {
-      header: "CHIPS",
-      field: "chips",
-    },
-    {
-      header: "DISCOUNT",
-      field: "discount",
-    },
-    {
-      header: "PAY AMOUNT",
-      field: "pkgamnt",
-    },
-    {
-      header: "STATUS",
-      field: "status",
-      clr: true,
-    },
+    { header: "DATE & TIME", field: "dateAndTime" },
+    { header: "TRX ID", field: "trxid" },
+    { header: "PACKAGE TRX", field: "package" },
+    { header: "CHIPS", field: "chips" },
+    { header: "DISCOUNT", field: "discount" },
+    { header: "PAY AMOUNT", field: "pkgamnt" },
+    { header: "STATUS", field: "status", clr: true },
   ];
 
   const cols1 = [
-    {
-      header: "DATE",
-      field: "date",
-    },
-    {
-      header: "TIME",
-      field: "time",
-    },
-    // {
-    //   header: "Name & ROLE",
-    //   field: "nameAndRole",
-    // },
-    {
-      header: "TRX ID",
-      field: "trxid",
-    },
-    {
-      header: "PACKAGE TRX",
-      field: "package",
-    },
-    {
-      header: "CHIPS",
-      field: "chips",
-    },
-    {
-      header: "DISCOUNT",
-      field: "discount",
-    },
-    {
-      header: "PAY AMOUNT",
-      field: "pkgamnt",
-    },
-    {
-      header: "VIEW",
-      field: "icon",
-    },
-    {
-      header: "STATUS",
-      field: "status",
-      clr: true,
-    },
+    { header: "DATE", field: "date" },
+    { header: "TIME", field: "time" },
+    { header: "TRX ID", field: "trxid" },
+    { header: "PACKAGE TRX", field: "package" },
+    { header: "CHIPS", field: "chips" },
+    { header: "DISCOUNT", field: "discount" },
+    { header: "PAY AMOUNT", field: "pkgamnt" },
+    { header: "VIEW", field: "icon" },
+    { header: "STATUS", field: "status", clr: true },
   ];
 
   const cols2 = [
-    {
-      header: "DATE & TIME",
-      field: "dateAndTime",
-    },
+    { header: "DATE & TIME", field: "dateAndTime" },
     // {
     //   header: "Name & ROLE",
     //   field: "nameAndRole",
     // },
-    {
-      header: "TRX ID",
-      field: "trxid",
-    },
-    {
-      header: "PACKAGE TRX",
-      field: "package",
-    },
-    {
-      header: "CHIPS",
-      field: "chips",
-    },
-    {
-      header: "DISCOUNT",
-      field: "discount",
-    },
-    {
-      header: "PAY AMOUNT",
-      field: "pkgamnt",
-    },
-    {
-      header: "VIEW",
-      field: "icon",
-    },
-    {
-      header: "STATUS",
-      field: "status",
-      clr: true,
-    },
+    { header: "TRX ID", field: "trxid" },
+    { header: "PACKAGE TRX", field: "package" },
+    { header: "CHIPS", field: "chips" },
+    { header: "DISCOUNT", field: "discount" },
+    { header: "PAY AMOUNT", field: "pkgamnt" },
+    { header: "VIEW", field: "icon" },
+    { header: "STATUS", field: "status", clr: true },
   ];
 
   const cols3 = [
-    {
-      header: "DATE & TIME",
-      field: "dateAndTime",
-    },
+    { header: "DATE & TIME", field: "dateAndTime" },
     // {
     //   header: "Name & ROLE",
     //   field: "nameAndRole",
     // },
-    {
-      header: "TRX ID",
-      field: "trxid",
-    },
-    {
-      header: "PACKAGE TRX",
-      field: "package",
-    },
-    {
-      header: "CHIPS",
-      field: "chips",
-    },
-    {
-      header: "DISCOUNT",
-      field: "discount",
-    },
-    {
-      header: "PAY AMOUNT",
-      field: "pkgamnt",
-    },
-    {
-      header: "VIEW",
-      field: "icon",
-    },
-    {
-      header: "STATUS",
-      field: "status",
-      clr: true,
-    },
+    { header: "TRX ID", field: "trxid" },
+    { header: "PACKAGE TRX", field: "package" },
+    { header: "CHIPS", field: "chips" },
+    { header: "DISCOUNT", field: "discount" },
+    { header: "PAY AMOUNT", field: "pkgamnt" },
+    { header: "VIEW", field: "icon" },
+    { header: "STATUS", field: "status", clr: true },
   ];
 
   const handleSuccessfullPopup = async (
@@ -188,6 +80,7 @@ function Tickets() {
   ) => {
     const url = type ? PACKAGE_APPROVE_REJECT : BULK_PACKAGE_APPROVE_REJECT;
     setIsProcessing(true);
+    setStatus(status);
     await call(url, {
       register_id: "company",
       transaction_id,
@@ -198,6 +91,7 @@ function Tickets() {
       .then((res) => {
         if (res.status === 200) {
           setIsProcessing(false);
+          setStatus("");
           setTimeout(() => {
             setIsProcessing(false);
             setShowPackageUpgrade(false);
@@ -206,6 +100,7 @@ function Tickets() {
       })
       .catch((err) => {
         setIsProcessing(false);
+        setStatus("");
         console.log(err);
       });
   };
@@ -217,7 +112,6 @@ function Tickets() {
     await call(GET_ADMIN_PACKAGE_REQUEST, payload)
       .then((res) => {
         setRequestedPackages(res?.data?.data);
-        // setStatus((prev) => !prev);
       })
       .catch((err) => console.log(err));
   };
@@ -228,8 +122,6 @@ function Tickets() {
     };
     fetchData();
   }, []);
-
-  console.log(status, "==>STATUS");
 
   const PACKAGE_TICKET_BUTTONS = [
     {
@@ -245,6 +137,14 @@ function Tickets() {
       buttonName: "PAYMENT TICKETS",
     },
   ];
+
+  const [showPackageUpgrade, setShowPackageUpgrade] = useState(false);
+  const handlePackageUpgrade = (item) => {
+    setPopupData(item);
+    setTransactionData(item);
+    setShowPackageUpgrade(true);
+    setStatus((prev) => !prev);
+  };
 
   const modifiedTicketDetails =
     requestedPackages?.length > 0 &&
@@ -278,9 +178,7 @@ function Tickets() {
         </div>
       ),
       date: `${item?.created_date}`,
-
       time: `${item?.created_time}`,
-
       trxid: item?.transaction_id,
       package: item?.summary.final_package_cost,
       pkgamnt: item?.summary.total_packages_cost,
@@ -354,13 +252,6 @@ function Tickets() {
         <AiOutlineEye className="" onClick={() => handlePackageUpgrade(item)} />
       ),
     }));
-
-  const [showPackageUpgrade, setShowPackageUpgrade] = useState(false);
-  const handlePackageUpgrade = (item) => {
-    setPopupData(item);
-    setTransactionData(item);
-    setShowPackageUpgrade(true);
-  };
   return (
     <div className="p-4 w-100">
       <div>
@@ -398,6 +289,7 @@ function Tickets() {
         showPackageUpgrade={showPackageUpgrade}
         transactionData={transactionData}
         isProcessing={isProcessing}
+        status={status}
         handleSuccessfullPopup={handleSuccessfullPopup}
         setShowPackageUpgrade={setShowPackageUpgrade}
       />

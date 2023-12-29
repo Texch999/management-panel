@@ -205,7 +205,7 @@ function AddDirectorsPopup(props) {
   useEffect(() => {
     getwebsiteNames();
   }, []);
-  
+
   const [allPayments, setAllPayments] = useState([]);
   const getPaymentWay = async () => {
     const payload = {
@@ -224,8 +224,7 @@ function AddDirectorsPopup(props) {
     getPaymentWay();
   }, []);
 
-
-  console.log("===>addDirectorsPopup",addDirectorsPopup)
+  console.log("===>addDirectorsPopup", addDirectorsPopup);
 
   return (
     <div className="modal fade bd-example-modal-lg container mt-5">
@@ -266,11 +265,14 @@ function AddDirectorsPopup(props) {
                 >
                   <option value="select">select</option>
                   <option value="All">All</option>
-                  {allPayments?.map((obj) => (
-                    <option value={obj.country_name} selected>
-                      {obj.country_name}
-                    </option>
-                  ))}
+                  {allPayments?.map(
+                    (obj) =>
+                      obj.active === true && (
+                        <option value={obj.country_name} selected>
+                          {obj.country_name}
+                        </option>
+                      )
+                  )}
                 </select>
               </Col>
             </Row>
@@ -325,16 +327,22 @@ function AddDirectorsPopup(props) {
                     {role === "director" ? (
                       <>
                         <option value="">Select</option>
-                        {allPayments?.map((obj) => (
-                          <option value={obj.pg_upi}>{obj.pg_upi}</option>
-                        ))}
+                        {allPayments?.map(
+                          (obj) =>
+                            obj.active === true && (
+                              <option value={obj.pg_upi}>{obj.pg_upi}</option>
+                            )
+                        )}
                       </>
                     ) : (
                       <>
                         <option value="">Select</option>
-                        {allPayments?.map((obj) => (
-                          <option value={obj.pg_upi}>{obj.pg_upi}</option>
-                        ))}
+                        {allPayments?.map(
+                          (obj) =>
+                            obj.active === true && (
+                              <option value={obj.pg_upi}>{obj.pg_upi}</option>
+                            )
+                        )}
                       </>
                     )}
                   </select>

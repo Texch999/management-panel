@@ -17,6 +17,7 @@ function PackageViewPoup(props) {
     transactionData = {},
     isProcessing,
     handleSuccessfullPopup,
+    status,
   } = props;
   const [showScreenshotImg, setShowScreenshotImg] = useState(false);
   const handleShowImg = () => {
@@ -24,7 +25,6 @@ function PackageViewPoup(props) {
   };
   const [saleTicket, setSaleTicket] = useState([]);
   const [rejectionDropDown, setRejectionDropDown] = useState([]);
-  const [status, setStatus] = useState(false);
 
   const handleAdminTicketPopupClose = () => {
     setShowPackageUpgrade(false);
@@ -42,7 +42,6 @@ function PackageViewPoup(props) {
     const res = await call(GET_ADMIN_PACKAGE_REQUEST, payload)
       .then((res) => {
         setSaleTicket(res?.data?.data);
-        // setStatus((prev) => !prev);
       })
       .catch((err) => console.log(err));
   };
@@ -355,7 +354,10 @@ function PackageViewPoup(props) {
                   disabled={isProcessing}
                 >
                   {" "}
-                  {isProcessing ? "Processing..." : "Accept"}{" "}
+                  {/* {isProcessing ? "Processing..." : "Accept"}{" "} */}
+                  {isProcessing && status !== "Reject"
+                    ? "Processing..."
+                    : "Accept"}
                 </button>
                 <button
                   type="submit"
@@ -369,7 +371,9 @@ function PackageViewPoup(props) {
                   }
                   disabled={isProcessing}
                 >
-                  {isProcessing ? "Processing..." : "Reject"}
+                  {isProcessing && status == "Reject"
+                    ? "Processing..."
+                    : "Reject"}
                 </button>
               </div>
             ) : (
@@ -390,7 +394,7 @@ function PackageViewPoup(props) {
         </Modal.Header>
       </Modal>
       <ShowImagePopup
-        transactionData = {transactionData}
+        transactionData={transactionData}
         showScreenshotImg={showScreenshotImg}
         setShowScreenshotImg={setShowScreenshotImg}
       />

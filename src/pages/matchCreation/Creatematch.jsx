@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { FaLocationDot, FaTrophy } from "react-icons/fa6";
-// import { MdStadium } from "react-icons/md";
+import { FaLocationDot } from "react-icons/fa6";
+import { MdStadium } from "react-icons/md";
 import Table from "../table/Table";
 import { AiOutlineEdit } from "react-icons/ai";
 import { MdDateRange } from "react-icons/md";
@@ -21,6 +21,7 @@ function Creatematch() {
   const [liveMatches, setLiveMatches] = useState([]);
   const [upcomingMatches, setUpcommingMatches] = useState([]);
   const [todayMatches, setTodayMatches] = useState([]);
+  const [matchTypeSelect, setMatchTypeSelect] = useState("");
 
   const handleSubmitMatch = async () => {
     if (
@@ -32,7 +33,8 @@ function Creatematch() {
       !createMatch.stadium ||
       !createMatch.date ||
       !createMatch.time ||
-      !createMatch.match_type
+      !matchTypeSelect?.first ||
+      !matchTypeSelect?.second
     ) {
       return setError("Missing Required feilds");
     } else {
@@ -50,11 +52,8 @@ function Creatematch() {
         date: createMatch.date,
         time: createMatch.time,
         game_object: {
-          first_innings_fancy_overs: getOvers(createMatch?.match_type, "first"),
-          second_innings_fancy_overs: getOvers(
-            createMatch?.match_type,
-            "second"
-          ),
+          first_innings_fancy_overs: getOvers(matchTypeSelect?.first),
+          second_innings_fancy_overs: getOvers(matchTypeSelect?.second),
           match_type: createMatch?.match_type,
         },
       }).then((res) => {
@@ -72,6 +71,7 @@ function Creatematch() {
   }, []);
 
   const handelChange = (e) => {
+    setError("");
     setcreateMatch({ ...createMatch, [e.target.name]: e.target.value });
   };
 
