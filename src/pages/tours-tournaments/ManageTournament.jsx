@@ -82,7 +82,7 @@ function ManageTournament() {
       .then((res) => setGuestDocs(res?.data?.data?.Items))
       .catch((error) => console.log(error));
   };
-  // console.log(guestDocs, ".....guestdocs");
+  console.log(guestDocs, ".....guestdocs");
 
   useEffect(() => {
     gettingInterestedMembers();

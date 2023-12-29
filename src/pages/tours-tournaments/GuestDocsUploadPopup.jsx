@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Modal } from "react-bootstrap";
 import { PRESIGNED_URL } from "../../config/endpoints";
+import { GENERATE_SIGNED_URL } from "../../config/endpoints";
+import MatchSubmitPopup from "../../matchpopups/MatchSubmitPopup";
 import { FaRegEye } from "react-icons/fa";
 import { MdUpload } from "react-icons/md";
 const axios = require("axios");
@@ -13,11 +15,12 @@ function GuestDocsUploadPopup(props) {
     companyUploadingDocType,
   } = props;
   const [allPackMembers, setAllPackMembers] = useState([]);
-  console.log(
-    guestDetails.guests_details,
-    companyUploadingDocType,
-    ".....guestdetails"
-  );
+  const [doctype, setDoctype] = useState("");
+  const [state, setState] = useState(false);
+  const [header, setHeader] = useState("");
+
+  console.log(guestDetails,companyUploadingDocType,".....guestdetails");
+  
   const guestdetails = guestDetails.guests_details;
 
   const regularpacks = guestdetails?.filter((item) =>
@@ -51,6 +54,7 @@ function GuestDocsUploadPopup(props) {
       ) {
         const member = {
           userpack: pkgType,
+          userid: user[`${pkgType}userid${i}`],
           userdob: user[`${pkgType}userdob${i}`],
           usergender: user[`${pkgType}usergender${i}`],
           useridproof: user[`${pkgType}useridproof${i}`],
@@ -65,6 +69,7 @@ function GuestDocsUploadPopup(props) {
     });
     return packageMembers;
   };
+
   const regularpackMembers =
     regularpacks?.length > 0
       ? membersInEachPack(regularpacks, "regularPack")
@@ -108,6 +113,91 @@ function GuestDocsUploadPopup(props) {
   }, [guestDetails]);
   console.log(allPackMembers, ".......allpack");
 
+  useEffect(()=>{
+    switch (companyUploadingDocType) {
+      case "travelBooking":
+        setDoctype(allPackMembers.usertraveldoc)
+        break;
+      case "hotelBooking":
+        setDoctype(allPackMembers.userhoteldoc)
+        break;
+      case "tourGuidance":
+        setDoctype(allPackMembers.userguidancedoc)
+        break;
+    }
+  },[])
+
+  const handleUploadChange = async (e, item, amenityType) => {
+    // console.log(item,e, ".....consolefrom onclick");
+    const imagefile = e.target.files[0];
+    const imageId = Date.now();
+    // const imageuploadingurl = await generatesignedurl(imageId);
+    // imageUploading(imageuploadingurl, imagefile, imageId, item, amenityType);
+  };
+
+  // const imageUploading = async (imageuploadingurl,imagefile,imageId,item,amenityType) => {
+  //   // console.log(imageuploadingurl, ".......imageuploadingurl");
+  //   // console.log(imagefile, ".......imagefile");
+  //   imageuploadingurl &&
+  //     imagefile &&
+  //     (await fetch(imageuploadingurl, {
+  //       method: "PUT",
+  //       body: imagefile,
+  //       headers: {
+  //         "Content-Type": "image/jpeg",
+  //         "cache-control": "public, max-age=0",
+  //       },
+  //     })
+  //       .then((res) => {
+  //         // console.log(res, ".......res");
+  //         if (res.status === 200) {
+  //           setHeader("image uploaded successfully");
+  //           setState(true);
+  //           updatingImageUrlinTable(
+  //             `${ImageBaseUrl}/tour_booking_docs_from_company/${imageId}.png`,
+  //             item,
+  //             amenityType
+  //           );
+  //         }
+  //       })
+  //       .catch((err) => {
+  //         setHeader(`err:${err}`);
+  //         setState(true);
+  //       }));
+  // };
+
+  // const generatesignedurl = async (imageId) => {
+  //   const payload = {
+  //     register_id: `${imageId}`,
+  //     event_type: "user_profile_image",
+  //     folder_name: "tour_booking_docs_from_company",
+  //   };
+  //   try {
+  //     const res = await call(GENERATE_SIGNED_URL, payload);
+  //     const url = res?.data?.data?.result?.signed_url;
+  //     return url;
+  //   } catch (error) {
+  //     console.log("error while creating the signed url", error);
+  //     return "";
+  //   }
+  // };
+
+  // const updatingImageUrlinTable = async (url, item, amenityType) => {
+  //   // console.log(item,'.......item')
+  //   // console.log(amenityType, "...amenitytype");
+  //   const payload = {
+  //     [amenityType]: url,
+  //     tour_payment_id: item.tour_payment_id,
+  //   };
+  //   // console.log(payload, "......payload");
+  //   await call(UPDATE_TOUR_PAYMENTS_DOCUMENTS, payload)
+  //     .then((res) => {
+  //       setReRendering((prev) => !prev);
+  //       // console.log(res, "......image url updated successfully in table");
+  //     })
+  //     .catch((error) => console.log(error));
+  // };
+
   const TableHeads = [
     {
       label: "SNO",
@@ -138,7 +228,7 @@ function GuestDocsUploadPopup(props) {
       field: "document",
     },
   ];
-
+  console.log(doctype,'......doctype')
   const TableData =
     allPackMembers && allPackMembers.length > 0
       ? allPackMembers.map((guest, index) => {
@@ -154,7 +244,7 @@ function GuestDocsUploadPopup(props) {
                 <div>
                   <div
                     className={
-                        guest.usertraveldoc === false
+                        guest[doctype] === false
                         ? "d-flex align-items-center button-custom-deactive"
                         : "d-flex align-items-center button-custom"
                     }
@@ -166,7 +256,7 @@ function GuestDocsUploadPopup(props) {
                   >
                     <FaRegEye
                       className={
-                        guest.usertraveldoc === false
+                        guest[doctype] === false
                           ? "me-1 ions-deactive-clr"
                           : "me-1 ions-clr"
                       }
@@ -175,16 +265,16 @@ function GuestDocsUploadPopup(props) {
                   </div>
                   <label
                     className="d-flex align-items-center mt-1 button-custom"
-                    htmlFor={`hotel_bookings_${index}`}
+                    htmlFor={`${doctype}-${index}`}
                   >
                     <input
                       type="file"
-                      id={`hotel_bookings_${index}`}
-                      name={`hotel_bookings_${index}`}
+                      id={`${doctype}-${index}`}
+                      name={`${doctype}-${index}`}
                       className="fileupload-input-display-none"
-                    //   onChange={(e) =>
-                    //     handleUploadChange(e, item, "hotel_bookings")
-                    //   }
+                      onChange={(e) =>
+                      handleUploadChange(e, guestDetails, companyUploadingDocType)
+                      }
                     ></input>
                     <MdUpload className="me-1 ions-clr" />
                     Upload
@@ -243,6 +333,7 @@ function GuestDocsUploadPopup(props) {
           </table>
         </div>
       </Modal>
+      <MatchSubmitPopup header={header} state={state} setState={setState} />
     </div>
   );
 }
