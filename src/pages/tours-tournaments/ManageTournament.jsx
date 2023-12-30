@@ -796,7 +796,7 @@ function ManageTournament() {
               travelBookings: (
                 <div
                   className="d-flex align-items-center  button-custom"
-                  onClick={() => handleUploadClick(item, "travelBooking")}
+                  onClick={() => handleUploadClick(item, "usertraveldoc")}
                 >
                   <MdUpload className="me-1 ions-clr" />
                   Upload

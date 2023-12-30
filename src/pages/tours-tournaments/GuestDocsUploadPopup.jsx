@@ -5,7 +5,9 @@ import { GENERATE_SIGNED_URL } from "../../config/endpoints";
 import MatchSubmitPopup from "../../matchpopups/MatchSubmitPopup";
 import { FaRegEye } from "react-icons/fa";
 import { MdUpload } from "react-icons/md";
-const axios = require("axios");
+import { call } from "../../config/axios";
+import { ImageBaseUrl } from "../../images/index";
+import { UPDATE_TOUR_PAYMENTS_DOCUMENTS } from "../../config/endpoints";
 
 function GuestDocsUploadPopup(props) {
   const {
@@ -15,12 +17,11 @@ function GuestDocsUploadPopup(props) {
     companyUploadingDocType,
   } = props;
   const [allPackMembers, setAllPackMembers] = useState([]);
-  const [doctype, setDoctype] = useState("");
   const [state, setState] = useState(false);
   const [header, setHeader] = useState("");
 
-  console.log(guestDetails,companyUploadingDocType,".....guestdetails");
-  
+  console.log(guestDetails, companyUploadingDocType, ".....guestdetails");
+
   const guestdetails = guestDetails.guests_details;
 
   const regularpacks = guestdetails?.filter((item) =>
@@ -113,90 +114,93 @@ function GuestDocsUploadPopup(props) {
   }, [guestDetails]);
   console.log(allPackMembers, ".......allpack");
 
-  useEffect(()=>{
-    switch (companyUploadingDocType) {
-      case "travelBooking":
-        setDoctype(allPackMembers.usertraveldoc)
-        break;
-      case "hotelBooking":
-        setDoctype(allPackMembers.userhoteldoc)
-        break;
-      case "tourGuidance":
-        setDoctype(allPackMembers.userguidancedoc)
-        break;
-    }
-  },[])
-
-  const handleUploadChange = async (e, item, amenityType) => {
+  const handleUploadChange = async (e, userid, item, amenityType) => {
     // console.log(item,e, ".....consolefrom onclick");
     const imagefile = e.target.files[0];
     const imageId = Date.now();
-    // const imageuploadingurl = await generatesignedurl(imageId);
-    // imageUploading(imageuploadingurl, imagefile, imageId, item, amenityType);
+    const imageuploadingurl = await generatesignedurl(imageId);
+    imageUploading(
+      imageuploadingurl,
+      imagefile,
+      imageId,
+      userid,
+      item,
+      amenityType
+    );
   };
 
-  // const imageUploading = async (imageuploadingurl,imagefile,imageId,item,amenityType) => {
-  //   // console.log(imageuploadingurl, ".......imageuploadingurl");
-  //   // console.log(imagefile, ".......imagefile");
-  //   imageuploadingurl &&
-  //     imagefile &&
-  //     (await fetch(imageuploadingurl, {
-  //       method: "PUT",
-  //       body: imagefile,
-  //       headers: {
-  //         "Content-Type": "image/jpeg",
-  //         "cache-control": "public, max-age=0",
-  //       },
-  //     })
-  //       .then((res) => {
-  //         // console.log(res, ".......res");
-  //         if (res.status === 200) {
-  //           setHeader("image uploaded successfully");
-  //           setState(true);
-  //           updatingImageUrlinTable(
-  //             `${ImageBaseUrl}/tour_booking_docs_from_company/${imageId}.png`,
-  //             item,
-  //             amenityType
-  //           );
-  //         }
-  //       })
-  //       .catch((err) => {
-  //         setHeader(`err:${err}`);
-  //         setState(true);
-  //       }));
-  // };
+  const imageUploading = async (
+    imageuploadingurl,
+    imagefile,
+    imageId,
+    userid,
+    item,
+    amenityType
+  ) => {
+    // console.log(imageuploadingurl, ".......imageuploadingurl");
+    // console.log(imagefile, ".......imagefile");
+    imageuploadingurl &&
+      imagefile &&
+      (await fetch(imageuploadingurl, {
+        method: "PUT",
+        body: imagefile,
+        headers: {
+          "Content-Type": "image/jpeg",
+          "cache-control": "public, max-age=0",
+        },
+      })
+        .then((res) => {
+          // console.log(res, ".......res");
+          if (res.status === 200) {
+            setHeader("image uploaded successfully");
+            setState(true);
+            updatingImageUrlinTable(
+              `${ImageBaseUrl}/tour_booking_docs_from_company/${imageId}.png`,
+              userid,
+              item,
+              amenityType
+            );
+          }
+        })
+        .catch((err) => {
+          setHeader(`err:${err}`);
+          setState(true);
+        }));
+  };
 
-  // const generatesignedurl = async (imageId) => {
-  //   const payload = {
-  //     register_id: `${imageId}`,
-  //     event_type: "user_profile_image",
-  //     folder_name: "tour_booking_docs_from_company",
-  //   };
-  //   try {
-  //     const res = await call(GENERATE_SIGNED_URL, payload);
-  //     const url = res?.data?.data?.result?.signed_url;
-  //     return url;
-  //   } catch (error) {
-  //     console.log("error while creating the signed url", error);
-  //     return "";
-  //   }
-  // };
+  const generatesignedurl = async (imageId) => {
+    const payload = {
+      register_id: `${imageId}`,
+      event_type: "user_profile_image",
+      folder_name: "tour_booking_docs_from_company",
+    };
+    try {
+      const res = await call(GENERATE_SIGNED_URL, payload);
+      const url = res?.data?.data?.result?.signed_url;
+      return url;
+    } catch (error) {
+      console.log("error while creating the signed url", error);
+      return "";
+    }
+  };
 
-  // const updatingImageUrlinTable = async (url, item, amenityType) => {
-  //   // console.log(item,'.......item')
-  //   // console.log(amenityType, "...amenitytype");
-  //   const payload = {
-  //     [amenityType]: url,
-  //     tour_payment_id: item.tour_payment_id,
-  //   };
-  //   // console.log(payload, "......payload");
-  //   await call(UPDATE_TOUR_PAYMENTS_DOCUMENTS, payload)
-  //     .then((res) => {
-  //       setReRendering((prev) => !prev);
-  //       // console.log(res, "......image url updated successfully in table");
-  //     })
-  //     .catch((error) => console.log(error));
-  // };
+  const updatingImageUrlinTable = async (url, userid, item, amenityType) => {
+    console.log(item, ".......item");
+    console.log(userid, ".....userid");
+    console.log(amenityType, "...amenitytype");
+    const payload = {
+      [amenityType]: url,
+      [userid]: userid,
+      tour_payment_id: item.tour_payment_id,
+    };
+    console.log(payload, "......payload");
+    // await call(UPDATE_TOUR_PAYMENTS_DOCUMENTS, payload)
+    //   .then((res) => {
+    //     setReRendering((prev) => !prev);
+    //     console.log(res, "......image url updated successfully in table");
+    //   })
+    //   .catch((error) => console.log(error));
+  };
 
   const TableHeads = [
     {
@@ -228,7 +232,7 @@ function GuestDocsUploadPopup(props) {
       field: "document",
     },
   ];
-  console.log(doctype,'......doctype')
+
   const TableData =
     allPackMembers && allPackMembers.length > 0
       ? allPackMembers.map((guest, index) => {
@@ -243,11 +247,9 @@ function GuestDocsUploadPopup(props) {
               document: (
                 <div>
                   <div
-                    className={
-                        guest[doctype] === false
-                        ? "d-flex align-items-center button-custom-deactive"
-                        : "d-flex align-items-center button-custom"
-                    }
+                    className={`d-flex align-items-center button-custom${
+                      !guest.companyUploadingDocType ? "-deactive" : ""
+                    }`}
                     // onClick={
                     //   item?.hotel_bookings === false
                     //     ? null
@@ -255,25 +257,30 @@ function GuestDocsUploadPopup(props) {
                     // }
                   >
                     <FaRegEye
-                      className={
-                        guest[doctype] === false
-                          ? "me-1 ions-deactive-clr"
-                          : "me-1 ions-clr"
-                      }
+                      className={`me-1 ions${
+                        !guest.companyUploadingDocType
+                          ? "-deactive-clr"
+                          : "-clr"
+                      }`}
                     />
                     View
                   </div>
                   <label
                     className="d-flex align-items-center mt-1 button-custom"
-                    htmlFor={`${doctype}-${index}`}
+                    htmlFor={companyUploadingDocType}
                   >
                     <input
                       type="file"
-                      id={`${doctype}-${index}`}
-                      name={`${doctype}-${index}`}
+                      id={companyUploadingDocType}
+                      name={companyUploadingDocType}
                       className="fileupload-input-display-none"
                       onChange={(e) =>
-                      handleUploadChange(e, guestDetails, companyUploadingDocType)
+                        handleUploadChange(
+                          e,
+                          guest.userid,
+                          guestDetails,
+                          companyUploadingDocType
+                        )
                       }
                     ></input>
                     <MdUpload className="me-1 ions-clr" />
@@ -302,7 +309,6 @@ function GuestDocsUploadPopup(props) {
         </Modal.Header>
         {/* <center>Select Your Tours</center> */}
         <div className="p-2 w-100">
-          <div style={{ color: "white" }}>hello</div>
           <table className="tickets-table table table-borderless">
             <thead id="home-table-head" className="p-3">
               <tr>
