@@ -73,7 +73,6 @@ function Rejectionreason() {
         if (res.status === 200) {
           setActive((prev) => !prev);
         }
-        console.log(res, "res===>");
       })
       .catch((err) => console.log(err));
   };

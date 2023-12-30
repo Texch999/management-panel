@@ -2,14 +2,9 @@ import React, { useState, useEffect, useRef } from "react";
 import MatchSubmitPopup from "../../matchpopups/MatchSubmitPopup";
 import { Col, Container, Modal, Row } from "react-bootstrap";
 import {
-  // ADD_COUNTRY_AND_CURRENCY,
-  // UPDATE_COUNTRY_CURRENCY,
   ADD_PAYMENT_GATEWAY,
   UPDATE_PAYMENT_GATEWAY,
-  GET_ALL_WEBSITES,
   GENERATE_SIGNED_URL,
-  // GET_ALL_PAYMENTS,
-  // GET_COUNTRY_AND_CURRENCY,
 } from "../../config/endpoints";
 import { call } from "../../config/axios";
 
@@ -18,34 +13,25 @@ function AddCountryPopups(props) {
   const {
     addCountryOpen,
     setAddCountryOpen,
-    Heading,
     setStatus,
-    setData,
-    selectedPayment,
-    // getData,
     inputData,
     setInputData,
     updateGatway,
   } = props;
-  console.log("Props======>", props);
 
   const [acceptClick, setAcceptClick] = useState(false);
   const [profileImage, setProfileImage] = useState("");
   const [paymentId, setPaymentId] = useState("");
   const [singedUrl, setSignedUrl] = useState("");
-  // const [paymentGateway, setPaymentGateway] = useState("Select");
   const [uploadImage, setuploadImage] = useState([]);
-  const [processing, setProcessing] = useState(false);
 
   const handleAddCountryOpenClose = () => {
     setAddCountryOpen(false);
-    setData(null);
   };
 
   const uploadfileInputRef = useRef(null);
   const handleUploadFileSelect = (e) => {
     const file = e.target.files[0];
-    // setInputData({...inputData,qr_code:})
     setProfileImage(file);
     generateSignedUrl();
   };
@@ -55,7 +41,6 @@ function AddCountryPopups(props) {
   };
 
   const handleCreateOrUpdatePaymentGateway = async () => {
-    setProcessing(true);
     const payload = {
       register_id: "company",
       uploadImage: `${ImageBaseUrl}/${"payment-images"}/${paymentId}.png`,
@@ -81,17 +66,15 @@ function AddCountryPopups(props) {
       } else {
         const url =
           updateGatway === true ? UPDATE_PAYMENT_GATEWAY : ADD_PAYMENT_GATEWAY;
-
         const res = await call(url, payload);
-        setProcessing(true);
-        setAcceptClick(true)
-        setTimeout(()=>{
-          setAcceptClick(false)
-        },2000)
-        setAddCountryOpen(false);
-        setInputData({});
-
-        console.log("res====>", res);
+        if(res.data.statusCode===200){
+          setAcceptClick(true);
+          setTimeout(() => {
+            setAcceptClick(false);
+          }, 2000);
+          setAddCountryOpen(false);
+          setInputData({});
+        }
       }
     } catch (error) {
       console.log(error);
@@ -116,8 +99,6 @@ function AddCountryPopups(props) {
         console.log("generating signed url error", err);
       });
   };
-
-  console.log("Input Data=====>", inputData);
   return (
     <div className="modal fade bd-example-modal-lg container mt-5">
       <Modal
@@ -129,7 +110,11 @@ function AddCountryPopups(props) {
       >
         <Modal.Header closeButton>
           <div className="px-5 mt-3">
-            <h6 className="text-start">{Heading}</h6>
+            <h6 className="text-start">
+              {updateGatway === true
+                ? "Update Payment Gateway"
+                : "Add Payment Gateway"}
+            </h6>
           </div>
         </Modal.Header>
         <Modal.Body className="px-5">
@@ -160,7 +145,6 @@ function AddCountryPopups(props) {
               <div className="small-font my-1">Payment Gateway *</div>
               <select
                 name="pg_upi"
-                // value={paymentGateway}
                 onChange={(e) => onInputChange(e)}
                 className="w-100 custom-select small-font input-btn-bg px-2 py-3 all-none rounded all-none"
               >
@@ -279,10 +263,7 @@ function AddCountryPopups(props) {
                   name="uploadCode"
                   ref={uploadfileInputRef}
                   onChange={handleUploadFileSelect}
-                  // name="upi_id"
                   className="w-100 custom-select small-font login-inputs input-btn-bg px-2 py-3 all-none rounded all-none"
-                  // value={currencyName}
-                  // onChange={(e) => setCurrencyName(e.target.value)}
                 ></input>
               </Col>
             </Row>
@@ -316,11 +297,7 @@ function AddCountryPopups(props) {
                 className="add-button  small-font rounded px-4 py-3 my-3 w-50 all-none"
                 onClick={handleCreateOrUpdatePaymentGateway}
               >
-                {processing === true
-                  ? "Processing...."
-                  : updateGatway === true
-                  ? "Update"
-                  : "Create"}
+                {updateGatway === true ? "Update" : "Create"}
               </button>
             </Col>
           </Row>

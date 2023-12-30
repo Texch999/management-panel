@@ -31,8 +31,6 @@ function BulkPackageDiscount(props) {
     ) {
       return setErr("Please enter required fields");
     }
-    console.log("item=====>", item);
-
     const payload = {
       package_cost: inputData[item?.priceKey],
       package_duration: selectedDuration,
@@ -213,32 +211,6 @@ function BulkPackageDiscount(props) {
             );
           })}
 
-          {/* <div className="col-sm-2 col-lg-1 d-flex align-items-center">
-            <div className="medium-font role-color d-flex">
-              <input
-                type="radio"
-                id="yearly"
-                name="duration"
-                value="yearly"
-                checked={selectedDuration === "yearly"}
-                onChange={() => handleDurationChange("yearly")}
-              />
-              <label htmlFor="yearly">Yearly</label>
-            </div>
-          </div>
-          <div className="col-sm-2 col-lg-1 d-flex align-items-center">
-            <div className="medium-font role-color d-flex">
-              <input
-                type="radio"
-                id="hourly"
-                name="duration"
-                value="hourly"
-                checked={selectedDuration === "hourly"}
-                onChange={() => handleDurationChange("hourly")}
-              />
-              <label htmlFor="hourly">Hourly</label>
-            </div>
-          </div> */}
         </div>
       </div>
       {selectPackage?.map((item, index) => (

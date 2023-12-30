@@ -6,7 +6,6 @@ import {
   ACCOUNT_REGISTERATION,
   UPDATE_PROFILE,
   GET_ALL_WEBSITES,
-  GET_COUNTRY_AND_CURRENCY,
   GET_ALL_PAYMENTS,
 } from "../../config/endpoints";
 import { call } from "../../config/axios";
@@ -30,7 +29,6 @@ function AddDirectorsPopup(props) {
   const [lastName, setLastName] = useState("");
   const [phonenumber, setPhoneNumber] = useState("");
   const [website, setWebsite] = useState("");
-  // const [timezone, setTimeZone] = useState("");
   const [paymentGateway, setPaymentGateway] = useState("");
   const [packageDiscount, setPackageDiscount] = useState("");
   const [share, setShare] = useState("");
@@ -69,7 +67,7 @@ function AddDirectorsPopup(props) {
   const handleConfirmPasswordChange = (evnt) => {
     setConfrmPasswordInput({
       ...confrmPasswordInput,
-      [evnt.target.name]: evnt.target.value,
+      [evnt.target.name]: evnt.target.value
     });
   };
 
@@ -97,7 +95,6 @@ function AddDirectorsPopup(props) {
       setPhoneNumber(selectedDirector.mobile_no || "");
       setWebsite(selectedDirector.website_name || "");
       setPaymentGateway(selectedDirector.pg_upi || "");
-      // setTimeZone(selectedDirector.timezone || "");
       setRole(selectedDirector.account_role || "");
       setCountryName(selectedDirector.country_name || "");
       setPasswordInput(selectedDirector.password || "");
@@ -125,7 +122,6 @@ function AddDirectorsPopup(props) {
         last_name: lastName,
         mobile_no: phonenumber,
         website_name: website,
-        // time_zone: timezone,
         account_role: role,
         country_name: countryName,
         password: passwordInput.password,
@@ -150,7 +146,6 @@ function AddDirectorsPopup(props) {
         }, 2000);
       }
       await call(url, requestData).then((res) => {
-        console.log("-------->", res.data);
         if (res.data.status === 201) {
           setAddDirectorPopup(true);
           setReRender((prev) => !prev);
@@ -169,7 +164,6 @@ function AddDirectorsPopup(props) {
           setFirstName("");
           setLastName("");
           setWebsite("");
-          // setTimeZone("");
           setRole("");
           setCountryName("");
           setPasswordInput("");
@@ -187,7 +181,6 @@ function AddDirectorsPopup(props) {
   };
   const [addDirectorsPopup, setAddDirectorPopup] = useState(false);
   const handleAddDirectorPopup = () => {
-    // setAddDirectorPopup(true);
     setShowAddDirectorPopup(false);
   };
 
@@ -205,7 +198,7 @@ function AddDirectorsPopup(props) {
   useEffect(() => {
     getwebsiteNames();
   }, []);
-  
+
   const [allPayments, setAllPayments] = useState([]);
   const getPaymentWay = async () => {
     const payload = {
@@ -223,9 +216,6 @@ function AddDirectorsPopup(props) {
   useEffect(() => {
     getPaymentWay();
   }, []);
-
-
-  console.log("===>addDirectorsPopup",addDirectorsPopup)
 
   return (
     <div className="modal fade bd-example-modal-lg container mt-5">
@@ -288,11 +278,7 @@ function AddDirectorsPopup(props) {
                     {role === "director" ? (
                       <>
                         <option value="">select</option>
-                        {/* <option value="All">
-                          ALL
-                          <input type="checkbox" />
-                          RRR
-                        </option> */}
+
                         {websiteNames.map((obj) => (
                           <option value={obj.web_url}>
                             <input type="checkbox" /> {obj.web_url}
@@ -320,8 +306,7 @@ function AddDirectorsPopup(props) {
                     onChange={(e) => setPaymentGateway(e.target.value)}
                     className="w-100 custom-select small-font input-btn-bg px-2 py-2 all-none rounded all-none"
                   >
-                    {/* <option value=""selected>select</option>
-                    <option value="All">All</option>  */}
+            
                     {role === "director" ? (
                       <>
                         <option value="">Select</option>

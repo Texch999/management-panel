@@ -34,7 +34,7 @@ function AddReasonPopup(props) {
         description: selectedQuestion.description || "",
       });
     } else {
-      // Clear the form when creating a new question
+      // Clear the form when creating a new reason
       setFormData({
         p_id: "REJECT-REASON",
         register_id: "company",

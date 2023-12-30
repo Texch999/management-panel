@@ -1,6 +1,5 @@
 import React from "react";
 import Table from "../table/Table";
-// import { MdOutlineEdit } from "react-icons/md";
 import AddSecurityPopup from "../Popups/AddSecurityPopup";
 import { useEffect, useState } from "react";
 import {
@@ -60,7 +59,6 @@ function Securityquestions() {
         if (res.status === 200) {
           setActive((prev) => !prev);
         }
-        console.log(res, "res===>");
       })
       .catch((err) => console.log(err));
   };
@@ -78,12 +76,6 @@ function Securityquestions() {
     .map((item) => {
       return {
         questions: <div className="role-color">{item?.question}</div>,
-        // status:
-        //   item?.is_active === "Active" ? (
-        //     <div className="font-green custom-active-button px-2">Active</div>
-        //   ) : (
-        //     <div className="custom-deactive-button px-2">InActive</div>
-        //   ),
         status: (
           <div
             className={
