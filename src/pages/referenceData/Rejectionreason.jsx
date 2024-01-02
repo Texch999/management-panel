@@ -30,7 +30,7 @@ function Rejectionreason() {
   };
 
   const cols = [
-    {
+    { 
       header: "REASON",
       field: "reason",
     },

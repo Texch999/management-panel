@@ -67,7 +67,7 @@ function AddDirectorsPopup(props) {
   const handleConfirmPasswordChange = (evnt) => {
     setConfrmPasswordInput({
       ...confrmPasswordInput,
-      [evnt.target.name]: evnt.target.value
+      [evnt.target.name]: evnt.target.value,
     });
   };
 
@@ -306,7 +306,6 @@ function AddDirectorsPopup(props) {
                     onChange={(e) => setPaymentGateway(e.target.value)}
                     className="w-100 custom-select small-font input-btn-bg px-2 py-2 all-none rounded all-none"
                   >
-            
                     {role === "director" ? (
                       <>
                         <option value="">Select</option>
@@ -499,9 +498,9 @@ function AddDirectorsPopup(props) {
       </Modal>
       <MatchSubmitPopup
         header={
-          addDirectorsPopup
-            ? "Director created Successfully"
-            : "Director updated Successfully"
+          addDirectorsPopup === false
+            ? "Director updated Successfully"
+            : "Director created Successfully"
         }
         state={addDirectorsPopup}
         setState={setAddDirectorPopup}
