@@ -190,7 +190,7 @@ function GuestDocsUploadPopup(props) {
     console.log(amenityType, "...amenitytype");
     const payload = {
       [amenityType]: url,
-      [userid]: userid,
+      userid: userid,
       tour_payment_id: item.tour_payment_id,
     };
     console.log(payload, "......payload");
