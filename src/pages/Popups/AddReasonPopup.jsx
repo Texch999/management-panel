@@ -141,8 +141,8 @@ function AddReasonPopup(props) {
                 >
                   Select
                   <option value="Select">Select</option>
-                  <option value="true">Active</option>
-                  <option value="false">Inactive</option>
+                  <option value={"true"}>Active</option>
+                  <option value={"false"}>Inactive</option>
                 </select>
               </Col>
             </Row>
@@ -180,7 +180,7 @@ function AddReasonPopup(props) {
       </Modal>
       <MatchSubmitPopup
         header={
-          acceptClick
+          acceptClick===true
             ? "Updated Reject Questions Successfully "
             : "Created Reject Questions Successfully"
         }

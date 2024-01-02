@@ -184,7 +184,7 @@ function AddPolicyPopup(props) {
       </Modal>
       <MatchSubmitPopup
         header={
-          acceptClick
+          acceptClick===true
             ? "Updated Policy Successfully "
             : "Created Policy Successfully"
         }
