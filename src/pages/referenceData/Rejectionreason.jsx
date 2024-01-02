@@ -18,7 +18,8 @@ function Rejectionreason() {
   const [status, setStatus] = useState(false);
   const [active, setActive] = useState(false);
   const handleSelectChange = (event) => {
-    const selectedValue = event.target.value;
+    const selectedValue = event.target.value; 
+    console.log("selectedValue====>",selectedValue)
     setSelectedOption(selectedValue);
   };
   const searchContent = (value) => {
@@ -30,7 +31,7 @@ function Rejectionreason() {
   };
 
   const cols = [
-    {
+    { 
       header: "REASON",
       field: "reason",
     },
@@ -41,7 +42,7 @@ function Rejectionreason() {
 
     {
       header: "STATUS",
-      field: "status",
+      field: "active",
     },
     {
       header: "Action",
@@ -73,7 +74,6 @@ function Rejectionreason() {
         if (res.status === 200) {
           setActive((prev) => !prev);
         }
-        console.log(res, "res===>");
       })
       .catch((err) => console.log(err));
   };
@@ -85,7 +85,7 @@ function Rejectionreason() {
   const modifiedRejectionreasonDetails = searchText.length
     ? filteredQuestions
         .filter((item) =>
-          selectedOption === "Active"
+          selectedOption === "true"
             ? item?.active === true
             : item?.active === false
         )
@@ -97,7 +97,7 @@ function Rejectionreason() {
             return {
               reason: <div className="role-color">{item?.reason}</div>,
               description: item?.description,
-              status: (
+              active: (
                 <div
                   className={
                     item?.active
@@ -115,7 +115,7 @@ function Rejectionreason() {
         })
     : allQuestions
         .filter((item) =>
-          selectedOption === "Active"
+          selectedOption === "true"
             ? item?.active === true
             : item?.active === false
         )
@@ -123,7 +123,7 @@ function Rejectionreason() {
           return {
             reason: <div className="role-color">{item?.reason}</div>,
             description: item?.description,
-            status: (
+            active: (
               <div
                 className={
                   item?.active
@@ -191,8 +191,8 @@ function Rejectionreason() {
               value={selectedOption}
               onChange={handleSelectChange}
             >
-              <option selected>Active</option>
-              <option value="1">In-active</option>
+              <option value={"true"}>Active</option>
+              <option value={"false"}>In-active</option>
             </select>
           </div>
         </div>

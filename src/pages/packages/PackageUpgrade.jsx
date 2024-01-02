@@ -23,13 +23,13 @@ function PackageUpgrade(props) {
 
   const handleUploadFileSelect = (e) => {
     const file = e.target.files[0];
-    console.log(file,"====>file");
     setProfileImage(file);
     generateSignedUrl();
   };
 
   const handleUploadButtonClick = () => {
-    uploadfileInputRef.current.click();
+    console.log("handleUploadButtonClick called");
+    uploadfileInputRef.current && uploadfileInputRef.current.click();
   };
 
   const handleInputChange = (e) => {
@@ -53,7 +53,6 @@ function PackageUpgrade(props) {
       return setErr("Please enter required fields");
     }
     const payload = {
-      // is_autherised: "true",
       package_cost: inputData[item?.priceKey],
       package_duration: selectedDuration,
       discount: inputData[item?.discountPriceKey],
@@ -75,12 +74,10 @@ function PackageUpgrade(props) {
     setIsProcessing(true);
     await call(PACKAGES_CREATION, payload)
       .then(async (res) => {
-        // if (res.data.statusCode === 200) {
-        setShowSuccessfulPopup(true)
-        setTimeout(()=>{
-          setShowSuccessfulPopup(false)
-        },2000)
-        console.log("res====>", res);
+        setShowSuccessfulPopup(true);
+        setTimeout(() => {
+          setShowSuccessfulPopup(false);
+        }, 2000);
         singedUrl &&
           profileImage &&
           (await fetch(singedUrl, {
@@ -97,11 +94,6 @@ function PackageUpgrade(props) {
             }));
         setIsProcessing(false);
         setInputData({});
-        // } else {
-        //   setErr(
-        //     res?.data?.message ? res?.data?.message : `something wen't wrong`
-        //   );
-        // }
       })
       .catch((err) => {
         setIsProcessing(false);
@@ -168,7 +160,7 @@ function PackageUpgrade(props) {
         membersKey: "silver_members",
         hoursKey: "silver_Hours",
         priceKey: "silver_Price",
-        discountPriceKey: "silver_discount_Price"
+        discountPriceKey: "silver_discount_Price",
       },
     },
     {
@@ -239,9 +231,9 @@ function PackageUpgrade(props) {
       : PACKAGES_DATA?.filter((i) => {
           return i.packageId === selectedPackage;
         });
-  console.log("INPUTDATA", inputData);
 
-  const handleDurationChange = (obj) => { 
+  console.log(selectedPackage, "===>selectedPackage");
+  const handleDurationChange = (obj) => {
     setSelectedDuration(obj);
   };
 
@@ -268,33 +260,6 @@ function PackageUpgrade(props) {
               </div>
             );
           })}
-
-          {/* <div className="col-sm-2 col-lg-1 d-flex align-items-center">
-            <div className="medium-font role-color d-flex">
-              <input
-                type="radio"
-                id="yearly"
-                name="duration"
-                value="yearly"
-                checked={selectedDuration === "yearly"}
-                onChange={() => handleDurationChange("yearly")}
-              />
-              <label htmlFor="yearly">Yearly</label>
-            </div>
-          </div>
-          <div className="col-sm-2 col-lg-1 d-flex align-items-center">
-            <div className="medium-font role-color d-flex">
-              <input
-                type="radio"
-                id="hourly"
-                name="duration"
-                value="hourly"
-                checked={selectedDuration === "hourly"}
-                onChange={() => handleDurationChange("hourly")}
-              />
-              <label htmlFor="hourly">Hourly</label>
-            </div>
-          </div> */}
         </div>
       </div>
       {selectPackage?.map((item, index) => (
@@ -346,25 +311,27 @@ function PackageUpgrade(props) {
                   <div className="medium-font package-btn-bg p-2 rounded font-white fw-semibold">
                     Package Logo
                   </div>
-                  <div
-                    className="medium-font package-btn-bg p-2 rounded mt-1 d-flex align-items-center justify-content-between"
-                    onClick={handleUploadButtonClick}
-                    disabled={uploadImage}
-                  >
-                    <img
-                      className="standard-image"
-                      src={item.packageLogo}
-                      alt="Standard_Image"
-                    />
-                    <input
-                      type="file"
-                      ref={uploadfileInputRef}
-                      style={{ display: "none" }}
-                      onChange={handleUploadFileSelect}
-                      className="login-inputs"
-                    ></input>
-                    <MdFileUpload className="bluecolor-text large-font" />
-                  </div>
+                  {item.packageLogo && (
+                    <div
+                      className="medium-font package-btn-bg p-2 rounded mt-1 d-flex align-items-center justify-content-between"
+                      onClick={handleUploadButtonClick}
+                      disabled={uploadImage}
+                    >
+                      <img
+                        className="standard-image"
+                        src={item.packageLogo}
+                        alt="Standard_Image"
+                      />
+                      <input
+                        type="file"
+                        ref={uploadfileInputRef}
+                        style={{ display: "none" }}
+                        onChange={handleUploadFileSelect}
+                        className="login-inputs"
+                      ></input>
+                      <MdFileUpload className="bluecolor-text large-font" />
+                    </div>
+                  )}
                 </div>
               </div>
               <div className="col">

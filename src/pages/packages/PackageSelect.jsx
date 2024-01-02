@@ -5,8 +5,6 @@ import { call } from "../../config/axios";
 function PackageSelect(props) {
   const { setSelectedPackage, setPackageInputs, packageInputs } = props;
   const [selectPackages, setSelectPackages] = useState([]);
-  // const [activeIndex, setActiveIndex] = useState("all");
-
   const handelChange = (e) => {
     setPackageInputs({
       ...packageInputs,
@@ -25,7 +23,6 @@ function PackageSelect(props) {
     };
     await call(GET_ALL_WEBSITES, payload)
       .then((res) => {
-        console.log("response=====>", res);
         setwebsiteNames(res?.data?.data);
       })
       .catch((err) => console.log(err));
@@ -63,7 +60,7 @@ function PackageSelect(props) {
             onChange={(e) => handelChange(e)}
             className="w-100 select-bg p-3 rounded medium-font"
           >
-            <option value="select">selecte...</option>
+            <option value="select">Select</option>
             <option value="All">All</option>
             {websiteNames.map((obj) => (
               <option value={obj.web_url} selected>

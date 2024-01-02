@@ -88,14 +88,6 @@ function PolicyDocument() {
           return {
             countryname: <div className="role-color">{item?.country_name}</div>,
             showwebsites: item?.website_name,
-            // status:
-            //   item?.active === true ? (
-            //     <div className="font-green custom-active-button px-2">
-            //       Active
-            //     </div>
-            //   ) : (
-            //     <div className="custom-deactive-button px-2">InActive</div>
-            //   ),
             status: (
               <div
                 className={
@@ -131,7 +123,6 @@ function PolicyDocument() {
             <MdOutlineEdit
               className="eye-icon-size"
               onClick={() => {
-                console.log("testetestste");
                 setSelectedPolicy(item);
                 handlePolicyOpen();
               }}

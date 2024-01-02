@@ -1,7 +1,6 @@
 import React from "react";
 import Table from "../table/Table";
 import Totalaccount from "../home/Totalaccount";
-import { MdKeyboardArrowUp, MdKeyboardArrowDown } from "react-icons/md";
 import AddWebsitePopup from "../Popups/AddWebsitePopup";
 import { useEffect, useState } from "react";
 import { GET_ALL_WEBSITES } from "../../config/endpoints";
@@ -11,7 +10,6 @@ function Addwebsites() {
   const [filteredWebsites, setFilteredWebsites] = useState([]);
   const [status, setStatus] = useState(false);
   const [searchText, setSearchText] = useState("");
-
   const searchContent = (value) => {
     setSearchText(value);
     const filteredSearchText = allWebsites.filter((res) =>
@@ -28,14 +26,6 @@ function Addwebsites() {
       ),
       field: "websitename",
     },
-    // {
-    //   header: (
-    //     <div className="d-flex justify-content-center align-items-center">
-    //       <div className="marginright-10">IS USED</div>
-    //     </div>
-    //   ),
-    //   field: "isAndusedAndthree",
-    // },
   ];
   const getAllWebsites = async () => {
     const payload = {
@@ -43,10 +33,8 @@ function Addwebsites() {
     };
     await call(GET_ALL_WEBSITES, payload)
       .then((res) => {
-        console.log("response====>", res);
         setAllWebsites(res?.data?.data);
       })
-
       .catch((err) => console.log(err));
   };
   useEffect(() => {
@@ -61,57 +49,16 @@ function Addwebsites() {
         .map((item) => {
           return {
             websitename: <span>{item?.web_url}</span>,
-            // isAndusedAndthree: (
-            //   <div>
-            //     {item?.is_used} <br /> <span>{item?.used}</span> <br />
-            //     {item?.three}
-            //     {""}
-            //   </div>
-            // ),
-            // userAndfullAndname: (
-            //   <div>
-            //     {item?.user_name} <br /> <span>{item?.full}</span> <br />
-            //     {item?.name}
-            //   </div>
-            // ),
-            // role1Androle2Androle3: (
-            //   <div className="role-color">
-            //     {item?.account_role} <br /> <span>{item?.role2}</span> <br />
-            //     {item?.role3}
-            //     {""}
-            //   </div>
-            // ),
           };
         })
     : allWebsites.map((item) => {
         return {
           websitename: <span>{item?.web_url}</span>,
-          isAndusedAndthree: (
-            <div>
-              {item?.is_used} <br /> <span>{item?.used}</span> <br />
-              {item?.three}
-              {""}
-            </div>
-          ),
-          userAndfullAndname: (
-            <div>
-              {item?.user_name} <br /> <span>{item?.full}</span> <br />
-              {item?.name}
-            </div>
-          ),
-          role1Androle2Androle3: (
-            <div className="role-color">
-              {item?.account_role} <br /> <span>{item?.role2}</span> <br />
-              {item?.role3}
-              {""}
-            </div>
-          ),
         };
       });
   const [showAddWebPopup, setShowAddWebPopup] = useState(false);
   const handleShowAddWebPopup = () => {
     setShowAddWebPopup(true);
-    console.log("click me!!!!");
   };
   return (
     <div className="p-4 w-100">
