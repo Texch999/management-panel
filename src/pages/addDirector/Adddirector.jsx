@@ -6,6 +6,7 @@ import AddDirectorsPopup from "../Popups/AddDirectorsPopup";
 import { GET_ALL_USERS } from "../../config/endpoints";
 import { USERS_ACTIVE_INACTIVE } from "../../config/endpoints";
 import { call } from "../../config/axios";
+import { useNavigate } from "react-router-dom";
 
 function Adddirector() {
   const [getAllDirectors, setAllDirectors] = useState([]);
@@ -13,7 +14,8 @@ function Adddirector() {
   const [filteredDirectors, setFilteredDirectors] = useState([]);
   const [searchText, setSearchText] = useState("");
   const [active, setActive] = useState();
-  const [reRender, setReRender] = useState(false)
+  const navigate = useNavigate();
+  const [reRender, setReRender] = useState(false);
 
   const searchContent = (value) => {
     setSearchText(value);
@@ -46,7 +48,7 @@ function Adddirector() {
           <div className="marginright-10">In USED</div>
         </div>
       ),
-      field: "inused",  
+      field: "inused",
     },
     {
       header: (
@@ -127,7 +129,10 @@ function Adddirector() {
         .map((item) => {
           return {
             role: (
-              <div className="role-color">
+              <div
+                className="role-color"
+                onClick={() => navigate(`/usertransaction/${item.register_id}`)}
+              >
                 <span className="role-color">{item?.account_role}</span>{" "}
               </div>
             ),
@@ -148,7 +153,10 @@ function Adddirector() {
     : getAllDirectors?.map((item) => {
         return {
           role: (
-            <div className="role-color">
+            <div
+              className="role-color"
+              onClick={() => navigate(`/usertransaction/${item.register_id}`)}
+            >
               <span className="role-color">{item?.account_role}</span>{" "}
             </div>
           ),
@@ -190,6 +198,7 @@ function Adddirector() {
   const handleAddDirectorPopup = () => {
     setShowAddDirectorPopup(true);
   };
+
   return (
     <div className="p-4 w-100">
       <div>

@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 function Table(props) {
   const { data, columns } = props;
   const getColor = (clr) => {
@@ -21,12 +21,12 @@ function Table(props) {
         return "w-fit-content p-1 px-2";
     }
   };
-  const navigate = useNavigate();
-  const handleClickTable = (item) => {
-    {
-      item === "role" && navigate("/usertransaction");
-    }
-  };
+  // const navigate = useNavigate();/
+  // const handleClickTable = (role, item) => {
+  //   {
+  //     role === "role" && navigate(`/usertransaction/${item}`);
+  //   }
+  // };
   // console.log(data, columns, "..........table");
   return (
     <div className="sidebar-bg w-100 home-border-radius">
@@ -41,6 +41,7 @@ function Table(props) {
           </tr>
         </thead>
         <tbody className="td-color w-100">
+          {console.log(data, "children........")}
           {data?.length > 0 &&
             data?.map((item, rowIndex) => (
               <tr key={rowIndex} className="small-font td-color text-center">
@@ -59,7 +60,7 @@ function Table(props) {
                               ? getColor(item[column.field])
                               : ""
                           }
-                          onClick={() => handleClickTable(column.field)}
+                          // onClick={() => handleClickTable(column.field, item)}
                         >
                           <div>{item[column.field]}</div>
                         </div>

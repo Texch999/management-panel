@@ -21,6 +21,7 @@ function Tickets() {
     setActiveIndex(index);
   };
   const cols = [
+    { header: "USERNAME & ROLE", field: "usernameAndrole" },
     { header: "DATE & TIME", field: "dateAndTime" },
     { header: "TRX ID", field: "trxid" },
     { header: "PACKAGE TRX", field: "package" },
@@ -31,6 +32,7 @@ function Tickets() {
   ];
 
   const cols1 = [
+    { header: "USERNAME & ROLE", field: "usernameAndrole" },
     { header: "DATE", field: "date" },
     { header: "TIME", field: "time" },
     { header: "TRX ID", field: "trxid" },
@@ -43,6 +45,7 @@ function Tickets() {
   ];
 
   const cols2 = [
+    { header: "USERNAME & ROLE", field: "usernameAndrole" },
     { header: "DATE & TIME", field: "dateAndTime" },
     // {
     //   header: "Name & ROLE",
@@ -58,6 +61,7 @@ function Tickets() {
   ];
 
   const cols3 = [
+    { header: "USERNAME & ROLE", field: "usernameAndrole" },
     { header: "DATE & TIME", field: "dateAndTime" },
     // {
     //   header: "Name & ROLE",
@@ -149,7 +153,11 @@ function Tickets() {
   const modifiedTicketDetails =
     requestedPackages?.length > 0 &&
     requestedPackages?.map((item) => ({
-      nameAndRole: " ",
+      usernameAndrole: (
+        <div>
+          {item?.summary.requester_name} <br /> <span className="role-color">{item?.summary.requester_role}</span>{" "}
+        </div>
+      ),
       dateAndTime: (
         <div>
           {item?.created_date} <br /> <span>{item?.created_time}</span>{" "}
@@ -172,9 +180,9 @@ function Tickets() {
     requestedPackages?.length > 0 &&
     requestedPackages.map((item) => ({
       ...item,
-      nameAndRole: (
+      usernameAndrole: (
         <div>
-          {item?.name} <br /> <span className="role-color">{item?.role}</span>{" "}
+          {item?.summary.requester_name} <br /> <span className="role-color">{item?.summary.requester_role}</span>{" "}
         </div>
       ),
       date: `${item?.created_date}`,
@@ -195,9 +203,9 @@ function Tickets() {
       ),
     }));
   const modifiedTicketDetails2 = requestedPackages?.map((item) => ({
-    nameAndRole: (
+    usernameAndrole: (
       <div>
-        {item?.name} <br /> <span className="role-color">{item?.role}</span>{" "}
+        {item?.summary.requester_name} <br /> <span className="role-color">{item?.summary.requester_role}</span>{" "}
       </div>
     ),
     dateAndTime: (
@@ -227,9 +235,9 @@ function Tickets() {
   const modifiedTicketDetails3 =
     requestedPackages?.length > 0 &&
     requestedPackages.map((item) => ({
-      nameAndRole: (
+      usernameAndrole: (
         <div>
-          {item?.name} <br /> <span className="role-color">{item?.role}</span>{" "}
+          {item?.summary.requester_name} <br /> <span className="role-color">{item?.summary.requester_role}</span>{" "}
         </div>
       ),
       dateAndTime: (
