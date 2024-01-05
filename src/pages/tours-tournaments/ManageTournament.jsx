@@ -139,89 +139,11 @@ function ManageTournament() {
     setGuestsDetails(item);
     setShowPaymentDetailsPopup(true);
   };
-  const handleViewClick = async (item, amenityType) => {
-    setDocumentView(item[amenityType]);
-    setShowScreenshotImg(true);
-  };
+  
   const handleUploadClick = async (id, bookingType) => {
     setCompanyUploadingDocType(bookingType)
     setTourPaymentId(id)
     setDocUploadPopupOpen(true);
-  };
-
-  const updatingImageUrlinTable = async (url, item, amenityType) => {
-    // console.log(item,'.......item')
-    // console.log(amenityType, "...amenitytype");
-    const payload = {
-      [amenityType]: url,
-      tour_payment_id: item.tour_payment_id,
-    };
-    // console.log(payload, "......payload");
-    await call(UPDATE_TOUR_PAYMENTS_DOCUMENTS, payload)
-      .then((res) => {
-        setReRendering((prev) => !prev);
-        // console.log(res, "......image url updated successfully in table");
-      })
-      .catch((error) => console.log(error));
-  };
-
-  const handleUploadChange = async (e, item, amenityType) => {
-    // console.log(item, ".....consolefrom onclick");
-    const imagefile = e.target.files[0];
-    const imageId = Date.now();
-    const imageuploadingurl = await generatesignedurl(imageId);
-    imageUploading(imageuploadingurl, imagefile, imageId, item, amenityType);
-  };
-  const imageUploading = async (
-    imageuploadingurl,
-    imagefile,
-    imageId,
-    item,
-    amenityType
-  ) => {
-    // console.log(imageuploadingurl, ".......imageuploadingurl");
-    // console.log(imagefile, ".......imagefile");
-    imageuploadingurl &&
-      imagefile &&
-      (await fetch(imageuploadingurl, {
-        method: "PUT",
-        body: imagefile,
-        headers: {
-          "Content-Type": "image/jpeg",
-          "cache-control": "public, max-age=0",
-        },
-      })
-        .then((res) => {
-          // console.log(res, ".......res");
-          if (res.status === 200) {
-            setHeader("image uploaded successfully");
-            setState(true);
-            updatingImageUrlinTable(
-              `${ImageBaseUrl}/tour_booking_docs_from_company/${imageId}.png`,
-              item,
-              amenityType
-            );
-          }
-        })
-        .catch((err) => {
-          setHeader(`err:${err}`);
-          setState(true);
-        }));
-  };
-  const generatesignedurl = async (imageId) => {
-    const payload = {
-      register_id: `${imageId}`,
-      event_type: "user_profile_image",
-      folder_name: "tour_booking_docs_from_company",
-    };
-    try {
-      const res = await call(GENERATE_SIGNED_URL, payload);
-      const url = res?.data?.data?.result?.signed_url;
-      return url;
-    } catch (error) {
-      console.log("error while creating the signed url", error);
-      return "";
-    }
   };
 
   const manageButtons = [
@@ -804,96 +726,24 @@ function ManageTournament() {
                 </div>
               ),
               hotelBookings: (
-                <div>
-                  <div
-                    className={
-                      item?.hotel_bookings === false
-                        ? "d-flex align-items-center button-custom-deactive"
-                        : "d-flex align-items-center button-custom"
-                    }
-                    onClick={
-                      item?.hotel_bookings === false
-                        ? null
-                        : () => handleViewClick(item, "hotel_bookings")
-                    }
-                  >
-                    <FaRegEye
-                      className={
-                        item?.hotel_bookings === false
-                          ? "me-1 ions-deactive-clr"
-                          : "me-1 ions-clr"
-                      }
-                    />
-                    View
-                  </div>
-                  <label
-                    className="d-flex align-items-center mt-1 button-custom"
-                    htmlFor={`hotel_bookings_${index}`}
-                  >
-                    <input
-                      type="file"
-                      id={`hotel_bookings_${index}`}
-                      name={`hotel_bookings_${index}`}
-                      className="fileupload-input-display-none"
-                      onChange={(e) =>
-                        handleUploadChange(e, item, "hotel_bookings")
-                      }
-                    ></input>
-                    <MdUpload className="me-1 ions-clr" />
-                    Upload
-                  </label>
+                <div
+                  className="d-flex align-items-center  button-custom"
+                  onClick={() => handleUploadClick(item.tour_payment_id, "hotel_booking")}
+                >
+                  <MdUpload className="me-1 ions-clr" />
+                  Upload
                 </div>
               ),
               tourGuidance: (
-                <div>
-                  <div
-                    className={
-                      item?.tour_guidance === false
-                        ? "d-flex align-items-center button-custom-deactive"
-                        : "d-flex align-items-center button-custom"
-                    }
-                    onClick={
-                      item?.tour_guidance === false
-                        ? null
-                        : () => handleViewClick(item, "tour_guidance")
-                    }
-                  >
-                    <FaRegEye
-                      className={
-                        item?.tour_guidance === false
-                          ? "me-1 ions-deactive-clr"
-                          : "me-1 ions-clr"
-                      }
-                    />
-                    View
-                  </div>
-                  <label
-                    className="d-flex align-items-center mt-1 button-custom"
-                    htmlFor={`tour_guidance_${index}`}
-                    // onClick={()=>handleUploadClick(tourGuidanceRef)}
-                  >
-                    <input
-                      type="file"
-                      id={`tour_guidance_${index}`}
-                      name={`tour_guidance_${index}`}
-                      // ref={tourGuidanceRef}
-                      className="fileupload-input-display-none"
-                      onChange={(e) =>
-                        handleUploadChange(e, item, "tour_guidance")
-                      }
-                    ></input>
-                    <MdUpload className="me-1 ions-clr" />
-                    Upload
-                  </label>
+                <div
+                  className="d-flex align-items-center  button-custom"
+                  onClick={() => handleUploadClick(item.tour_payment_id, "tour_guidance")}
+                >
+                  <MdUpload className="me-1 ions-clr" />
+                  Upload
                 </div>
               ),
               totalAmount: item.total_amount,
-              // paidAmount: "8,00,000",
-              // paymentIdproof: (
-              //   <button type="button" className="btn btn-outline-secondary btn-sm">
-              //     View
-              //   </button>
-              // ),
               confirmationStatus: item.confirm_payment_status,
             };
           })

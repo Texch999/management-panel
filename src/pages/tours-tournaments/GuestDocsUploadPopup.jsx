@@ -29,12 +29,13 @@ function GuestDocsUploadPopup(props) {
   const [docType, setDocType] = useState("");
   const [showScreenshotImg, setShowScreenshotImg] = useState(false);
   const [documentView, setDocumentView] = useState("");
+  const [reRendering, setReRendering] = useState(false)
 
   const gettingguestsdocs = async () => {
     const payload = {
       tour_payment_id: tourPaymentId,
     };
-    console.log(payload, ".....payload");
+    // console.log(payload, ".....payload");
     await call(GET_TOUR_PAYMENT_DOCUMENTS, payload)
       .then((res) => setData(res?.data?.data?.Items[0]))
       .catch((error) => console.log(error));
@@ -52,7 +53,7 @@ function GuestDocsUploadPopup(props) {
         setDocType("userguidancedoc");
         break;
     }
-  }, [tourPaymentId]);
+  }, [tourPaymentId, reRendering]);
   console.log(data,".....data");
 
   const guestdetails = data?.guests_details;
@@ -149,7 +150,7 @@ function GuestDocsUploadPopup(props) {
   // console.log(allPackMembers, ".......allpack");
 
   const handleUploadChange = async (e, userid, item, amenityType) => {
-    console.log(item, e, ".....consolefrom onclick");
+    // console.log(item, e, ".....consolefrom onclick");
     const imagefile = e.target.files[0];
     const imageId = Date.now();
     const imageuploadingurl = await generatesignedurl(imageId);
@@ -171,8 +172,8 @@ function GuestDocsUploadPopup(props) {
     item,
     amenityType
   ) => {
-    console.log(imageuploadingurl, ".......imageuploadingurl");
-    console.log(imagefile, ".......imagefile");
+    // console.log(imageuploadingurl, ".......imageuploadingurl");
+    // console.log(imagefile, ".......imagefile");
     imageuploadingurl &&
       imagefile &&
       (await fetch(imageuploadingurl, {
@@ -233,14 +234,14 @@ function GuestDocsUploadPopup(props) {
     await call(UPDATE_URL_IN_GUESTDOCS, payload)
       .then((res) => {
         if (res?.status === 200) {
+          setReRendering((prev) => !prev);
           console.log(res, "......image url updated successfully in table");
         }
-        // setReRendering((prev) => !prev);
       })
       .catch((error) => console.log(error));
   };
   const handleViewClick = async (guest, amenityType) => {
-    console.log(guest[amenityType], ".......viewclicked");
+    // console.log(guest[amenityType], ".......viewclicked");
     setDocumentView(guest[amenityType]);
     setShowScreenshotImg(true);
   };
@@ -308,12 +309,12 @@ function GuestDocsUploadPopup(props) {
                   </div>
                   <label
                     className="d-flex align-items-center mt-1 button-custom"
-                    htmlFor={companyUploadingDocType}
+                    htmlFor={`${companyUploadingDocType}${index}`}
                   >
                     <input
                       type="file"
-                      id={companyUploadingDocType}
-                      name={companyUploadingDocType}
+                      id={`${companyUploadingDocType}${index}`}
+                      name={`${companyUploadingDocType}${index}`}
                       className="fileupload-input-display-none"
                       onChange={(e) =>
                         handleUploadChange(e, guest.userid, data, companyUploadingDocType)
