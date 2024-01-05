@@ -109,7 +109,6 @@ function Usertransaction() {
     (item) => item.register_id === adminPayload.id
   );
 
-
   // const handleOffline = () => {
   //   setOfflineWebsites(true);
   //   setOnlineWebsites(false);
@@ -120,7 +119,7 @@ function Usertransaction() {
   };
   const currentUrl = window.location.href;
   const contains = currentUrl.includes("/usertransaction/");
- 
+
   return (
     <div className="p-4 w-100">
       <h6 className="h6 font-grey p-1">userprofile/profile</h6>
@@ -292,7 +291,7 @@ function Usertransaction() {
         </div>
       </div>
       {transactionData === "Websites/Limit" && OnlineWebsites === "online" && (
-        <WebsitesLimit adminPayload={adminPayload}/>
+        <WebsitesLimit adminPayload={adminPayload} />
       )}
       {transactionData === "Websites/Limit" && OnlineWebsites === "offline" && (
         <div>

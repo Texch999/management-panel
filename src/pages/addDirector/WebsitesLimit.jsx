@@ -13,10 +13,10 @@ import {
 } from "../../config/endpoints";
 import { useParams } from "react-router-dom";
 function WebsitesLimit(props) {
-  const {adminPayload} = props;
+  const { adminPayload } = props;
   const [paymentTypeSelect, setPaymentTypeSelect] = useState("share");
-  const [allDirectors,setAllDirectors]=useState()
-  const [active,setActive] =useState("")
+  const [allDirectors, setAllDirectors] = useState();
+  const [active, setActive] = useState("");
   const handlePaymentSelect = (e) => {
     setPaymentTypeSelect(e.target.value);
   };
@@ -37,11 +37,13 @@ function WebsitesLimit(props) {
     getDirectors();
   }, []);
 
-  const filteredData=allDirectors?.filter((item)=>item?.register_id===websiteLimit.id);
+  const filteredData = allDirectors?.filter(
+    (item) => item?.register_id === adminPayload?.id
+  );
 
-  console.log(filteredData,"====>Data")
- 
-  const handleBlockUnBlock=async(item,active)=>{
+  console.log(filteredData, "====>Data");
+
+  const handleBlockUnBlock = async (item, active) => {
     const payload = {
       register_id: item,
       active: !active,
@@ -52,7 +54,7 @@ function WebsitesLimit(props) {
         console.log(res);
       })
       .catch((err) => console.log(err));
-  }
+  };
 
   return (
     <div className="sidebar-bg rounded w-100">
@@ -73,12 +75,17 @@ function WebsitesLimit(props) {
               id="flexSwitchCheckDefault"
             />
           </div>
-          <div className="p-1"  onClick={() => {
-                  handleBlockUnBlock(
-                    filteredData[0]?.register_id,
-                    filteredData[0]?.website_status
-                  );
-               }} >Active</div>
+          <div
+            className="p-1"
+            onClick={() => {
+              handleBlockUnBlock(
+                filteredData[0]?.register_id,
+                filteredData[0]?.website_status
+              );
+            }}
+          >
+            Active
+          </div>
         </div>
       </div>
       <hr className="hr-line" />
