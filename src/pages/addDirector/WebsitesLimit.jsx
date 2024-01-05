@@ -6,13 +6,57 @@ import RevenueOnlineShare from "./RevenueOnlineShare";
 import RevenueOnlineFixd from "./RevenueOnlineFixd";
 import TotalPaidBalanceTable from "./TotalPaidBalanceTable";
 import RevenueOfflineTable from "./RevenueOfflineTable";
-function WebsitesLimit() {
+import { call } from "../../config/axios";
+import {
+  GET_ALL_USERS,
+  GET_ALL_WEBSITES,
+  WEBSITES_ACTIVE_INACTIVE,
+} from "../../config/endpoints";
+import { useParams } from "react-router-dom";
+function WebsitesLimit(props) {
+  const {adminPayload} = props;
+  console.log(adminPayload,'.......adminpayloadddddd')
+  const websiteLimit=useParams();
+  console.log(websiteLimit,"===>websiteLimit")
   const [paymentTypeSelect, setPaymentTypeSelect] = useState("share");
-
+  const [allDirectors,setAllDirectors]=useState()
+  const [active,setActive] =useState("")
   const handlePaymentSelect = (e) => {
     setPaymentTypeSelect(e.target.value);
   };
   console.log(paymentTypeSelect);
+
+  const getDirectors = async () => {
+    const payload = {
+      register_id: "company",
+    };
+    await call(GET_ALL_USERS, payload)
+      .then((res) => {
+        setAllDirectors(res?.data?.data);
+      })
+
+      .catch((err) => console.log(err));
+  };
+  useEffect(() => {
+    getDirectors();
+  }, []);
+
+  const filteredData=allDirectors?.filter((item)=>item?.register_id===websiteLimit.id);
+
+  console.log(filteredData,"====>filteredData")
+ 
+  const handleBlockUnBlock=async(item,active)=>{
+    const payload = {
+      register_id: item,
+      active: !active,
+    };
+    await call(WEBSITES_ACTIVE_INACTIVE, payload)
+      .then((res) => {
+        setActive(!active);
+        console.log(res);
+      })
+      .catch((err) => console.log(err));
+  }
 
   return (
     <div className="sidebar-bg rounded w-100">
@@ -20,7 +64,7 @@ function WebsitesLimit() {
         <div className="small-font">
           <TbWorldUp className="th-color" />
           <span className="th-color px-1">T Exchange |</span>
-          <span className="role-color px-1">www.texch.com</span>
+          <span className="role-color px-1">www.texch.co</span>
           <BsFiles className="th-color" />
         </div>
         <div className=" d-flex align-items-center justify-content-center th-color small-font">
@@ -33,7 +77,12 @@ function WebsitesLimit() {
               id="flexSwitchCheckDefault"
             />
           </div>
-          <div className="p-1">Active</div>
+          <div className="p-1"  onClick={() => {
+                  handleBlockUnBlock(
+                    filteredData[0]?.register_id,
+                    filteredData[0]?.website_status
+                  );
+               }} >Active</div>
         </div>
       </div>
       <hr className="hr-line" />
