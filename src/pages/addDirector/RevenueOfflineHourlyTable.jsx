@@ -5,7 +5,7 @@ import { GET_ADMIN_PACKAGES } from "../../config/endpoints";
 import { call } from "../../config/axios";
 import { useEffect, useState } from "react";
 
-function RevenueOfflineTable() {
+function RevenueOfflineHourlyTable() {
   const register_id = localStorage.getItem("register_id");
   const [adminPackages, setAdminPackages] = useState([]);
 
@@ -45,9 +45,7 @@ function RevenueOfflineTable() {
       salevalue: standeredPackage?.used_packages || 0,
       baltext: "Bal",
       balvalue:
-        standeredPackage?.no_of_packages ||
-        0 - standeredPackage?.used_packages ||
-        0,
+        standeredPackage?.no_of_packages - standeredPackage?.used_packages,
     },
     {
       header: (
@@ -62,8 +60,7 @@ function RevenueOfflineTable() {
       saletext: "Sale",
       salevalue: silverPackage?.used_packages || 0,
       baltext: "Bal",
-      balvalue:
-        silverPackage?.no_of_packages || 0 - silverPackage?.used_packages || 0,
+      balvalue: silverPackage?.no_of_packages - silverPackage?.used_packages,
     },
     {
       header: (
@@ -78,8 +75,7 @@ function RevenueOfflineTable() {
       saletext: "Sale",
       salevalue: goldPackage?.used_packages || 0,
       baltext: "Bal",
-      balvalue:
-        goldPackage?.no_of_packages || 0 - goldPackage?.used_packages || 0,
+      balvalue: goldPackage?.no_of_packages - goldPackage?.used_packages,
     },
     {
       header: (
@@ -94,10 +90,7 @@ function RevenueOfflineTable() {
       saletext: "Sale",
       salevalue: diamondPackage?.used_packages || 0,
       baltext: "Bal",
-      balvalue:
-        diamondPackage?.no_of_packages ||
-        0 - diamondPackage?.used_packages ||
-        0,
+      balvalue: diamondPackage?.no_of_packages - diamondPackage?.used_packages,
     },
     {
       header: (
@@ -112,8 +105,7 @@ function RevenueOfflineTable() {
       saletext: "Sale",
       salevalue: vipPackage?.used_packages || 0,
       baltext: "Bal",
-      balvalue:
-        vipPackage?.no_of_packages || 0 - vipPackage?.used_packages || 0,
+      balvalue: vipPackage?.no_of_packages - vipPackage?.used_packages,
     },
   ];
 
@@ -139,8 +131,11 @@ function RevenueOfflineTable() {
   const getAdminPackages = async () => {
     await call(GET_ADMIN_PACKAGES, { register_id })
       .then((res) => {
-        setAdminPackages(res?.data?.data?.bulk_subscriptions);
-        console.log(res.data);
+        const hoursPackages = res?.data?.data?.bulk_subscriptions.filter(
+          (obj) =>
+            obj.duration === "hourly" || obj.package_duration === "hourly"
+        );
+        setAdminPackages(hoursPackages || []);
       })
       .catch((err) => console.log(err));
   };
@@ -152,7 +147,7 @@ function RevenueOfflineTable() {
     <div>
       <div className="px-3 mt-2">
         <div className="th-color w-fit-content rounded-pill sports-casino-bg-br small-font p-1 px-2">
-          Total Purchase & Payment
+          Topup Hours
         </div>
       </div>
       <div className="px-3 mt-1">
@@ -192,4 +187,4 @@ function RevenueOfflineTable() {
   );
 }
 
-export default RevenueOfflineTable;
+export default RevenueOfflineHourlyTable;

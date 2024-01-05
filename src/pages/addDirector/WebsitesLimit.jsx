@@ -62,7 +62,7 @@ function WebsitesLimit(props) {
         <div className="small-font">
           <TbWorldUp className="th-color" />
           <span className="th-color px-1">T Exchange |</span>
-          <span className="role-color px-1">www.texch.co</span>
+          <span className="role-color px-1">www.texch.com</span>
           <BsFiles className="th-color" />
         </div>
         <div className=" d-flex align-items-center justify-content-center th-color small-font">

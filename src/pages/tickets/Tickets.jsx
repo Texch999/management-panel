@@ -92,9 +92,10 @@ function Tickets() {
       reason,
       company_id: "company_id",
     })
-      .then((res) => {
+      .then(async (res) => {
         if (res.status === 200) {
           setIsProcessing(false);
+          await getRequestedPackages();
           setStatus("");
           setTimeout(() => {
             setIsProcessing(false);

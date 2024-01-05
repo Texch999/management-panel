@@ -43,6 +43,8 @@ const ADD_REASON_REJECTIONS = "/settings/add_reason_rejection";
 const UPDATE_NOTIFICATION = "/management/update_notifications";
 const UPDATE_OFFER = "/management/update_offers";
 const UPDATE_MATCH = "/offline-management/update_matchid_data";
+const GET_ADMIN_PACKAGES = "/packages/get_admin_packages";
+const UPDATE_PACKAGES = "/packages/update_packages";
 
 const ADD_TOURS = "/tours/add_tours";
 const GET_TOURS = "/tours/get_tours";
@@ -474,4 +476,14 @@ exports.REJECT_QUESTIONS_ACTIVE_INACTIVE = {
 exports.WEBSITES_ACTIVE_INACTIVE = {
   url: WEBSITES_ACTIVE_INACTIVE,
   method: POST
+}
+
+exports.GET_ADMIN_PACKAGES = {
+  url: GET_ADMIN_PACKAGES,
+  method: POST,
+};
+
+exports.UPDATE_PACKAGES = {
+  url: UPDATE_PACKAGES,
+  method: POST,
 };
