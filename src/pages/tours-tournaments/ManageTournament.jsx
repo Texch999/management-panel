@@ -31,6 +31,7 @@ function ManageTournament() {
   const [guestDocs, setGuestDocs] = useState([]);
   const [openGuestDetailsPopup, setOpenGuestDetailsPopup] = useState(false);
   const [guestDetails, setGuestsDetails] = useState({});
+  const [tourPaymentId, setTourPaymentId] = useState("");
   const [showPaymentDetailsPopup, setShowPaymentDetailsPopup] = useState(false);
   const [reRendering, setReRendering] = useState(false);
   const [showScreenshotImg, setShowScreenshotImg] = useState(false);
@@ -82,7 +83,7 @@ function ManageTournament() {
       .then((res) => setGuestDocs(res?.data?.data?.Items))
       .catch((error) => console.log(error));
   };
-  console.log(guestDocs, ".....guestdocs");
+  // console.log(guestDocs, ".....guestdocs");
 
   useEffect(() => {
     gettingInterestedMembers();
@@ -142,9 +143,9 @@ function ManageTournament() {
     setDocumentView(item[amenityType]);
     setShowScreenshotImg(true);
   };
-  const handleUploadClick = async (item, bookingType) => {
+  const handleUploadClick = async (id, bookingType) => {
     setCompanyUploadingDocType(bookingType)
-    setGuestsDetails(item);
+    setTourPaymentId(id)
     setDocUploadPopupOpen(true);
   };
 
@@ -796,7 +797,7 @@ function ManageTournament() {
               travelBookings: (
                 <div
                   className="d-flex align-items-center  button-custom"
-                  onClick={() => handleUploadClick(item, "usertraveldoc")}
+                  onClick={() => handleUploadClick(item.tour_payment_id, "travel_booking")}
                 >
                   <MdUpload className="me-1 ions-clr" />
                   Upload
@@ -1012,7 +1013,8 @@ function ManageTournament() {
       <GuestDocsUploadPopup
         docUploadPopupOpen={docUploadPopupOpen}
         setDocUploadPopupOpen={setDocUploadPopupOpen}
-        guestDetails={guestDetails}
+        tourPaymentId={tourPaymentId}
+        setTourPaymentId={setTourPaymentId}
         companyUploadingDocType={companyUploadingDocType}
       />
     </div>

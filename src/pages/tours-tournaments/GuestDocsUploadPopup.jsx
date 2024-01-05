@@ -1,28 +1,62 @@
 import React, { useEffect, useState } from "react";
 import { Modal } from "react-bootstrap";
-import { PRESIGNED_URL } from "../../config/endpoints";
+import {
+  GET_TOUR_PAYMENT_DOCUMENTS,
+  UPDATE_URL_IN_GUESTDOCS,
+} from "../../config/endpoints";
 import { GENERATE_SIGNED_URL } from "../../config/endpoints";
 import MatchSubmitPopup from "../../matchpopups/MatchSubmitPopup";
 import { FaRegEye } from "react-icons/fa";
 import { MdUpload } from "react-icons/md";
 import { call } from "../../config/axios";
 import { ImageBaseUrl } from "../../images/index";
-import { UPDATE_TOUR_PAYMENTS_DOCUMENTS } from "../../config/endpoints";
+import PaymentImagePopup from "./PaymentImagePopup";
 
 function GuestDocsUploadPopup(props) {
   const {
     docUploadPopupOpen,
     setDocUploadPopupOpen,
-    guestDetails,
+    tourPaymentId,
+    setTourPaymentId,
     companyUploadingDocType,
   } = props;
+  // console.log(tourPaymentId,'.........tourpaymentid')
+
   const [allPackMembers, setAllPackMembers] = useState([]);
   const [state, setState] = useState(false);
   const [header, setHeader] = useState("");
+  const [data, setData] = useState(false);
+  const [docType, setDocType] = useState("");
+  const [showScreenshotImg, setShowScreenshotImg] = useState(false);
+  const [documentView, setDocumentView] = useState("");
 
-  console.log(guestDetails, companyUploadingDocType, ".....guestdetails");
+  const gettingguestsdocs = async () => {
+    const payload = {
+      tour_payment_id: tourPaymentId,
+    };
+    console.log(payload, ".....payload");
+    await call(GET_TOUR_PAYMENT_DOCUMENTS, payload)
+      .then((res) => setData(res?.data?.data?.Items[0]))
+      .catch((error) => console.log(error));
+  };
+  useEffect(() => {
+    gettingguestsdocs();
+    switch (companyUploadingDocType) {
+      case "travel_booking":
+        setDocType("usertraveldoc");
+        break;
+      case "hotel_booking":
+        setDocType("userhoteldoc");
+        break;
+      case "tour_guidance":
+        setDocType("userguidancedoc");
+        break;
+    }
+  }, [tourPaymentId]);
+  console.log(data,".....data");
 
-  const guestdetails = guestDetails.guests_details;
+  const guestdetails = data?.guests_details;
+  // console.log(guestdetails,'.........guestdetails')
 
   const regularpacks = guestdetails?.filter((item) =>
     Object.keys(item)[0]?.includes("regular")
@@ -111,11 +145,11 @@ function GuestDocsUploadPopup(props) {
   };
   useEffect(() => {
     setAllMembers();
-  }, [guestDetails]);
-  console.log(allPackMembers, ".......allpack");
+  }, [data]);
+  // console.log(allPackMembers, ".......allpack");
 
   const handleUploadChange = async (e, userid, item, amenityType) => {
-    // console.log(item,e, ".....consolefrom onclick");
+    console.log(item, e, ".....consolefrom onclick");
     const imagefile = e.target.files[0];
     const imageId = Date.now();
     const imageuploadingurl = await generatesignedurl(imageId);
@@ -137,8 +171,8 @@ function GuestDocsUploadPopup(props) {
     item,
     amenityType
   ) => {
-    // console.log(imageuploadingurl, ".......imageuploadingurl");
-    // console.log(imagefile, ".......imagefile");
+    console.log(imageuploadingurl, ".......imageuploadingurl");
+    console.log(imagefile, ".......imagefile");
     imageuploadingurl &&
       imagefile &&
       (await fetch(imageuploadingurl, {
@@ -185,21 +219,30 @@ function GuestDocsUploadPopup(props) {
   };
 
   const updatingImageUrlinTable = async (url, userid, item, amenityType) => {
+    console.log(url,'.........url')
     console.log(item, ".......item");
     console.log(userid, ".....userid");
     console.log(amenityType, "...amenitytype");
     const payload = {
-      [amenityType]: url,
+      url: url,
       userid: userid,
+      update_url_type: amenityType,
       tour_payment_id: item.tour_payment_id,
     };
-    console.log(payload, "......payload");
-    // await call(UPDATE_TOUR_PAYMENTS_DOCUMENTS, payload)
-    //   .then((res) => {
-    //     setReRendering((prev) => !prev);
-    //     console.log(res, "......image url updated successfully in table");
-    //   })
-    //   .catch((error) => console.log(error));
+    console.log(payload,'....payload')
+    await call(UPDATE_URL_IN_GUESTDOCS, payload)
+      .then((res) => {
+        if (res?.status === 200) {
+          console.log(res, "......image url updated successfully in table");
+        }
+        // setReRendering((prev) => !prev);
+      })
+      .catch((error) => console.log(error));
+  };
+  const handleViewClick = async (guest, amenityType) => {
+    console.log(guest[amenityType], ".......viewclicked");
+    setDocumentView(guest[amenityType]);
+    setShowScreenshotImg(true);
   };
 
   const TableHeads = [
@@ -247,21 +290,19 @@ function GuestDocsUploadPopup(props) {
               document: (
                 <div>
                   <div
-                    className={`d-flex align-items-center button-custom${
-                      !guest.companyUploadingDocType ? "-deactive" : ""
-                    }`}
-                    // onClick={
-                    //   item?.hotel_bookings === false
-                    //     ? null
-                    //     : () => handleViewClick(item, "hotel_bookings")
-                    // }
+                    className={
+                      guest[docType] === false ? "d-flex align-items-center button-custom-deactive" : "d-flex align-items-center button-custom"
+                    }
+                    onClick={
+                      guest[docType] === false
+                        ? null
+                        : () => handleViewClick(guest, docType)
+                    }
                   >
                     <FaRegEye
-                      className={`me-1 ions${
-                        !guest.companyUploadingDocType
-                          ? "-deactive-clr"
-                          : "-clr"
-                      }`}
+                      className={
+                        guest[docType] ===false ? "me-1 ions-deactive-clr" : "me-1 ions-clr"
+                      }
                     />
                     View
                   </div>
@@ -275,12 +316,7 @@ function GuestDocsUploadPopup(props) {
                       name={companyUploadingDocType}
                       className="fileupload-input-display-none"
                       onChange={(e) =>
-                        handleUploadChange(
-                          e,
-                          guest.userid,
-                          guestDetails,
-                          companyUploadingDocType
-                        )
+                        handleUploadChange(e, guest.userid, data, companyUploadingDocType)
                       }
                     ></input>
                     <MdUpload className="me-1 ions-clr" />
@@ -295,10 +331,16 @@ function GuestDocsUploadPopup(props) {
         })
       : [{ guests: "No guests to Display" }];
 
+  const handleClose = () => {
+    setDocUploadPopupOpen(false);
+    setAllPackMembers([]);
+    setData(false);
+    setTourPaymentId("")
+  };
   return (
     <div className="modal fade bd-example-modal-lg total-background container mt-5">
       <Modal
-        onHide={() => setDocUploadPopupOpen(false)}
+        onHide={() => handleClose()}
         show={docUploadPopupOpen}
         centered
         size="lg"
@@ -340,6 +382,11 @@ function GuestDocsUploadPopup(props) {
         </div>
       </Modal>
       <MatchSubmitPopup header={header} state={state} setState={setState} />
+      <PaymentImagePopup
+        showScreenshotImg={showScreenshotImg}
+        setShowScreenshotImg={setShowScreenshotImg}
+        imageurl={documentView}
+      />
     </div>
   );
 }

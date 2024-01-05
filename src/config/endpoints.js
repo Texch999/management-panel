@@ -68,12 +68,18 @@ const SECURITY_QUESTIONS_ACTIVE_INACTIVE =
 const BROADCAST_ACTIVE_INACTIVE = "/management/broadcast_active_inactive";
 const REJECT_QUESTIONS_ACTIVE_INACTIVE =
   "/management/reject_reasons_active_inactive";
+const UPDATE_URL_IN_GUESTDOCS = "/tours/update_url_in_guestdocs";
 
 // methods
 const DELETE = "DELETE";
 const POST = "POST";
 const GET = "POST";
 const PUT = "PUT";
+
+exports.UPDATE_URL_IN_GUESTDOCS = {
+  url: UPDATE_URL_IN_GUESTDOCS,
+  method: POST
+}
 
 exports.GET_ADMIN_ALL_ACCOUNTS = {
   method: POST,
