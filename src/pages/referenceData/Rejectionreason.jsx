@@ -18,7 +18,8 @@ function Rejectionreason() {
   const [status, setStatus] = useState(false);
   const [active, setActive] = useState(false);
   const handleSelectChange = (event) => {
-    const selectedValue = event.target.value;
+    const selectedValue = event.target.value; 
+    console.log("selectedValue====>",selectedValue)
     setSelectedOption(selectedValue);
   };
   const searchContent = (value) => {
@@ -30,7 +31,7 @@ function Rejectionreason() {
   };
 
   const cols = [
-    {
+    { 
       header: "REASON",
       field: "reason",
     },
@@ -41,7 +42,7 @@ function Rejectionreason() {
 
     {
       header: "STATUS",
-      field: "status",
+      field: "active",
     },
     {
       header: "Action",
@@ -63,31 +64,30 @@ function Rejectionreason() {
       })
       .catch((err) => console.log(err));
   };
-  const handleBlockUnBlock = async (item) => {
+  const handleBlockUnBlock = async (item,currentActiveState) => {
     const payload = {
       s_id: item,
-      active: !active,
+      active: !currentActiveState,
     };
     await call(REJECT_QUESTIONS_ACTIVE_INACTIVE, payload)
       .then((res) => {
         if (res.status === 200) {
           setActive((prev) => !prev);
         }
-        console.log(res, "res===>");
       })
       .catch((err) => console.log(err));
   };
   useEffect(() => {
     getAllRejectQuestions();
-  }, [active]);
+  }, [active,status]);
 
 
   const modifiedRejectionreasonDetails = searchText.length
     ? filteredQuestions
         .filter((item) =>
-          selectedOption === "Active"
-            ? item?.is_active === 1
-            : item?.is_active === 0
+          selectedOption === "true"
+            ? item?.active === true
+            : item?.active === false
         )
         .filter((item) =>
           item?.reason?.toLowerCase().includes(searchText.toLowerCase())
@@ -97,14 +97,14 @@ function Rejectionreason() {
             return {
               reason: <div className="role-color">{item?.reason}</div>,
               description: item?.description,
-              status: (
+              active: (
                 <div
                   className={
                     item?.active
                       ? "font-green custom-active-button px-2"
                       : "custom-deactive-button px-2"
                   }
-                  onClick={() => handleBlockUnBlock(item?.s_id)}
+                  onClick={() => handleBlockUnBlock(item?.s_id,item?.active)}
                 >
                   {item?.active ? "Active" : "InActive"}
                 </div>
@@ -115,22 +115,22 @@ function Rejectionreason() {
         })
     : allQuestions
         .filter((item) =>
-          selectedOption === "Active"
-            ? item?.is_active === 1
-            : item?.is_active === 0
+          selectedOption === "true"
+            ? item?.active === true
+            : item?.active === false
         )
         .map((item) => {
           return {
             reason: <div className="role-color">{item?.reason}</div>,
             description: item?.description,
-            status: (
+            active: (
               <div
                 className={
                   item?.active
                     ? "font-green custom-active-button px-2"
                     : "custom-deactive-button px-2"
                 }
-                onClick={() => handleBlockUnBlock(item?.s_id)}
+                onClick={() => handleBlockUnBlock(item?.s_id,item?.active)}
               >
                 {item?.active ? "Active" : "InActive"}
               </div>
@@ -191,8 +191,8 @@ function Rejectionreason() {
               value={selectedOption}
               onChange={handleSelectChange}
             >
-              <option selected>Active</option>
-              <option value="1">In-active</option>
+              <option value={"true"}>Active</option>
+              <option value={"false"}>In-active</option>
             </select>
           </div>
         </div>

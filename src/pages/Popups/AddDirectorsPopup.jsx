@@ -6,7 +6,6 @@ import {
   ACCOUNT_REGISTERATION,
   UPDATE_PROFILE,
   GET_ALL_WEBSITES,
-  GET_COUNTRY_AND_CURRENCY,
   GET_ALL_PAYMENTS,
 } from "../../config/endpoints";
 import { call } from "../../config/axios";
@@ -18,7 +17,9 @@ function AddDirectorsPopup(props) {
     firstTextBox,
     firstSelect,
     selectedDirector,
+    setSelectedDirector,
     setActive,
+    setReRender,
   } = props;
 
   const [userId, setUserId] = useState("");
@@ -28,31 +29,48 @@ function AddDirectorsPopup(props) {
   const [lastName, setLastName] = useState("");
   const [phonenumber, setPhoneNumber] = useState("");
   const [website, setWebsite] = useState("");
-  const [timezone, setTimeZone] = useState("");
   const [paymentGateway, setPaymentGateway] = useState("");
   const [packageDiscount, setPackageDiscount] = useState("");
   const [share, setShare] = useState("");
   const [ulshare, setUlshare] = useState("");
   const [showEye, setShowEye] = useState(false);
+  const [ulCommision, setUlCommision] = useState("");
 
   const handleAddDirectorClose = () => {
     setShowAddDirectorPopup(false);
+    setUserId("");
     setFirstName("");
     setLastName("");
     setWebsite("");
     setCountryName("");
-    setTimeZone("");
+    // setTimeZone("");
     setRole("");
     setPaymentGateway("");
     setPackageDiscount("");
     setUlshare("");
     setShare("");
+    setUlCommision("");
+    setSelectedDirector("");
+    setPhoneNumber("");
   };
   const [passwordType, setPasswordType] = useState("password");
   const [passwordInput, setPasswordInput] = useState("");
+  const [err, setErr] = useState("");
   const handlePasswordChange = (evnt) => {
-    setPasswordInput(evnt.target.value);
+    setPasswordInput({
+      ...passwordInput,
+      [evnt.target.name]: evnt.target.value,
+    });
   };
+  const [confrmPasswordType, setConfrmPasswordType] = useState("password");
+  const [confrmPasswordInput, setConfrmPasswordInput] = useState("");
+  const handleConfirmPasswordChange = (evnt) => {
+    setConfrmPasswordInput({
+      ...confrmPasswordInput,
+      [evnt.target.name]: evnt.target.value,
+    });
+  };
+
   const togglePassword = () => {
     if (passwordType === "password") {
       setPasswordType("text");
@@ -60,24 +78,37 @@ function AddDirectorsPopup(props) {
     }
     setPasswordType("password");
   };
+
+  const toggleConfirmPassword = () => {
+    if (confrmPasswordType === "password") {
+      setConfrmPasswordType("text");
+      return;
+    }
+    setConfrmPasswordType("password");
+  };
+
   useEffect(() => {
     if (selectedDirector) {
       setUserId(selectedDirector.user_name || "");
       setFirstName(selectedDirector.first_name || "");
       setLastName(selectedDirector.last_name || "");
       setPhoneNumber(selectedDirector.mobile_no || "");
-      setWebsite(selectedDirector.website || "");
+      setWebsite(selectedDirector.website_name || "");
       setPaymentGateway(selectedDirector.pg_upi || "");
-      setTimeZone(selectedDirector.timezone || "");
       setRole(selectedDirector.account_role || "");
       setCountryName(selectedDirector.country_name || "");
       setPasswordInput(selectedDirector.password || "");
       setPackageDiscount(selectedDirector.package_discount || "");
       setUlshare(selectedDirector.ul_share || "");
       setShare(selectedDirector.share || "");
+      setUlCommision(selectedDirector.ul_commision || "");
     }
   }, [selectedDirector]);
+
   const handleCreateOrUpdateDirector = async (status) => {
+    if (passwordInput?.password !== confrmPasswordInput?.confirm_password) {
+      return setErr(`password doesn't match`);
+    }
     try {
       const url = selectedDirector ? UPDATE_PROFILE : ACCOUNT_REGISTERATION;
       const requestData = {
@@ -91,14 +122,14 @@ function AddDirectorsPopup(props) {
         last_name: lastName,
         mobile_no: phonenumber,
         website_name: website,
-        time_zone: timezone,
         account_role: role,
         country_name: countryName,
-        password: passwordInput,
+        password: passwordInput.password,
         pg_upi: paymentGateway,
         share: 100 - +ulshare,
         ul_share: ulshare,
         package_discount: packageDiscount,
+        ul_commision: ulCommision,
       };
 
       if (selectedDirector) {
@@ -107,11 +138,17 @@ function AddDirectorsPopup(props) {
         // requestData.creator_role = selectedDirector.creator_role;
         // requestData.creator_password = selectedDirector.creator_password;
         // requestData.management = selectedDirector.management;
+        setAddDirectorPopup(true);
+        setReRender((prev) => !prev);
+        setTimeout(() => {
+          setAddDirectorPopup(false);
+          setShowAddDirectorPopup(false);
+        }, 2000);
       }
       await call(url, requestData).then((res) => {
-        console.log("-------->", res.data);
         if (res.data.status === 201) {
           setAddDirectorPopup(true);
+          setReRender((prev) => !prev);
           setTimeout(() => {
             setAddDirectorPopup(false);
             setShowAddDirectorPopup(false);
@@ -127,11 +164,15 @@ function AddDirectorsPopup(props) {
           setFirstName("");
           setLastName("");
           setWebsite("");
-          setTimeZone("");
           setRole("");
           setCountryName("");
           setPasswordInput("");
           setPaymentGateway("");
+          setUlCommision("");
+          setUlshare("");
+          setShare("");
+          setPackageDiscount("");
+          setPhoneNumber("");
         }
       });
     } catch (err) {
@@ -140,7 +181,6 @@ function AddDirectorsPopup(props) {
   };
   const [addDirectorsPopup, setAddDirectorPopup] = useState(false);
   const handleAddDirectorPopup = () => {
-    // setAddDirectorPopup(true);
     setShowAddDirectorPopup(false);
   };
 
@@ -159,23 +199,6 @@ function AddDirectorsPopup(props) {
     getwebsiteNames();
   }, []);
 
-  // const [allCountries, setallCountries] = useState([]);
-  // const getallCountries = async () => {
-  //   const payload = {
-  //     register_id: "company",
-  //   };
-  //   await call(GET_COUNTRY_AND_CURRENCY, payload)
-  //     .then((res) => {
-  //       setallCountries(res?.data?.data);
-  //     })
-  //     .catch((err) => {
-  //       setShowAddDirectorPopup(true);
-  //     });
-  // };
-  // useEffect(() => {
-  //   getallCountries();
-  // }, []);
-
   const [allPayments, setAllPayments] = useState([]);
   const getPaymentWay = async () => {
     const payload = {
@@ -193,8 +216,6 @@ function AddDirectorsPopup(props) {
   useEffect(() => {
     getPaymentWay();
   }, []);
-
-  console.log("allPayments===>", allPayments);
 
   return (
     <div className="modal fade bd-example-modal-lg container mt-5">
@@ -235,11 +256,14 @@ function AddDirectorsPopup(props) {
                 >
                   <option value="select">select</option>
                   <option value="All">All</option>
-                  {allPayments?.map((obj) => (
-                    <option value={obj.country_name} selected>
-                      {obj.country_name}
-                    </option>
-                  ))}
+                  {allPayments?.map(
+                    (obj) =>
+                      obj.active === true && (
+                        <option value={obj.country_name} selected>
+                          {obj.country_name}
+                        </option>
+                      )
+                  )}
                 </select>
               </Col>
             </Row>
@@ -257,16 +281,12 @@ function AddDirectorsPopup(props) {
                     {role === "director" ? (
                       <>
                         <option value="">select</option>
-                        {/* <option value="All">
-                          ALL
-                          <input type="checkbox" />
-                          RRR
-                        </option> */}
-                        {/* {websiteNames.map((obj) => (
+
+                        {websiteNames.map((obj) => (
                           <option value={obj.web_url}>
                             <input type="checkbox" /> {obj.web_url}
                           </option>
-                        ))} */}
+                        ))}
                       </>
                     ) : (
                       <>
@@ -289,39 +309,64 @@ function AddDirectorsPopup(props) {
                     onChange={(e) => setPaymentGateway(e.target.value)}
                     className="w-100 custom-select small-font input-btn-bg px-2 py-2 all-none rounded all-none"
                   >
-                    {/* <option value=""selected>select</option>
-                    <option value="All">All</option>  */}
                     {role === "director" ? (
                       <>
                         <option value="">Select</option>
-                        <option value="all">All</option>
+                        {allPayments?.map(
+                          (obj) =>
+                            obj.active === true && (
+                              <option value={obj.pg_upi}>{obj.pg_upi}</option>
+                            )
+                        )}
                       </>
                     ) : (
                       <>
                         <option value="">Select</option>
-                        {allPayments?.map((obj) => (
-                          <option value={obj.pg_upi}>{obj.pg_upi}</option>
-                        ))}
+                        {allPayments?.map(
+                          (obj) =>
+                            obj.active === true && (
+                              <option value={obj.pg_upi}>{obj.pg_upi}</option>
+                            )
+                        )}
                       </>
                     )}
                   </select>
                 </div>
               </Col>
             </Row>
+            <Row>
+              <Col>
+                <div className="d-flex flex-column w-100 mt-2">
+                  <div className="small-font mb-1 mt-1">User ID *</div>
+                  <div className="w-100">
+                    <input
+                      type="text"
+                      placeholder="Enter UserId"
+                      name="user_name"
+                      className="w-100 custom-select small-font login-inputs input-btn-bg px-2 py-2 all-none rounded all-none"
+                      value={userId}
+                      onChange={(e) => setUserId(e.target.value)}
+                    ></input>
+                  </div>
+                </div>
+              </Col>
+              <Col>
+                <div className="d-flex flex-column w-100 mt-2">
+                  <div className="small-font mb-1 mt-1">Phone *</div>
+                  <div className="w-100">
+                    <input
+                      type="number"
+                      placeholder="Enter"
+                      name="mobile_no"
+                      className="w-100 custom-select small-font login-inputs input-btn-bg px-2 py-2 all-none rounded all-none"
+                      value={phonenumber}
+                      onChange={(e) => setPhoneNumber(e.target.value)}
+                    ></input>
+                  </div>
+                </div>
+              </Col>
+            </Row>
 
-            <div className="d-flex flex-column w-100 mt-2">
-              <div className="small-font mb-1 mt-1">User ID *</div>
-              <div className="w-100">
-                <input
-                  type="text"
-                  placeholder="Enter UserId"
-                  name="user_name"
-                  className="w-100 custom-select small-font login-inputs input-btn-bg px-2 py-2 all-none rounded all-none"
-                  value={userId}
-                  onChange={(e) => setUserId(e.target.value)}
-                ></input>
-              </div>
-            </div>
             <Container fluid className="my-2">
               <Row>
                 <Col className="ps-0">
@@ -330,8 +375,8 @@ function AddDirectorsPopup(props) {
                     <input
                       type={passwordType}
                       onChange={handlePasswordChange}
-                      value={passwordInput}
-                      name="confirm password"
+                      value={passwordInput.password}
+                      name="password"
                       placeholder="Enter"
                       className="w-100 custom-select login-inputs small-font input-btn-bg px-2 py-2 all-none rounded all-none"
                     ></input>
@@ -351,18 +396,18 @@ function AddDirectorsPopup(props) {
                   <div className="small-font my-1">Confirm Password *</div>
                   <div className="d-flex justify-content-between flex-row aligin-items-center input-btn-bg w-100 rounded">
                     <input
-                      type={passwordType}
-                      onChange={handlePasswordChange}
-                      value={passwordInput}
-                      name="password"
+                      type={confrmPasswordType}
+                      onChange={handleConfirmPasswordChange}
+                      value={passwordInput.confirm_password}
+                      name="confirm_password"
                       placeholder="Re-enter"
                       className="w-100 custom-select small-font login-inputs input-btn-bg px-2 py-2 all-none rounded all-none"
                     ></input>
                     <button
-                      onClick={togglePassword}
+                      onClick={toggleConfirmPassword}
                       className="all-none input-btn-bg"
                     >
-                      {passwordType === "password" ? (
+                      {confrmPasswordType === "password" ? (
                         <i className="bi bi-eye-slash"></i>
                       ) : (
                         <i className="bi bi-eye"></i>
@@ -401,14 +446,14 @@ function AddDirectorsPopup(props) {
             <Container fluid className="my-2">
               <Row>
                 <Col className="ps-0">
-                  <div className="small-font my-1">Phone *</div>
+                  <div className="small-font my-1">UL Commison*</div>
                   <input
-                    type="number"
+                    type="text"
                     placeholder="Enter"
-                    name="mobile_no"
+                    name="ul_commision"
                     className="w-100 custom-select small-font login-inputs input-btn-bg px-2 py-2 all-none rounded all-none"
-                    value={phonenumber}
-                    onChange={(e) => setPhoneNumber(e.target.value)}
+                    value={ulCommision}
+                    onChange={(e) => setUlCommision(e.target.value)}
                   ></input>
                 </Col>
                 <Col className="pe-0">
@@ -425,7 +470,7 @@ function AddDirectorsPopup(props) {
               </Row>
               <Row>
                 <Col className="pe-0 ps-0">
-                  <div className="small-font my-1">UL Share</div>
+                  <div className="small-font my-1">UL Share *</div>
                   <input
                     type="text"
                     placeholder="Enter"
@@ -436,7 +481,7 @@ function AddDirectorsPopup(props) {
                   ></input>
                 </Col>
                 <Col className="pe-0">
-                  <div className="small-font my-1">share</div>
+                  <div className="small-font my-1">share *</div>
                   <input
                     type="text"
                     placeholder="Enter"
@@ -448,6 +493,7 @@ function AddDirectorsPopup(props) {
                 </Col>
               </Row>
             </Container>
+            {err && <div className="error-message mb-1">{err}</div>}
             <div className="d-flex justify-content-center w-100 my-4">
               <button
                 className="add-button rounded px-2 py-3 w-50 medium-font"
@@ -461,9 +507,9 @@ function AddDirectorsPopup(props) {
       </Modal>
       <MatchSubmitPopup
         header={
-          addDirectorsPopup
-            ? "Director created Successfully"
-            : "Director updated Successfully"
+          addDirectorsPopup === false
+            ? "Director updated Successfully"
+            : "Director created Successfully"
         }
         state={addDirectorsPopup}
         setState={setAddDirectorPopup}

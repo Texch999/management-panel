@@ -33,7 +33,7 @@ function AddSecurityPopup(props) {
         p_id: "SECURITY_QUESTIONS",
         register_id: "company",
         question: selectedQuestion.question || "",
-        active: selectedQuestion.is_active || "Select",
+        active: selectedQuestion.is_active || "",
         description: selectedQuestion.description || "",
       });
     } else {
@@ -67,7 +67,7 @@ function AddSecurityPopup(props) {
       const requestData = {
         p_id: "SECURITY_QUESTIONS",
         register_id: "company",
-        question: formData.question,
+        question: formData.question, 
         active: formData.active,
         description: formData.description,
       };
@@ -81,6 +81,7 @@ function AddSecurityPopup(props) {
       const res = await call(url, requestData);
       if (res.data.status === 200) {
         setAcceptClick(true);
+        setStatus((prev) => !prev);
         setTimeout(() => {
           setAcceptClick(false);
           SetRejectpopupOpen(false);
@@ -96,7 +97,7 @@ function AddSecurityPopup(props) {
         setStatus((prev) => !prev);
         setFormData({
           question: "",
-          active: "Select",
+          active: "",
           description: "",
         });
       }

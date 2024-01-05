@@ -61,10 +61,10 @@ function PolicyDocument() {
     },
   ];
 
-  const handleBlockUnBlock = async (item) => {
+  const handleBlockUnBlock = async (item,currentActiveState) => {
     const payload = {
       policy_id: item,
-      active: !active,
+      active: !currentActiveState
     };
     await call(POLICY_DOCUMENT_ACTIVE_INACTIVE, payload)
       .then((res) => {
@@ -77,7 +77,7 @@ function PolicyDocument() {
 
   useEffect(() => {
     getallPolicyDocuments();
-  }, [active]);
+  }, [active,status]);
 
   const modifiedPolicydocumentDetails = searchText.length
     ? filteredQuestions
@@ -88,14 +88,6 @@ function PolicyDocument() {
           return {
             countryname: <div className="role-color">{item?.country_name}</div>,
             showwebsites: item?.website_name,
-            // status:
-            //   item?.active === true ? (
-            //     <div className="font-green custom-active-button px-2">
-            //       Active
-            //     </div>
-            //   ) : (
-            //     <div className="custom-deactive-button px-2">InActive</div>
-            //   ),
             status: (
               <div
                 className={
@@ -103,7 +95,7 @@ function PolicyDocument() {
                     ? "font-green custom-active-button px-2"
                     : "custom-deactive-button px-2"
                 }
-                onClick={() => handleBlockUnBlock(item?.policy_id)}
+                onClick={() => handleBlockUnBlock(item?.policy_id,item?.active)}
               >
                 {item?.active ? "Active" : "InActive"}
               </div>
@@ -122,7 +114,7 @@ function PolicyDocument() {
                   ? "font-green custom-active-button px-2"
                   : "custom-deactive-button px-2"
               }
-              onClick={() => handleBlockUnBlock(item?.policy_id)}
+              onClick={() => handleBlockUnBlock(item?.policy_id,item?.active)}
             >
               {item?.active ? "Active" : "InActive"}
             </div>
@@ -131,7 +123,6 @@ function PolicyDocument() {
             <MdOutlineEdit
               className="eye-icon-size"
               onClick={() => {
-                console.log("testetestste");
                 setSelectedPolicy(item);
                 handlePolicyOpen();
               }}

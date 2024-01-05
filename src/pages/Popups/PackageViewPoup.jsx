@@ -17,6 +17,7 @@ function PackageViewPoup(props) {
     transactionData = {},
     isProcessing,
     handleSuccessfullPopup,
+    status,
   } = props;
   const [showScreenshotImg, setShowScreenshotImg] = useState(false);
   const handleShowImg = () => {
@@ -24,6 +25,7 @@ function PackageViewPoup(props) {
   };
   const [saleTicket, setSaleTicket] = useState([]);
   const [rejectionDropDown, setRejectionDropDown] = useState([]);
+
   const handleAdminTicketPopupClose = () => {
     setShowPackageUpgrade(false);
   };
@@ -65,6 +67,7 @@ function PackageViewPoup(props) {
       })
       .catch((err) => console.log(err));
   };
+  console.log("rejectionDropDown", rejectionDropDown);
   useEffect(() => {
     getAllRejections();
   }, []);
@@ -165,8 +168,7 @@ function PackageViewPoup(props) {
               </div>
               <div className="d-flex flex-row justify-content-between small-font  all-none  align-items-center justify-content-between my-1 ">
                 <div className="font-grey">To</div>
-                {transactionData?.user_name}-
-                {transactionData?.requested_account_role}
+                {localStorage.getItem("creator_id")}
                 {/* <div>Jayanta-Admin</div> */}
               </div>
               <div className="d-flex flex-row justify-content-between small-font  all-none  align-items-center justify-content-between my-1 ">
@@ -182,7 +184,10 @@ function PackageViewPoup(props) {
             <div className="w-100 my-1 relative-position">
               <img
                 className="w-100 h9vh rounded"
-                src={process.env.PUBLIC_URL + "./assets/dog_imge.jpg"}
+                src={
+                  transactionData?.summary?.transaction_img ||
+                  process.env.PUBLIC_URL + "./assets/dog_imge.jpg"
+                }
                 alt=""
               />
               <PiArrowsOutLight
@@ -320,9 +325,12 @@ function PackageViewPoup(props) {
               >
                 <option value="">Select</option>
 
-                {rejectionDropDown?.map((obj) => (
-                  <option value={obj.reason}>{obj.reason}</option>
-                ))}
+                {rejectionDropDown?.map(
+                  (obj) =>
+                    obj.active === true && (
+                      <option value={obj.reason}>{obj.reason}</option>
+                    )
+                )}
               </select>
             </div>
             <hr />
@@ -346,7 +354,10 @@ function PackageViewPoup(props) {
                   disabled={isProcessing}
                 >
                   {" "}
-                  {isProcessing ? "Processing..." : "Accept"}{" "}
+                  {/* {isProcessing ? "Processing..." : "Accept"}{" "} */}
+                  {isProcessing && status !== "Reject"
+                    ? "Processing..."
+                    : "Accept"}
                 </button>
                 <button
                   type="submit"
@@ -360,7 +371,9 @@ function PackageViewPoup(props) {
                   }
                   disabled={isProcessing}
                 >
-                  {isProcessing ? "Processing..." : "Reject"}
+                  {isProcessing && status == "Reject"
+                    ? "Processing..."
+                    : "Reject"}
                 </button>
               </div>
             ) : (
@@ -381,6 +394,7 @@ function PackageViewPoup(props) {
         </Modal.Header>
       </Modal>
       <ShowImagePopup
+        transactionData={transactionData}
         showScreenshotImg={showScreenshotImg}
         setShowScreenshotImg={setShowScreenshotImg}
       />

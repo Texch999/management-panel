@@ -6,6 +6,7 @@ import AddDirectorsPopup from "../Popups/AddDirectorsPopup";
 import { GET_ALL_USERS } from "../../config/endpoints";
 import { USERS_ACTIVE_INACTIVE } from "../../config/endpoints";
 import { call } from "../../config/axios";
+import { useNavigate } from "react-router-dom";
 
 function Adddirector() {
   const [getAllDirectors, setAllDirectors] = useState([]);
@@ -13,11 +14,13 @@ function Adddirector() {
   const [filteredDirectors, setFilteredDirectors] = useState([]);
   const [searchText, setSearchText] = useState("");
   const [active, setActive] = useState();
+  const navigate = useNavigate();
+  const [reRender, setReRender] = useState(false);
 
   const searchContent = (value) => {
     setSearchText(value);
     const filteredSearchText = getAllDirectors.filter((res) =>
-      res?.account_role?.toLowerCase().includes(searchText.toLowerCase())
+      res?.user_name?.toLowerCase().includes(searchText.toLowerCase())
     );
     setFilteredDirectors(filteredSearchText);
   };
@@ -116,17 +119,20 @@ function Adddirector() {
 
   useEffect(() => {
     getDirectors();
-  }, [active]);
+  }, [active, reRender]);
 
   const modifiedAdddirectorDetails = searchText.length
     ? filteredDirectors
         .filter((item) =>
-          item?.account_role.toLowerCase().includes(searchText.toLowerCase())
+          item?.user_name?.toLowerCase().includes(searchText.toLowerCase())
         )
         .map((item) => {
           return {
             role: (
-              <div className="role-color">
+              <div
+                className="role-color"
+                onClick={() => navigate(`/usertransaction/${item.register_id}`)}
+              >
                 <span className="role-color">{item?.account_role}</span>{" "}
               </div>
             ),
@@ -147,7 +153,10 @@ function Adddirector() {
     : getAllDirectors?.map((item) => {
         return {
           role: (
-            <div className="role-color">
+            <div
+              className="role-color"
+              onClick={() => navigate(`/usertransaction/${item.register_id}`)}
+            >
               <span className="role-color">{item?.account_role}</span>{" "}
             </div>
           ),
@@ -189,6 +198,7 @@ function Adddirector() {
   const handleAddDirectorPopup = () => {
     setShowAddDirectorPopup(true);
   };
+
   return (
     <div className="p-4 w-100">
       <div>
@@ -234,6 +244,7 @@ function Adddirector() {
         firstSelect="Time Zone"
         setStatus={setActive}
         setSelectedDirector={setSelectedDirector}
+        setReRender={setReRender}
       />
     </div>
   );

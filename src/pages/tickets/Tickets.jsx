@@ -15,168 +15,65 @@ function Tickets() {
   const [popupData, setPopupData] = useState([]);
   const [transactionData, setTransactionData] = useState({});
   const [isProcessing, setIsProcessing] = useState(false);
+  const [status, setStatus] = useState(false);
 
   const handleActiveIndex = (index) => {
     setActiveIndex(index);
   };
   const cols = [
-    {
-      header: "DATE & TIME",
-      field: "dateAndTime",
-    },
-    // {
-    //   header: "Name & ROLE",
-    //   field: "nameAndRole",
-    // },
-    {
-      header: "TRX ID",
-      field: "trxid",
-    },
-    {
-      header: "PACKAGE TRX",
-      field: "package",
-    },
-    {
-      header: "CHIPS",
-      field: "chips",
-    },
-    {
-      header: "DISCOUNT",
-      field: "discount",
-    },
-    {
-      header: "PAY AMOUNT",
-      field: "pkgamnt",
-    },
-    {
-      header: "STATUS",
-      field: "status",
-      clr: true,
-    },
+    { header: "USERNAME & ROLE", field: "usernameAndrole" },
+    { header: "DATE & TIME", field: "dateAndTime" },
+    { header: "TRX ID", field: "trxid" },
+    { header: "PACKAGE TRX", field: "package" },
+    { header: "CHIPS", field: "chips" },
+    { header: "DISCOUNT", field: "discount" },
+    { header: "PAY AMOUNT", field: "pkgamnt" },
+    { header: "STATUS", field: "status", clr: true },
   ];
 
   const cols1 = [
-    {
-      header: "DATE",
-      field: "date",
-    },
-    {
-      header: "TIME",
-      field: "time",
-    },
-    // {
-    //   header: "Name & ROLE",
-    //   field: "nameAndRole",
-    // },
-    {
-      header: "TRX ID",
-      field: "trxid",
-    },
-    {
-      header: "PACKAGE TRX",
-      field: "package",
-    },
-    {
-      header: "CHIPS",
-      field: "chips",
-    },
-    {
-      header: "DISCOUNT",
-      field: "discount",
-    },
-    {
-      header: "PAY AMOUNT",
-      field: "pkgamnt",
-    },
-    {
-      header: "VIEW",
-      field: "icon",
-    },
-    {
-      header: "STATUS",
-      field: "status",
-      clr: true,
-    },
+    { header: "USERNAME & ROLE", field: "usernameAndrole" },
+    { header: "DATE", field: "date" },
+    { header: "TIME", field: "time" },
+    { header: "TRX ID", field: "trxid" },
+    { header: "PACKAGE TRX", field: "package" },
+    { header: "CHIPS", field: "chips" },
+    { header: "DISCOUNT", field: "discount" },
+    { header: "PAY AMOUNT", field: "pkgamnt" },
+    { header: "VIEW", field: "icon" },
+    { header: "STATUS", field: "status", clr: true },
   ];
 
   const cols2 = [
-    {
-      header: "DATE & TIME",
-      field: "dateAndTime",
-    },
+    { header: "USERNAME & ROLE", field: "usernameAndrole" },
+    { header: "DATE & TIME", field: "dateAndTime" },
     // {
     //   header: "Name & ROLE",
     //   field: "nameAndRole",
     // },
-    {
-      header: "TRX ID",
-      field: "trxid",
-    },
-    {
-      header: "PACKAGE TRX",
-      field: "package",
-    },
-    {
-      header: "CHIPS",
-      field: "chips",
-    },
-    {
-      header: "DISCOUNT",
-      field: "discount",
-    },
-    {
-      header: "PAY AMOUNT",
-      field: "pkgamnt",
-    },
-    {
-      header: "VIEW",
-      field: "icon",
-    },
-    {
-      header: "STATUS",
-      field: "status",
-      clr: true,
-    },
+    { header: "TRX ID", field: "trxid" },
+    { header: "PACKAGE TRX", field: "package" },
+    { header: "CHIPS", field: "chips" },
+    { header: "DISCOUNT", field: "discount" },
+    { header: "PAY AMOUNT", field: "pkgamnt" },
+    { header: "VIEW", field: "icon" },
+    { header: "STATUS", field: "status", clr: true },
   ];
 
   const cols3 = [
-    {
-      header: "DATE & TIME",
-      field: "dateAndTime",
-    },
+    { header: "USERNAME & ROLE", field: "usernameAndrole" },
+    { header: "DATE & TIME", field: "dateAndTime" },
     // {
     //   header: "Name & ROLE",
     //   field: "nameAndRole",
     // },
-    {
-      header: "TRX ID",
-      field: "trxid",
-    },
-    {
-      header: "PACKAGE TRX",
-      field: "package",
-    },
-    {
-      header: "CHIPS",
-      field: "chips",
-    },
-    {
-      header: "DISCOUNT",
-      field: "discount",
-    },
-    {
-      header: "PAY AMOUNT",
-      field: "pkgamnt",
-    },
-    {
-      header: "VIEW",
-      field: "icon",
-    },
-    {
-      header: "STATUS",
-      field: "status",
-      clr: true,
-    },
+    { header: "TRX ID", field: "trxid" },
+    { header: "PACKAGE TRX", field: "package" },
+    { header: "CHIPS", field: "chips" },
+    { header: "DISCOUNT", field: "discount" },
+    { header: "PAY AMOUNT", field: "pkgamnt" },
+    { header: "VIEW", field: "icon" },
+    { header: "STATUS", field: "status", clr: true },
   ];
 
   const handleSuccessfullPopup = async (
@@ -187,6 +84,7 @@ function Tickets() {
   ) => {
     const url = type ? PACKAGE_APPROVE_REJECT : BULK_PACKAGE_APPROVE_REJECT;
     setIsProcessing(true);
+    setStatus(status);
     await call(url, {
       register_id: "company",
       transaction_id,
@@ -194,9 +92,11 @@ function Tickets() {
       reason,
       company_id: "company_id",
     })
-      .then((res) => {
+      .then(async (res) => {
         if (res.status === 200) {
           setIsProcessing(false);
+          await getRequestedPackages();
+          setStatus("");
           setTimeout(() => {
             setIsProcessing(false);
             setShowPackageUpgrade(false);
@@ -205,6 +105,7 @@ function Tickets() {
       })
       .catch((err) => {
         setIsProcessing(false);
+        setStatus("");
         console.log(err);
       });
   };
@@ -221,7 +122,10 @@ function Tickets() {
   };
 
   useEffect(() => {
-    getRequestedPackages();
+    const fetchData = async () => {
+      await getRequestedPackages();
+    };
+    fetchData();
   }, []);
 
   const PACKAGE_TICKET_BUTTONS = [
@@ -239,10 +143,22 @@ function Tickets() {
     },
   ];
 
+  const [showPackageUpgrade, setShowPackageUpgrade] = useState(false);
+  const handlePackageUpgrade = (item) => {
+    setPopupData(item);
+    setTransactionData(item);
+    setShowPackageUpgrade(true);
+    setStatus((prev) => !prev);
+  };
+
   const modifiedTicketDetails =
     requestedPackages?.length > 0 &&
     requestedPackages?.map((item) => ({
-      nameAndRole: " ",
+      usernameAndrole: (
+        <div>
+          {item?.summary.requester_name} <br /> <span className="role-color">{item?.summary.requester_role}</span>{" "}
+        </div>
+      ),
       dateAndTime: (
         <div>
           {item?.created_date} <br /> <span>{item?.created_time}</span>{" "}
@@ -265,15 +181,13 @@ function Tickets() {
     requestedPackages?.length > 0 &&
     requestedPackages.map((item) => ({
       ...item,
-      nameAndRole: (
+      usernameAndrole: (
         <div>
-          {item?.name} <br /> <span className="role-color">{item?.role}</span>{" "}
+          {item?.summary.requester_name} <br /> <span className="role-color">{item?.summary.requester_role}</span>{" "}
         </div>
       ),
       date: `${item?.created_date}`,
-
       time: `${item?.created_time}`,
-
       trxid: item?.transaction_id,
       package: item?.summary.final_package_cost,
       pkgamnt: item?.summary.total_packages_cost,
@@ -289,11 +203,10 @@ function Tickets() {
         <AiOutlineEye className="" onClick={() => handlePackageUpgrade(item)} />
       ),
     }));
-
   const modifiedTicketDetails2 = requestedPackages?.map((item) => ({
-    nameAndRole: (
+    usernameAndrole: (
       <div>
-        {item?.name} <br /> <span className="role-color">{item?.role}</span>{" "}
+        {item?.summary.requester_name} <br /> <span className="role-color">{item?.summary.requester_role}</span>{" "}
       </div>
     ),
     dateAndTime: (
@@ -323,9 +236,9 @@ function Tickets() {
   const modifiedTicketDetails3 =
     requestedPackages?.length > 0 &&
     requestedPackages.map((item) => ({
-      nameAndRole: (
+      usernameAndrole: (
         <div>
-          {item?.name} <br /> <span className="role-color">{item?.role}</span>{" "}
+          {item?.summary.requester_name} <br /> <span className="role-color">{item?.summary.requester_role}</span>{" "}
         </div>
       ),
       dateAndTime: (
@@ -348,13 +261,6 @@ function Tickets() {
         <AiOutlineEye className="" onClick={() => handlePackageUpgrade(item)} />
       ),
     }));
-
-  const [showPackageUpgrade, setShowPackageUpgrade] = useState(false);
-  const handlePackageUpgrade = (item) => {
-    setPopupData(item);
-    setTransactionData(item);
-    setShowPackageUpgrade(true);
-  };
   return (
     <div className="p-4 w-100">
       <div>
@@ -392,6 +298,7 @@ function Tickets() {
         showPackageUpgrade={showPackageUpgrade}
         transactionData={transactionData}
         isProcessing={isProcessing}
+        status={status}
         handleSuccessfullPopup={handleSuccessfullPopup}
         setShowPackageUpgrade={setShowPackageUpgrade}
       />

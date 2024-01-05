@@ -1,6 +1,5 @@
 import React from "react";
 import Table from "../table/Table";
-// import { MdOutlineEdit } from "react-icons/md";
 import AddSecurityPopup from "../Popups/AddSecurityPopup";
 import { useEffect, useState } from "react";
 import {
@@ -50,57 +49,56 @@ function Securityquestions() {
       })
       .catch((err) => console.log(err));
   };
-  const handleBlockUnBlock = async (item) => {
+  const handleBlockUnBlock = async (item, currentActiveState) => {
     const payload = {
       s_id: item,
-      active: !active,
+      active: !currentActiveState,
     };
     await call(SECURITY_QUESTIONS_ACTIVE_INACTIVE, payload)
       .then((res) => {
         if (res.status === 200) {
           setActive((prev) => !prev);
         }
-        console.log(res, "res===>");
       })
       .catch((err) => console.log(err));
   };
 
   useEffect(() => {
     getAllSecurityQuestions();
-  }, [active]);
+  }, [active,status]);
 
-  const modifiedSecurityquestionsDetails = allQuestions?.map((item) => {
-    return {
-      questions: <div className="role-color">{item?.question}</div>,
-      // status:
-      //   item?.is_active === "Active" ? (
-      //     <div className="font-green custom-active-button px-2">Active</div>
-      //   ) : (
-      //     <div className="custom-deactive-button px-2">InActive</div>
-      //   ),
-      status: (
-        <div
-          className={
-            item?.active
-              ? "font-green custom-active-button px-2"
-              : "custom-deactive-button px-2"
-          }
-          onClick={() => handleBlockUnBlock(item?.s_id)}
-        >
-          {item?.active ? "Active" : "InActive"}
-        </div>
-      ),
-      icon: (
-        <MdOutlineEdit
-          className="eye-icon-size"
-          onClick={() => {
-            setSelectedQuestion(item);
-            handleRejectionPopupOpen();
-          }}
-        />
-      ),
-    };
-  });
+  const modifiedSecurityquestionsDetails = allQuestions
+    ?.filter((item) =>
+      selectedOption === "Active"
+        ? item?.active === true
+        : item?.active === false
+    )
+    .map((item) => {
+      return {
+        questions: <div className="role-color">{item?.question}</div>,
+        status: (
+          <div
+            className={
+              item?.active
+                ? "font-green custom-active-button px-2"
+                : "custom-deactive-button px-2"
+            }
+            onClick={() => handleBlockUnBlock(item?.s_id, item?.active)}
+          >
+            {item?.active ? "Active" : "InActive"}
+          </div>
+        ),
+        icon: (
+          <MdOutlineEdit
+            className="eye-icon-size"
+            onClick={() => {
+              setSelectedQuestion(item);
+              handleRejectionPopupOpen();
+            }}
+          />
+        ),
+      };
+    });
   const [rejectPopupOpen, SetRejectpopupOpen] = useState(false);
 
   const handleRejectionPopupOpen = () => {

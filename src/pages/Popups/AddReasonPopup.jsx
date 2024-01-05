@@ -30,16 +30,16 @@ function AddReasonPopup(props) {
         p_id: "REJECT-REASON",
         register_id: "company",
         reason: selectedQuestion.reason || "",
-        active: selectedQuestion.active || "Select",
+        active: selectedQuestion.active || "",
         description: selectedQuestion.description || "",
       });
     } else {
-      // Clear the form when creating a new question
+      // Clear the form when creating a new reason
       setFormData({
         p_id: "REJECT-REASON",
         register_id: "company",
         reason: "",
-        active: "Select",
+        active: "",
         description: "",
       });
     }
@@ -93,7 +93,7 @@ function AddReasonPopup(props) {
         setStatus((prev) => !prev);
         setFormData({
           reason: "",
-          active: "Select",
+          active: "",
           description: "",
         });
       }
@@ -133,11 +133,16 @@ function AddReasonPopup(props) {
               </Col>
               <Col className="pe-0">
                 <div className="small-font my-1">In-Active *</div>
-                <select className="w-100 small-font login-inputs input-btn-bg px-2 py-3 all-none rounded">
+                <select 
+                className="w-100 small-font login-inputs input-btn-bg px-2 py-3 all-none rounded"
+                name="active"
+                value={formData.active}
+                onChange={handleInputChange}
+                >
                   Select
                   <option value="Select">Select</option>
-                  <option value="1">Active</option>
-                  <option value="0">Inactive</option>
+                  <option value={"true"}>Active</option>
+                  <option value={"false"}>Inactive</option>
                 </select>
               </Col>
             </Row>
@@ -175,7 +180,7 @@ function AddReasonPopup(props) {
       </Modal>
       <MatchSubmitPopup
         header={
-          acceptClick
+          acceptClick===true
             ? "Updated Reject Questions Successfully "
             : "Created Reject Questions Successfully"
         }

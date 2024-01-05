@@ -11,8 +11,7 @@ function Paymentgateway() {
   const [filteredQuestions, setFilteredQuestions] = useState([]);
   const [searchText, setSearchText] = useState("");
   const [status, setStatus] = useState(false);
-  const [selectedPayment, setSelectedPayment] = useState();
-  const [inputData, setInputData] = useState({});
+  const [inputData, setInputData] = useState([]);
   const [updateGatway, setUpdateGatway] = useState(false);
   const [active, setActive] = useState([]);
 
@@ -47,8 +46,9 @@ function Paymentgateway() {
 
   const [addCountryOpen, setAddCountryOpen] = useState(false);
   const handleAddCountryPopup = () => {
+    setInputData([]);
     setAddCountryOpen(true);
-    setInputData({});
+    setUpdateGatway(false);
   };
 
   const searchContent = (value) => {
@@ -71,10 +71,10 @@ function Paymentgateway() {
       .catch((err) => console.log(err));
   };
 
-  const handleBlockUnBlock = async (item, active) => {
+  const handleBlockUnBlock = async (item, currentActiveState) => {
     const payload = {
       pg_id: item,
-      active: !active,
+      active: !currentActiveState,
     };
     await call(PG_ACTIVE_INACTIVE, payload)
       .then((res) => {
@@ -85,7 +85,7 @@ function Paymentgateway() {
   };
   useEffect(() => {
     getPaymentWay();
-  }, [active]);
+  }, [active, status]);
 
   const modifiedPaymentgatewayDetails = searchText.length
     ? filteredQuestions
@@ -98,14 +98,25 @@ function Paymentgateway() {
             country: item?.country_name,
             currency: item?.currency_name,
             lastupdate: item?.update_at,
-            status:
-              item?.is_active === 1 ? (
-                <div className="font-green custom-active-button px-2">
-                  Active
-                </div>
-              ) : (
-                <div className="custom-deactive-butto px-2">InActive</div>
-              ),
+            status: item?.active ? (
+              <div
+                className="font-green custom-active-button px-2"
+                onClick={() => {
+                  handleBlockUnBlock(item?.pg_id, item?.active);
+                }}
+              >
+                Active
+              </div>
+            ) : (
+              <div
+                className="custom-deactive-button px-2"
+                onClick={() => {
+                  handleBlockUnBlock(item.pg_id, item?.active);
+                }}
+              >
+                InActive
+              </div>
+            ),
             icon: <MdOutlineEdit className="eye-icon-size" />,
           };
         })
@@ -138,16 +149,14 @@ function Paymentgateway() {
             <MdOutlineEdit
               className="eye-icon-size"
               onClick={() => {
-                // setSelectedPayment(item);
-                setUpdateGatway(true);
-                handleAddCountryPopup();
                 setInputData(item);
+                setAddCountryOpen(true);
+                setUpdateGatway(true);
               }}
             />
           ),
         };
       });
-
   return (
     <div className="p-4 w-100">
       <div className="d-flex align-items-center justify-content-between">
@@ -181,7 +190,7 @@ function Paymentgateway() {
           <div className=" medium-font font-weight-bold px-2 p-2 m-1 th-color">
             All Currencies
           </div>
-          <div className=" d-flex justify-conten-between m-1 px-2">
+          {/* <div className=" d-flex justify-conten-between m-1 px-2">
             <select
               className="form-select-option w-100 rounded p-2 px-3 m-1 mx-2 small-font"
               aria-label="Default select example"
@@ -191,19 +200,15 @@ function Paymentgateway() {
               <option value="2">Garmany</option>
               <option value="3">UK</option>
             </select>
-          </div>
+          </div> */}
         </div>
 
         <Table columns={cols} data={modifiedPaymentgatewayDetails} />
       </div>
       <AddCountryPopups
         addCountryOpen={addCountryOpen}
-        Heading={`${selectedPayment ? "Update" : "Add"} Payment Gateways`}
         setAddCountryOpen={setAddCountryOpen}
         setStatus={setStatus}
-        selectedPayment={selectedPayment}
-        setData={setSelectedPayment}
-        getData={getPaymentWay}
         inputData={inputData}
         setInputData={setInputData}
         updateGatway={updateGatway}

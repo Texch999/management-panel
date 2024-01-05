@@ -59,7 +59,7 @@ function App() {
                   <Route path="/addwebsites" element={<Addwebsites />}></Route>
                   <Route path="/adddirectors" element={<Adddirector />}></Route>
                   <Route
-                    path="/usertransaction"
+                    path="/usertransaction/:id"
                     element={<Usertransaction />}
                   ></Route>
                   <Route path="/addtt" element={<Addtt />}></Route>

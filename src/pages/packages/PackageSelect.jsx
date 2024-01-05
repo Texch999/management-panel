@@ -1,15 +1,10 @@
 import React, { useState, useEffect } from "react";
-import {
-  GET_ALL_PAYMENTS,
-  GET_ALL_WEBSITES
-} from "../../config/endpoints";
+import { GET_ALL_PAYMENTS, GET_ALL_WEBSITES } from "../../config/endpoints";
 import { call } from "../../config/axios";
 
 function PackageSelect(props) {
-  const { setSelectedPackage,setPackageInputs,packageInputs} = props;
+  const { setSelectedPackage, setPackageInputs, packageInputs } = props;
   const [selectPackages, setSelectPackages] = useState([]);
-  // const [activeIndex, setActiveIndex] = useState("all");
-
   const handelChange = (e) => {
     setPackageInputs({
       ...packageInputs,
@@ -28,7 +23,6 @@ function PackageSelect(props) {
     };
     await call(GET_ALL_WEBSITES, payload)
       .then((res) => {
-        console.log("response=====>", res);
         setwebsiteNames(res?.data?.data);
       })
       .catch((err) => console.log(err));
@@ -37,10 +31,6 @@ function PackageSelect(props) {
     getwebsiteNames();
   }, []);
 
-  console.log("websiteNames", websiteNames);
-
-  const [allCountries, setallCountries] = useState([]);
- 
   const [allPayments, setAllPayments] = useState([]);
   const getPaymentWay = async () => {
     const payload = {
@@ -70,7 +60,7 @@ function PackageSelect(props) {
             onChange={(e) => handelChange(e)}
             className="w-100 select-bg p-3 rounded medium-font"
           >
-            <option value="select">selecte...</option>
+            <option value="select">Select</option>
             <option value="All">All</option>
             {websiteNames.map((obj) => (
               <option value={obj.web_url} selected>
@@ -97,9 +87,6 @@ function PackageSelect(props) {
                 {obj.country_name}
               </option>
             ))}
-            <option>Select</option>
-            <option>India</option>
-            <option>SriLanka</option>
           </select>
         </div>
       </div>
