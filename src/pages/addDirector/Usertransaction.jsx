@@ -23,10 +23,9 @@ import {
   USERS_ACTIVE_INACTIVE,
 } from "../../config/endpoints";
 function Usertransaction() {
-  const ImageBaseUrl = "https://we2-call-images.s3.us-east-2.amazonaws.com";
   const adminPayload = useParams();
   const [OnlineWebsites, setOnlineWebsites] = useState(true);
-  const [OfflineWebsites, setOfflineWebsites] = useState();
+  // const [OfflineWebsites, setOfflineWebsites] = useState();
   // const [active, setActive] = useState("Transaction");
   const [transactionData, setTransactionData] = useState("Transaction");
   const [activeDrop, setActiveDrop] = useState(false);
@@ -36,7 +35,7 @@ function Usertransaction() {
   const [singedUrl, setSignedUrl] = useState("");
   const [uploadImage, setuploadImage] = useState([]);
   const [imageId, setImageId] = useState("");
-  const [isProcessing, setIsProcessing] = useState(false);
+  // const [isProcessing, setIsProcessing] = useState(false);
 
   const uploadfileInputRef = useRef(null);
 

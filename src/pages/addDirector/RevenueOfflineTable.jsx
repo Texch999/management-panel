@@ -17,18 +17,18 @@ function RevenueOfflineTable() {
   const silver = adminPackages?.filter(
     (item) => item?.package_name === "silver"
   );
-  const silverPackage = silver[0];
+  const silverPackage = silver;
 
   const gold = adminPackages?.filter((item) => item?.package_name === "gold");
-  const goldPackage = gold[0];
+  const goldPackage = gold;
 
   const diamond = adminPackages?.filter(
     (item) => item?.package_name === "diamond"
   );
-  const diamondPackage = diamond[0];
+  const diamondPackage = diamond;
 
   const vip = adminPackages?.filter((item) => item?.package_name === "vip");
-  const vipPackage = vip[0];
+  const vipPackage = vip;
 
   const purchaseboxes = [
     {
@@ -139,7 +139,7 @@ function RevenueOfflineTable() {
   const getAdminPackages = async () => {
     await call(GET_ADMIN_PACKAGES, { register_id })
       .then((res) => {
-        setAdminPackages(res?.data?.data?.bulk_subscriptions);
+        setAdminPackages(res?.data?.data?.bulk_subscriptions[0]);
         console.log(res.data);
       })
       .catch((err) => console.log(err));

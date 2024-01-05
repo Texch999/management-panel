@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { TbWorldUp } from "react-icons/tb";
 import { BsFiles } from "react-icons/bs";
-import RevenueOfflineShare from "./RevenueOfflineShare";
+// import RevenueOfflineShare from "./RevenueOfflineShare";
 import RevenueOnlineShare from "./RevenueOnlineShare";
 import RevenueOnlineFixd from "./RevenueOnlineFixd";
 import TotalPaidBalanceTable from "./TotalPaidBalanceTable";
-import RevenueOfflineTable from "./RevenueOfflineTable";
+// import RevenueOfflineTable from "./RevenueOfflineTable";
 
 function WebsitesLimit() {
   const [paymentTypeSelect, setPaymentTypeSelect] = useState("share");

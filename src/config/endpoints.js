@@ -74,9 +74,12 @@ const REJECT_QUESTIONS_ACTIVE_INACTIVE =
   "/management/websites_active_inactive";
 
 // methods
+// eslint-disable-next-line no-unused-vars
 const DELETE = "DELETE";
 const POST = "POST";
+// eslint-disable-next-line no-unused-vars
 const GET = "POST";
+// eslint-disable-next-line no-unused-vars
 const PUT = "PUT";
 
 exports.GET_ADMIN_ALL_ACCOUNTS = {
