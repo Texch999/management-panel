@@ -68,6 +68,8 @@ const SECURITY_QUESTIONS_ACTIVE_INACTIVE =
 const BROADCAST_ACTIVE_INACTIVE = "/management/broadcast_active_inactive";
 const REJECT_QUESTIONS_ACTIVE_INACTIVE =
   "/management/reject_reasons_active_inactive";
+  const WEBSITES_ACTIVE_INACTIVE =
+  "/management/websites_active_inactive";
 
 // methods
 const DELETE = "DELETE";
@@ -466,4 +468,10 @@ exports.BROADCAST_ACTIVE_INACTIVE = {
 exports.REJECT_QUESTIONS_ACTIVE_INACTIVE = {
   url: REJECT_QUESTIONS_ACTIVE_INACTIVE,
   method: POST,
+};
+
+
+exports.WEBSITES_ACTIVE_INACTIVE = {
+  url: WEBSITES_ACTIVE_INACTIVE,
+  method: POST
 };
