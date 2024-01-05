@@ -1,12 +1,50 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { BsFiles } from "react-icons/bs";
 import { TbWorldUp } from "react-icons/tb";
 import RevenueOfflineTable from "./RevenueOfflineTable";
 import TotalPaidBalanceTable from "./TotalPaidBalanceTable";
 import { UPDATE_PACKAGES } from "../../config/endpoints";
 import RevenueOfflineHourlyTable from "./RevenueOfflineHourlyTable";
+import { call } from "../../config/axios";
+import {
+  GET_ALL_USERS,
+  WEBSITES_ACTIVE_INACTIVE,
+} from "../../config/endpoints";
+function RevenueOfflineShare(props) {
+  const {adminPayload}=props
+  const [allDirectors, setAllDirectors] = useState();
+  const [active, setActive] = useState("");
+  const getDirectors = async () => {
+    const payload = {
+      register_id: "company",
+    };
+    await call(GET_ALL_USERS, payload)
+      .then((res) => {
+        setAllDirectors(res?.data?.data);
+      })
 
-function RevenueOfflineShare() {
+      .catch((err) => console.log(err));
+  };
+  useEffect(() => {
+    getDirectors();
+  }, [active]);
+
+  const handleBlockUnBlock = async (item, active) => {
+    const payload = {
+      register_id: item,
+      active: !active,
+    };
+    await call(WEBSITES_ACTIVE_INACTIVE, payload)
+      .then((res) => {
+        setActive(!active);
+        console.log(res);
+      })
+      .catch((err) => console.log(err));
+  };
+  const filteredData = allDirectors?.filter(
+    (item) => item?.register_id === adminPayload?.id
+  );
+  console.log(filteredData,"===>filteredData")
   return (
     <div className="sidebar-bg rounded w-100">
       <div className="d-flex justify-content-between align-items-center p-3">
