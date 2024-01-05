@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { TbWorldUp } from "react-icons/tb";
 import { BsFiles } from "react-icons/bs";
 import RevenueOfflineShare from "./RevenueOfflineShare";
@@ -6,12 +6,55 @@ import RevenueOnlineShare from "./RevenueOnlineShare";
 import RevenueOnlineFixd from "./RevenueOnlineFixd";
 import TotalPaidBalanceTable from "./TotalPaidBalanceTable";
 import RevenueOfflineTable from "./RevenueOfflineTable";
-function WebsitesLimit() {
+import { call } from "../../config/axios";
+import {
+  GET_ALL_USERS,
+  WEBSITES_ACTIVE_INACTIVE,
+} from "../../config/endpoints";
+import { useParams } from "react-router-dom";
+function WebsitesLimit(props) {
+  const { adminPayload } = props;
   const [paymentTypeSelect, setPaymentTypeSelect] = useState("share");
+  const [allDirectors, setAllDirectors] = useState();
+  const [active, setActive] = useState("");
   const handlePaymentSelect = (e) => {
     setPaymentTypeSelect(e.target.value);
   };
   console.log(paymentTypeSelect);
+
+  const getDirectors = async () => {
+    const payload = {
+      register_id: "company",
+    };
+    await call(GET_ALL_USERS, payload)
+      .then((res) => {
+        setAllDirectors(res?.data?.data);
+      })
+
+      .catch((err) => console.log(err));
+  };
+  useEffect(() => {
+    getDirectors();
+  }, []);
+
+  const filteredData = allDirectors?.filter(
+    (item) => item?.register_id === adminPayload?.id
+  );
+
+  console.log(filteredData, "====>Data");
+
+  const handleBlockUnBlock = async (item, active) => {
+    const payload = {
+      register_id: item,
+      active: !active,
+    };
+    await call(WEBSITES_ACTIVE_INACTIVE, payload)
+      .then((res) => {
+        setActive(!active);
+        console.log(res);
+      })
+      .catch((err) => console.log(err));
+  };
 
   return (
     <div className="sidebar-bg rounded w-100">
@@ -32,7 +75,17 @@ function WebsitesLimit() {
               id="flexSwitchCheckDefault"
             />
           </div>
-          <div className="p-1">Active</div>
+          <div
+            className="p-1"
+            onClick={() => {
+              handleBlockUnBlock(
+                filteredData[0]?.register_id,
+                filteredData[0]?.website_status
+              );
+            }}
+          >
+            Active
+          </div>
         </div>
       </div>
       <hr className="hr-line" />

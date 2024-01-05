@@ -35,11 +35,10 @@ function Usertransaction() {
   const [profileImage, setProfileImage] = useState("");
   const [singedUrl, setSignedUrl] = useState("");
   const [uploadImage, setuploadImage] = useState([]);
-  const [imageId,setImageId] = useState("")
+  const [imageId, setImageId] = useState("");
   const [isProcessing, setIsProcessing] = useState(false);
-  const uploadfileInputRef = useRef(null);
 
-  console.log(adminPayload, ".......adminPayload");
+  const uploadfileInputRef = useRef(null);
 
   const handleActiveButton = (type) => {
     setTransactionData(type);
@@ -79,16 +78,16 @@ function Usertransaction() {
   };
 
   const handleUploadButtonClick = () => {
-    console.log("handleUploadButtonClick called");
-    uploadfileInputRef.current && uploadfileInputRef.current.click();
+    uploadfileInputRef.current.click();
   };
   const generateSignedUrl = async () => {
     setuploadImage(true);
     const posetNewId = new Date().getTime();
+    console.log(posetNewId, "====>posetNewId");
     await call(GENERATE_SIGNED_URL, {
       register_id: `${posetNewId}`,
       event_type: "user_profile_image",
-      folder_name: "package-images",
+      folder_name: "user-images",
     })
       .then(async (res) => {
         setuploadImage(false);
@@ -110,7 +109,6 @@ function Usertransaction() {
     (item) => item.register_id === adminPayload.id
   );
 
-  console.log(filteredData[0], ".......allDirectors");
   // const handleOffline = () => {
   //   setOfflineWebsites(true);
   //   setOnlineWebsites(false);
@@ -121,6 +119,7 @@ function Usertransaction() {
   };
   const currentUrl = window.location.href;
   const contains = currentUrl.includes("/usertransaction/");
+
   return (
     <div className="p-4 w-100">
       <h6 className="h6 font-grey p-1">userprofile/profile</h6>
@@ -131,20 +130,23 @@ function Usertransaction() {
           alt="profile_banner"
         />
         <div className="sidebar-bg th-color user-img-bg-br row row-unset p-2">
-          <div className="col-5 d-flex"
-           onClick={handleUploadButtonClick}
-           disabled={uploadImage}>
+          <div
+            className="col-5 d-flex"
+            onClick={handleUploadButtonClick}
+            disabled={uploadImage}
+          >
             <img
               src={contains ? "../assets/person-img.png" : Images.PersonImg}
               className="w-20 user-margin-top"
-              alt="profile_imafe"
+              alt="profile_image"
             />
             <input
               type="file"
-              id="upload-button"
+              ref={uploadfileInputRef}
               style={{ display: "none" }}
               onChange={handleUploadFileSelect}
-            />
+              className="login-inputs"
+            ></input>
             <div className="row px-2">
               <div className="medium-font d-flex align-items-center">
                 {filteredData[0]?.user_name}
@@ -185,7 +187,8 @@ function Usertransaction() {
                   );
                 }}
               >
-                <TiTick className="eye-icon-size" /> Active
+                <TiTick className="eye-icon-size" />
+                {filteredData[0]?.active ? "Active" : "Inactive"}
               </div>
             </div>
           </div>
@@ -253,7 +256,7 @@ function Usertransaction() {
               )}
               {OnlineWebsites === "offline" && (
                 <div className="d-flex justify-content-between p-2">
-                  <span>www.we2call.com</span>
+                  <span>{filteredData[0]?.website_name}</span>
                   <span class="form-check">
                     <input
                       class="form-check-input check-box-input-clr"
@@ -288,7 +291,7 @@ function Usertransaction() {
         </div>
       </div>
       {transactionData === "Websites/Limit" && OnlineWebsites === "online" && (
-        <WebsitesLimit />
+        <WebsitesLimit adminPayload={adminPayload} />
       )}
       {transactionData === "Websites/Limit" && OnlineWebsites === "offline" && (
         <div>

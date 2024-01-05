@@ -270,13 +270,13 @@ function TransactionTable() {
       <div className="d-flex align-items-center justify-content-between">
         <h6 className="h6 font-grey px-2 p-2 m-1">Transaction</h6>
         <div className=" d-flex justify-conten-between m-1 px-2">
-          <select
+          {/* <select
             className="form-select-option w-100 rounded p-2 px-3 m-1 mx-2 small-font"
             aria-label="Default select example"
           >
             <option selected>ALL</option>
             <option value="1">active</option>
-          </select>
+          </select> */}
         </div>
       </div>
 
