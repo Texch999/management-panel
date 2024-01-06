@@ -232,7 +232,6 @@ function PackageUpgrade(props) {
           return i.packageId === selectedPackage;
         });
 
-  console.log(selectedPackage, "===>selectedPackage");
   const handleDurationChange = (obj) => {
     setSelectedDuration(obj);
   };

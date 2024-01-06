@@ -157,7 +157,8 @@ function Sidebar() {
       reactIcon: <TiMessages />,
     },
   ];
-
+  const currentUrl = window.location.href;
+  const contains = currentUrl.includes("/usertransaction/");
   return (
     <div className="d-flex justify-content-between flex-column sidebar-bg th-color p-1 vh-100">
       <div className="sidebar">
@@ -165,7 +166,11 @@ function Sidebar() {
           className="d-flex align-items-center justfy-content-center p-2"
           onClick={() => navigate("/login")}
         >
-          <img src={Images.SsevenLogo} className="sseven-logo-size" />
+          <img
+            src={contains ? "../assets/ssevenLogo.png" : Images.SsevenLogo}
+            className="sseven-logo-size"
+            alt="header"
+          />
         </div>
         <hr className="th-color mt-2"></hr>
         <div className="scroll-side-bar">
