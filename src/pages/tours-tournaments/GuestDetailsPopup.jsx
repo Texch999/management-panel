@@ -74,28 +74,28 @@ function GuestDetailsPopup(props) {
   //   setAllMembers();
   // },[])
 
-  const handleDownload = async (imageUrl, imageName) => {
-    
-      const link = document.createElement('a');
-      link.href = imageUrl;
-      link.setAttribute('download', imageName || 'image.png');
-      link.target = 'blank';
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-    
-  };
   // const handleDownload = async (imageUrl, imageName) => {
-  //   try {
-  //     const response = await fetch(imageUrl);
-  //     const blob = await response.blob();
-  //     console.log(imageUrl, "my image");
-  //     // Using file-saver to save the blob
-  //     saveAs(blob, imageName || "image.png");
-  //   } catch (error) {
-  //     console.error("Error downloading image:", error);
-  //   }
+    
+  //     const link = document.createElement('a');
+  //     link.href = imageUrl;
+  //     link.setAttribute('download', imageName || 'image.png');
+  //     link.target = 'blank';
+  //     document.body.appendChild(link);
+  //     link.click();
+  //     document.body.removeChild(link);
+    
   // };
+  const handleDownload = async (imageUrl, imageName) => {
+    try {
+      const response = await fetch(imageUrl);
+      const blob = await response.blob();
+      console.log(imageUrl, "my image");
+      // Using file-saver to save the blob
+      saveAs(blob, imageName || "image.png");
+    } catch (error) {
+      console.error("Error downloading image:", error);
+    }
+  };
   
 
   const TableHeads = [
