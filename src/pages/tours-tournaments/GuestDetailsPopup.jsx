@@ -91,7 +91,7 @@ function GuestDetailsPopup(props) {
       const blob = await response.blob();
       console.log(imageUrl, "my image");
       // Using file-saver to save the blob
-      saveAs(blob, imageName || "image.png");
+      saveAs(blob, imageName);
     } catch (error) {
       console.error("Error downloading image:", error);
     }
