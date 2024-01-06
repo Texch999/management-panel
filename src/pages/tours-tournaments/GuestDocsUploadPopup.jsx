@@ -4,7 +4,7 @@ import {
   GET_TOUR_PAYMENT_DOCUMENTS,
   UPDATE_URL_IN_GUESTDOCS,
 } from "../../config/endpoints";
-import { GENERATE_SIGNED_URL } from "../../config/endpoints";
+import { GENERATE_SIGNED_URL_FOR_ALL_FORMATS } from "../../config/endpoints";
 import MatchSubmitPopup from "../../matchpopups/MatchSubmitPopup";
 import { FaRegEye } from "react-icons/fa";
 import { MdUpload } from "react-icons/md";
@@ -151,36 +151,45 @@ function GuestDocsUploadPopup(props) {
 
   const handleUploadChange = async (e, userid, item, amenityType) => {
     // console.log(item, e, ".....consolefrom onclick");
-    const imagefile = e.target.files[0];
+    const file = e.target.files[0];
+    const fileName = file.name;
+    const fileType = file.type;
+    const extension = fileName.split('.')
+    const fileExtension = extension[1]
     const imageId = Date.now();
-    const imageuploadingurl = await generatesignedurl(imageId);
+    const imageuploadingurl = await generatesignedurl(imageId, fileType, fileExtension);
+    // console.log(imageuploadingurl,'......presignedurl')
     imageUploading(
       imageuploadingurl,
-      imagefile,
+      file,
       imageId,
       userid,
       item,
-      amenityType
+      amenityType,
+      fileType,
+      fileExtension
     );
   };
 
   const imageUploading = async (
     imageuploadingurl,
-    imagefile,
+    file,
     imageId,
     userid,
     item,
-    amenityType
+    amenityType,
+    fileType,
+    fileExtension
   ) => {
     // console.log(imageuploadingurl, ".......imageuploadingurl");
     // console.log(imagefile, ".......imagefile");
     imageuploadingurl &&
-      imagefile &&
+      file &&
       (await fetch(imageuploadingurl, {
         method: "PUT",
-        body: imagefile,
+        body: file,
         headers: {
-          "Content-Type": "image/jpeg",
+          "Content-Type": `${fileType}`,
           "cache-control": "public, max-age=0",
         },
       })
@@ -190,10 +199,10 @@ function GuestDocsUploadPopup(props) {
             setHeader("image uploaded successfully");
             setState(true);
             updatingImageUrlinTable(
-              `${ImageBaseUrl}/tour_booking_docs_from_company/${imageId}.png`,
+              `${ImageBaseUrl}/tour_booking_docs_from_company/${imageId}.${fileExtension}`,
               userid,
               item,
-              amenityType
+              amenityType,
             );
           }
         })
@@ -203,14 +212,16 @@ function GuestDocsUploadPopup(props) {
         }));
   };
 
-  const generatesignedurl = async (imageId) => {
+  const generatesignedurl = async (imageId, fileType, fileExtension) => {
     const payload = {
       register_id: `${imageId}`,
       event_type: "user_profile_image",
       folder_name: "tour_booking_docs_from_company",
+      fileType: fileType,
+      fileExtension: fileExtension
     };
     try {
-      const res = await call(GENERATE_SIGNED_URL, payload);
+      const res = await call(GENERATE_SIGNED_URL_FOR_ALL_FORMATS, payload);
       const url = res?.data?.data?.result?.signed_url;
       return url;
     } catch (error) {
@@ -220,17 +231,17 @@ function GuestDocsUploadPopup(props) {
   };
 
   const updatingImageUrlinTable = async (url, userid, item, amenityType) => {
-    console.log(url,'.........url')
-    console.log(item, ".......item");
-    console.log(userid, ".....userid");
-    console.log(amenityType, "...amenitytype");
+    // console.log(url,'.........url')
+    // console.log(item, ".......item");
+    // console.log(userid, ".....userid");
+    // console.log(amenityType, "...amenitytype");
     const payload = {
       url: url,
       userid: userid,
       update_url_type: amenityType,
       tour_payment_id: item.tour_payment_id,
     };
-    console.log(payload,'....payload')
+    // console.log(payload,'....payload')
     await call(UPDATE_URL_IN_GUESTDOCS, payload)
       .then((res) => {
         if (res?.status === 200) {
@@ -240,8 +251,9 @@ function GuestDocsUploadPopup(props) {
       })
       .catch((error) => console.log(error));
   };
+
   const handleViewClick = async (guest, amenityType) => {
-    // console.log(guest[amenityType], ".......viewclicked");
+    console.log(guest[amenityType], ".......viewclicked");
     setDocumentView(guest[amenityType]);
     setShowScreenshotImg(true);
   };
@@ -386,7 +398,8 @@ function GuestDocsUploadPopup(props) {
       <PaymentImagePopup
         showScreenshotImg={showScreenshotImg}
         setShowScreenshotImg={setShowScreenshotImg}
-        imageurl={documentView}
+        documentView={documentView}
+        setDocumentView={setDocumentView}
       />
     </div>
   );
