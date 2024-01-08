@@ -42,24 +42,24 @@ function RevenueOnlineFixd(props) {
       value: "10000",
     },
   ];
-  const totalboxes = [
-    {
-      header: "Total Amount",
-      value: "10000",
-    },
-    {
-      header: "Paid Amount",
-      value: "10000",
-    },
-    {
-      header: "Balance",
-      value: "10000",
-    },
-    {
-      header: "Send Reminder",
-      value: "10000",
-    },
-  ];
+  // const totalboxes = [
+  //   {
+  //     header: "Total Amount",
+  //     value: "10000",
+  //   },
+  //   {
+  //     header: "Paid Amount",
+  //     value: "10000",
+  //   },
+  //   {
+  //     header: "Balance",
+  //     value: "10000",
+  //   },
+  //   {
+  //     header: "Send Reminder",
+  //     value: "10000",
+  //   },
+  // ];
   return (
     <div>
       <div className="px-3 mt-2">

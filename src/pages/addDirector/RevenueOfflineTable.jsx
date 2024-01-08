@@ -117,24 +117,24 @@ function RevenueOfflineTable() {
     },
   ];
 
-  const totalboxes = [
-    {
-      header: "Total Amount",
-      value: "10000",
-    },
-    {
-      header: "Paid Amount",
-      value: "10000",
-    },
-    {
-      header: "Balance",
-      value: "10000",
-    },
-    {
-      header: "Send Reminder",
-      value: "10000",
-    },
-  ];
+  // const totalboxes = [
+  //   {
+  //     header: "Total Amount",
+  //     value: "10000",
+  //   },
+  //   {
+  //     header: "Paid Amount",
+  //     value: "10000",
+  //   },
+  //   {
+  //     header: "Balance",
+  //     value: "10000",
+  //   },
+  //   {
+  //     header: "Send Reminder",
+  //     value: "10000",
+  //   },
+  // ];
 
   const getAdminPackages = async () => {
     await call(GET_ADMIN_PACKAGES, { register_id })

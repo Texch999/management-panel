@@ -489,4 +489,8 @@ exports.GET_ADMIN_PACKAGES = {
 exports.UPDATE_PACKAGES = {
   url: UPDATE_PACKAGES,
   method: POST,
+}
+exports.WEBSITES_ACTIVE_INACTIVE = {
+  url: WEBSITES_ACTIVE_INACTIVE,
+  method: POST
 };

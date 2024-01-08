@@ -290,11 +290,12 @@ function Usertransaction() {
         </div>
       </div>
       {transactionData === "Websites/Limit" && OnlineWebsites === "online" && (
-        <WebsitesLimit  />
+
+        <WebsitesLimit />
       )}
       {transactionData === "Websites/Limit" && OnlineWebsites === "offline" && (
         <div>
-          <RevenueOfflineShare adminPayload={adminPayload}/>
+          <RevenueOfflineShare adminPayload={adminPayload} />
           {/* <RevenueOfflineTable /> */}
         </div>
       )}
