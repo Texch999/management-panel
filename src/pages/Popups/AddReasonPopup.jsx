@@ -20,7 +20,7 @@ function AddReasonPopup(props) {
     p_id: "REJECT-REASON",
     register_id: "company",
     reason: "",
-    active: "Select",
+    active: "",
     description: "",
   });
 
@@ -141,8 +141,8 @@ function AddReasonPopup(props) {
                 >
                   Select
                   <option value="Select">Select</option>
-                  <option value={"true"}>Active</option>
-                  <option value={"false"}>Inactive</option>
+                  <option value={true}>Active</option>
+                  <option value={false}>Inactive</option>
                 </select>
               </Col>
             </Row>

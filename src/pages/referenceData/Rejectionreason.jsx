@@ -85,7 +85,7 @@ function Rejectionreason() {
   const modifiedRejectionreasonDetails = searchText.length
     ? filteredQuestions
         .filter((item) =>
-          selectedOption === "true"
+          selectedOption === "Active"
             ? item?.active === true
             : item?.active === false
         )
@@ -115,7 +115,7 @@ function Rejectionreason() {
         })
     : allQuestions
         .filter((item) =>
-          selectedOption === "true"
+          selectedOption === "Active"
             ? item?.active === true
             : item?.active === false
         )
@@ -146,6 +146,9 @@ function Rejectionreason() {
             ),
           };
         });
+
+
+    console.log("selectedOption====>",selectedOption)
 
   const [rejectPopupOpen, SetRejectpopupOpen] = useState(false);
   const handleRejectionPopupOpen = () => {
@@ -191,8 +194,8 @@ function Rejectionreason() {
               value={selectedOption}
               onChange={handleSelectChange}
             >
-              <option value={"true"}>Active</option>
-              <option value={"false"}>In-active</option>
+              <option value="Active">Active</option>
+              <option value="In-Active">In-active</option>
             </select>
           </div>
         </div>
