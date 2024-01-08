@@ -29,7 +29,7 @@ function GuestDocsUploadPopup(props) {
   const [docType, setDocType] = useState("");
   const [showScreenshotImg, setShowScreenshotImg] = useState(false);
   const [documentView, setDocumentView] = useState("");
-  const [reRendering, setReRendering] = useState(false)
+  const [reRendering, setReRendering] = useState(false);
 
   const gettingguestsdocs = async () => {
     const payload = {
