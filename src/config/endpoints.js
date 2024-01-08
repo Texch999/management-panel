@@ -72,6 +72,8 @@ const REJECT_QUESTIONS_ACTIVE_INACTIVE =
   "/management/reject_reasons_active_inactive";
   const WEBSITES_ACTIVE_INACTIVE =
   "/management/websites_active_inactive";
+const UPDATE_URL_IN_GUESTDOCS = "/tours/update_url_in_guestdocs";
+const GENERATE_SIGNED_URL_FOR_ALL_FORMATS = "/tours/generate_signed_url_for_all_formats"
 
 // methods
 // eslint-disable-next-line no-unused-vars
@@ -81,6 +83,16 @@ const POST = "POST";
 const GET = "POST";
 // eslint-disable-next-line no-unused-vars
 const PUT = "PUT";
+
+exports.GENERATE_SIGNED_URL_FOR_ALL_FORMATS = {
+  url: GENERATE_SIGNED_URL_FOR_ALL_FORMATS,
+  method: POST
+}
+
+exports.UPDATE_URL_IN_GUESTDOCS = {
+  url: UPDATE_URL_IN_GUESTDOCS,
+  method: POST
+}
 
 exports.GET_ADMIN_ALL_ACCOUNTS = {
   method: POST,

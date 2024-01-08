@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Modal } from "react-bootstrap";
 import { PRESIGNED_URL } from "../../config/endpoints";
+import { saveAs } from "file-saver";
 const axios = require("axios")
 
 function GuestDetailsPopup(props) {
@@ -69,54 +70,31 @@ function GuestDetailsPopup(props) {
       }, []);
       
   
-  useEffect(()=>{
-    setAllMembers();
-  },[])
-//   console.log(allPackMembers,'......allpackmembers')
-  // const handleDownload = (imageUrl, imageName) => {
-  //     var element = document.createElement("a");
-  //     var file = new Blob(
-  //       [
-  //         imageUrl
-  //       ],
-  //       { type: "image/jpg" }
-  //     );
-  //     element.href = URL.createObjectURL(file);
-  //     element.download = imageName;
-  //     element.click();
+  // useEffect(()=>{
+  //   setAllMembers();
+  // },[])
+
   // const handleDownload = async (imageUrl, imageName) => {
-  //   const element = document.createElement("a");
-  //   element.href = imageUrl;
-  //   element.download = imageName || "image.png";
-  //   element.target = 'blank';
-  //   document.body.appendChild(element);
-  //   element.click();
-  //   document.body.removeChild(element);
+    
+  //     const link = document.createElement('a');
+  //     link.href = imageUrl;
+  //     link.setAttribute('download', imageName || 'image.png');
+  //     link.target = 'blank';
+  //     document.body.appendChild(link);
+  //     link.click();
+  //     document.body.removeChild(link);
+    
   // };
   const handleDownload = async (imageUrl, imageName) => {
-    // try {
-    //   const payload = {
-    //     imageurl: imageUrl,
-    //   };
-  
-    //   const response = await axios({
-    //     url: "https://gddigb51ed.execute-api.us-east-2.amazonaws.com/prod/tours/presignedurl",
-    //     method: 'POST',
-    //     responseType: 'arraybuffer', // Use 'blob' for binary data like images
-    //     data: payload, // Send the payload in the request body
-    //   });
-  
-    //   const url = window.URL.createObjectURL(new Blob([response.data]));
-      const link = document.createElement('a');
-      link.href = imageUrl;
-      link.setAttribute('download', imageName || 'image.png');
-      link.target = 'blank';
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-    // } catch (error) {
-    //   console.error('Error downloading image:', error);
-    // }
+    try {
+      const response = await fetch(imageUrl);
+      const blob = await response.blob();
+      console.log(imageUrl, "my image");
+      // Using file-saver to save the blob
+      saveAs(blob, imageName);
+    } catch (error) {
+      console.error("Error downloading image:", error);
+    }
   };
   
 
