@@ -14,11 +14,11 @@ function PaymentImagePopup(props) {
   console.log(documentView, "......imageurl");
   // const fileExtensionForView = documentView?.split('.')
   // console.log(fileExtensionForView[1],'......view')
-  const fileName = documentView.split('/').pop();
+  const fileName = documentView?.split('/').pop();
   
   // Get the file extension
   console.log(fileName,'........filename')
-  const fileExtension = fileName.split('.').pop();
+  const fileExtension = fileName?.split('.').pop();
   console.log(fileExtension,'........fileext')
   
   // return fileExtension;
