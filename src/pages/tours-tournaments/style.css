@@ -182,3 +182,7 @@
 .fileupload-input-display-none {
   display: none;
 }
+
+.rpv-core__viewer {
+  height: 25vh !important;
+}
