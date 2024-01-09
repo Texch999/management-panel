@@ -32,9 +32,9 @@ function Creatematch() {
       !createMatch.match_place ||
       !createMatch.stadium ||
       !createMatch.date ||
-      !createMatch.time ||
-      !matchTypeSelect?.first ||
-      !matchTypeSelect?.second
+      !createMatch.time 
+      // !matchTypeSelect?.first ||
+      // !matchTypeSelect?.second
     ) {
       return setError("Missing Required feilds");
     } else {

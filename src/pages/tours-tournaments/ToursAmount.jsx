@@ -37,9 +37,7 @@ function ToursAmount() {
   const packOnchangeHandle = (tourId, pkgtype, field, value) => {
     setTours((prevTours) =>
       prevTours.map((tour) => {
-        // console.log(tour,'.......tourfromsettours')
         if (tour.tour_id === tourId) {
-          // console.log(tour,'....tourinside')
           return {
             ...tour,
             packages: {
@@ -120,7 +118,49 @@ function ToursAmount() {
       country: item.country,
       website: item.website,
       tour_title: item.tour_title,
-      packages: (
+      packages: (item.tour_name === "1.Take Part in Our Tour" ||
+      item.tour_name === "2.Cricket Tour" ||
+      item.tour_name === "3.Sports Tour" ||
+      item.tour_name === "5.Entertainment Tour")?
+      (<div className="text-center justify-content-center d-flex align-items-center">
+        <div className="amount-div text-center justify-content-center align-items-center">
+          <div className="d-flex ms-6 w-100 head-position">
+            <div className="input-custum text-center justify-content-center d-flex align-items-center">
+              Amount
+            </div>
+          </div>
+          {packagesType.map((pkgtype, index) => {
+            return (
+              <div className="d-flex align-items-center w-100 row" key={index}>
+                <div className="col-3">{pkgtype}</div>
+                <input
+                  className="input-custum text-center col-3"
+                  type="text"
+                  name="minamount"
+                  value={item?.packages[pkgtype]?.minamount || ""}
+                  onChange={(e) =>
+                    packOnchangeHandle(
+                      item.tour_id,
+                      pkgtype,
+                      "minamount",
+                      e.target.value
+                    )
+                  }
+                ></input>
+              </div>
+            );
+          })}
+          <div className="d-flex align-items-center">
+            <button
+              className="input-custum text-center select-button update-position"
+              onClick={() => submitTourPackages(item)}
+            >
+              UPDATE
+            </button>
+          </div>
+        </div>
+        </div>):
+      (
         <div className="amount-div">
           <div className="d-flex justify-content-center ms-4 w-100 head-position">
             <div className="input-custum text-center d-flex align-items-center">
@@ -191,7 +231,7 @@ function ToursAmount() {
             </button>
           </div>
         </div>
-      ),
+      )
     };
   });
   return (

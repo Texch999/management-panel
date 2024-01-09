@@ -33,7 +33,7 @@ function AddSecurityPopup(props) {
         p_id: "SECURITY_QUESTIONS",
         register_id: "company",
         question: selectedQuestion.question || "",
-        active: selectedQuestion.is_active || "",
+        active: selectedQuestion.active || "",
         description: selectedQuestion.description || "",
       });
     } else {
@@ -81,7 +81,6 @@ function AddSecurityPopup(props) {
       const res = await call(url, requestData);
       if (res.data.status === 200) {
         setAcceptClick(true);
-        setStatus((prev) => !prev);
         setTimeout(() => {
           setAcceptClick(false);
           SetRejectpopupOpen(false);
@@ -141,8 +140,8 @@ function AddSecurityPopup(props) {
                 <select className="w-100 small-font login-inputs input-btn-bg px-2 py-3 all-none rounded">
                   Select
                   <option value="Select">Select</option>
-                  <option value="1">Active</option>
-                  <option value="0">Inactive</option>
+                  <option value={true}>Active</option>
+                  <option value={false}>Inactive</option>
                 </select>
               </Col>
             </Row>
